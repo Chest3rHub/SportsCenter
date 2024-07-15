@@ -1,12 +1,12 @@
 import React from 'react';
-import '../Styles/Login.css';
+import '../Styles/Auth.css';
 
 function Login() {
   return (
     <div className="container">
-        <div className="login-container">
-            <div className="login-header">Logowanie</div>
-            <div className="login-form">
+        <div className="auth-container">
+            <div className="auth-header">Logowanie</div>
+            <div className="auth-form">
                 <div className="form-group">
                     <label htmlFor="email">*E-mail:</label>
                     <input type="email" id="email" name="email" required />
@@ -15,7 +15,7 @@ function Login() {
                 <label htmlFor="password">*Hasło:</label>
                 <input type="password" id="password" name="password" required />
                 </div>
-                <button className="login-button">Zaloguj</button>
+                <button className="auth-button">Zaloguj</button>
                 <a href="#" className="forgot-password">Nie pamiętam hasła</a>
             </div>
         </div>

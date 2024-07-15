@@ -1,6 +1,7 @@
 import React from 'react';
 import './App.css';
 import Login from './Components/Login';
+import Register from './Components/Register';
 
 function App() {
   return (
@@ -12,7 +13,7 @@ function App() {
           <button className="nav-button">LOGOWANIE</button>
           <button className="nav-button">REJESTRACJA</button>
         </div>
-        <Login />
+        <Register />
       </div>
     </div>
   );

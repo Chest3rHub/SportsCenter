@@ -1,16 +1,20 @@
-.login-container {
+.auth-container {
     background-color: #ebf9ea;
     border-radius: 20px;
     padding: 20px;
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
     width: 60%;
     margin: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 80vh;
 }
 
-.login-header {
+.auth-header {
     background-color: #AFEBBC;
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-    width: 70%;
+    width: 60%;
     border-radius: 20px;
     padding: 10px 0;
     font-size: 2rem;
@@ -21,37 +25,62 @@
     margin-bottom: 30px;
 }
 
-.login-form {
+.auth-form {
     background-color: #FFE3B3;
     border-radius: 20px;
     padding: 20px;
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-    text-align: left;
     width: 70%;
-    margin: 20px auto;
-}
-
-.login-form .form-group {
-    display: flex;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 10px;
     align-items: center;
-    justify-content: center;
-    margin-bottom: 15px;
 }
 
-.login-form label {
-    margin-right: 20px;
+.labels {
+    width: 50%;
+    display: grid;
+    grid-template-columns: auto;
+    gap: 10px;
+    align-items: center;
+    text-align: right;
+    margin: auto;
+}
+
+.labels label {
+    margin-bottom: 10px;
     font-size: 1rem;
     color: #000000;
 }
 
-.login-form input {
+.inputs {
     width: 50%;
+    display: grid;
+    grid-template-columns: auto;
+    gap: 10px;
+    align-items: center;
+    margin: auto;
+}
+
+.inputs input,
+.gender-options {
+    width: 100%;
     padding: 10px;
+    margin-bottom: 10px;
     border: none;
     border-radius: 10px;
 }
 
-.login-button {
+.gender-options {
+    display: flex;
+    align-items: center;
+}
+
+.gender-options label {
+    margin-right: 10px;
+}
+
+.auth-button {
     background-color: #8edfb4;
     display: block;
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
@@ -62,10 +91,9 @@
     cursor: pointer;
     width: 50%;
     margin: 20px auto;
-    margin-left: 30%;
 }
 
-.login-button:hover {
+.auth-button:hover {
     background-color: #7ec7a0;
 }
 

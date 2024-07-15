@@ -1,18 +1,14 @@
 import React from 'react';
 import './App.css';
-import Login from './Components/Login';
-import Register from './Components/Register';
+import Navbar from './components/Navbar';
+// import Login from './components/Login';
+import Register from './components/Register';
 
 function App() {
   return (
     <div className="App">
       <div className="container">
-        <div className="navbar">
-          <button className="nav-button">OFERTA KLUBU</button>
-          <button className="nav-button">GRAFIK ZAJĘĆ</button>
-          <button className="nav-button">LOGOWANIE</button>
-          <button className="nav-button">REJESTRACJA</button>
-        </div>
+        <Navbar/>
         <Register />
       </div>
     </div>

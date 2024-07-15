@@ -1,10 +1,11 @@
 import React from 'react';
-import '../Styles/Auth.css';
+//import Header from './Header';
+import '../styles/auth.css';
 
-function Login() {
+export default function Login() {
   return (
     <div className="auth-container">
-        <div className="auth-header">Logowanie</div>
+        <Header>Logowanie</Header>
         <form className="auth-form">
             <div className="labels">
                 <label htmlFor="email">*E-mail:</label>
@@ -21,5 +22,3 @@ function Login() {
     </div>
   );
 }
-
-export default Login;

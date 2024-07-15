@@ -4,29 +4,9 @@ body {
   margin: 0px;
   text-align: center;
 }
-
+/* ten container pewnie tez bedziemy stad wywalac ale jeszcze nie wiem jaka mialas wizje z nim, jaki to moze byc komponent itd więc poki co zostawiam*/
 .container {
   width: 100%;
   margin: 0px;
 }
 
-.navbar {
-  display: flex;
-  justify-content: space-around;
-  background: linear-gradient(to right, #028174, #98dfc6);
-  padding: 10px;
-  margin-bottom: 30px;
-}
-
-.nav-button {
-  background: linear-gradient(to right, #0AB68B, #FFE3B3);
-  border: 1px solid #2D7E5C;
-  border-radius: 20px;
-  padding: 10px 20px;
-  font-size: 1rem;
-  cursor: pointer;
-}
-
-.nav-button:hover {
-  background: linear-gradient(to right, #FFE3B3, #0AB68B);
-}

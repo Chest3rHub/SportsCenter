@@ -11,19 +11,6 @@
     height: 80vh;
 }
 
-.auth-header {
-    background-color: #AFEBBC;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-    width: 60%;
-    border-radius: 20px;
-    padding: 10px 0;
-    font-size: 2rem;
-    margin-bottom: 20px;
-    color: #000000;
-    text-align: center;
-    margin: auto;
-    margin-bottom: 30px;
-}
 
 .auth-form {
     background-color: #FFE3B3;
@@ -62,8 +49,7 @@
     margin: auto;
 }
 
-.inputs input,
-.gender-options {
+.inputs input, .gender-options {
     width: 100%;
     padding: 10px;
     margin-bottom: 10px;

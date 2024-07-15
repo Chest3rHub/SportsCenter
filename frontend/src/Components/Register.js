@@ -1,10 +1,11 @@
 import React from 'react';
-import '../Styles/Auth.css';
+import Header from './Header';
+import '../styles/auth.css';
 
 function Register() {
   return (
     <div className="auth-container">
-        <div className="auth-header">Rejestracja</div>
+        <Header>Rejestracja</Header>
         <form className="auth-form">
           <div className="labels">
             <label htmlFor="firstName">*Imię:</label>

@@ -1,6 +1,6 @@
 namespace SportsCenterBackend.Services;
 
-public class RegisterDbService
+public class RegisterDbService : IRegisterDbService
 {
     
 }

@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using SportsCenterBackend.Services;
 
 namespace SportsCenterBackend.Controllers;
 
@@ -7,5 +8,11 @@ namespace SportsCenterBackend.Controllers;
 
 public class RegisterController : ControllerBase
 {
+    private readonly IRegisterDbService _registerDbService;
+    public RegisterController(IRegisterDbService registerDbService)
+    {
+        _registerDbService= registerDbService;
+    }
+    
     
 }

@@ -1,6 +1,12 @@
+using SportsCenterBackend.Controllers;
+using SportsCenterBackend.Services;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddTransient<IRegisterDbService,RegisterDbService>();
+builder.Services.AddTransient<ILoginDbService,LoginDbService>();
+
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

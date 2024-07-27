@@ -1,37 +1,29 @@
-.auth-container {
-    background-color: #ebf9ea;
-    border-radius: 20px;
-    padding: 20px;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-    width: 60%;
-    margin: auto;
+
+.testClass{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: center;
+}
+.xlabels{
     display: flex;
     flex-direction: column;
-    align-items: center;
-    height: 80vh;
+    min-width: 15vw;
 }
-
-
-.auth-form {
-    background-color: #FFE3B3;
-    border-radius: 20px;
-    padding: 20px;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-    width: 70%;
-    display: grid;
-    grid-template-columns: auto 1fr;
-    gap: 10px;
-    align-items: center;
+.xinputs{
+    display: flex;
+    flex-direction: column;
+    min-width: 20vw;
 }
-
+.przyciskTest{
+    display: flex;
+    justify-content: center;
+}
 .labels {
-    width: 50%;
-    display: grid;
-    grid-template-columns: auto;
-    gap: 10px;
-    align-items: center;
-    text-align: right;
-    margin: auto;
+    display:flex;
+    flex-direction: column;
+    row-gap: 1rem;
+    margin-top: -100px;
 }
 
 .labels label {
@@ -64,23 +56,6 @@
 
 .gender-options label {
     margin-right: 10px;
-}
-
-.auth-button {
-    background-color: #8edfb4;
-    display: block;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-    border: none;
-    border-radius: 20px;
-    padding: 10px 20px;
-    font-size: 1rem;
-    cursor: pointer;
-    width: 50%;
-    margin: 20px auto;
-}
-
-.auth-button:hover {
-    background-color: #7ec7a0;
 }
 
 .forgot-password {

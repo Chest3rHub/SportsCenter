@@ -1,13 +1,18 @@
 import React from 'react';
 import Header from '../components/Header';
+import GreenButton from '../components/GreenButton';
+import GreenBackground from '../components/GreenBackground';
+import OrangeBackground from '../components/OrangeBackground';
 import '../styles/auth.css';
 
 function Register() {
   return (
-    <div className="auth-container">
+    <GreenBackground>
         <Header>Rejestracja</Header>
-        <form className="auth-form">
-          <div className="labels">
+        <OrangeBackground>
+        <form>
+          <div className="testClass">
+          <div className="xlabels">
             <label htmlFor="firstName">*Imię:</label>
             <label htmlFor="lastName">*Nazwisko:</label>
             <label htmlFor="address">Adres:</label>
@@ -19,7 +24,7 @@ function Register() {
             <label htmlFor="confirmPassword">*Powtórz hasło:</label>
           </div>
 
-          <div className="inputs">
+          <div className="xinputs">
             <input type="text" id="firstName" name="firstName" required />
             <input type="text" id="lastName" name="lastName" required />
             <input type="text" id="address" name="address" />
@@ -34,10 +39,15 @@ function Register() {
             <input type="email" id="email" name="email" required />
             <input type="password" id="password" name="password" required />
             <input type="password" id="confirmPassword" name="confirmPassword" required />
-            <button type="submit" className="auth-button">Utwórz konto</button>
+            <GreenButton type="submit" onClick={1+1} >Utwórz konto</GreenButton>
           </div>
+          </div>
+        
+          
         </form>
-    </div>
+        </OrangeBackground>
+        
+      </GreenBackground>
   );
 }
 

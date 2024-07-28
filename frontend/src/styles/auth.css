@@ -1,57 +1,65 @@
 
-.testClass{
+.register-content{
     display: flex;
     flex-direction: row;
     width: 100%;
     justify-content: center;
 }
-.xlabels{
+.labels{
     display: flex;
     flex-direction: column;
     min-width: 15vw;
 }
-.xinputs{
+.labels label{
+    font-size: 1rem;
+    color: #000000;
+}
+.register-inputs{
     display: flex;
     flex-direction: column;
     min-width: 20vw;
 }
-.przyciskTest{
-    display: flex;
-    justify-content: center;
-}
-.labels {
-    display:flex;
-    flex-direction: column;
-    row-gap: 1rem;
-    margin-top: -100px;
-}
-
-.labels label {
-    margin-bottom: 10px;
-    font-size: 1rem;
-    color: #000000;
-}
-
-.inputs {
-    width: 50%;
-    display: grid;
-    grid-template-columns: auto;
-    gap: 10px;
-    align-items: center;
-    margin: auto;
-}
-
-.inputs input, .gender-options {
-    width: 100%;
-    padding: 10px;
+.register-inputs .one-register-input {
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
     margin-bottom: 10px;
     border: none;
-    border-radius: 10px;
+    border-radius: 20px;
+    padding-left: 1rem;
+}
+
+.top-inputs{
+    display: flex;
+    flex-direction: column;
+}
+.top-labels{
+    margin-top: 0.4rem;
+    margin-right: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.32rem;
+    align-items: end;
+}
+.bottom-labels{
+    margin-top: 1rem;
+    margin-right: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.32rem;
+    align-items: end;
+}
+.bottom-inputs{
+    display: flex;
+    flex-direction: column;
 }
 
 .gender-options {
     display: flex;
     align-items: center;
+    justify-content: center;
+    column-gap: 7rem;
+    margin-top: 0.1rem;
+    margin-bottom: 0.7rem;
 }
 
 .gender-options label {

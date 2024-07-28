@@ -7,4 +7,10 @@
     margin-left: auto;
     margin-right: auto;
     height: 80vh;
+    
+}
+.centered-content{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }

@@ -1,3 +1,4 @@
+CREATE DATABASE SportsCenter;
 
 CREATE TABLE Certyfikat (
                             CertyfikatID int  NOT NULL IDENTITY,

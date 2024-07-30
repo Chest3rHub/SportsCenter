@@ -1,3 +1,5 @@
+using Microsoft.EntityFrameworkCore;
+using SportsCenterBackend.Context;
 using SportsCenterBackend.Controllers;
 using SportsCenterBackend.Services;
 
@@ -6,6 +8,9 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddTransient<IRegisterDbService,RegisterDbService>();
 builder.Services.AddTransient<ILoginDbService,LoginDbService>();
+
+builder.Services.AddDbContext<SportsCenterDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("mssqlConnString")));
 
 
 builder.Services.AddControllers();

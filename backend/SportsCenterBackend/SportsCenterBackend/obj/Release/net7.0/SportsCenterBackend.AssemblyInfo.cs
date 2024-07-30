@@ -13,7 +13,7 @@ using System.Reflection;
 
 [assembly: Microsoft.Extensions.Configuration.UserSecrets.UserSecretsIdAttribute("bd9cd581-a11b-4d20-b401-dcfd375dfabb")]
 [assembly: System.Reflection.AssemblyCompanyAttribute("SportsCenterBackend")]
-[assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
+[assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
 [assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e8b9f266ca5f04c4394f2100bbae45bc12e3a060")]
 [assembly: System.Reflection.AssemblyProductAttribute("SportsCenterBackend")]

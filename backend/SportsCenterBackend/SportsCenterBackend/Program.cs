@@ -8,13 +8,11 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddTransient<IRegisterDbService, RegisterDbService>();
 builder.Services.AddTransient<ILoginDbService, LoginDbService>();
+builder.Services.AddTransient<IProductDbService, ProductDbService>();
 
 // Configure DbContext
 builder.Services.AddDbContext<SportsCenterDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("mssqlConnString")));
-
-// Register ProductDbService
-builder.Services.AddScoped<IProductDbService, ProductDbService>();
 
 // Add controllers
 builder.Services.AddControllers();

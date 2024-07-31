@@ -7,7 +7,6 @@ namespace SportsCenterBackend.Context;
 
 public partial class SportsCenterDbContext : DbContext
 {
-    private readonly IConfiguration _configuration;
     
     public SportsCenterDbContext(DbContextOptions<SportsCenterDbContext> options)
         : base(options)
@@ -55,9 +54,6 @@ public partial class SportsCenterDbContext : DbContext
     public virtual DbSet<ZamowienieProdukt> ZamowienieProdukts { get; set; }
 
     public virtual DbSet<Zapis> Zapis { get; set; }
-
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        => optionsBuilder.UseSqlServer(_configuration.GetConnectionString("mssqlConnString"));
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

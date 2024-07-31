@@ -1,12 +1,139 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "C:\\Users\\48660\\source\\repos\\Chest3rHub\\SportsCenter\\backend\\SportsCenterBackend\\",
-  "Documents": [],
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{D9E2C229-904C-4749-AAA8-E2471E765725}|SportsCenterBackend\\SportsCenterBackend.csproj|c:\\users\\48660\\source\\repos\\chest3rhub\\sportscenter\\backend\\sportscenterbackend\\sportscenterbackend\\context\\sportscenterdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D9E2C229-904C-4749-AAA8-E2471E765725}|SportsCenterBackend\\SportsCenterBackend.csproj|solutionrelative:sportscenterbackend\\context\\sportscenterdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D9E2C229-904C-4749-AAA8-E2471E765725}|SportsCenterBackend\\SportsCenterBackend.csproj|c:\\users\\48660\\source\\repos\\chest3rhub\\sportscenter\\backend\\sportscenterbackend\\sportscenterbackend\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D9E2C229-904C-4749-AAA8-E2471E765725}|SportsCenterBackend\\SportsCenterBackend.csproj|solutionrelative:sportscenterbackend\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D9E2C229-904C-4749-AAA8-E2471E765725}|SportsCenterBackend\\SportsCenterBackend.csproj|c:\\users\\48660\\source\\repos\\chest3rhub\\sportscenter\\backend\\sportscenterbackend\\sportscenterbackend\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{D9E2C229-904C-4749-AAA8-E2471E765725}|SportsCenterBackend\\SportsCenterBackend.csproj|solutionrelative:sportscenterbackend\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D9E2C229-904C-4749-AAA8-E2471E765725}|SportsCenterBackend\\SportsCenterBackend.csproj|c:\\users\\48660\\source\\repos\\chest3rhub\\sportscenter\\backend\\sportscenterbackend\\sportscenterbackend\\services\\productdbservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D9E2C229-904C-4749-AAA8-E2471E765725}|SportsCenterBackend\\SportsCenterBackend.csproj|solutionrelative:sportscenterbackend\\services\\productdbservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D9E2C229-904C-4749-AAA8-E2471E765725}|SportsCenterBackend\\SportsCenterBackend.csproj|c:\\users\\48660\\source\\repos\\chest3rhub\\sportscenter\\backend\\sportscenterbackend\\sportscenterbackend\\entities\\produkt.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D9E2C229-904C-4749-AAA8-E2471E765725}|SportsCenterBackend\\SportsCenterBackend.csproj|solutionrelative:sportscenterbackend\\entities\\produkt.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D9E2C229-904C-4749-AAA8-E2471E765725}|SportsCenterBackend\\SportsCenterBackend.csproj|c:\\users\\48660\\source\\repos\\chest3rhub\\sportscenter\\backend\\sportscenterbackend\\sportscenterbackend\\controllers\\productcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D9E2C229-904C-4749-AAA8-E2471E765725}|SportsCenterBackend\\SportsCenterBackend.csproj|solutionrelative:sportscenterbackend\\controllers\\productcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D9E2C229-904C-4749-AAA8-E2471E765725}|SportsCenterBackend\\SportsCenterBackend.csproj|c:\\users\\48660\\source\\repos\\chest3rhub\\sportscenter\\backend\\sportscenterbackend\\sportscenterbackend\\services\\iproductdbservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D9E2C229-904C-4749-AAA8-E2471E765725}|SportsCenterBackend\\SportsCenterBackend.csproj|solutionrelative:sportscenterbackend\\services\\iproductdbservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
       "VerticalTabListWidth": 256,
-      "DocumentGroups": []
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 6,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "C:\\Users\\48660\\source\\repos\\Chest3rHub\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenterBackend\\appsettings.json",
+              "RelativeDocumentMoniker": "SportsCenterBackend\\appsettings.json",
+              "ToolTip": "C:\\Users\\48660\\source\\repos\\Chest3rHub\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenterBackend\\appsettings.json",
+              "RelativeToolTip": "SportsCenterBackend\\appsettings.json",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAwAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2024-07-31T10:19:09.435Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Produkt.cs",
+              "DocumentMoniker": "C:\\Users\\48660\\source\\repos\\Chest3rHub\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenterBackend\\Entities\\Produkt.cs",
+              "RelativeDocumentMoniker": "SportsCenterBackend\\Entities\\Produkt.cs",
+              "ToolTip": "C:\\Users\\48660\\source\\repos\\Chest3rHub\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenterBackend\\Entities\\Produkt.cs",
+              "RelativeToolTip": "SportsCenterBackend\\Entities\\Produkt.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-07-31T10:16:27.446Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\48660\\source\\repos\\Chest3rHub\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenterBackend\\Program.cs",
+              "RelativeDocumentMoniker": "SportsCenterBackend\\Program.cs",
+              "ToolTip": "C:\\Users\\48660\\source\\repos\\Chest3rHub\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenterBackend\\Program.cs",
+              "RelativeToolTip": "SportsCenterBackend\\Program.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA0AAAAmAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-07-31T10:15:20.494Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "IProductDbService.cs",
+              "DocumentMoniker": "C:\\Users\\48660\\source\\repos\\Chest3rHub\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenterBackend\\Services\\IProductDbService.cs",
+              "RelativeDocumentMoniker": "SportsCenterBackend\\Services\\IProductDbService.cs",
+              "ToolTip": "C:\\Users\\48660\\source\\repos\\Chest3rHub\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenterBackend\\Services\\IProductDbService.cs",
+              "RelativeToolTip": "SportsCenterBackend\\Services\\IProductDbService.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-07-31T10:14:35.082Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "ProductDbService.cs",
+              "DocumentMoniker": "C:\\Users\\48660\\source\\repos\\Chest3rHub\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenterBackend\\Services\\ProductDbService.cs",
+              "RelativeDocumentMoniker": "SportsCenterBackend\\Services\\ProductDbService.cs",
+              "ToolTip": "C:\\Users\\48660\\source\\repos\\Chest3rHub\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenterBackend\\Services\\ProductDbService.cs",
+              "RelativeToolTip": "SportsCenterBackend\\Services\\ProductDbService.cs",
+              "ViewState": "AQIAAA0AAAAAAAAAAAAgwAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-07-31T10:14:26.064Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "ProductController.cs",
+              "DocumentMoniker": "C:\\Users\\48660\\source\\repos\\Chest3rHub\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenterBackend\\Controllers\\ProductController.cs",
+              "RelativeDocumentMoniker": "SportsCenterBackend\\Controllers\\ProductController.cs",
+              "ToolTip": "C:\\Users\\48660\\source\\repos\\Chest3rHub\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenterBackend\\Controllers\\ProductController.cs",
+              "RelativeToolTip": "SportsCenterBackend\\Controllers\\ProductController.cs",
+              "ViewState": "AQIAAAMAAAAAAAAAAAAAAAoAAAApAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-07-31T10:13:53.769Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "SportsCenterDbContext.cs",
+              "DocumentMoniker": "C:\\Users\\48660\\source\\repos\\Chest3rHub\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenterBackend\\Context\\SportsCenterDbContext.cs",
+              "RelativeDocumentMoniker": "SportsCenterBackend\\Context\\SportsCenterDbContext.cs",
+              "ToolTip": "C:\\Users\\48660\\source\\repos\\Chest3rHub\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenterBackend\\Context\\SportsCenterDbContext.cs",
+              "RelativeToolTip": "SportsCenterBackend\\Context\\SportsCenterDbContext.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAADcAAAAzAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-07-31T10:09:55.77Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
     }
   ]
 }

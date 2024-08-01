@@ -1,32 +1,26 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\48660\\Source\\Repos\\Chest3rHub\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenterBackend\\SportsCenterBackend.csproj": {}
+    "/Users/szymeg/Desktop/SportsCenter/backend/SportsCenterBackend/SportsCenterBackend/SportsCenterBackend.csproj": {}
   },
   "projects": {
-    "C:\\Users\\48660\\Source\\Repos\\Chest3rHub\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenterBackend\\SportsCenterBackend.csproj": {
+    "/Users/szymeg/Desktop/SportsCenter/backend/SportsCenterBackend/SportsCenterBackend/SportsCenterBackend.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\48660\\Source\\Repos\\Chest3rHub\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenterBackend\\SportsCenterBackend.csproj",
+        "projectUniqueName": "/Users/szymeg/Desktop/SportsCenter/backend/SportsCenterBackend/SportsCenterBackend/SportsCenterBackend.csproj",
         "projectName": "SportsCenterBackend",
-        "projectPath": "C:\\Users\\48660\\Source\\Repos\\Chest3rHub\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenterBackend\\SportsCenterBackend.csproj",
-        "packagesPath": "C:\\Users\\48660\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\48660\\Source\\Repos\\Chest3rHub\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenterBackend\\obj\\",
+        "projectPath": "/Users/szymeg/Desktop/SportsCenter/backend/SportsCenterBackend/SportsCenterBackend/SportsCenterBackend.csproj",
+        "packagesPath": "/Users/szymeg/.nuget/packages/",
+        "outputPath": "/Users/szymeg/Desktop/SportsCenter/backend/SportsCenterBackend/SportsCenterBackend/obj/",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\48660\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "/Users/szymeg/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net7.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\dotnet\\library-packs": {},
+          "/Users/szymeg/.dotnet/sdk/7.0.306/Sdks/Microsoft.NET.Sdk.Web/library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -39,11 +33,6 @@
           "warnAsError": [
             "NU1605"
           ]
-        },
-        "restoreAuditProperties": {
-          "enableAudit": "true",
-          "auditLevel": "low",
-          "auditMode": "direct"
         }
       },
       "frameworks": {
@@ -98,7 +87,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.303\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/Users/szymeg/.dotnet/sdk/7.0.306/RuntimeIdentifierGraph.json"
         }
       }
     }

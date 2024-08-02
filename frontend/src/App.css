@@ -4,9 +4,5 @@ body {
   margin: 0px;
   text-align: center;
 }
-/* ten container pewnie tez bedziemy stad wywalac ale jeszcze nie wiem jaka mialas wizje z nim, jaki to moze byc komponent itd więc poki co zostawiam*/
-.container {
-  width: 100%;
-  margin: 0px;
-}
+
 

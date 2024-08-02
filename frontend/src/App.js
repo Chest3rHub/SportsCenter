@@ -8,9 +8,7 @@ import SportsCenterRouter from './router/SportsCenterRouter';
 function App() {
   return (
     <div className="App">
-      <div className="container">
-        <SportsCenterRouter/>
-      </div>
+      <SportsCenterRouter/>
     </div>
   );
 }

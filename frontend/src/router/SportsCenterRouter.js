@@ -1,5 +1,7 @@
 import Navbar from "../components/Navbar";
+import Home from "../pages/Home";
 import Login from "../pages/Login";
+import NotFound from "../pages/NotFound";
 import Register from "../pages/Register";
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 
@@ -9,8 +11,8 @@ const clientRouter = [];
     const adminRouter = [];
     const baseRouter = [
         {
-            path: "/home",
-            element: <Login/>,
+            path: "/",
+            element: <Home/>,
         },
         {
             path: "/login",
@@ -22,7 +24,7 @@ const clientRouter = [];
         },
         {
             path: "*",
-            element: <Register/>
+            element: <NotFound/>
         }
     ];
     function getRouter(role){

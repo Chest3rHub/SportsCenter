@@ -7,7 +7,7 @@ import '../styles/auth.css';
 
 function Register() {
   return (
-    <GreenBackground>
+    <GreenBackground height={"75vh"} marginTop={"5vh"}>
         <Header>Rejestracja</Header>
         <OrangeBackground>
         <form>

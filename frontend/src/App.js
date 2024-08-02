@@ -9,7 +9,7 @@ function App() {
     <div className="App">
       <div className="container">
         <Navbar/>
-        <Login />
+        <Login/>
       </div>
     </div>
   );

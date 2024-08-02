@@ -7,7 +7,7 @@ import '../styles/auth.css';
 
 function Login() {
   return (
-    <GreenBackground>
+    <GreenBackground height={"50vh"} marginTop={"10vh"}>
         <Header>Logowanie</Header>
         <OrangeBackground>
         <form>

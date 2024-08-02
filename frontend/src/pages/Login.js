@@ -1,24 +1,50 @@
 import React from 'react';
 import Header from '../components/Header';
+import GreenButton from '../components/GreenButton';
+import GreenBackground from '../components/GreenBackground';
+import OrangeBackground from '../components/OrangeBackground';
 import '../styles/auth.css';
 
-export default function Login() {
+function Login() {
   return (
-    <div className="auth-container">
+    <GreenBackground>
         <Header>Logowanie</Header>
-        <form className="auth-form">
-            <div className="labels">
-                <label htmlFor="email">*E-mail:</label>
-                <label htmlFor="password">*Hasło:</label>
-            </div>
-
-            <div className="inputs">
-                <input type="email" id="email" name="email" required />
-                <input type="password" id="password" name="password" required />
-                <button className="auth-button">Zaloguj</button>
-                <a href="#" className="forgot-password">Nie pamiętam hasła</a>
-            </div>
+        <OrangeBackground>
+        <form>
+        <table>
+        <tr>
+            <td class="right-align">
+              <label htmlFor="email">E-mail:</label>
+            </td>
+            <td class="center-align">
+              <input type="text" id="email" name="email" className='one-register-input' required />
+            </td>
+        </tr>
+        <tr>
+            <td class="right-align">
+              <label htmlFor="password">Hasło:</label>
+            </td>
+            <td class="center-align">
+              <input type="text" id="password" name="password" className='one-register-input' required />
+            </td>
+        </tr>
+        <tr>
+            <td class="right-align"></td>
+            <td class="center-align">
+              <GreenButton type="submit" onClick={1+1} >Zaloguj</GreenButton>
+            </td>
+        </tr>
+        <tr>
+            <td class="right-align"></td>
+            <td class="center-align">
+              <a href="#" className="forgot-password">Nie pamiętam hasła</a>
+            </td>
+        </tr>
+        </table>
         </form>
-    </div>
+        </OrangeBackground>
+    </GreenBackground>
   );
 }
+
+export default Login;

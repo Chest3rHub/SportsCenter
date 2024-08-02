@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 import Navbar from './components/Navbar';
-// import Login from './pages/Login';
+import Login from './pages/Login';
 import Register from './pages/Register';
 
 function App() {
@@ -9,7 +9,7 @@ function App() {
     <div className="App">
       <div className="container">
         <Navbar/>
-        <Register />
+        <Login />
       </div>
     </div>
   );

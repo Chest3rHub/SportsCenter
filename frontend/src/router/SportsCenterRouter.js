@@ -1,3 +1,4 @@
+import Navbar from "../components/Navbar";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
@@ -36,9 +37,12 @@ const clientRouter = [];
         return createBrowserRouter(router);
     }
 
-export default function SportsCenterRouter(){
+export default function SportsCenterRouter(props){
     // tutaj mozna bedzie dodac rozpoznawanie slownika z jezykiem polskim i angielskim
     // a rola bedzie wyciagana z props (pewnie backend ja bedzie wysylal)
-    return <RouterProvider router={getRouter('rola wyciagana z props')}/>
+    return <>
+    
+    <RouterProvider router={getRouter('rola wyciagana z props')}/>
+    </>
     
 }

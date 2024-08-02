@@ -3,10 +3,13 @@ import Header from '../components/Header';
 import GreenButton from '../components/GreenButton';
 import GreenBackground from '../components/GreenBackground';
 import OrangeBackground from '../components/OrangeBackground';
+import Navbar from '../components/Navbar';
 import '../styles/auth.css';
 
 function Register() {
   return (
+    <>
+    <Navbar/>
     <GreenBackground height={"75vh"} marginTop={"5vh"}>
         <Header>Rejestracja</Header>
         <OrangeBackground>
@@ -101,6 +104,7 @@ function Register() {
         </OrangeBackground>
         
       </GreenBackground>
+    </>
   );
 }
 

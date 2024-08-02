@@ -8,7 +8,7 @@ export default function Navbar(){
     <div className="navbar">
         <NavbarButton>OFERTA KLUBU</NavbarButton>
         <NavbarButton>GRAFIK ZAJĘĆ</NavbarButton>
-        <NavbarButton>LOGOWANIE</NavbarButton>
-        <NavbarButton>REJESTRACJA</NavbarButton>
+        <NavbarButton navigate="/login">LOGOWANIE</NavbarButton>
+        <NavbarButton navigate="/register">REJESTRACJA</NavbarButton>
       </div>);
 }

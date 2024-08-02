@@ -3,10 +3,13 @@ import Header from '../components/Header';
 import GreenButton from '../components/GreenButton';
 import GreenBackground from '../components/GreenBackground';
 import OrangeBackground from '../components/OrangeBackground';
+import Navbar from '../components/Navbar';
 import '../styles/auth.css';
 
 function Login() {
   return (
+    <>
+    <Navbar/>
     <GreenBackground height={"50vh"} marginTop={"10vh"}>
         <Header>Logowanie</Header>
         <OrangeBackground>
@@ -44,6 +47,7 @@ function Login() {
         </form>
         </OrangeBackground>
     </GreenBackground>
+    </>
   );
 }
 

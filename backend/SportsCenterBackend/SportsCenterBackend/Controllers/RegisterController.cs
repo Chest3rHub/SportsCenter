@@ -1,4 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
+using SportsCenterBackend.DTOs;
+using SportsCenterBackend.Entities;
 using SportsCenterBackend.Services;
 
 namespace SportsCenterBackend.Controllers;
@@ -14,5 +16,16 @@ public class RegisterController : ControllerBase
         _registerDbService= registerDbService;
     }
     
+    [HttpPost]
+    public async Task<IActionResult> RegisterClientAsync([FromBody] RegisterClientDTO clientDto)
+    {
+        if (clientDto == null)
+        {
+            return BadRequest("Osoba nie może być null");
+        }
+
+        await _registerDbService.RegisterClientAsync(clientDto);
+        return Ok($"Zarejestrowano pomyslnie osobe: {clientDto}");
+    }
     
 }

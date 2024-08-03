@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace SportsCenterBackend.Entities;
 
 public partial class Osoba
 {
     public int OsobaId { get; set; }
-
+    
     public string Imie { get; set; } = null!;
 
     public string Nazwisko { get; set; } = null!;

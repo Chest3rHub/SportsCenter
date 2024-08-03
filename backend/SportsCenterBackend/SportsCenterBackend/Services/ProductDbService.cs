@@ -17,6 +17,7 @@ namespace SportsCenterBackend.Services
 
         public async Task AddProductAsync(Produkt product)
         {
+            // tutaj tez walidacja czy nie ma juz produktu np o tej nazwie moze?
             _context.Produkts.Add(product);
             await _context.SaveChangesAsync();
         }

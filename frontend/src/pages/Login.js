@@ -12,7 +12,7 @@ function Login() {
     <Navbar/>
     <GreenBackground height={"50vh"} marginTop={"10vh"}>
         <Header>Logowanie</Header>
-        <OrangeBackground>
+        <OrangeBackground width="70%">
         <form>
         <table>
         <tr>

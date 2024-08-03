@@ -12,7 +12,7 @@ function Register() {
     <Navbar/>
     <GreenBackground height={"75vh"} marginTop={"5vh"}>
         <Header>Rejestracja</Header>
-        <OrangeBackground>
+        <OrangeBackground width="70%">
         <form>
         <table>
         <tr>

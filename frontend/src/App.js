@@ -3,6 +3,7 @@ import './App.css';
 import Navbar from './components/Navbar';
 import Login from './pages/Login';
 import Register from './pages/Register';
+import Dashboard from './pages/Dashboard';
 import SportsCenterRouter from './router/SportsCenterRouter';
 
 function App() {

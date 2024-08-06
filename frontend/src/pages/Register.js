@@ -4,12 +4,14 @@ import GreenButton from '../components/GreenButton';
 import GreenBackground from '../components/GreenBackground';
 import OrangeBackground from '../components/OrangeBackground';
 import Navbar from '../components/Navbar';
+import OwnerSidebar from '../components/OwnerSidebar'
 import '../styles/auth.css';
 
 function Register() {
   return (
     <>
     <Navbar/>
+    <OwnerSidebar/>
     <GreenBackground height={"75vh"} marginTop={"5vh"}>
         <Header>Rejestracja</Header>
         <OrangeBackground width="70%">

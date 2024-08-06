@@ -17,7 +17,7 @@ CREATE TABLE Grafik (
 );
 
 CREATE TABLE Klient (
-                        KlientID int  NOT NULL IDENTITY,
+                        KlientID int  NOT NULL,
                         Saldo int  NOT NULL,
                         Znizka_zajecia int  NULL,
                         Znizka_produkty int  NULL,
@@ -52,7 +52,7 @@ CREATE TABLE Osoba (
                        Imie varchar(50)  NOT NULL,
                        Nazwisko varchar(50)  NOT NULL,
                        Email varchar(50)  NOT NULL,
-                       Haslo varchar(50)  NOT NULL,
+                       Haslo varchar(100)  NOT NULL,
                        Data_ur date  NULL,
                        Nr_tel varchar(15)  NOT NULL,
                        Pesel varchar(11)  NULL,

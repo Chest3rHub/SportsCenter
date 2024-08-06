@@ -100,7 +100,6 @@ public partial class SportsCenterDbContext : DbContext
             entity.ToTable("Klient");
 
             entity.Property(e => e.KlientId)
-                .ValueGeneratedOnAdd()
                 .HasColumnName("KlientID");
             entity.Property(e => e.ZnizkaProdukty).HasColumnName("Znizka_produkty");
             entity.Property(e => e.ZnizkaZajecia).HasColumnName("Znizka_zajecia");
@@ -189,7 +188,7 @@ public partial class SportsCenterDbContext : DbContext
                 .HasMaxLength(50)
                 .IsUnicode(false);
             entity.Property(e => e.Haslo)
-                .HasMaxLength(50)
+                .HasMaxLength(100)
                 .IsUnicode(false);
             entity.Property(e => e.Imie)
                 .HasMaxLength(50)

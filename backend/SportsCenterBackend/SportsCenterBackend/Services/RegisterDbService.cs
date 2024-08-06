@@ -13,20 +13,43 @@ public class RegisterDbService : IRegisterDbService
     {
         _context = context;
     }
+
     public async Task RegisterClientAsync(RegisterClientDTO clientDto)
     {
-        _context.Osobas.Add(new Osoba()
+        using (var transaction = await _context.Database.BeginTransactionAsync())
         {
-            Imie = clientDto.Imie,
-            Nazwisko = clientDto.Nazwisko,
-            Adres = clientDto.Adres,
-            DataUr = clientDto.DataUr,
-            Email = clientDto.Email,
-            Haslo = clientDto.Haslo,
-            NrTel = clientDto.NrTel
-        });
-        // dodac jednoczesne dodawanie osoby do tabeli Klient i walidacje czy email nie jest juz uzyty
-        await _context.SaveChangesAsync();
+            try
+            {
+                string hashedPassword = BCrypt.Net.BCrypt.HashPassword(clientDto.Haslo);
+
+                var newOsoba = new Osoba()
+                {
+                    Imie = clientDto.Imie,
+                    Nazwisko = clientDto.Nazwisko,
+                    Adres = clientDto.Adres,
+                    DataUr = clientDto.DataUr,
+                    Email = clientDto.Email,
+                    Haslo = hashedPassword,
+                    NrTel = clientDto.NrTel
+                };
+                _context.Osobas.Add(newOsoba);
+                await _context.SaveChangesAsync();
+
+                var client = new Klient()
+                {
+                    KlientId = newOsoba.OsobaId,
+                    Saldo = 0,
+                };
+                _context.Klients.Add(client);
+                await _context.SaveChangesAsync();
+
+                await transaction.CommitAsync();
+            }
+            catch (Exception)
+            {
+                await transaction.RollbackAsync();
+                throw;
+            }
+        }
     }
-    
 }

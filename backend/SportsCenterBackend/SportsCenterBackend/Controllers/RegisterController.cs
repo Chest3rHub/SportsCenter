@@ -24,8 +24,16 @@ public class RegisterController : ControllerBase
             return BadRequest("Osoba nie może być null");
         }
 
-        await _registerDbService.RegisterClientAsync(clientDto);
-        return Ok($"Zarejestrowano pomyslnie osobe: {clientDto}");
+        try
+        {
+            await _registerDbService.RegisterClientAsync(clientDto);
+            return Ok($"Zarejestrowano pomyslnie osobe: {clientDto.Imie} {clientDto.Nazwisko}");
+        }
+        catch (Exception e)
+        {
+            return Conflict("Ten adres email jest juz zajety");
+        }
+        
     }
     
 }

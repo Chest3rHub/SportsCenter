@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using SportsCenterBackend.DTOs;
 using SportsCenterBackend.Services;
 
 namespace SportsCenterBackend.Controllers;
@@ -14,5 +15,24 @@ public class LoginController : ControllerBase
         _logindbService= loginDbService;
     }
     
+    [HttpPost]
+    public async Task<IActionResult> RegisterClientAsync([FromBody] LoginDTO login)
+    {
+        if (login == null)
+        {
+            return BadRequest("Login nie może być null");
+        }
+
+        try
+        {
+            var result = await _logindbService.LoginAsync(login);
+            return Ok(result);
+        }
+        catch (Exception e)
+        {
+            return Unauthorized(e.Message);
+        }
+        
+    }
     
 }

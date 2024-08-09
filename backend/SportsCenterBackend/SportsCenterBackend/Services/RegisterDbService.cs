@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using SportsCenterBackend.Context;
 using SportsCenterBackend.DTOs;
 using SportsCenterBackend.Entities;
@@ -20,6 +21,12 @@ public class RegisterDbService : IRegisterDbService
         {
             try
             {
+                
+                var existingUser = await _context.Osobas.SingleOrDefaultAsync(x => x.Email == clientDto.Email);
+                if (existingUser != null)
+                {
+                    throw new Exception("Ten adres email jest już zajęty.");
+                }
                 string hashedPassword = BCrypt.Net.BCrypt.HashPassword(clientDto.Haslo);
 
                 var newOsoba = new Osoba()
@@ -40,8 +47,12 @@ public class RegisterDbService : IRegisterDbService
                     KlientId = newOsoba.OsobaId,
                     Saldo = 0,
                 };
+
                 _context.Klients.Add(client);
                 await _context.SaveChangesAsync();
+                newOsoba.Klient = client;
+                await _context.SaveChangesAsync();
+
 
                 await transaction.CommitAsync();
             }

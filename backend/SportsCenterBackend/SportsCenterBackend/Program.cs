@@ -16,6 +16,11 @@ builder.Services.AddDbContext<SportsCenterDbContext>(options =>
 
 // Add controllers
 builder.Services.AddControllers();
+//builder.Services.AddControllers().AddJsonOptions(options =>
+//{
+//    options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.Preserve;
+//});
+// "$id": "1", takie pola sa zwracane w jsonie gdy dodam te options, Include wtedy dziala ale tego pola nie bylo
 
 // Configure Swagger
 builder.Services.AddEndpointsApiExplorer();

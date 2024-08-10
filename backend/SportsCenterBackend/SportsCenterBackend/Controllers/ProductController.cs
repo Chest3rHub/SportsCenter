@@ -3,6 +3,7 @@ using SportsCenterBackend.Entities;
 using SportsCenterBackend.Services;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using SportsCenterBackend.DTOs;
 
 namespace SportsCenterBackend.Controllers
 {
@@ -18,22 +19,22 @@ namespace SportsCenterBackend.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Produkt>>> GetProducts()
+        public async Task<ActionResult<IEnumerable<ProductDTO>>> GetProducts()
         {
             var products = await _productDbService.GetProductsAsync();
             return Ok(products);
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddProduct([FromBody] Produkt product)
+        public async Task<IActionResult> AddProduct([FromBody] ProductWithoutIdDTO productDto)
         {
-            if (product == null)
+            if (productDto == null)
             {
                 return BadRequest("Produkt nie może być null");
             }
 
-            await _productDbService.AddProductAsync(product);
-            return CreatedAtAction(nameof(GetProducts), new { id = product.ProduktId }, product);
+            var createdProduct = await _productDbService.AddProductAsync(productDto);
+            return CreatedAtAction(nameof(GetProducts), new { id = createdProduct.ProduktId }, productDto);
         }
 
         [HttpDelete("{id}")]

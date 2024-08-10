@@ -271,10 +271,10 @@ public partial class SportsCenterDbContext : DbContext
             entity.Property(e => e.Nazwa)
                 .HasMaxLength(20)
                 .IsUnicode(false);
-           // entity.Property(e => e.Producent)
-               // .HasMaxLength(20)
-               // .IsUnicode(false);
-            //entity.Property(e => e.Zdjecie).HasColumnType("image");
+            entity.Property(e => e.Producent)
+                .HasMaxLength(20)
+                .IsUnicode(false);
+            entity.Property(e => e.Zdjecie).HasColumnType("image");
         });
 
         modelBuilder.Entity<Rezerwacja>(entity =>

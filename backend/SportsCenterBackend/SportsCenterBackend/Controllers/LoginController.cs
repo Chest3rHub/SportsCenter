@@ -16,7 +16,7 @@ public class LoginController : ControllerBase
     }
     
     [HttpPost]
-    public async Task<IActionResult> RegisterClientAsync([FromBody] LoginDTO login)
+    public async Task<IActionResult> LoginAsync([FromBody] LoginDTO login)
     {
         if (login == null)
         {

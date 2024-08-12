@@ -1,10 +1,14 @@
+using System;
+using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using SportsCenter.Core.Entities;
+//using SportsCenterBackend.Entities;
 
-namespace SportsCenter.Infrastructure.DAL;
+namespace SportsCenterBackend.Context;
 
-internal partial class SportsCenterDbContext : DbContext
+public partial class SportsCenterDbContext : DbContext
 {
+    
     public SportsCenterDbContext(DbContextOptions<SportsCenterDbContext> options)
         : base(options)
     {
@@ -152,8 +156,7 @@ internal partial class SportsCenterDbContext : DbContext
                 .HasMaxLength(255)
                 .IsUnicode(false);
             entity.Property(e => e.TrenerTrenerId).HasColumnName("Trener_TrenerID");
-            entity.Property(e => e.ZajeciaWGrafikuZajeciaWGrafikuId)
-                .HasColumnName("Zajecia_w_grafiku_Zajecia_w_grafikuID");
+            entity.Property(e => e.ZajeciaWGrafikuZajeciaWGrafikuId).HasColumnName("Zajecia_w_grafiku_Zajecia_w_grafikuID");
 
             entity.HasOne(d => d.KlientKlient).WithMany(p => p.Ocenas)
                 .HasForeignKey(d => d.KlientKlientId)
@@ -269,9 +272,9 @@ internal partial class SportsCenterDbContext : DbContext
             entity.Property(e => e.Nazwa)
                 .HasMaxLength(20)
                 .IsUnicode(false);
-            // entity.Property(e => e.Producent)
-            // .HasMaxLength(20)
-            // .IsUnicode(false);
+           // entity.Property(e => e.Producent)
+               // .HasMaxLength(20)
+               // .IsUnicode(false);
             //entity.Property(e => e.Zdjecie).HasColumnType("image");
         });
 

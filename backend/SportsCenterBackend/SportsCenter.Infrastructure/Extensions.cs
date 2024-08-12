@@ -15,6 +15,7 @@ using SportsCenter.Infrastructure.DAL;
 using SportsCenter.Infrastructure.DAL.Repositories;
 using SportsCenter.Infrastructure.Security;
 using SportsCenter.Infrastructure.Time;
+using SportsCenterBackend.Context;
 
 namespace SportsCenter.Infrastructure;
 

@@ -6,6 +6,7 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using SportsCenter.Application.Users.Queries;
 using SportsCenter.Application.Users.Queries.GetClients;
+using SportsCenterBackend.Context;
 
 namespace SportsCenter.Infrastructure.DAL.Handlers;
 

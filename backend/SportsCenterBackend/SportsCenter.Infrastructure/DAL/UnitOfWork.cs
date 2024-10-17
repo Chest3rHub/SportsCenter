@@ -1,16 +1,12 @@
-using System.Threading;
-using System.Threading.Tasks;
-using SportsCenter.Application.Abstractions;
 using SportsCenter.Infrastructure.Abstractions;
-using SportsCenterBackend.Context;
 
 namespace SportsCenter.Infrastructure.DAL;
 
 internal class UnitOfWork : IUnitOfWork
 {
-    private readonly SportsCenterDbContext _context;
+    private readonly ApplicationDbContext _context;
 
-    public UnitOfWork(SportsCenterDbContext context)
+    public UnitOfWork(ApplicationDbContext context)
     {
         _context = context;
     }

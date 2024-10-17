@@ -1,5 +1,3 @@
-using System.Threading;
-using System.Threading.Tasks;
 using MediatR;
 using SportsCenter.Application.Exceptions;
 using SportsCenter.Application.Security;
@@ -24,27 +22,27 @@ internal sealed class RegisterClientHandler : IRequestHandler<RegisterClient, Un
         var existingUser = await _userRepository.GetUserByEmailAsync(request.Email, cancellationToken);
         if (existingUser != null) throw new UserAlreadyExistsException(request.Email);
 
-        var securedPassword = _passwordManager.Secure(request.Haslo);
-
-        var newOsoba = new Osoba
-        {
-            Imie = request.Imie,
-            Nazwisko = request.Nazwisko,
-            Adres = request.Adres,
-            DataUr = request.DataUr,
-            Email = request.Email,
-            Haslo = securedPassword,
-            NrTel = request.NrTel
-        };
-
-        var newClient = new Klient
-        {
-            KlientNavigation = newOsoba,
-            Saldo = 0
-        };
-
-        await _userRepository.AddClientAsync(newClient, cancellationToken);
-
+         var securedPassword = _passwordManager.Secure(request.Haslo);
+        
+         var newOsoba = new Osoba
+         {
+             Imie = request.Imie,
+             Nazwisko = request.Nazwisko,
+             Adres = request.Adres,
+             DataUr = DateOnly.FromDateTime(request.DataUr),
+             Email = request.Email,
+             Haslo = securedPassword,
+             NrTel = request.NrTel
+         };
+        
+         var newClient = new Klient
+         {
+             KlientNavigation = newOsoba,
+             Saldo = 0
+         };
+        
+         await _userRepository.AddClientAsync(newClient, cancellationToken);
+        
         return Unit.Value;
     }
 }

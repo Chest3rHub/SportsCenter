@@ -8,11 +8,11 @@ public partial class Produkt
 
     public string Producent { get; set; } = null!;
 
-    public int Ilosc { get; set; }
+    public int LiczbaNaStanie { get; set; }
 
-    public int Koszt { get; set; }
+    public decimal Koszt { get; set; }
 
-    public byte[] Zdjecie { get; set; } = null!;
+    public string ZdjecieUrl { get; set; } = null!;
 
     public virtual ICollection<ZamowienieProdukt> ZamowienieProdukts { get; set; } = new List<ZamowienieProdukt>();
 }

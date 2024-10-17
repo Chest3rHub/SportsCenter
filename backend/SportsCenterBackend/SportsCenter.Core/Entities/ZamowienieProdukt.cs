@@ -2,15 +2,13 @@
 
 public partial class ZamowienieProdukt
 {
-    public int ZamowienieProduktId { get; set; }
-
     public int ZamowienieId { get; set; }
 
     public int ProduktId { get; set; }
 
-    public int Koszt { get; set; }
+    public int Liczba { get; set; }
 
-    public DateTime DataZamowienia { get; set; }
+    public decimal Koszt { get; set; }
 
     public virtual Produkt Produkt { get; set; } = null!;
 

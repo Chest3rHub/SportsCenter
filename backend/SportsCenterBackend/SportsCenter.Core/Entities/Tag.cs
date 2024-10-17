@@ -6,5 +6,5 @@ public partial class Tag
 
     public string Nazwa { get; set; } = null!;
 
-    public virtual ICollection<KlientTag> KlientTags { get; set; } = new List<KlientTag>();
+    public virtual ICollection<Klient> Klients { get; set; } = new List<Klient>();
 }

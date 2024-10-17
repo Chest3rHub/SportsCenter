@@ -1,4 +1,3 @@
-using System;
 using FluentValidation;
 
 namespace SportsCenter.Application.Users.Commands.RegisterClient;
@@ -36,13 +35,10 @@ public class RegisterClientValidator : AbstractValidator<RegisterClient>
             .Length(5, 100).WithMessage("Adres must be between 5 and 100 characters.");
     }
 
-    private bool BeAValidAge(DateTime? date)
+    private bool BeAValidAge(DateTime date)
     {
-        if (date == null)
-            return false;
-
-        var age = DateTime.Today.Year - date.Value.Year;
-        if (date.Value.Date > DateTime.Today.AddYears(-age)) age--;
+        var age = DateTime.Today.Year - date.Year;
+        if (date.Date > DateTime.Today.AddYears(-age)) age--;
 
         return age >= 18;
     }

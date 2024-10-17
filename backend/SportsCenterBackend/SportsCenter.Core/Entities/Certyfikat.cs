@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace SportsCenter.Core.Entities;
+﻿namespace SportsCenter.Core.Entities;
 
 public partial class Certyfikat
 {
@@ -8,5 +6,5 @@ public partial class Certyfikat
 
     public string Nazwa { get; set; } = null!;
 
-    public virtual ICollection<Posiadanie> Posiadanies { get; set; } = new List<Posiadanie>();
+    public virtual ICollection<TrenerCertifikat> TrenerCertifikats { get; set; } = new List<TrenerCertifikat>();
 }

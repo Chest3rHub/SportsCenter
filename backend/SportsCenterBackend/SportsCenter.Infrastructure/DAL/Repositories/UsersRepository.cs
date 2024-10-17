@@ -1,25 +1,21 @@
-using System.Threading;
-using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using SportsCenter.Core.Entities;
 using SportsCenter.Core.Repositories;
-using SportsCenterBackend.Context;
 
 namespace SportsCenter.Infrastructure.DAL.Repositories;
 
-internal class UserRepository : IUserRepository
+public class UsersRepository : IUserRepository
 {
-    private readonly SportsCenterDbContext _dbContext;
+    private ApplicationDbContext _dbContext;
 
-    public UserRepository(SportsCenterDbContext dbContext)
+    public UsersRepository(ApplicationDbContext dbContext)
     {
         _dbContext = dbContext;
     }
-
+    
     public Task<Osoba?> GetUserByEmailAsync(string email, CancellationToken cancellationToken)
     {
-        return _dbContext.Osobas.Include(o => o.Klient)
-            .SingleOrDefaultAsync(e => e.Email == email, cancellationToken);
+        return _dbContext.Osobas.Where(o => o.Email == email).FirstOrDefaultAsync(cancellationToken: cancellationToken);
     }
 
     public async Task AddClientAsync(Klient client, CancellationToken cancellationToken)

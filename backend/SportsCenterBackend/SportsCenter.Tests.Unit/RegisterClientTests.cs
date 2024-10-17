@@ -11,7 +11,7 @@ public class RegisterClientTests
     public async Task Handle_ShouldThrowUserAlreadyExistsException_WhenUserAlreadyExists()
     {
         // Arrange
-        var request = new RegisterClient("John", "Doe", "john.doe@example.com", "password", null, "123456789",
+        var request = new RegisterClient("John", "Doe", "john.doe@example.com", "password", DateTime.Now, "123456789",
             "123 Main St");
         var handler = new RegisterClientHandler(new FakeUserRepository(new List<Osoba>
         {

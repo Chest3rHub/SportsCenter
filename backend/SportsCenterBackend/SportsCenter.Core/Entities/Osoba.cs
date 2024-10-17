@@ -12,7 +12,7 @@ public partial class Osoba
 
     public string Haslo { get; set; } = null!;
 
-    public DateTime? DataUr { get; set; }
+    public DateOnly? DataUr { get; set; }
 
     public string NrTel { get; set; } = null!;
 
@@ -22,11 +22,5 @@ public partial class Osoba
 
     public virtual Klient? Klient { get; set; }
 
-    public virtual PomocSprzatajaca? PomocSprzatajaca { get; set; }
-
-    public virtual PracownikAdministracyjny? PracownikAdministracyjny { get; set; }
-
-    public virtual Trener? Trener { get; set; }
-
-    public virtual WlascicielKlubu? WlascicielKlubu { get; set; }
+    public virtual Pracownik? Pracownik { get; set; }
 }

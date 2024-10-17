@@ -6,11 +6,9 @@ public partial class Zajecium
 
     public string Nazwa { get; set; } = null!;
 
-    public string Poziom { get; set; } = null!;
+    public int IdPoziomZajec { get; set; }
 
-    public bool CzyRezerwacjaPrywatna { get; set; }
+    public virtual ICollection<GrafikZajec> GrafikZajecs { get; set; } = new List<GrafikZajec>();
 
-    public virtual ICollection<Rezerwacja> Rezerwacjas { get; set; } = new List<Rezerwacja>();
-
-    public virtual ICollection<ZajeciaWGrafiku> ZajeciaWGrafikus { get; set; } = new List<ZajeciaWGrafiku>();
+    public virtual PoziomZajec IdPoziomZajecNavigation { get; set; } = null!;
 }

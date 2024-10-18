@@ -4,9 +4,9 @@ namespace SportsCenter.Infrastructure.DAL;
 
 internal class UnitOfWork : IUnitOfWork
 {
-    private readonly ApplicationDbContext _context;
+    private readonly SportsCenterDbContext _context;
 
-    public UnitOfWork(ApplicationDbContext context)
+    public UnitOfWork(SportsCenterDbContext context)
     {
         _context = context;
     }

@@ -4,11 +4,11 @@ using SportsCenter.Core.Repositories;
 
 namespace SportsCenter.Infrastructure.DAL.Repositories;
 
-public class UsersRepository : IUserRepository
+public class UserRepository : IUserRepository
 {
-    private ApplicationDbContext _dbContext;
+    private SportsCenterDbContext _dbContext;
 
-    public UsersRepository(ApplicationDbContext dbContext)
+    public UserRepository(SportsCenterDbContext dbContext)
     {
         _dbContext = dbContext;
     }

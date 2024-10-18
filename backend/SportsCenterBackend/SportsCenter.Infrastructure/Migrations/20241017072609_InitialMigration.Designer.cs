@@ -11,7 +11,7 @@ using SportsCenter.Infrastructure.DAL;
 
 namespace SportsCenter.Infrastructure.Migrations
 {
-    [DbContext(typeof(ApplicationDbContext))]
+    [DbContext(typeof(SportsCenterDbContext))]
     [Migration("20241017072609_InitialMigration")]
     partial class InitialMigration
     {

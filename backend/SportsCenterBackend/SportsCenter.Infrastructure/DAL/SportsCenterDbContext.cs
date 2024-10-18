@@ -3,13 +3,13 @@ using SportsCenter.Core.Entities;
 
 namespace SportsCenter.Infrastructure.DAL;
 
-public partial class ApplicationDbContext : DbContext
+public partial class SportsCenterDbContext : DbContext
 {
-    public ApplicationDbContext()
+    public SportsCenterDbContext()
     {
     }
 
-    public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
+    public SportsCenterDbContext(DbContextOptions<SportsCenterDbContext> options)
         : base(options)
     {
     }
@@ -54,7 +54,7 @@ public partial class ApplicationDbContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Server=localhost;Database=SportsDb;User Id=jan15;Password=asd12345AW;TrustServerCertificate=True;");
+        => optionsBuilder.UseSqlServer("tajemnica");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -205,7 +205,7 @@ public partial class ApplicationDbContext : DbContext
             entity.Property(e => e.OsobaId).HasColumnName("OsobaID");
             entity.Property(e => e.Adres).HasMaxLength(255);
             entity.Property(e => e.Email).HasMaxLength(50);
-            entity.Property(e => e.Haslo).HasMaxLength(50);
+            entity.Property(e => e.Haslo).HasMaxLength(250);
             entity.Property(e => e.Imie).HasMaxLength(50);
             entity.Property(e => e.Nazwisko).HasMaxLength(50);
             entity.Property(e => e.NrTel).HasMaxLength(15);

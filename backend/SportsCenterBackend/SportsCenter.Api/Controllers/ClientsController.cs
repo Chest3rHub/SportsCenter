@@ -8,6 +8,7 @@ using SportsCenter.Application.Users.Commands.RegisterClient;
 using SportsCenter.Application.Users.Queries;
 using SportsCenter.Application.Users.Queries.GetClients;
 using SportsCenter.Infrastructure.DAL;
+using SportsCenter.Application.Exceptions;
 
 namespace SportsCenter.Api.Controllers;
 
@@ -28,9 +29,27 @@ public class ClientsController : BaseController
     [HttpPost]
     public async Task<IActionResult> RegisterClientAsync([FromBody] RegisterClient registerClient)
     {
-        await Mediator.Send(registerClient);
-        return NoContent();
+        var validationResults = new RegisterClientValidator().Validate(registerClient);
+        if (!validationResults.IsValid)
+        {
+            return BadRequest(validationResults.Errors);
+        }
+
+        try
+        {
+            await Mediator.Send(registerClient);
+            return NoContent();
+        }
+        catch (UserAlreadyExistsException ex)
+        {
+            return Conflict(new { message = ex.Message });
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, new { message = "Wystąpił błąd podczas wysyłania żądania", details = ex.Message });
+        }
     }
+
 
     [AllowAnonymous]
     [HttpPost("login")]

@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
 import GreenButton from '../components/GreenButton';
 import GreenBackground from '../components/GreenBackground';
@@ -8,6 +9,67 @@ import OwnerSidebar from '../components/OwnerSidebar'
 import '../styles/auth.css';
 
 function Register() {
+
+    const [formData, setFormData] = useState({
+      firstName: '',
+      lastName: '',
+      address: '',
+      birthDate: '',
+      gender: '',
+      phoneNumber: '',
+      email: '',
+      password: '',
+      confirmPassword: ''
+    });
+  
+    const navigate = useNavigate();
+  
+    const handleChange = (e) => {
+      const { name, value } = e.target;
+      setFormData((prev) => ({
+        ...prev,
+        [name]: value
+      }));
+    };
+  
+    const handleSubmit = async (e) => {
+      e.preventDefault();
+  
+      if (formData.password !== formData.confirmPassword) {
+        alert("Hasła nie zgadzają się!");
+        return;
+      }
+  
+      try {
+        const response = await fetch(apiUrl+'/register', { //apiUrl do skonfigurowania
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            imie: formData.firstName,
+            nazwisko: formData.lastName,
+            adres: formData.address,
+            dataUr: formData.birthDate,
+            nrTel: formData.phoneNumber,
+            email: formData.email,
+            haslo: formData.password,
+          }),
+        });
+  
+        if (!response.ok) {
+          const errorData = await response.json();
+          alert(errorData.message || 'Wystąpił błąd podczas rejestracji');
+          return;
+        }
+  
+        alert('Rejestracja zakończona pomyślnie!');
+      } catch (error) {
+        console.error('Błąd rejestracji:', error);
+        alert('Wystąpił błąd podczas rejestracji');
+      }
+    };
+
   return (
     <>
     <Navbar/>
@@ -98,7 +160,7 @@ function Register() {
         <tr>
             <td class="right-align"></td>
             <td class="center-align">
-              <GreenButton type="submit" onClick={1+1} >Utwórz konto</GreenButton>
+              <GreenButton type="submit">Utwórz konto</GreenButton>
             </td>
         </tr>
     </table>

@@ -21,5 +21,6 @@ public class UserRepository : IUserRepository
     public async Task AddClientAsync(Klient client, CancellationToken cancellationToken)
     {
         await _dbContext.Klients.AddAsync(client, cancellationToken);
+        await _dbContext.SaveChangesAsync(cancellationToken);
     }
 }

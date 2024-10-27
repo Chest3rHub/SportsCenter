@@ -7,18 +7,18 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\SportsCenter.Core\SportsCenter.Core.csproj"/>
+        <ProjectReference Include="..\SportsCenter.Core\SportsCenter.Core.csproj" />
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="FluentValidation" Version="11.9.2"/>
-        <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.9.2"/>
-        <PackageReference Include="MediatR" Version="12.4.0"/>
-        <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="8.0.1"/>
+        <PackageReference Include="FluentValidation" Version="11.9.2" />
+        <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.9.2" />
+        <PackageReference Include="MediatR" Version="12.4.0" />
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="8.0.1" />
     </ItemGroup>
 
     <ItemGroup>
-        <InternalsVisibleTo Include="SportsCenter.Tests.Unit"/>
+        <InternalsVisibleTo Include="SportsCenter.Tests.Unit" />
     </ItemGroup>
 
 </Project>

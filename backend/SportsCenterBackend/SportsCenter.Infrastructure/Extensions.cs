@@ -35,6 +35,7 @@ public static class Extensions
         services.AddDbContext<SportsCenterDbContext>(x => x.UseSqlServer(databaseOptions.ConnectionString));
         services.AddScoped<IUnitOfWork, UnitOfWork>();
         services.AddScoped<IUserRepository, UserRepository>();
+        services.AddScoped<IJWTTokenGenerator, JWTTokenGenerator>();
 
         //Security
         services.AddSingleton<IPasswordManager, PasswordManager>();

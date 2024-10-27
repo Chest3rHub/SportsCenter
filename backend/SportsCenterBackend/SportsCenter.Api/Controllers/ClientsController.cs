@@ -3,6 +3,7 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SportsCenter.Application.Users.Commands;
+using SportsCenter.Application.Users.Commands.Login;
 using SportsCenter.Application.Users.Commands.RegisterClient;
 using SportsCenter.Application.Users.Queries;
 using SportsCenter.Application.Users.Queries.GetClients;
@@ -29,5 +30,13 @@ public class ClientsController : BaseController
     {
         await Mediator.Send(registerClient);
         return NoContent();
+    }
+
+    [AllowAnonymous]
+    [HttpPost("login")]
+    public async Task<IActionResult> LoginAsync([FromBody] Login loginCommand)
+    {
+        var loginResponse = await Mediator.Send(loginCommand);
+        return Ok(loginResponse);
     }
 }

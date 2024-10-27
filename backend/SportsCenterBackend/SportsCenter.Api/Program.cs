@@ -16,6 +16,17 @@ builder.Services.AddSingleton<ExceptionMiddleware>();
 builder.Services.AddApplicationLayer();
 builder.Services.AddInfrastructureLayer(builder.Configuration);
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("CorsPolicy", builder =>
+    {
+        builder
+            .AllowAnyOrigin() 
+            .AllowAnyMethod()   
+            .AllowAnyHeader();   
+    });
+});
+
 builder.Host.UseSerilog((context, loggerConfiguration) =>
 {
     loggerConfiguration.WriteTo
@@ -38,5 +49,7 @@ app.UseMiddleware<ExceptionMiddleware>();
 app.UseHttpsRedirection();
 app.UseAuthorization();
 app.MapControllers();
+
+app.UseCors("CorsPolicy");
 
 app.Run();

@@ -9,13 +9,12 @@ import API_URL from '../appConfig';
 import '../styles/auth.css';
 
 function Login() {
-  //State do przechowywania maila i hasla
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   //Funkcja obsługi logowania
   const handleSubmit = async (event) => {
-    event.preventDefault(); // Zapobiega przeładowaniu strony
+    event.preventDefault(); 
 
     //Tworzenie obiektu z danymi logowania
     const loginData = {
@@ -31,10 +30,9 @@ function Login() {
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify(loginData) //dane w formacie JSON
+        body: JSON.stringify(loginData) 
       });
 
-      //odpowiedź jest OK
       if (response.ok) {
         const data = await response.json();
         console.log('Zalogowano pomyślnie:', data);

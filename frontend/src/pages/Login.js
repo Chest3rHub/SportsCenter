@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import Header from '../components/Header';
 import GreenButton from '../components/GreenButton';
 import GreenBackground from '../components/GreenBackground';
 import OrangeBackground from '../components/OrangeBackground';
 import Navbar from '../components/Navbar';
+import API_URL from '../appConfig';
 import '../styles/auth.css';
 
 function Login() {
@@ -23,7 +25,7 @@ function Login() {
 
     try {
       //Wysłanie żądania POST na endpoint /login
-      const response = await fetch('https://localhost:7085/api/clients/login', {
+      const response = await fetch(`${API_URL}/clients/login`, {
 
         method: 'POST',
         headers: {
@@ -39,7 +41,7 @@ function Login() {
 
         //zapis tokena w localStorage 
         localStorage.setItem('token', data.token);
-        window.location.href = '/dashboard'; // Przekierowanie na dashboard
+        
       } else {
         //blad logowania
         const errorData = await response.json();
@@ -101,7 +103,7 @@ function Login() {
               <tr>
                 <td className="right-align"></td>
                 <td className="center-align">
-                  <a href="/reset-password" className="forgot-password">Nie pamiętam hasła</a>
+                  <Link to="/reset-password" className="forgot-password">Nie pamiętam hasła</Link>
                 </td>
               </tr>
             </table>

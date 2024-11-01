@@ -7,8 +7,11 @@ using SportsCenter.Application.Users.Commands.Login;
 using SportsCenter.Application.Users.Commands.RegisterClient;
 using SportsCenter.Application.Users.Queries;
 using SportsCenter.Application.Users.Queries.GetClients;
+using SportsCenter.Application.Users.Queries.GetClientsByAge;
+using SportsCenter.Application.Users.Queries.GetClientsByTags;
 using SportsCenter.Infrastructure.DAL;
 using SportsCenter.Application.Exceptions;
+using SportsCenter.Core.Entities;
 
 namespace SportsCenter.Api.Controllers;
 
@@ -68,5 +71,32 @@ public class ClientsController : BaseController
         {
             return StatusCode(500, new { message = "Wystąpił błąd podczas wysyłania żądania", details = ex.Message });
         }
+    }
+
+    [AllowAnonymous]
+    [HttpPost("byAge")]
+    public async Task<IActionResult> GetClientsByAgeAsync(int minAge, int maxAge)
+    {
+        var query = new GetClientsByAge
+        {
+            MinAge = minAge,
+            MaxAge = maxAge
+        };
+
+        var clients = await Mediator.Send(query);
+        return Ok(clients);
+    }
+
+    [AllowAnonymous]
+    [HttpPost("byTags")]
+    public async Task<IActionResult> GetClientsByTagsAsync(List<int> tagIds)
+    {
+        var query = new GetClientsByTags
+        {
+            TagIds = tagIds
+        };
+
+        var clients = await Mediator.Send(query);
+        return Ok(clients);
     }
 }

@@ -55,7 +55,18 @@ public class ClientsController : BaseController
     [HttpPost("login")]
     public async Task<IActionResult> LoginAsync([FromBody] Login loginCommand)
     {
-        var loginResponse = await Mediator.Send(loginCommand);
-        return Ok(loginResponse);
+        try
+        {
+            var loginResponse = await Mediator.Send(loginCommand);
+            return Ok(loginResponse);
+        }
+        catch (InvalidLoginException ex)
+        {
+            return Conflict(new {message = ex.Message});
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, new { message = "Wystąpił błąd podczas wysyłania żądania", details = ex.Message });
+        }
     }
 }

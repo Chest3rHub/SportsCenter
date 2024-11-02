@@ -73,9 +73,8 @@ public class ClientsController : BaseController
         }
     }
 
-    [AllowAnonymous]
-    [HttpPost("byAge")]
-    public async Task<IActionResult> GetClientsByAgeAsync(int minAge, int maxAge)
+    [HttpGet("byAge")]
+    public async Task<IActionResult> GetClientsByAgeAsync([FromQuery] int minAge, [FromQuery] int maxAge)
     {
         var query = new GetClientsByAge
         {
@@ -87,9 +86,8 @@ public class ClientsController : BaseController
         return Ok(clients);
     }
 
-    [AllowAnonymous]
-    [HttpPost("byTags")]
-    public async Task<IActionResult> GetClientsByTagsAsync(List<int> tagIds)
+    [HttpGet("byTags")]
+    public async Task<IActionResult> GetClientsByTagsAsync([FromQuery] List<int> tagIds)
     {
         var query = new GetClientsByTags
         {

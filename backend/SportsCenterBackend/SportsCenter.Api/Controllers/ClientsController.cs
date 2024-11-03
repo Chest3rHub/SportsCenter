@@ -7,9 +7,12 @@ using SportsCenter.Application.Users.Commands.Login;
 using SportsCenter.Application.Users.Commands.RegisterClient;
 using SportsCenter.Application.Users.Queries;
 using SportsCenter.Application.Users.Queries.GetClients;
+using SportsCenter.Application.Users.Queries.GetClientsByAge;
+using SportsCenter.Application.Users.Queries.GetClientsByTags;
 using SportsCenter.Infrastructure.DAL;
 using SportsCenter.Application.Exceptions;
 using SportsCenter.Application.Users.Commands.AccountDeposit;
+using SportsCenter.Core.Entities;
 
 namespace SportsCenter.Api.Controllers;
 
@@ -56,8 +59,44 @@ public class ClientsController : BaseController
     [HttpPost("login")]
     public async Task<IActionResult> LoginAsync([FromBody] Login loginCommand)
     {
-        var loginResponse = await Mediator.Send(loginCommand);
-        return Ok(loginResponse);
+        try
+        {
+            var loginResponse = await Mediator.Send(loginCommand);
+            return Ok(loginResponse);
+        }
+        catch (InvalidLoginException ex)
+        {
+            return Conflict(new {message = ex.Message});
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, new { message = "Wystąpił błąd podczas wysyłania żądania", details = ex.Message });
+        }
+    }
+
+    [HttpGet("byAge")]
+    public async Task<IActionResult> GetClientsByAgeAsync([FromQuery] int minAge, [FromQuery] int maxAge)
+    {
+        var query = new GetClientsByAge
+        {
+            MinAge = minAge,
+            MaxAge = maxAge
+        };
+
+        var clients = await Mediator.Send(query);
+        return Ok(clients);
+    }
+
+    [HttpGet("byTags")]
+    public async Task<IActionResult> GetClientsByTagsAsync([FromQuery] List<int> tagIds)
+    {
+        var query = new GetClientsByTags
+        {
+            TagIds = tagIds
+        };
+
+        var clients = await Mediator.Send(query);
+        return Ok(clients);
     }
 
     [HttpPost("accountDeposit")]

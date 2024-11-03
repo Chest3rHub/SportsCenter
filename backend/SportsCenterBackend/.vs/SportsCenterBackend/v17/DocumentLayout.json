@@ -200,12 +200,8 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 35,
+          "SelectedChildIndex": 34,
           "Children": [
-            {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{cce594b6-0c39-4442-ba28-10c64ac7e89f}"
-            },
             {
               "$type": "Document",
               "DocumentIndex": 8,
@@ -216,8 +212,7 @@
               "RelativeToolTip": "SportsCenter.Core\\Entities\\TypPracownika.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-03T17:35:04.002Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-11-03T17:35:04.002Z"
             },
             {
               "$type": "Document",
@@ -229,8 +224,7 @@
               "RelativeToolTip": "SportsCenter.Application\\Users\\Commands\\AddDeposit\\AddDepositValidator.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-31T15:26:51.128Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-10-31T15:26:51.128Z"
             },
             {
               "$type": "Document",
@@ -254,8 +248,7 @@
               "RelativeToolTip": "SportsCenter.Core\\Entities\\Pracownik.cs",
               "ViewState": "AgIAAAYAAAAAAAAAAAA5wAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-31T14:41:07.066Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-10-31T14:41:07.066Z"
             },
             {
               "$type": "Document",
@@ -267,8 +260,7 @@
               "RelativeToolTip": "SportsCenter.Application\\Exceptions\\ClientNotFoundException.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-31T14:30:28.877Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-10-31T14:30:28.877Z"
             },
             {
               "$type": "Document",
@@ -280,8 +272,7 @@
               "RelativeToolTip": "SportsCenter.Application\\Users\\Commands\\AddDeposit\\AddDepositHandler.cs",
               "ViewState": "AgIAAA0AAAAAAAAAAAAywB4AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-31T13:59:41.596Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-10-31T13:59:41.596Z"
             },
             {
               "$type": "Document",
@@ -293,8 +284,7 @@
               "RelativeToolTip": "SportsCenter.Application\\Users\\Commands\\AddDeposit\\AddDeposit.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABYAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-31T13:37:40.968Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-10-31T13:37:40.968Z"
             },
             {
               "$type": "Document",
@@ -594,8 +584,7 @@
               "RelativeToolTip": "SportsCenter.Api\\Program.cs",
               "ViewState": "AgIAACMAAAAAAAAAAAAAABQAAAArAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-27T19:57:05.506Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-10-27T19:57:05.506Z"
             },
             {
               "$type": "Document",
@@ -629,7 +618,7 @@
               "RelativeDocumentMoniker": "SportsCenter.Api\\Controllers\\ClientsController.cs",
               "ToolTip": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Api\\Controllers\\ClientsController.cs",
               "RelativeToolTip": "SportsCenter.Api\\Controllers\\ClientsController.cs",
-              "ViewState": "AgIAADoAAAAAAAAAAAAQwEAAAAAFAAAAAAAAAA==",
+              "ViewState": "AgIAAFoAAAAAAAAAAAA4wA4AAAAhAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-10-27T19:00:53.289Z",
               "EditorCaption": ""
@@ -656,8 +645,7 @@
               "RelativeToolTip": "SportsCenter.Infrastructure\\Security\\JWTTokenGenerator.cs",
               "ViewState": "AgIAABUAAAAAAAAAAAA2wCUAAAA9AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-25T12:46:31.489Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-10-25T12:46:31.489Z"
             },
             {
               "$type": "Document",
@@ -752,8 +740,7 @@
               "RelativeToolTip": "SportsCenter.Infrastructure\\Extensions.cs",
               "ViewState": "AgIAABoAAAAAAAAAAADwvzkAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-27T19:20:09.568Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-10-27T19:20:09.568Z"
             },
             {
               "$type": "Document",
@@ -789,8 +776,11 @@
               "RelativeToolTip": "SportsCenter.Core\\Entities\\Osoba.cs",
               "ViewState": "AgIAAAcAAAAAAAAAAAAIwAgAAAAvAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-25T11:32:15.113Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-10-25T11:32:15.113Z"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{cce594b6-0c39-4442-ba28-10c64ac7e89f}"
             }
           ]
         }

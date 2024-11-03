@@ -1,13 +1,16 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using Serilog;
 using SportsCenter.Api.Middlewares;
 using SportsCenter.Application;
 using SportsCenter.Infrastructure;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
-
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
@@ -15,13 +18,13 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddSingleton<ExceptionMiddleware>();
 builder.Services.AddApplicationLayer();
 builder.Services.AddInfrastructureLayer(builder.Configuration);
-
+builder.Services.AddHttpContextAccessor(); 
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("CorsPolicy", builder =>
     {
         builder
-            .AllowAnyOrigin() 
+            .AllowAnyOrigin()
             .AllowAnyMethod()   
             .AllowAnyHeader();   
     });
@@ -47,9 +50,10 @@ if (app.Environment.IsDevelopment())
 
 app.UseMiddleware<ExceptionMiddleware>();
 app.UseHttpsRedirection();
+app.UseCors("CorsPolicy");
 app.UseAuthorization();
 app.MapControllers();
 
-app.UseCors("CorsPolicy");
+
 
 app.Run();

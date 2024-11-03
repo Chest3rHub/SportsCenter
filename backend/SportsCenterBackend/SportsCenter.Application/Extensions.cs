@@ -14,7 +14,7 @@ public static class Extensions
         services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
 
         services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
-
+        
         return services;
     }
 }

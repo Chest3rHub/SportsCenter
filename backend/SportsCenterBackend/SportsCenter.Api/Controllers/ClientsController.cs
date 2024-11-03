@@ -9,6 +9,7 @@ using SportsCenter.Application.Users.Queries;
 using SportsCenter.Application.Users.Queries.GetClients;
 using SportsCenter.Infrastructure.DAL;
 using SportsCenter.Application.Exceptions;
+using SportsCenter.Application.Users.Commands.AccountDeposit;
 
 namespace SportsCenter.Api.Controllers;
 
@@ -58,4 +59,23 @@ public class ClientsController : BaseController
         var loginResponse = await Mediator.Send(loginCommand);
         return Ok(loginResponse);
     }
+
+    [HttpPost("accountDeposit")]
+    public async Task<IActionResult> AddAccountDepositAsync([FromBody] AddDeposit deposit)
+    {
+        try
+        {
+            await Mediator.Send(deposit);
+            return NoContent();
+        }
+        catch (ClientNotFoundException ex)
+        {
+            return NotFound(new { message = ex.Message });
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, new { message = "Wystąpił błąd podczas doładowania salda", details = ex.Message });
+        }
+    }
+
 }

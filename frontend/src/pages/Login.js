@@ -12,19 +12,16 @@ function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  //Funkcja obsługi logowania
   const handleSubmit = async (event) => {
     event.preventDefault(); 
 
-    //Tworzenie obiektu z danymi logowania
     const loginData = {
       email: email,
       password: password
     };
 
     try {
-      //Wysłanie żądania POST na endpoint /login
-      const response = await fetch(`${API_URL}/clients/login`, {
+      const response = await fetch(`${API_URL}/Clients/login`, {
 
         method: 'POST',
         headers: {
@@ -36,12 +33,12 @@ function Login() {
       if (response.ok) {
         const data = await response.json();
         console.log('Zalogowano pomyślnie:', data);
-
-        //zapis tokena w localStorage 
         localStorage.setItem('token', data.token);
-        
+
+        //////
+        alert('Logowanie zakończone sukcesem!');
+
       } else {
-        //blad logowania
         const errorData = await response.json();
         console.error('Błąd logowania:', errorData.message);
         alert('Niepoprawne dane logowania');
@@ -71,7 +68,7 @@ function Login() {
                     name="email" 
                     className='one-register-input' 
                     value={email} 
-                    onChange={(e) => setEmail(e.target.value)} //Aktualizacja email w stanie
+                    onChange={(e) => setEmail(e.target.value)}
                     required 
                   />
                 </td>
@@ -87,7 +84,7 @@ function Login() {
                     name="password" 
                     className='one-register-input' 
                     value={password} 
-                    onChange={(e) => setPassword(e.target.value)} //Aktualizacja hasła w stanie
+                    onChange={(e) => setPassword(e.target.value)}
                     required 
                   />
                 </td>

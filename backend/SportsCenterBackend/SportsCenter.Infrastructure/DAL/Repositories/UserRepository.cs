@@ -23,4 +23,17 @@ public class UserRepository : IUserRepository
         await _dbContext.Klients.AddAsync(client, cancellationToken);
         await _dbContext.SaveChangesAsync(cancellationToken);
     }
+
+    public async Task<Klient?> GetClientByEmailAsync(string email, CancellationToken cancellationToken)
+    {
+        return await _dbContext.Klients
+            .Include(k => k.KlientNavigation)
+            .FirstOrDefaultAsync(k => k.KlientNavigation.Email == email, cancellationToken);
+    }
+
+    public async Task UpdateClientAsync(Klient client, CancellationToken cancellationToken)
+    {
+        _dbContext.Klients.Update(client);
+        await _dbContext.SaveChangesAsync(cancellationToken);
+    }
 }

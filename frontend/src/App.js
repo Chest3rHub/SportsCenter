@@ -5,11 +5,14 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
 import SportsCenterRouter from './router/SportsCenterRouter';
+import { SportsProvider } from './context/SportsContext';
 
 function App() {
   return (
     <div className="App">
-      <SportsCenterRouter/>
+      <SportsProvider>
+        <SportsCenterRouter/>
+      </SportsProvider>
     </div>
   );
 }

@@ -4,6 +4,7 @@ import Login from "../pages/Login";
 import NotFound from "../pages/NotFound";
 import Register from "../pages/Register";
 import Dashboard from "../pages/Dashboard";
+import Error from "../pages/Error";
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 
 const clientRouter = [];
@@ -26,6 +27,10 @@ const clientRouter = [];
         {
             path: "/dashboard",  
             element: <Dashboard/>
+        },
+        {
+            path: "/error",  
+            element: <Error/>
         },
         {
             path: "*",

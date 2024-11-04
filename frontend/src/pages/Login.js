@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useContext } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
 import GreenButton from '../components/GreenButton';
 import GreenBackground from '../components/GreenBackground';
@@ -7,10 +7,21 @@ import OrangeBackground from '../components/OrangeBackground';
 import Navbar from '../components/Navbar';
 import API_URL from '../appConfig';
 import '../styles/auth.css';
+import { SportsContext } from '../context/SportsContext';
 
 function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
+  const { dictionary, toggleLanguage } = useContext(SportsContext);
+
+  const navigate = useNavigate();
+
+  function handleError(textToDisplay) {
+    navigate('/error', {
+        state: { message: textToDisplay }
+    });
+}
 
   const handleSubmit = async (event) => {
     event.preventDefault(); 
@@ -21,7 +32,7 @@ function Login() {
     };
 
     try {
-      const response = await fetch(`${API_URL}/Clients/login`, {
+      const response = await fetch(`${API_URL}/clients/login`, {
 
         method: 'POST',
         headers: {
@@ -33,19 +44,19 @@ function Login() {
       if (response.ok) {
         const data = await response.json();
         console.log('Zalogowano pomyślnie:', data);
+
         localStorage.setItem('token', data.token);
 
         //////
         alert('Logowanie zakończone sukcesem!');
 
       } else {
+        
         const errorData = await response.json();
-        console.error('Błąd logowania:', errorData.message);
-        alert('Niepoprawne dane logowania');
+        handleError(errorData.message);
       }
     } catch (error) {
-      console.error('Wystąpił błąd:', error);
-      alert('Wystąpił problem z logowaniem');
+      handleError(error);
     }
   };
 
@@ -53,13 +64,13 @@ function Login() {
     <>
       <Navbar />
       <GreenBackground height={"50vh"} marginTop={"10vh"}>
-        <Header>Logowanie</Header>
+        <Header>{dictionary.loginPage.title}</Header>
         <OrangeBackground width="70%">
           <form onSubmit={handleSubmit}>
             <table>
               <tr>
                 <td className="right-align">
-                  <label htmlFor="email">E-mail:</label>
+                  <label htmlFor="email">{dictionary.loginPage.emailLabel}</label>
                 </td>
                 <td className="center-align">
                   <input 
@@ -68,14 +79,14 @@ function Login() {
                     name="email" 
                     className='one-register-input' 
                     value={email} 
-                    onChange={(e) => setEmail(e.target.value)}
+                    onChange={(e) => setEmail(e.target.value)} 
                     required 
                   />
                 </td>
               </tr>
               <tr>
                 <td className="right-align">
-                  <label htmlFor="password">Hasło:</label>
+                  <label htmlFor="password">{dictionary.loginPage.passwordLabel}</label>
                 </td>
                 <td className="center-align">
                   <input 
@@ -84,7 +95,7 @@ function Login() {
                     name="password" 
                     className='one-register-input' 
                     value={password} 
-                    onChange={(e) => setPassword(e.target.value)}
+                    onChange={(e) => setPassword(e.target.value)} 
                     required 
                   />
                 </td>
@@ -92,13 +103,13 @@ function Login() {
               <tr>
                 <td className="right-align"></td>
                 <td className="center-align">
-                  <GreenButton type="submit">Zaloguj</GreenButton>
+                  <GreenButton type="submit">{dictionary.loginPage.signInLabel}</GreenButton>
                 </td>
               </tr>
               <tr>
                 <td className="right-align"></td>
                 <td className="center-align">
-                  <Link to="/reset-password" className="forgot-password">Nie pamiętam hasła</Link>
+                  <Link to="/reset-password" className="forgot-password">{dictionary.loginPage.forgotPasswordLabel}</Link>
                 </td>
               </tr>
             </table>

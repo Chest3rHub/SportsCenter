@@ -7,5 +7,12 @@ export default {
     },
     loginPage: {
       title: 'Logowanie',
+      emailLabel:'E-mail',
+      passwordLabel: 'Hasło',
+      forgotPasswordLabel: 'Nie pamiętam hasła',
+      signInLabel: 'Zaloguj',
+    },
+    errorPage: {
+        returnLabel: 'Wróć',
     },
   };

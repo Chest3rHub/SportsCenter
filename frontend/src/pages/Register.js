@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
 import GreenButton from '../components/GreenButton';
@@ -8,9 +8,11 @@ import Navbar from '../components/Navbar';
 import OwnerSidebar from '../components/OwnerSidebar'
 import API_URL from '../appConfig';
 import '../styles/auth.css';
+import { SportsContext } from '../context/SportsContext';
+function Register() {
 
- function Register() {
-
+    const { dictionary, toggleLanguage } = useContext(SportsContext);
+    
     const [formData, setFormData] = useState({
       firstName: '',
       lastName: '',
@@ -21,6 +23,12 @@ import '../styles/auth.css';
       password: '',
       confirmPassword: ''
     });
+
+    function handleError(textToDisplay) {
+      navigate('/error', {
+          state: { message: textToDisplay }
+      });
+  }
   
     const navigate = useNavigate();
   
@@ -59,9 +67,13 @@ import '../styles/auth.css';
   
         if (!response.ok) {
           const errorData = await response.json();
-          return;
+          console.log(errorData);
+          handleError('Blad rejestracji... sprawdz konsole')
+
+        } else {
+          navigate('/login');
         }
-        navigate('/login');
+        
         } catch (error) {
         console.error('Błąd rejestracji:', error);
       }
@@ -72,7 +84,7 @@ import '../styles/auth.css';
     <Navbar/>
     <OwnerSidebar/>
     <GreenBackground height={"75vh"} marginTop={"5vh"}>
-        <Header>Rejestracja</Header>
+        <Header>{dictionary.registerPage.title}</Header>
         <OrangeBackground width="70%">
         <form onSubmit={handleSubmit}>
         <table>

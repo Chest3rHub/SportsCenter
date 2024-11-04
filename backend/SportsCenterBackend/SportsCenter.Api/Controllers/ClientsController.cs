@@ -12,6 +12,7 @@ using SportsCenter.Application.Users.Queries.GetClientsByTags;
 using SportsCenter.Infrastructure.DAL;
 using SportsCenter.Application.Exceptions;
 using SportsCenter.Application.Users.Commands.AccountDeposit;
+using SportsCenter.Application.Users.Commands.AddClientTags;
 using SportsCenter.Core.Entities;
 
 namespace SportsCenter.Api.Controllers;
@@ -116,5 +117,30 @@ public class ClientsController : BaseController
             return StatusCode(500, new { message = "Wystąpił błąd podczas doładowania salda", details = ex.Message });
         }
     }
+    
+    [HttpPost("addTags")]
+    public async Task<IActionResult> AddClientTagsAsync([FromBody] AddClientTags command)
+    {
+        
+        try
+        {
+            await Mediator.Send(command);
+            return NoContent();
+        }
+        catch (ClientNotFoundException ex)
+        {
+            return NotFound(new { message = ex.Message });
+        }
+        catch (TagLimitException ex)
+        {
+            return Conflict(new { message = ex.Message });
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, new { message = "Wystąpił błąd podczas dodawania tagów", details = ex.Message });
+        }
+    }
+
+    
 
 }

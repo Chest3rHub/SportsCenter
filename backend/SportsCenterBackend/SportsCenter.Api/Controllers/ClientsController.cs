@@ -13,6 +13,7 @@ using SportsCenter.Infrastructure.DAL;
 using SportsCenter.Application.Exceptions;
 using SportsCenter.Application.Users.Commands.AccountDeposit;
 using SportsCenter.Application.Users.Commands.AddClientTags;
+using SportsCenter.Application.Users.Commands.RemoveClientTags;
 using SportsCenter.Core.Entities;
 
 namespace SportsCenter.Api.Controllers;
@@ -138,6 +139,30 @@ public class ClientsController : BaseController
         catch (Exception ex)
         {
             return StatusCode(500, new { message = "Wystąpił błąd podczas dodawania tagów", details = ex.Message });
+        }
+    }
+
+    [HttpPost("removeTags")]
+    public async Task<IActionResult> RemoveClientTagsAsync([FromBody] RemoveClientTags removeClientTags)
+    {
+        var validationResults = new RemoveClientTagsValidator().Validate(removeClientTags);
+        if (!validationResults.IsValid)
+        {
+            return BadRequest(validationResults.Errors);
+        }
+        
+        try
+        {
+            await Mediator.Send(removeClientTags);
+            return NoContent();
+        }
+        catch (ClientNotFoundException ex)
+        {
+            return NotFound(new { message = ex.Message });
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, new { message = "Wystąpił błąd podczas usuwania tagów", details = ex.Message });
         }
     }
 

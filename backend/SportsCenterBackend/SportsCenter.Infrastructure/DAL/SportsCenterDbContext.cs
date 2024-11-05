@@ -155,11 +155,11 @@ public partial class SportsCenterDbContext : DbContext
                     "KlientTag",
                     r => r.HasOne<Tag>().WithMany()
                         .HasForeignKey("TagId")
-                        .OnDelete(DeleteBehavior.ClientSetNull)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .HasConstraintName("Posiadanie_Tag"),
                     l => l.HasOne<Klient>().WithMany()
                         .HasForeignKey("KlientId")
-                        .OnDelete(DeleteBehavior.ClientSetNull)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .HasConstraintName("Posiadanie_Klient"),
                     j =>
                     {

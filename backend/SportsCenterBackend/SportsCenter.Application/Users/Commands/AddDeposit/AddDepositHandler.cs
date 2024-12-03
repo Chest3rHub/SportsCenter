@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Http;
 using SportsCenter.Application.Exceptions;
+using SportsCenter.Application.Exceptions.ClientsExceptions;
 using SportsCenter.Core.Repositories;
 using System;
 using System.Collections.Generic;

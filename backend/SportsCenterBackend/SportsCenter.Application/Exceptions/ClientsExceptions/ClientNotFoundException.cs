@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SportsCenter.Application.Exceptions
+namespace SportsCenter.Application.Exceptions.ClientsExceptions
 {
     public sealed class ClientNotFoundException : Exception
     {

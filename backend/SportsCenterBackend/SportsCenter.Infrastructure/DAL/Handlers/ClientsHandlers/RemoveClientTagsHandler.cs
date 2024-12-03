@@ -2,8 +2,9 @@ using MediatR;
 using SportsCenter.Application.Exceptions;
 using Microsoft.EntityFrameworkCore;
 using SportsCenter.Application.Users.Commands.RemoveClientTags;
+using SportsCenter.Application.Exceptions.ClientsExceptions;
 
-namespace SportsCenter.Infrastructure.DAL.Handlers;
+namespace SportsCenter.Infrastructure.DAL.Handlers.ClientsHandlers;
 
 internal sealed class RemoveClientTagsHandler : IRequestHandler<RemoveClientTags, Unit>
 {
@@ -21,7 +22,7 @@ internal sealed class RemoveClientTagsHandler : IRequestHandler<RemoveClientTags
             .FirstOrDefaultAsync(k => k.KlientId == request.ClientId, cancellationToken);
 
         if (client == null)
-            throw new ClientNotFoundException("Client with ID -> "+request.ClientId.ToString()+" not found");
+            throw new ClientNotFoundException("Client with ID -> " + request.ClientId.ToString() + " not found");
 
         var tagsToRemove = client.Tags
             .Where(tag => request.TagIds.Contains(tag.TagId))

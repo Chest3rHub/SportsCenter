@@ -3,8 +3,9 @@ using SportsCenter.Application.Users.Commands.AddClientTags;
 using SportsCenter.Application.Exceptions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
+using SportsCenter.Application.Exceptions.ClientsExceptions;
 
-namespace SportsCenter.Infrastructure.DAL.Handlers
+namespace SportsCenter.Infrastructure.DAL.Handlers.ClientsHandlers
 {
     internal sealed class AddClientTagsHandler : IRequestHandler<AddClientTags, Unit>
     {
@@ -31,7 +32,7 @@ namespace SportsCenter.Infrastructure.DAL.Handlers
 
             if (currentTagCount + request.TagIds.Count > 3)
                 throw new TagLimitException(client.KlientId);
-            
+
             foreach (var tagId in request.TagIds)
             {
                 if (!client.Tags.Any(t => t.TagId == tagId))

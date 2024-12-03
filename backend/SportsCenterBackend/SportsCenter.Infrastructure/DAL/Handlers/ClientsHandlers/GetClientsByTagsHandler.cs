@@ -3,7 +3,7 @@ using SportsCenter.Application.Users.Queries.GetClientsByTags;
 using Microsoft.EntityFrameworkCore;
 using SportsCenter.Application.Users.Queries.GetClients;
 
-namespace SportsCenter.Infrastructure.DAL.Handlers
+namespace SportsCenter.Infrastructure.DAL.Handlers.ClientsHandlers
 {
     internal class GetClientsByTagsHandler : IRequestHandler<GetClientsByTags, IEnumerable<ClientByTagsDto>>
     {

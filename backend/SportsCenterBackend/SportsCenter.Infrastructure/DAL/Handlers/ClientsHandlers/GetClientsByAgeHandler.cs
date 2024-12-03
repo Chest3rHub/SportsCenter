@@ -3,7 +3,7 @@ using SportsCenter.Application.Users.Queries.GetClientsByAge;
 using Microsoft.EntityFrameworkCore;
 using SportsCenter.Core.Abstractions;
 
-namespace SportsCenter.Infrastructure.DAL.Handlers
+namespace SportsCenter.Infrastructure.DAL.Handlers.ClientsHandlers
 {
     internal class GetClientsByAgeHandler : IRequestHandler<GetClientsByAge, IEnumerable<ClientByAgeDto>>
     {
@@ -27,11 +27,11 @@ namespace SportsCenter.Infrastructure.DAL.Handlers
                     k.KlientNavigation.Email,
                     k.KlientNavigation.DataUr,
 
-                    Age = today.Year - k.KlientNavigation.DataUr.Value.Year - 
-                    (today.Month < k.KlientNavigation.DataUr.Value.Month 
-                    || (today.Month == k.KlientNavigation.DataUr.Value.Month && today.Day < k.KlientNavigation.DataUr.Value.Day) ? 1 : 0)
+                    Age = today.Year - k.KlientNavigation.DataUr.Value.Year -
+                    (today.Month < k.KlientNavigation.DataUr.Value.Month
+                    || today.Month == k.KlientNavigation.DataUr.Value.Month && today.Day < k.KlientNavigation.DataUr.Value.Day ? 1 : 0)
                 })
-                .Where(k => k.Age >= request.MinAge && k.Age <= request.MaxAge) 
+                .Where(k => k.Age >= request.MinAge && k.Age <= request.MaxAge)
                 .Select(k => new ClientByAgeDto
                 {
                     FullName = k.Nazwisko,

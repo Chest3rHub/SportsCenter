@@ -1,4 +1,4 @@
-namespace SportsCenter.Application.Exceptions;
+namespace SportsCenter.Application.Exceptions.ClientsExceptions;
 
 public class TagLimitException : Exception
 {

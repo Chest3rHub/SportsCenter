@@ -15,6 +15,7 @@ using SportsCenter.Application.Users.Commands.AccountDeposit;
 using SportsCenter.Application.Users.Commands.AddClientTags;
 using SportsCenter.Application.Users.Commands.RemoveClientTags;
 using SportsCenter.Core.Entities;
+using SportsCenter.Application.Exceptions.ClientsExceptions;
 
 namespace SportsCenter.Api.Controllers;
 
@@ -33,7 +34,7 @@ public class ClientsController : BaseController
 
     [AllowAnonymous]
     [HttpPost]
-    public async Task<IActionResult> RegisterClientAsync([FromBody] RegisterClient registerClient)
+    public async Task<IActionResult> ShowClientAsync([FromBody] RegisterClient registerClient)
     {
         var validationResults = new RegisterClientValidator().Validate(registerClient);
         if (!validationResults.IsValid)

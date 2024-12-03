@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using SportsCenter.Application.Users.Queries;
 using SportsCenter.Application.Users.Queries.GetClients;
 
-namespace SportsCenter.Infrastructure.DAL.Handlers;
+namespace SportsCenter.Infrastructure.DAL.Handlers.ClientsHandlers;
 
 internal class GetClientsHandler : IRequestHandler<GetClients, IEnumerable<ClientDto>>
 {

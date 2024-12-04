@@ -58,5 +58,12 @@ namespace SportsCenter.Infrastructure.DAL.Repositories
             _dbContext.Zadanies.Remove(task);
             await _dbContext.SaveChangesAsync(cancellationToken);
         }
+
+        public async Task UpdateTaskAsync(Zadanie task, CancellationToken cancellationToken)
+        {
+            _dbContext.Zadanies.Update(task);
+            await _dbContext.SaveChangesAsync(cancellationToken);
+        }
+    
     }
 }

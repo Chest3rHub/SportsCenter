@@ -16,5 +16,6 @@ namespace SportsCenter.Core.Repositories
         Task AddTaskAsync(Zadanie task, CancellationToken cancellationToken);
         Task<Zadanie?> GetTaskByIdAsync(int id, CancellationToken cancellationToken);
         Task RemoveTaskAsync(Zadanie task, CancellationToken cancellationToken);
+        Task UpdateTaskAsync(Zadanie task, CancellationToken cancellationToken);
     }
 }

@@ -9,17 +9,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-
-//klasa do przypadku uzycia "dodawanie zadan to-do w swojej liscie"
+//klasa przeznaczona do realizacji przypadku "Dodawanie zadań to-do wybranemu pracownikowi administracyjnemu"
 
 namespace SportsCenter.Application.Employees.Commands.AddTask
 {
-    internal sealed class AddTaskHandler : IRequestHandler<AddTask, Unit>
+    internal sealed class AddTaskForAdmEmployeeHandler : IRequestHandler<AddTask, Unit>
     {
         private readonly IEmployeeRepository _employeeRepository;
         private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public AddTaskHandler(IEmployeeRepository employeeRepository, IHttpContextAccessor httpContextAccessor)
+        public AddTaskForAdmEmployeeHandler(IEmployeeRepository employeeRepository, IHttpContextAccessor httpContextAccessor)
         {
             _employeeRepository = employeeRepository;
             _httpContextAccessor = httpContextAccessor;
@@ -27,13 +26,19 @@ namespace SportsCenter.Application.Employees.Commands.AddTask
 
         public async Task<Unit> Handle(AddTask request, CancellationToken cancellationToken)
         {
-            //dodac wyciaganie id pracownika z sesji zeby sam sobie dodawal
+            var employee = await _employeeRepository.GetEmployeeByIdAsync(request.PracownikId, cancellationToken);
 
-            var pracownik = await _employeeRepository.GetEmployeeByIdAsync(request.PracownikId, cancellationToken);
-
-            if (pracownik == null)
+            if (employee == null)
             {
                 throw new EmployeeNotFoundException(request.PracownikId);
+            }
+
+            int employeeTypeId = employee.IdTypPracownika;
+
+            //2 to id zarezerowane w tebeli slownikowej TypPracownika dla pracownika Administracyjnego
+            if (employeeTypeId != 2)
+            {
+                throw new NotAdmEmployeeException(request.PracownikId);
             }
 
             var newTask = new Zadanie
@@ -49,4 +54,5 @@ namespace SportsCenter.Application.Employees.Commands.AddTask
             return Unit.Value;
         }
     }
+
 }

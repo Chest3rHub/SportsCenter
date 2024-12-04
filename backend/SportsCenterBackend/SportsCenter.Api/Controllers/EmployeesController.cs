@@ -14,6 +14,7 @@ using SportsCenter.Application.Employees.Commands.RemoveTask;
 using SportsCenter.Application.Employees.Queries.GetEmployees;
 using SportsCenter.Application.Employees.Queries.GetTasks;
 using SportsCenter.Application.Users.Commands.RegisterClient;
+using SportsCenter.Application.Employees.Commands.EditTask;
 
 
 namespace SportsCenter.Api.Controllers
@@ -56,11 +57,12 @@ namespace SportsCenter.Api.Controllers
             }
                 catch (Exception ex)
                 {
-                    return StatusCode(500, new { message = "Wystąpił błąd podczas wysyłania żądania", details = ex.Message });
+                    return StatusCode(500, new { message = "An error occurred while sending the request", details = ex.Message });
                 }
             }
-
-        [HttpPost("Add-task")]
+        
+        //dodawanie zadan samemu sobie
+        [HttpPost("Self-Add-task")]
         public async Task<IActionResult> AddTask([FromBody] AddTask task)
         {
             try
@@ -74,7 +76,31 @@ namespace SportsCenter.Api.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, new { message = "Wystąpił błąd podczas wysyłania żądania", details = ex.Message });
+                return StatusCode(500, new { message = "An error occurred while sending the request", details = ex.Message });
+
+            }
+        }
+
+        //dodawanie zadan pracownikowi administracyjunemu
+        [HttpPost("Add-task")]
+        public async Task<IActionResult> AddTaskForAdmEmployee([FromBody] AddTask task)
+        {
+            try
+            {
+                await Mediator.Send(task);
+                return NoContent();
+            }
+            catch (EmployeeNotFoundException ex)
+            {
+                return Conflict(new { message = ex.Message });
+            }
+            catch(NotAdmEmployeeException ex)
+            {
+                return Conflict(new { message = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "An error occurred while sending the request", details = ex.Message });
 
             }
         }
@@ -93,7 +119,7 @@ namespace SportsCenter.Api.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, new { message = "Wystąpił problem z usunięciem zadania.", error = ex.Message });
+                return StatusCode(500, new { message = "An error occurred while removing the task", error = ex.Message });
             }
         }
 
@@ -104,9 +130,26 @@ namespace SportsCenter.Api.Controllers
 
             if (tasks == null || !tasks.Any())
             {
-                return NotFound("No tasks found for the given employee.");
+                return NotFound("No tasks found for the given employee");
             }
             return Ok(tasks);  
+        }
+
+        [HttpPut("Edit-task")]
+        public async Task<IActionResult> UpdateTask(EditTask task, CancellationToken cancellationToken)
+        {
+            try
+            {
+                await Mediator.Send(task);
+                return NoContent();
+            }
+            catch (TaskNotFoundException ex)
+            {
+                return NotFound(new { message = ex.Message });
+            }catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "An error occurred while updating the task", error = ex.Message });
+            }
         }
     }
 }

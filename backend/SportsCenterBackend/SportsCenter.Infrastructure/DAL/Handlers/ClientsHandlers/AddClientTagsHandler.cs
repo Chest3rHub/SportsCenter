@@ -1,9 +1,9 @@
 using MediatR;
-using SportsCenter.Application.Users.Commands.AddClientTags;
 using SportsCenter.Application.Exceptions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using SportsCenter.Application.Exceptions.ClientsExceptions;
+using SportsCenter.Application.Clients.Commands.AddClientTags;
 
 namespace SportsCenter.Infrastructure.DAL.Handlers.ClientsHandlers
 {

@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using SportsCenter.Application.Exceptions;
 using SportsCenter.Application.Exceptions.EmployeesException;
+using SportsCenter.Application.Exceptions.UsersException;
 using SportsCenter.Application.Security;
 using SportsCenter.Core.Entities;
 using SportsCenter.Core.Repositories;
@@ -16,18 +17,20 @@ namespace SportsCenter.Application.Employees.Commands.RegisterEmployee
     internal class RegisterEmployeeHandler : IRequestHandler<RegisterEmployee, Unit>
     {
 
+        private readonly IUserRepository _userRepository;
         private readonly IEmployeeRepository _employeeRepository;
         private readonly IPasswordManager _passwordManager;
 
-        public RegisterEmployeeHandler(IEmployeeRepository employeeRepository, IPasswordManager passwordManager)
+        public RegisterEmployeeHandler(IUserRepository userRepository, IEmployeeRepository employeeRepository, IPasswordManager passwordManager)
         {
+            _userRepository = userRepository;
             _employeeRepository = employeeRepository;
             _passwordManager = passwordManager;
         }
         public async Task<Unit> Handle(RegisterEmployee request, CancellationToken cancellationToken)
         {
 
-            var existingUser = await _employeeRepository.GetEmployeeByEmailAsync(request.Email, cancellationToken);
+            var existingUser = await _userRepository.GetUserByEmailAsync(request.Email, cancellationToken);
             if (existingUser != null) throw new UserAlreadyExistsException(request.Email);
 
             var employeeType = await _employeeRepository.GetTypeOfEmployeeIdAsync(request.PositionName, cancellationToken);

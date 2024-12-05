@@ -1,7 +1,6 @@
 ﻿using MediatR;
-using SportsCenter.Application.Users.Queries.GetClientsByTags;
 using Microsoft.EntityFrameworkCore;
-using SportsCenter.Application.Users.Queries.GetClients;
+using SportsCenter.Application.Clients.Queries.GetClientsByTags;
 
 namespace SportsCenter.Infrastructure.DAL.Handlers.ClientsHandlers
 {

@@ -1,7 +1,7 @@
 ﻿using MediatR;
-using SportsCenter.Application.Users.Queries.GetClientsByAge;
 using Microsoft.EntityFrameworkCore;
 using SportsCenter.Core.Abstractions;
+using SportsCenter.Application.Clients.Queries.GetClientsByAge;
 
 namespace SportsCenter.Infrastructure.DAL.Handlers.ClientsHandlers
 {

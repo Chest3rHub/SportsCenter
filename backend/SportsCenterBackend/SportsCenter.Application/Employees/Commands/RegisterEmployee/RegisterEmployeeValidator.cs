@@ -1,5 +1,4 @@
 ﻿using FluentValidation;
-using SportsCenter.Application.Users.Commands.RegisterClient;
 using System;
 using System.Collections.Generic;
 using System.Linq;

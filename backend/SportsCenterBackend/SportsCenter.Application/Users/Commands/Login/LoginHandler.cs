@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using SportsCenter.Application.Exceptions;
+using SportsCenter.Application.Exceptions.UsersException;
 using SportsCenter.Application.Security;
 using SportsCenter.Core.Repositories;
 

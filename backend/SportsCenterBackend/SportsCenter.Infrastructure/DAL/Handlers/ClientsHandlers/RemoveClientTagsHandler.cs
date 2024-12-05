@@ -1,8 +1,8 @@
 using MediatR;
 using SportsCenter.Application.Exceptions;
 using Microsoft.EntityFrameworkCore;
-using SportsCenter.Application.Users.Commands.RemoveClientTags;
 using SportsCenter.Application.Exceptions.ClientsExceptions;
+using SportsCenter.Application.Clients.Commands.RemoveClientTags;
 
 namespace SportsCenter.Infrastructure.DAL.Handlers.ClientsHandlers;
 

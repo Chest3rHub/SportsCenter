@@ -1,6 +1,6 @@
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using SportsCenter.Application.Users.Commands.AddClientTags;
+using SportsCenter.Application.Clients.Commands.AddClientTags;
 using System.Threading;
 using System.Threading.Tasks;
 

@@ -1,20 +1,15 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using SportsCenter.Application.Exceptions;
 using SportsCenter.Application.Employees.Commands.RegisterEmployee;
-using FluentValidation;
 using SportsCenter.Application.Exceptions.EmployeesException;
-using SportsCenter.Application.Users.Queries.GetClients;
-using SportsCenter.Application.Employees.Queries;
 using SportsCenter.Application.Employees.Commands.AddTask;
-using System.Threading.Tasks;
 using SportsCenter.Application.Exceptions.TaskExceptions;
 using SportsCenter.Application.Employees.Commands.RemoveTask;
 using SportsCenter.Application.Employees.Queries.GetEmployees;
 using SportsCenter.Application.Employees.Queries.GetTasks;
-using SportsCenter.Application.Users.Commands.RegisterClient;
 using SportsCenter.Application.Employees.Commands.EditTask;
+using SportsCenter.Application.Exceptions.UsersException;
 
 
 namespace SportsCenter.Api.Controllers

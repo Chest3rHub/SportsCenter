@@ -4,8 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using SportsCenter.Application.Users.Queries;
-using SportsCenter.Application.Users.Queries.GetClients;
+using SportsCenter.Application.Clients.Queries.GetClients;
 
 namespace SportsCenter.Infrastructure.DAL.Handlers.ClientsHandlers;
 

@@ -2,20 +2,15 @@ using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using SportsCenter.Application.Users.Commands;
-using SportsCenter.Application.Users.Commands.Login;
-using SportsCenter.Application.Users.Commands.RegisterClient;
-using SportsCenter.Application.Users.Queries;
-using SportsCenter.Application.Users.Queries.GetClients;
-using SportsCenter.Application.Users.Queries.GetClientsByAge;
-using SportsCenter.Application.Users.Queries.GetClientsByTags;
-using SportsCenter.Infrastructure.DAL;
-using SportsCenter.Application.Exceptions;
-using SportsCenter.Application.Users.Commands.AccountDeposit;
-using SportsCenter.Application.Users.Commands.AddClientTags;
-using SportsCenter.Application.Users.Commands.RemoveClientTags;
-using SportsCenter.Core.Entities;
 using SportsCenter.Application.Exceptions.ClientsExceptions;
+using SportsCenter.Application.Clients.Commands.AddClientTags;
+using SportsCenter.Application.Clients.Commands.AddDeposit;
+using SportsCenter.Application.Clients.Commands.RegisterClient;
+using SportsCenter.Application.Clients.Commands.RemoveClientTags;
+using SportsCenter.Application.Exceptions.UsersException;
+using SportsCenter.Application.Clients.Queries.GetClients;
+using SportsCenter.Application.Clients.Queries.GetClientsByAge;
+using SportsCenter.Application.Clients.Queries.GetClientsByTags;
 
 namespace SportsCenter.Api.Controllers;
 
@@ -34,7 +29,7 @@ public class ClientsController : BaseController
 
     [AllowAnonymous]
     [HttpPost]
-    public async Task<IActionResult> ShowClientAsync([FromBody] RegisterClient registerClient)
+    public async Task<IActionResult> GetClientAsync([FromBody] RegisterClient registerClient)
     {
         var validationResults = new RegisterClientValidator().Validate(registerClient);
         if (!validationResults.IsValid)
@@ -50,26 +45,6 @@ public class ClientsController : BaseController
         catch (UserAlreadyExistsException ex)
         {
             return Conflict(new { message = ex.Message });
-        }
-        catch (Exception ex)
-        {
-            return StatusCode(500, new { message = "Wystąpił błąd podczas wysyłania żądania", details = ex.Message });
-        }
-    }
-
-
-    [AllowAnonymous]
-    [HttpPost("login")]
-    public async Task<IActionResult> LoginAsync([FromBody] Login loginCommand)
-    {
-        try
-        {
-            var loginResponse = await Mediator.Send(loginCommand);
-            return Ok(loginResponse);
-        }
-        catch (InvalidLoginException ex)
-        {
-            return Conflict(new {message = ex.Message});
         }
         catch (Exception ex)
         {

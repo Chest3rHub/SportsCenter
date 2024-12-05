@@ -1,4 +1,4 @@
-using SportsCenter.Application.Exceptions;
+using SportsCenter.Application.Exceptions.UsersException;
 using SportsCenter.Application.Users.Commands.RegisterClient;
 using SportsCenter.Core.Entities;
 using SportsCenter.Tests.Unit.TestObjects;

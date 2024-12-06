@@ -27,6 +27,11 @@ public class FakeUserRepository : IUserRepository
         return Task.FromResult(_osoby.SingleOrDefault(e => e.Email == email));
     }
 
+    public Task<Osoba?> GetUserByEmailWithRoleAsync(string email, CancellationToken cancellationToken)
+    {
+        throw new NotImplementedException();
+    }
+
     public Task<Osoba?> GetUserByIdAsync(int id, CancellationToken cancellationToken)
     {
         return Task.FromResult(_osoby.SingleOrDefault(e => e.OsobaId ==  id));

@@ -21,7 +21,7 @@ namespace SportsCenter.Application.Users.Commands.Login
 
         public async Task<LoginResponse> Handle(Login request, CancellationToken cancellationToken)
         {
-            var user = await _userRepository.GetUserByEmailAsync(request.Email, cancellationToken);
+            var user = await _userRepository.GetUserByEmailWithRoleAsync(request.Email, cancellationToken);
             if (user == null || !_passwordManager.Validate(request.Password, user.Haslo))
             {
                 throw new InvalidLoginException();

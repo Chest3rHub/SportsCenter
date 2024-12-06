@@ -16,7 +16,17 @@ public class UserRepository : IUserRepository
     public Task<Osoba?> GetUserByEmailAsync(string email, CancellationToken cancellationToken)
     {
         return _dbContext.Osobas.Where(o => o.Email == email).FirstOrDefaultAsync(cancellationToken: cancellationToken);
-    }    
+    }
+
+    public Task<Osoba?> GetUserByEmailWithRoleAsync(string email, CancellationToken cancellationToken)
+    {
+        return _dbContext.Osobas
+            .Include(o => o.Klient)
+            .Include(o => o.Pracownik)
+            .ThenInclude(p => p.IdTypPracownikaNavigation)
+            .Where(o => o.Email == email)
+            .FirstOrDefaultAsync(cancellationToken: cancellationToken);
+    }
 
     public Task<Osoba?> GetUserByIdAsync(int id, CancellationToken cancellationToken)
     {

@@ -96,12 +96,12 @@ public class ClientsController : BaseController
     }
     
     [HttpPost("addTags")]
-    public async Task<IActionResult> AddClientTagsAsync([FromBody] AddClientTags command)
+    public async Task<IActionResult> AddClientTagsAsync([FromBody] AddClientTags addClientTags)
     {
         
         try
         {
-            await Mediator.Send(command);
+            await Mediator.Send(addClientTags);
             return NoContent();
         }
         catch (ClientNotFoundException ex)

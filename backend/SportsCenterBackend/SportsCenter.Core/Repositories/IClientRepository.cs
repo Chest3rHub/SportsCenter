@@ -13,5 +13,7 @@ namespace SportsCenter.Core.Repositories
         Task<Klient?> GetClientByEmailAsync(string email, CancellationToken cancellationToken);
         Task<Klient?> GetClientByIdAsync(int id, CancellationToken cancellationToken);
         Task UpdateClientAsync(Klient client, CancellationToken cancellationToken);
+
+        Task<Tag?> GetTagById(int id, CancellationToken cancellationToken);
     }
 }

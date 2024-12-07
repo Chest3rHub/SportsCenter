@@ -14,7 +14,7 @@ public partial class GrafikZajecKlient
 
     public bool CzyUwzglednicSprzet { get; set; }
 
-    public virtual GrafikZajec GrafikZajec { get; set; } = null!;
+    public virtual SportActivitySchedule SportActivitySchedule { get; set; } = null!;
 
     public virtual Klient Klient { get; set; } = null!;
 

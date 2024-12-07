@@ -8,7 +8,7 @@ public partial class Pracownik
 
     public DateOnly DataZatrudnienia { get; set; }
 
-    public virtual ICollection<GrafikZajec> GrafikZajecs { get; set; } = new List<GrafikZajec>();
+    public virtual ICollection<SportActivitySchedule> GrafikZajecs { get; set; } = new List<SportActivitySchedule>();
 
     public virtual TypPracownika IdTypPracownikaNavigation { get; set; } = null!;
 

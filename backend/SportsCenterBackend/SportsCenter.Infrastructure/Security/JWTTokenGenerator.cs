@@ -38,7 +38,7 @@ namespace SportsCenter.Infrastructure.Security
             {
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                 new Claim("userId", osoba.OsobaId.ToString()),
-                new Claim(ClaimTypes.Role, role)
+                new Claim("role", role)
             };
 
             var tokenDescriptor = new JwtSecurityToken(

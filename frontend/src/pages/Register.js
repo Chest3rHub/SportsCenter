@@ -9,6 +9,8 @@ import OwnerSidebar from '../components/OwnerSidebar'
 import API_URL from '../appConfig';
 import '../styles/auth.css';
 import { SportsContext } from '../context/SportsContext';
+import registerRequest from '../api/registerRequest';
+import CustomInput from '../components/CustomInput';
 function Register() {
 
     const { dictionary, toggleLanguage } = useContext(SportsContext);
@@ -23,6 +25,16 @@ function Register() {
       password: '',
       confirmPassword: ''
     });
+
+    const [firstNameError, setFirstNameError] = useState(false);
+    const [lastNameError, setLastNameError] = useState(false);
+    const [birthDateError, setBirthDateError] = useState(false);
+    const [emailError, setEmailError] = useState(false);
+    const [passwordError, setPasswordError] = useState(false);
+    const [confirmPasswordError, setConfirmPasswordError] = useState(false);
+
+
+
 
     function handleError(textToDisplay) {
       navigate('/error', {
@@ -49,21 +61,7 @@ function Register() {
       }
   
       try {
-        const response = await fetch(`${API_URL}/clients`, { 
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            imie: formData.firstName,
-            nazwisko: formData.lastName,
-            email: formData.email,
-            haslo: formData.password,
-            dataUr: formData.birthDate,
-            nrTel: formData.phoneNumber,
-            adres: formData.address,
-          }),
-        });
+        const response = await registerRequest(formData);
   
         if (!response.ok) {
           const errorData = await response.json();
@@ -83,80 +81,116 @@ function Register() {
     <>
     <Navbar/>
     <OwnerSidebar/>
-    <GreenBackground height={"75vh"} marginTop={"5vh"}>
+    <GreenBackground height={"80vh"} marginTop={"2vh"}>
         <Header>{dictionary.registerPage.title}</Header>
         <OrangeBackground width="70%">
         <form onSubmit={handleSubmit}>
-        <table>
-        <tr>
-            <td class="right-align">
-              <label htmlFor="firstName">{dictionary.registerPage.firstNameLabel}</label>
-            </td>
-            <td class="center-align">
-              <input type="text" id="firstName" name="firstName" className='one-register-input' required onChange={handleChange}/>
-            </td>
-        </tr>
-        <tr>
-            <td class="right-align">
-              <label htmlFor="lastName">{dictionary.registerPage.lastNameLabel}</label>
-            </td>
-            <td class="center-align">
-              <input type="text" id="lastName" name="lastName" className='one-register-input' required onChange={handleChange}/>
-            </td>
-        </tr>
-        <tr>
-            <td class="right-align">
-              <label htmlFor="address">{dictionary.registerPage.addressLabel}</label>
-            </td>
-            <td class="center-align">
-              <input type="text" id="address" name="address" className='one-register-input' onChange={handleChange}/>
-            </td>
-        </tr>
-        <tr>
-            <td class="right-align">
-              <label htmlFor="birthDate">{dictionary.registerPage.dateOfBirthLabel}</label>
-            </td>
-            <td>
-              <input type="date" id="birthDate" name="birthDate" className='one-register-input' onChange={handleChange}/>
-            </td>
-        </tr>
-        <tr>
-            <td class="right-align">
-              <label htmlFor="phoneNumber">{dictionary.registerPage.phoneNumberLabel}</label>
-            </td>
-            <td class="center-align">
-              <input type="tel" id="phoneNumber" name="phoneNumber" className='one-register-input' onChange={handleChange}/>
-            </td>
-        </tr>
-        <tr>
-            <td class="right-align">
-              <label htmlFor="email">{dictionary.registerPage.emailLabel}</label>
-            </td>
-            <td class="center-align">
-              <input type="email" id="email" name="email" className='one-register-input' required onChange={handleChange}/>
-            </td>
-        </tr>
-        <tr>
-            <td class="right-align">
-              <label htmlFor="password">{dictionary.registerPage.passwordLabel}</label></td>
-            <td class="center-align">
-              <input type="password" id="password" name="password" className='one-register-input' required onChange={handleChange}/></td>
-        </tr>
-        <tr>
-            <td class="right-align">
-              <label htmlFor="confirmPassword">{dictionary.registerPage.confirmPasswordLabel}</label></td>
-            <td class="center-align">
-              <input type="password" id="confirmPassword" name="confirmPassword" className='one-register-input' required onChange={handleChange}/>
-            </td>
-        </tr>
-        <tr>
-            <td class="right-align"></td>
-            <td class="center-align">
+          <div style={{ display: "flex", flexDirection: "column", gap: "1rem", marginBottom: "2vh", }}>
+          <CustomInput
+                label={dictionary.registerPage.firstNameLabel}
+                type="text"
+                id="firstName"
+                name="firstName"
+                fullWidth
+                value={formData.firstName}
+                onChange={handleChange}
+                error={firstNameError}
+                helperText={firstNameError ? 'wpisac' : ""}
+                required
+                size="small"
+              />
+          <CustomInput
+                label={dictionary.registerPage.lastNameLabel}
+                type="text"
+                id="lastName"
+                name="lastName"
+                fullWidth
+                value={formData.lastName}
+                onChange={handleChange}
+                error={lastNameError}
+                helperText={lastNameError ? 'wpisac' : ""}
+                required
+                size="small"
+              />
+          <CustomInput
+                label={dictionary.registerPage.addressLabel}
+                type="text"
+                id="address"
+                name="address"
+                fullWidth
+                value={formData.address}
+                onChange={handleChange}
+                size="small"
+                
+              />
+          <CustomInput
+                label={dictionary.registerPage.dateOfBirthLabel}
+                type="date"
+                id="birthDate"
+                name="birthDate"
+                fullWidth
+                value={formData.birthDate}
+                onChange={handleChange}
+                error={birthDateError}
+                helperText={birthDateError ? 'wpisac' : ""}
+                required
+                size="small"
+                InputLabelProps={{
+                  shrink: true
+                }}
+              />
+          <CustomInput
+                label={dictionary.registerPage.phoneNumberLabel}
+                type="tel"
+                id="phoneNumber"
+                name="phoneNumber"
+                fullWidth
+                value={formData.phoneNumber}
+                onChange={handleChange}
+                size="small"
+              />
+          <CustomInput
+                label={dictionary.registerPage.emailLabel}
+                type="email"
+                id="email"
+                name="email"
+                fullWidth
+                value={formData.email}
+                onChange={handleChange}
+                error={emailError}
+                helperText={emailError ? 'wpisac' : ""}
+                required
+                size="small"
+              />
+            <CustomInput
+                label={dictionary.registerPage.passwordLabel}
+                type="password"
+                id="password"
+                name="password"
+                fullWidth
+                value={formData.password}
+                onChange={handleChange}
+                error={passwordError}
+                helperText={passwordError ? 'wpisac' : ""}
+                required
+                size="small"
+              />
+          <CustomInput
+                label={dictionary.registerPage.confirmPasswordLabel}
+                type="password"
+                id="confirmPassword"
+                name="confirmPassword"
+                fullWidth
+                value={formData.confirmPassword}
+                onChange={handleChange}
+                error={confirmPasswordError}
+                helperText={confirmPasswordError ? 'wpisac' : ""}
+                required
+                size="small"
+              />
               <GreenButton type="submit">{dictionary.registerPage.signUpLabel}</GreenButton>
-            </td>
-        </tr>
-    </table>
-        </form>
+          </div>
+                </form>
         </OrangeBackground>
         
        </GreenBackground>

@@ -20,6 +20,7 @@ export default {
       passwordLabel: 'Hasło',
       forgotPasswordLabel: 'Nie pamiętam hasła',
       signInLabel: 'Zaloguj',
+      incorrectLoginLabel: "Niepoprawny login lub hasło",
     },
     errorPage: {
         returnLabel: 'Wróć',

@@ -20,6 +20,7 @@ export default {
       passwordLabel: 'Password',
       forgotPasswordLabel: 'Forgot password',
       signInLabel: 'Sign in',
+      incorrectLoginLabel: "Incorrect login or password",
     },
     errorPage: {
         returnLabel: 'Return',

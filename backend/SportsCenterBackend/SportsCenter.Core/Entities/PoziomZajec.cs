@@ -6,5 +6,5 @@ public partial class PoziomZajec
 
     public string Nazwa { get; set; } = null!;
 
-    public virtual ICollection<Zajecium> Zajecia { get; set; } = new List<Zajecium>();
+    public virtual ICollection<SportActivity> Zajecia { get; set; } = new List<SportActivity>();
 }

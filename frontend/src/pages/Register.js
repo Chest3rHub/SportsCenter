@@ -90,7 +90,7 @@ function Register() {
         <table>
         <tr>
             <td class="right-align">
-              <label htmlFor="firstName">*Imię:</label>
+              <label htmlFor="firstName">{dictionary.registerPage.firstNameLabel}</label>
             </td>
             <td class="center-align">
               <input type="text" id="firstName" name="firstName" className='one-register-input' required onChange={handleChange}/>
@@ -98,7 +98,7 @@ function Register() {
         </tr>
         <tr>
             <td class="right-align">
-              <label htmlFor="lastName">*Nazwisko:</label>
+              <label htmlFor="lastName">{dictionary.registerPage.lastNameLabel}</label>
             </td>
             <td class="center-align">
               <input type="text" id="lastName" name="lastName" className='one-register-input' required onChange={handleChange}/>
@@ -106,7 +106,7 @@ function Register() {
         </tr>
         <tr>
             <td class="right-align">
-              <label htmlFor="address">Adres:</label>
+              <label htmlFor="address">{dictionary.registerPage.addressLabel}</label>
             </td>
             <td class="center-align">
               <input type="text" id="address" name="address" className='one-register-input' onChange={handleChange}/>
@@ -114,7 +114,7 @@ function Register() {
         </tr>
         <tr>
             <td class="right-align">
-              <label htmlFor="birthDate">*Data urodzenia:</label>
+              <label htmlFor="birthDate">{dictionary.registerPage.dateOfBirthLabel}</label>
             </td>
             <td>
               <input type="date" id="birthDate" name="birthDate" className='one-register-input' onChange={handleChange}/>
@@ -122,7 +122,7 @@ function Register() {
         </tr>
         <tr>
             <td class="right-align">
-              <label htmlFor="phoneNumber">*Numer telefonu:</label>
+              <label htmlFor="phoneNumber">{dictionary.registerPage.phoneNumberLabel}</label>
             </td>
             <td class="center-align">
               <input type="tel" id="phoneNumber" name="phoneNumber" className='one-register-input' onChange={handleChange}/>
@@ -130,7 +130,7 @@ function Register() {
         </tr>
         <tr>
             <td class="right-align">
-              <label htmlFor="email">*E-mail:</label>
+              <label htmlFor="email">{dictionary.registerPage.emailLabel}</label>
             </td>
             <td class="center-align">
               <input type="email" id="email" name="email" className='one-register-input' required onChange={handleChange}/>
@@ -138,13 +138,13 @@ function Register() {
         </tr>
         <tr>
             <td class="right-align">
-              <label htmlFor="password">*Hasło:</label></td>
+              <label htmlFor="password">{dictionary.registerPage.passwordLabel}</label></td>
             <td class="center-align">
               <input type="password" id="password" name="password" className='one-register-input' required onChange={handleChange}/></td>
         </tr>
         <tr>
             <td class="right-align">
-              <label htmlFor="confirmPassword">*Powtórz hasło:</label></td>
+              <label htmlFor="confirmPassword">{dictionary.registerPage.confirmPasswordLabel}</label></td>
             <td class="center-align">
               <input type="password" id="confirmPassword" name="confirmPassword" className='one-register-input' required onChange={handleChange}/>
             </td>
@@ -152,7 +152,7 @@ function Register() {
         <tr>
             <td class="right-align"></td>
             <td class="center-align">
-              <GreenButton type="submit">Utwórz konto</GreenButton>
+              <GreenButton type="submit">{dictionary.registerPage.signUpLabel}</GreenButton>
             </td>
         </tr>
     </table>

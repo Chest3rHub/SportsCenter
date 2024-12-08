@@ -7,6 +7,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
+using SportsCenter.Application.Exceptions.UsersException;
 
 namespace SportsCenter.Infrastructure.Security
 {
@@ -31,11 +32,13 @@ namespace SportsCenter.Infrastructure.Security
             var signingKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSecret));
             var signingCredentials = new SigningCredentials(signingKey, SecurityAlgorithms.HmacSha256);
 
-            // dodać do tokena rolę użytkownika 
+            var role = DetermineUserRole(osoba);
+
             var claims = new[]
             {
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                new Claim("userId", osoba.OsobaId.ToString())
+                new Claim("userId", osoba.OsobaId.ToString()),
+                new Claim("role", role)
             };
 
             var tokenDescriptor = new JwtSecurityToken(
@@ -52,6 +55,17 @@ namespace SportsCenter.Infrastructure.Security
         public string GenerateRefreshToken()
         {
             return Convert.ToBase64String(RandomNumberGenerator.GetBytes(64));
+        }
+
+        private string DetermineUserRole(Osoba osoba)
+        {
+            if (osoba.Klient != null)
+                return "Klient";
+
+            if (osoba.Pracownik != null && osoba.Pracownik.IdTypPracownikaNavigation?.Nazwa != null)
+                return osoba.Pracownik.IdTypPracownikaNavigation.Nazwa;
+
+            throw new InvalidUserRoleException();
         }
     }
 }

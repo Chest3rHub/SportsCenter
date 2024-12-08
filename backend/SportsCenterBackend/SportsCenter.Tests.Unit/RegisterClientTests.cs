@@ -1,5 +1,5 @@
+using SportsCenter.Application.Clients.Commands.RegisterClient;
 using SportsCenter.Application.Exceptions.UsersException;
-using SportsCenter.Application.Users.Commands.RegisterClient;
 using SportsCenter.Core.Entities;
 using SportsCenter.Tests.Unit.TestObjects;
 
@@ -13,14 +13,20 @@ public class RegisterClientTests
         // Arrange
         var request = new RegisterClient("John", "Doe", "john.doe@example.com", "password", DateTime.Now, "123456789",
             "123 Main St");
-        var handler = new RegisterClientHandler(new FakeUserRepository(new List<Osoba>
-        {
-            new()
-            {
-                Email = "john.doe@example.com"
-            }
-        }), new FakePasswordManager());
 
+        var fakeUserRepository = new FakeUserRepository(new List<Osoba>
+    {
+        new Osoba { Email = "john.doe@example.com" } 
+    });
+
+        var fakePasswordManager = new FakePasswordManager();
+
+        var handler = new RegisterClientHandler(
+            fakeUserRepository, 
+            null,              
+            fakePasswordManager 
+        );
+       
         // Act & Assert
         await Assert.ThrowsAsync<UserAlreadyExistsException>(() =>
             handler.Handle(request, CancellationToken.None));

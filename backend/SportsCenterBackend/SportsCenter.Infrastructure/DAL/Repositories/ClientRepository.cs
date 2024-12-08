@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Azure.Core;
+using Microsoft.EntityFrameworkCore;
 using SportsCenter.Core.Entities;
 using SportsCenter.Core.Repositories;
 using System;
@@ -44,5 +45,9 @@ namespace SportsCenter.Infrastructure.DAL.Repositories
             await _dbContext.SaveChangesAsync(cancellationToken);
         }
 
+        public async Task<Tag?> GetTagById(int id, CancellationToken cancellationToken)
+        {
+            return await _dbContext.Tags.Where(o => o.TagId == id).FirstOrDefaultAsync(cancellationToken: cancellationToken);
+        }
     }
 }

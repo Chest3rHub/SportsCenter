@@ -18,7 +18,7 @@ public partial class SportsCenterDbContext : DbContext
 
     public virtual DbSet<DataZajec> DataZajecs { get; set; }
 
-    public virtual DbSet<GrafikZajec> GrafikZajecs { get; set; }
+    public virtual DbSet<SportActivitySchedule> GrafikZajecs { get; set; }
 
     public virtual DbSet<GrafikZajecKlient> GrafikZajecKlients { get; set; }
 
@@ -46,7 +46,7 @@ public partial class SportsCenterDbContext : DbContext
 
     public virtual DbSet<Zadanie> Zadanies { get; set; }
 
-    public virtual DbSet<Zajecium> Zajecia { get; set; }
+    public virtual DbSet<SportActivity> Zajecia { get; set; }
 
     public virtual DbSet<Zamowienie> Zamowienies { get; set; }
 
@@ -78,13 +78,13 @@ public partial class SportsCenterDbContext : DbContext
             entity.Property(e => e.Date).HasColumnType("datetime");
             entity.Property(e => e.GrafikZajecId).HasColumnName("GrafikZajecID");
 
-            entity.HasOne(d => d.GrafikZajec).WithMany(p => p.DataZajecs)
+            entity.HasOne(d => d.SportActivitySchedule).WithMany(p => p.DataZajecs)
                 .HasForeignKey(d => d.GrafikZajecId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
+                .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("DataZajec_GrafikZajec");
         });
 
-        modelBuilder.Entity<GrafikZajec>(entity =>
+        modelBuilder.Entity<SportActivitySchedule>(entity =>
         {
             entity.HasKey(e => e.GrafikZajecId).HasName("GrafikZajec_pk");
 
@@ -99,17 +99,17 @@ public partial class SportsCenterDbContext : DbContext
 
             entity.HasOne(d => d.Kort).WithMany(p => p.GrafikZajecs)
                 .HasForeignKey(d => d.KortId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
+                .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("GrafikZajec_Kort");
 
             entity.HasOne(d => d.Pracownik).WithMany(p => p.GrafikZajecs)
                 .HasForeignKey(d => d.PracownikId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
+                .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("GrafikZajec_Pracownik");
 
             entity.HasOne(d => d.Zajecia).WithMany(p => p.GrafikZajecs)
                 .HasForeignKey(d => d.ZajeciaId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
+                .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("GrafikZajec_Zajecia");
         });
 
@@ -123,7 +123,7 @@ public partial class SportsCenterDbContext : DbContext
             entity.Property(e => e.GrafikZajecId).HasColumnName("GrafikZajecID");
             entity.Property(e => e.KlientId).HasColumnName("KlientID");
 
-            entity.HasOne(d => d.GrafikZajec).WithMany(p => p.GrafikZajecKlients)
+            entity.HasOne(d => d.SportActivitySchedule).WithMany(p => p.GrafikZajecKlients)
                 .HasForeignKey(d => d.GrafikZajecId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("Table_34_GrafikZajec");
@@ -345,7 +345,7 @@ public partial class SportsCenterDbContext : DbContext
                 .HasConstraintName("Zadanie_PracownikZlecajacy");
         });
 
-        modelBuilder.Entity<Zajecium>(entity =>
+        modelBuilder.Entity<SportActivity>(entity =>
         {
             entity.HasKey(e => e.ZajeciaId).HasName("Zajecia_pk");
 
@@ -354,7 +354,7 @@ public partial class SportsCenterDbContext : DbContext
 
             entity.HasOne(d => d.IdPoziomZajecNavigation).WithMany(p => p.Zajecia)
                 .HasForeignKey(d => d.IdPoziomZajec)
-                .OnDelete(DeleteBehavior.ClientSetNull)
+                .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("Zajecia_PoziomZajec");
         });
 

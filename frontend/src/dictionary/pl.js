@@ -4,6 +4,15 @@ export default {
     },
     registerPage: {
       title: 'Rejestracja',
+      firstNameLabel: '*Imię',
+      lastNameLabel: '*Nazwisko',
+      addressLabel: 'Adres',
+      dateOfBirthLabel: '*Data urodzenia',
+      phoneNumberLabel: '*Numer telefonu',
+      emailLabel: '*E-mail',
+      passwordLabel: '*Hasło',
+      confirmPasswordLabel: '*Powtórz hasło',
+      signUpLabel: 'Utwórz konto',
     },
     loginPage: {
       title: 'Logowanie',

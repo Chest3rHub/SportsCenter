@@ -27,37 +27,19 @@ public class FakeUserRepository : IUserRepository
         return Task.FromResult(_osoby.SingleOrDefault(e => e.Email == email));
     }
 
-    public Task AddClientAsync(Klient client, CancellationToken cancellationToken)
+    public Task<Osoba?> GetUserByEmailWithRoleAsync(string email, CancellationToken cancellationToken)
     {
-        _klienci.Add(client);
-        return Task.CompletedTask;
+        throw new NotImplementedException();
     }
 
-    public Task<Klient?> GetClientByIdAsync(int id, CancellationToken cancellationToken)
+    public Task<Osoba?> GetUserByIdAsync(int id, CancellationToken cancellationToken)
     {
-        // nie testowalem, wrzucam zeby usunac bledy z projektu
-        return Task.FromResult(_klienci.FirstOrDefault(e => e.KlientId == id));
+        return Task.FromResult(_osoby.SingleOrDefault(e => e.OsobaId ==  id));
     }
 
-    public Task<Klient?> GetClientByEmailAsync(string email, CancellationToken cancellationToken)
+    public Task UpdateUserAsync(Osoba user, CancellationToken cancellationToken)
     {
-        // nie testowalem, wrzucam zeby usunac bledy z projektu
-        return Task.FromResult(
-            _klienci
-                .Join(
-                    _osoby,
-                    klient => klient.KlientId,
-                    osoba => osoba.OsobaId,
-                    (klient, osoba) => new { Klient = klient, Osoba = osoba }
-                )
-                .Where(joined => joined.Osoba.Email == email)
-                .Select(joined => joined.Klient)
-                .SingleOrDefault()
-        );
-
-    }
-    public Task UpdateClientAsync(Klient client, CancellationToken cancellationToken)
-    {
-        return Task.CompletedTask;
+        throw new NotImplementedException();
     }
 }
+  

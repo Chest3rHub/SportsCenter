@@ -98,7 +98,6 @@ public class ClientsController : BaseController
     [HttpPost("addTags")]
     public async Task<IActionResult> AddClientTagsAsync([FromBody] AddClientTags addClientTags)
     {
-        
         try
         {
             await Mediator.Send(addClientTags);
@@ -126,7 +125,6 @@ public class ClientsController : BaseController
         {
             return BadRequest(validationResults.Errors);
         }
-        
         try
         {
             await Mediator.Send(removeClientTags);
@@ -141,7 +139,7 @@ public class ClientsController : BaseController
             return StatusCode(500, new { message = "Wystąpił błąd podczas usuwania tagów", details = ex.Message });
         }
     }
+}
 
     
 
-}

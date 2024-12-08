@@ -38,6 +38,7 @@ public static class Extensions
         services.AddScoped<IClientRepository, ClientRepository>();
         services.AddScoped<IEmployeeRepository, EmployeeRepository>();
         services.AddScoped<ISportActivityRepository, SportActivityRepository>();
+        services.AddScoped<ITagRepository, TagRepository>();
         services.AddScoped<IJWTTokenGenerator, JWTTokenGenerator>();
 
         //Security

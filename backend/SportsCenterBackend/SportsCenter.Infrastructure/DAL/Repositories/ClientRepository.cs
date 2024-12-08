@@ -49,5 +49,27 @@ namespace SportsCenter.Infrastructure.DAL.Repositories
         {
             return await _dbContext.Tags.Where(o => o.TagId == id).FirstOrDefaultAsync(cancellationToken: cancellationToken);
         }
+        
+        public async Task<bool> RemoveClientTagsAsync(int clientId, List<int> tagIds, CancellationToken cancellationToken)
+        {
+            var client = await _dbContext.Klients
+                .Include(c => c.Tags)
+                .FirstOrDefaultAsync(c => c.KlientId == clientId, cancellationToken);
+
+            if (client == null)
+                return false;
+            
+            var tagsToRemove = client.Tags.Where(t => tagIds.Contains(t.TagId)).ToList();
+            if (!tagsToRemove.Any())
+                return false;
+            
+            foreach (var tag in tagsToRemove)
+            {
+                client.Tags.Remove(tag); 
+            }
+            
+            await _dbContext.SaveChangesAsync(cancellationToken);
+            return true;
+        }
     }
 }

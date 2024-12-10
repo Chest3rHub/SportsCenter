@@ -15,5 +15,6 @@ namespace SportsCenter.Core.Repositories
         Task UpdateClientAsync(Klient client, CancellationToken cancellationToken);
 
         Task<Tag?> GetTagById(int id, CancellationToken cancellationToken);
+        Task<bool> RemoveClientTagsAsync(int clientId, List<int> tagIds, CancellationToken cancellationToken);
     }
 }

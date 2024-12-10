@@ -83,7 +83,7 @@ function Login() {
         <Header>{dictionary.loginPage.title}</Header>
         <OrangeBackground width="70%">
           <form onSubmit={handleSubmit}>
-            <div style={{ marginBottom: "16px" }}>
+            <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
               <CustomInput
                 label={dictionary.loginPage.emailLabel}
                 type="email"
@@ -96,8 +96,6 @@ function Login() {
                 helperText={emailError ? dictionary.loginPage.emailError : ""}
                 required
               />
-            </div>
-            <div style={{ marginBottom: "16px" }}>
               <CustomInput
                 label={dictionary.loginPage.passwordLabel}
                 type="password"
@@ -112,16 +110,14 @@ function Login() {
                 }
                 required
               />
-            </div>
             <div style={{ textAlign: "center" }}>
               <GreenButton type="submit">
                 {dictionary.loginPage.signInLabel}
               </GreenButton>
-            </div>
-            <div style={{ textAlign: "center", marginTop: "16px" }}>
               <Link to="/reset-password" className="forgot-password">
                 {dictionary.loginPage.forgotPasswordLabel}
               </Link>
+              </div>
             </div>
           </form>
         </OrangeBackground>

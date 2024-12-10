@@ -8,10 +8,11 @@
     margin-right: auto;
     
     padding-top: 7vh;
-    padding-bottom: 0px;
+    padding-bottom: 3vh;
 }
 .centered-content{
     display: flex;
     flex-direction: column;
     justify-content: center;
+    flex-grow: 1;
 }

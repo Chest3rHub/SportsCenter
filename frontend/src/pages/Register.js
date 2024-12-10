@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext , useEffect} from 'react';
 import { useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
 import GreenButton from '../components/GreenButton';
@@ -6,7 +6,6 @@ import GreenBackground from '../components/GreenBackground';
 import OrangeBackground from '../components/OrangeBackground';
 import Navbar from '../components/Navbar';
 import OwnerSidebar from '../components/OwnerSidebar'
-import API_URL from '../appConfig';
 import '../styles/auth.css';
 import { SportsContext } from '../context/SportsContext';
 import registerRequest from '../api/registerRequest';
@@ -26,13 +25,101 @@ function Register() {
       confirmPassword: ''
     });
 
-    const [firstNameError, setFirstNameError] = useState(false);
-    const [lastNameError, setLastNameError] = useState(false);
-    const [birthDateError, setBirthDateError] = useState(false);
-    const [emailError, setEmailError] = useState(false);
-    const [passwordError, setPasswordError] = useState(false);
-    const [confirmPasswordError, setConfirmPasswordError] = useState(false);
+    
+    const[firstNameError, setFirstNameError] = useState(false);
+    const[lastNameError, setLastNameError] = useState(false);
 
+    const[addressError, setAddressError] = useState(false);
+
+    const[birthDateError, setBirthDateError] = useState(false);
+
+    const[phoneNumberError, setPhoneNumberError] = useState(false);
+
+    const[emailError, setEmailError] = useState(false);
+    const[emailIsTakenError, setEmailIsTakenError] = useState(false);
+
+    const[passwordError, setPasswordError] = useState(false);
+
+    const[confirmPasswordError, setConfirmPasswordError] = useState(false);
+
+
+    const validateForm = () => {
+      let isValid = true;
+  
+      
+      if (formData.firstName.length < 2 || formData.firstName.length > 50) {
+        isValid = false;
+        setFirstNameError(true);
+      } else {
+        setFirstNameError(false);
+      }
+  
+      
+      if (formData.lastName.length < 2 || formData.lastName.length > 50) {
+        isValid = false;
+        setLastNameError(true);
+      } else {
+        setLastNameError(false);
+      }
+  
+      
+      if (formData.address.length < 5 || formData.address.length > 100) {
+        isValid = false;
+        setAddressError(true);
+      } else {
+        setAddressError(false);
+      }
+  
+      
+      const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+      if (!emailRegex.test(formData.email)) {
+        isValid = false;
+        setEmailError(true);
+        setEmailIsTakenError(false);
+      } else {
+        setEmailError(false);
+        setEmailIsTakenError(false);
+      }
+  
+      
+      if (formData.password.length < 6) {
+        isValid = false;
+        setPasswordError(true);
+      } else {
+        setPasswordError(false);
+      }
+  
+      
+      if (formData.password !== formData.confirmPassword) {
+        isValid = false;
+        setConfirmPasswordError(true);
+      } else {
+        setConfirmPasswordError(false);
+      }
+  
+      
+      const birthDate = new Date(formData.birthDate);
+      const age = new Date().getFullYear() - birthDate.getFullYear();
+      const month = new Date().getMonth() - birthDate.getMonth();
+      if (age < 18 || (age === 18 && month < 0)) {
+        isValid = false;
+        setBirthDateError(true);
+      } else {
+        setBirthDateError(false);
+      }
+  
+      
+      const phoneRegex = /^[0-9]{3}[0-9]{3}[0-9]{3}$/;
+      if (!phoneRegex.test(formData.phoneNumber)) {
+        isValid = false;
+        setPhoneNumberError(true);
+      } else {
+        setPhoneNumberError(false);
+      }
+  
+      
+      return isValid;
+    };
 
 
 
@@ -41,6 +128,7 @@ function Register() {
           state: { message: textToDisplay }
       });
   }
+  
   
     const navigate = useNavigate();
   
@@ -54,11 +142,11 @@ function Register() {
   
     const handleSubmit = async (e) => {
       e.preventDefault();
-  
-      if (formData.password !== formData.confirmPassword) {
-        alert("Hasła nie zgadzają się!");
+
+      if (!validateForm()) {
         return;
       }
+  
   
       try {
         const response = await registerRequest(formData);
@@ -66,7 +154,11 @@ function Register() {
         if (!response.ok) {
           const errorData = await response.json();
           console.log(errorData);
-          handleError('Blad rejestracji... sprawdz konsole')
+          if (errorData.message && errorData.message.includes('Email:')) {
+            setEmailIsTakenError(true);
+          } else {
+            handleError('Blad rejestracji... sprawdz konsole');
+          }
 
         } else {
           navigate('/login');
@@ -95,11 +187,11 @@ function Register() {
                 value={formData.firstName}
                 onChange={handleChange}
                 error={firstNameError}
-                helperText={firstNameError ? 'wpisac' : ""}
+                helperText={firstNameError ? dictionary.registerPage.firstNameError : ""}
                 required
                 size="small"
               />
-          <CustomInput
+              <CustomInput
                 label={dictionary.registerPage.lastNameLabel}
                 type="text"
                 id="lastName"
@@ -108,11 +200,11 @@ function Register() {
                 value={formData.lastName}
                 onChange={handleChange}
                 error={lastNameError}
-                helperText={lastNameError ? 'wpisac' : ""}
+                helperText={lastNameError ? dictionary.registerPage.lastNameError : ""}
                 required
                 size="small"
               />
-          <CustomInput
+              <CustomInput
                 label={dictionary.registerPage.addressLabel}
                 type="text"
                 id="address"
@@ -120,10 +212,11 @@ function Register() {
                 fullWidth
                 value={formData.address}
                 onChange={handleChange}
+                error={addressError}
+                helperText={addressError ? dictionary.registerPage.addressError : ""}
                 size="small"
-                
               />
-          <CustomInput
+              <CustomInput
                 label={dictionary.registerPage.dateOfBirthLabel}
                 type="date"
                 id="birthDate"
@@ -132,14 +225,14 @@ function Register() {
                 value={formData.birthDate}
                 onChange={handleChange}
                 error={birthDateError}
-                helperText={birthDateError ? 'wpisac' : ""}
+                helperText={birthDateError ? dictionary.registerPage.birthDateError : ""}
                 required
                 size="small"
                 InputLabelProps={{
                   shrink: true
                 }}
               />
-          <CustomInput
+              <CustomInput
                 label={dictionary.registerPage.phoneNumberLabel}
                 type="tel"
                 id="phoneNumber"
@@ -147,9 +240,11 @@ function Register() {
                 fullWidth
                 value={formData.phoneNumber}
                 onChange={handleChange}
+                error={phoneNumberError}
+                helperText={phoneNumberError ? dictionary.registerPage.phoneNumberError : ""}
                 size="small"
               />
-          <CustomInput
+              <CustomInput
                 label={dictionary.registerPage.emailLabel}
                 type="email"
                 id="email"
@@ -157,12 +252,13 @@ function Register() {
                 fullWidth
                 value={formData.email}
                 onChange={handleChange}
-                error={emailError}
-                helperText={emailError ? 'wpisac' : ""}
+                error={emailError || emailIsTakenError}
+                helperText={emailIsTakenError ? dictionary.registerPage.emailTakenError : (emailError ? dictionary.registerPage.emailError : "")}
+
                 required
                 size="small"
               />
-            <CustomInput
+              <CustomInput
                 label={dictionary.registerPage.passwordLabel}
                 type="password"
                 id="password"
@@ -171,11 +267,11 @@ function Register() {
                 value={formData.password}
                 onChange={handleChange}
                 error={passwordError}
-                helperText={passwordError ? 'wpisac' : ""}
+                helperText={passwordError ? dictionary.registerPage.passwordError : ""}
                 required
                 size="small"
               />
-          <CustomInput
+              <CustomInput
                 label={dictionary.registerPage.confirmPasswordLabel}
                 type="password"
                 id="confirmPassword"
@@ -184,7 +280,7 @@ function Register() {
                 value={formData.confirmPassword}
                 onChange={handleChange}
                 error={confirmPasswordError}
-                helperText={confirmPasswordError ? 'wpisac' : ""}
+                helperText={confirmPasswordError ? dictionary.registerPage.confirmPasswordError : ""}
                 required
                 size="small"
               />

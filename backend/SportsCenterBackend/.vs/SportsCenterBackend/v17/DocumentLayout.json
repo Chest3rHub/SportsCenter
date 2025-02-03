@@ -1,49 +1,277 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\Alan\\Desktop\\SportsCenter\\backend\\SportsCenterBackend\\",
+  "WorkspaceRootPath": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{1520B005-20E6-4F53-BFDB-456B93D4D37A}|SportsCenter.Infrastructure\\SportsCenter.Infrastructure.csproj|c:\\users\\alan\\desktop\\sportscenter\\backend\\sportscenterbackend\\sportscenter.infrastructure\\dal\\sportscenterdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{1520B005-20E6-4F53-BFDB-456B93D4D37A}|SportsCenter.Infrastructure\\SportsCenter.Infrastructure.csproj|solutionrelative:sportscenter.infrastructure\\dal\\sportscenterdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{C0CFB4B0-02D2-4257-A9B0-A5ADAF990E5D}|SportsCenter.Api\\SportsCenter.Api.csproj|c:\\users\\48660\\sportscenter\\backend\\sportscenterbackend\\sportscenter.api\\controllers\\reservationcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C0CFB4B0-02D2-4257-A9B0-A5ADAF990E5D}|SportsCenter.Api\\SportsCenter.Api.csproj|solutionrelative:sportscenter.api\\controllers\\reservationcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{1520B005-20E6-4F53-BFDB-456B93D4D37A}|SportsCenter.Infrastructure\\SportsCenter.Infrastructure.csproj|c:\\users\\alan\\desktop\\sportscenter\\backend\\sportscenterbackend\\sportscenter.infrastructure\\dal\\mssqlserveroptions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{1520B005-20E6-4F53-BFDB-456B93D4D37A}|SportsCenter.Infrastructure\\SportsCenter.Infrastructure.csproj|solutionrelative:sportscenter.infrastructure\\dal\\mssqlserveroptions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{1C4DC8AC-CE62-490B-B5CE-1C974879A2BF}|SportsCenter.Application\\SportsCenter.Application.csproj|c:\\users\\48660\\sportscenter\\backend\\sportscenterbackend\\sportscenter.application\\reservations\\commands\\removereservation\\removereservation.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1C4DC8AC-CE62-490B-B5CE-1C974879A2BF}|SportsCenter.Application\\SportsCenter.Application.csproj|solutionrelative:sportscenter.application\\reservations\\commands\\removereservation\\removereservation.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{1520B005-20E6-4F53-BFDB-456B93D4D37A}|SportsCenter.Infrastructure\\SportsCenter.Infrastructure.csproj|c:\\users\\alan\\desktop\\sportscenter\\backend\\sportscenterbackend\\sportscenter.infrastructure\\extensions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{1C4DC8AC-CE62-490B-B5CE-1C974879A2BF}|SportsCenter.Application\\SportsCenter.Application.csproj|c:\\users\\48660\\sportscenter\\backend\\sportscenterbackend\\sportscenter.application\\reservations\\commands\\removereservation\\removereservationhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1C4DC8AC-CE62-490B-B5CE-1C974879A2BF}|SportsCenter.Application\\SportsCenter.Application.csproj|solutionrelative:sportscenter.application\\reservations\\commands\\removereservation\\removereservationhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1520B005-20E6-4F53-BFDB-456B93D4D37A}|SportsCenter.Infrastructure\\SportsCenter.Infrastructure.csproj|c:\\users\\48660\\sportscenter\\backend\\sportscenterbackend\\sportscenter.infrastructure\\dal\\repositories\\reservationrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1520B005-20E6-4F53-BFDB-456B93D4D37A}|SportsCenter.Infrastructure\\SportsCenter.Infrastructure.csproj|solutionrelative:sportscenter.infrastructure\\dal\\repositories\\reservationrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{217EA6B9-B1CC-4497-A494-1A809B507A2E}|SportsCenter.Core\\SportsCenter.Core.csproj|c:\\users\\48660\\sportscenter\\backend\\sportscenterbackend\\sportscenter.core\\repositories\\ireservationrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{217EA6B9-B1CC-4497-A494-1A809B507A2E}|SportsCenter.Core\\SportsCenter.Core.csproj|solutionrelative:sportscenter.core\\repositories\\ireservationrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1C4DC8AC-CE62-490B-B5CE-1C974879A2BF}|SportsCenter.Application\\SportsCenter.Application.csproj|c:\\users\\48660\\sportscenter\\backend\\sportscenterbackend\\sportscenter.application\\employees\\commands\\removetask\\removetaskhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1C4DC8AC-CE62-490B-B5CE-1C974879A2BF}|SportsCenter.Application\\SportsCenter.Application.csproj|solutionrelative:sportscenter.application\\employees\\commands\\removetask\\removetaskhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1C4DC8AC-CE62-490B-B5CE-1C974879A2BF}|SportsCenter.Application\\SportsCenter.Application.csproj|c:\\users\\48660\\sportscenter\\backend\\sportscenterbackend\\sportscenter.application\\employees\\commands\\removetask\\removetask.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1C4DC8AC-CE62-490B-B5CE-1C974879A2BF}|SportsCenter.Application\\SportsCenter.Application.csproj|solutionrelative:sportscenter.application\\employees\\commands\\removetask\\removetask.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1C4DC8AC-CE62-490B-B5CE-1C974879A2BF}|SportsCenter.Application\\SportsCenter.Application.csproj|c:\\users\\48660\\sportscenter\\backend\\sportscenterbackend\\sportscenter.application\\reservations\\commands\\movereservation\\movereservationhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1C4DC8AC-CE62-490B-B5CE-1C974879A2BF}|SportsCenter.Application\\SportsCenter.Application.csproj|solutionrelative:sportscenter.application\\reservations\\commands\\movereservation\\movereservationhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1C4DC8AC-CE62-490B-B5CE-1C974879A2BF}|SportsCenter.Application\\SportsCenter.Application.csproj|c:\\users\\48660\\sportscenter\\backend\\sportscenterbackend\\sportscenter.application\\reservations\\commands\\movereservation\\movereservationvalidator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1C4DC8AC-CE62-490B-B5CE-1C974879A2BF}|SportsCenter.Application\\SportsCenter.Application.csproj|solutionrelative:sportscenter.application\\reservations\\commands\\movereservation\\movereservationvalidator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1C4DC8AC-CE62-490B-B5CE-1C974879A2BF}|SportsCenter.Application\\SportsCenter.Application.csproj|c:\\users\\48660\\sportscenter\\backend\\sportscenterbackend\\sportscenter.application\\reservations\\commands\\addreservation\\addreservationvalidator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1C4DC8AC-CE62-490B-B5CE-1C974879A2BF}|SportsCenter.Application\\SportsCenter.Application.csproj|solutionrelative:sportscenter.application\\reservations\\commands\\addreservation\\addreservationvalidator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1C4DC8AC-CE62-490B-B5CE-1C974879A2BF}|SportsCenter.Application\\SportsCenter.Application.csproj|c:\\users\\48660\\sportscenter\\backend\\sportscenterbackend\\sportscenter.application\\employees\\commands\\edittask\\edittaskvalidator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1C4DC8AC-CE62-490B-B5CE-1C974879A2BF}|SportsCenter.Application\\SportsCenter.Application.csproj|solutionrelative:sportscenter.application\\employees\\commands\\edittask\\edittaskvalidator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1C4DC8AC-CE62-490B-B5CE-1C974879A2BF}|SportsCenter.Application\\SportsCenter.Application.csproj|c:\\users\\48660\\sportscenter\\backend\\sportscenterbackend\\sportscenter.application\\employees\\commands\\edittask\\edittaskhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1C4DC8AC-CE62-490B-B5CE-1C974879A2BF}|SportsCenter.Application\\SportsCenter.Application.csproj|solutionrelative:sportscenter.application\\employees\\commands\\edittask\\edittaskhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1C4DC8AC-CE62-490B-B5CE-1C974879A2BF}|SportsCenter.Application\\SportsCenter.Application.csproj|c:\\users\\48660\\sportscenter\\backend\\sportscenterbackend\\sportscenter.application\\exceptions\\reservationexceptions\\reservationnotfoundexception.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1C4DC8AC-CE62-490B-B5CE-1C974879A2BF}|SportsCenter.Application\\SportsCenter.Application.csproj|solutionrelative:sportscenter.application\\exceptions\\reservationexceptions\\reservationnotfoundexception.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1C4DC8AC-CE62-490B-B5CE-1C974879A2BF}|SportsCenter.Application\\SportsCenter.Application.csproj|c:\\users\\48660\\sportscenter\\backend\\sportscenterbackend\\sportscenter.application\\exceptions\\employeesexception\\notadmemployeeexception.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1C4DC8AC-CE62-490B-B5CE-1C974879A2BF}|SportsCenter.Application\\SportsCenter.Application.csproj|solutionrelative:sportscenter.application\\exceptions\\employeesexception\\notadmemployeeexception.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1C4DC8AC-CE62-490B-B5CE-1C974879A2BF}|SportsCenter.Application\\SportsCenter.Application.csproj|c:\\users\\48660\\sportscenter\\backend\\sportscenterbackend\\sportscenter.application\\exceptions\\employeesexception\\employeenotfoundexception.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1C4DC8AC-CE62-490B-B5CE-1C974879A2BF}|SportsCenter.Application\\SportsCenter.Application.csproj|solutionrelative:sportscenter.application\\exceptions\\employeesexception\\employeenotfoundexception.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1C4DC8AC-CE62-490B-B5CE-1C974879A2BF}|SportsCenter.Application\\SportsCenter.Application.csproj|c:\\users\\48660\\sportscenter\\backend\\sportscenterbackend\\sportscenter.application\\exceptions\\reservationexceptions\\courtnotavaliableexception.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1C4DC8AC-CE62-490B-B5CE-1C974879A2BF}|SportsCenter.Application\\SportsCenter.Application.csproj|solutionrelative:sportscenter.application\\exceptions\\reservationexceptions\\courtnotavaliableexception.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1C4DC8AC-CE62-490B-B5CE-1C974879A2BF}|SportsCenter.Application\\SportsCenter.Application.csproj|c:\\users\\48660\\sportscenter\\backend\\sportscenterbackend\\sportscenter.application\\reservations\\commands\\addreservation\\addreservationhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1C4DC8AC-CE62-490B-B5CE-1C974879A2BF}|SportsCenter.Application\\SportsCenter.Application.csproj|solutionrelative:sportscenter.application\\reservations\\commands\\addreservation\\addreservationhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1C4DC8AC-CE62-490B-B5CE-1C974879A2BF}|SportsCenter.Application\\SportsCenter.Application.csproj|c:\\users\\48660\\sportscenter\\backend\\sportscenterbackend\\sportscenter.application\\reservations\\commands\\movereservation\\movereservation.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1C4DC8AC-CE62-490B-B5CE-1C974879A2BF}|SportsCenter.Application\\SportsCenter.Application.csproj|solutionrelative:sportscenter.application\\reservations\\commands\\movereservation\\movereservation.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1C4DC8AC-CE62-490B-B5CE-1C974879A2BF}|SportsCenter.Application\\SportsCenter.Application.csproj|c:\\users\\48660\\sportscenter\\backend\\sportscenterbackend\\sportscenter.application\\reservations\\commands\\addreservation\\addreservation.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1C4DC8AC-CE62-490B-B5CE-1C974879A2BF}|SportsCenter.Application\\SportsCenter.Application.csproj|solutionrelative:sportscenter.application\\reservations\\commands\\addreservation\\addreservation.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1C4DC8AC-CE62-490B-B5CE-1C974879A2BF}|SportsCenter.Application\\SportsCenter.Application.csproj|c:\\users\\48660\\sportscenter\\backend\\sportscenterbackend\\sportscenter.application\\employees\\commands\\edittask\\edittask.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1C4DC8AC-CE62-490B-B5CE-1C974879A2BF}|SportsCenter.Application\\SportsCenter.Application.csproj|solutionrelative:sportscenter.application\\employees\\commands\\edittask\\edittask.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C0CFB4B0-02D2-4257-A9B0-A5ADAF990E5D}|SportsCenter.Api\\SportsCenter.Api.csproj|c:\\users\\48660\\sportscenter\\backend\\sportscenterbackend\\sportscenter.api\\controllers\\clientscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C0CFB4B0-02D2-4257-A9B0-A5ADAF990E5D}|SportsCenter.Api\\SportsCenter.Api.csproj|solutionrelative:sportscenter.api\\controllers\\clientscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C0CFB4B0-02D2-4257-A9B0-A5ADAF990E5D}|SportsCenter.Api\\SportsCenter.Api.csproj|c:\\users\\48660\\sportscenter\\backend\\sportscenterbackend\\sportscenter.api\\controllers\\employeescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C0CFB4B0-02D2-4257-A9B0-A5ADAF990E5D}|SportsCenter.Api\\SportsCenter.Api.csproj|solutionrelative:sportscenter.api\\controllers\\employeescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1520B005-20E6-4F53-BFDB-456B93D4D37A}|SportsCenter.Infrastructure\\SportsCenter.Infrastructure.csproj|c:\\users\\48660\\sportscenter\\backend\\sportscenterbackend\\sportscenter.infrastructure\\extensions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{1520B005-20E6-4F53-BFDB-456B93D4D37A}|SportsCenter.Infrastructure\\SportsCenter.Infrastructure.csproj|solutionrelative:sportscenter.infrastructure\\extensions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{C0CFB4B0-02D2-4257-A9B0-A5ADAF990E5D}|SportsCenter.Api\\SportsCenter.Api.csproj|c:\\users\\alan\\desktop\\sportscenter\\backend\\sportscenterbackend\\sportscenter.api\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
-      "RelativeMoniker": "D:0:0:{C0CFB4B0-02D2-4257-A9B0-A5ADAF990E5D}|SportsCenter.Api\\SportsCenter.Api.csproj|solutionrelative:sportscenter.api\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+      "AbsoluteMoniker": "D:0:0:{1C4DC8AC-CE62-490B-B5CE-1C974879A2BF}|SportsCenter.Application\\SportsCenter.Application.csproj|c:\\users\\48660\\sportscenter\\backend\\sportscenterbackend\\sportscenter.application\\extensions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1C4DC8AC-CE62-490B-B5CE-1C974879A2BF}|SportsCenter.Application\\SportsCenter.Application.csproj|solutionrelative:sportscenter.application\\extensions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{1520B005-20E6-4F53-BFDB-456B93D4D37A}|SportsCenter.Infrastructure\\SportsCenter.Infrastructure.csproj|c:\\users\\alan\\desktop\\sportscenter\\backend\\sportscenterbackend\\sportscenter.infrastructure\\security\\jwttokengenerator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{C0CFB4B0-02D2-4257-A9B0-A5ADAF990E5D}|SportsCenter.Api\\SportsCenter.Api.csproj|c:\\users\\48660\\sportscenter\\backend\\sportscenterbackend\\sportscenter.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C0CFB4B0-02D2-4257-A9B0-A5ADAF990E5D}|SportsCenter.Api\\SportsCenter.Api.csproj|solutionrelative:sportscenter.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C0CFB4B0-02D2-4257-A9B0-A5ADAF990E5D}|SportsCenter.Api\\SportsCenter.Api.csproj|c:\\users\\48660\\sportscenter\\backend\\sportscenterbackend\\sportscenter.api\\controllers\\userscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C0CFB4B0-02D2-4257-A9B0-A5ADAF990E5D}|SportsCenter.Api\\SportsCenter.Api.csproj|solutionrelative:sportscenter.api\\controllers\\userscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C0CFB4B0-02D2-4257-A9B0-A5ADAF990E5D}|SportsCenter.Api\\SportsCenter.Api.csproj|c:\\users\\48660\\sportscenter\\backend\\sportscenterbackend\\sportscenter.api\\controllers\\activitiescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C0CFB4B0-02D2-4257-A9B0-A5ADAF990E5D}|SportsCenter.Api\\SportsCenter.Api.csproj|solutionrelative:sportscenter.api\\controllers\\activitiescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C0CFB4B0-02D2-4257-A9B0-A5ADAF990E5D}|SportsCenter.Api\\SportsCenter.Api.csproj|c:\\users\\48660\\sportscenter\\backend\\sportscenterbackend\\sportscenter.api\\controllers\\basecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C0CFB4B0-02D2-4257-A9B0-A5ADAF990E5D}|SportsCenter.Api\\SportsCenter.Api.csproj|solutionrelative:sportscenter.api\\controllers\\basecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1C4DC8AC-CE62-490B-B5CE-1C974879A2BF}|SportsCenter.Application\\SportsCenter.Application.csproj|c:\\users\\48660\\sportscenter\\backend\\sportscenterbackend\\sportscenter.application\\clients\\commands\\registerclient\\registerclientvalidator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1C4DC8AC-CE62-490B-B5CE-1C974879A2BF}|SportsCenter.Application\\SportsCenter.Application.csproj|solutionrelative:sportscenter.application\\clients\\commands\\registerclient\\registerclientvalidator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1C4DC8AC-CE62-490B-B5CE-1C974879A2BF}|SportsCenter.Application\\SportsCenter.Application.csproj|c:\\users\\48660\\sportscenter\\backend\\sportscenterbackend\\sportscenter.application\\clients\\commands\\registerclient\\registerclienthandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1C4DC8AC-CE62-490B-B5CE-1C974879A2BF}|SportsCenter.Application\\SportsCenter.Application.csproj|solutionrelative:sportscenter.application\\clients\\commands\\registerclient\\registerclienthandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1C4DC8AC-CE62-490B-B5CE-1C974879A2BF}|SportsCenter.Application\\SportsCenter.Application.csproj|c:\\users\\48660\\sportscenter\\backend\\sportscenterbackend\\sportscenter.application\\exceptions\\reservationexceptions\\trainernotavaliableexception.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1C4DC8AC-CE62-490B-B5CE-1C974879A2BF}|SportsCenter.Application\\SportsCenter.Application.csproj|solutionrelative:sportscenter.application\\exceptions\\reservationexceptions\\trainernotavaliableexception.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1C4DC8AC-CE62-490B-B5CE-1C974879A2BF}|SportsCenter.Application\\SportsCenter.Application.csproj|c:\\users\\48660\\sportscenter\\backend\\sportscenterbackend\\sportscenter.application\\exceptions\\reservationexceptions\\toomanyparticipantsexception.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1C4DC8AC-CE62-490B-B5CE-1C974879A2BF}|SportsCenter.Application\\SportsCenter.Application.csproj|solutionrelative:sportscenter.application\\exceptions\\reservationexceptions\\toomanyparticipantsexception.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1C4DC8AC-CE62-490B-B5CE-1C974879A2BF}|SportsCenter.Application\\SportsCenter.Application.csproj|c:\\users\\48660\\sportscenter\\backend\\sportscenterbackend\\sportscenter.application\\exceptions\\clientsexceptions\\clientwithgivenidnotfoundexception.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1C4DC8AC-CE62-490B-B5CE-1C974879A2BF}|SportsCenter.Application\\SportsCenter.Application.csproj|solutionrelative:sportscenter.application\\exceptions\\clientsexceptions\\clientwithgivenidnotfoundexception.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1520B005-20E6-4F53-BFDB-456B93D4D37A}|SportsCenter.Infrastructure\\SportsCenter.Infrastructure.csproj|c:\\users\\48660\\sportscenter\\backend\\sportscenterbackend\\sportscenter.infrastructure\\dal\\repositories\\sportactivityrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1520B005-20E6-4F53-BFDB-456B93D4D37A}|SportsCenter.Infrastructure\\SportsCenter.Infrastructure.csproj|solutionrelative:sportscenter.infrastructure\\dal\\repositories\\sportactivityrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1520B005-20E6-4F53-BFDB-456B93D4D37A}|SportsCenter.Infrastructure\\SportsCenter.Infrastructure.csproj|c:\\users\\48660\\sportscenter\\backend\\sportscenterbackend\\sportscenter.infrastructure\\migrations\\20241017072609_initialmigration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1520B005-20E6-4F53-BFDB-456B93D4D37A}|SportsCenter.Infrastructure\\SportsCenter.Infrastructure.csproj|solutionrelative:sportscenter.infrastructure\\migrations\\20241017072609_initialmigration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{217EA6B9-B1CC-4497-A494-1A809B507A2E}|SportsCenter.Core\\SportsCenter.Core.csproj|c:\\users\\48660\\sportscenter\\backend\\sportscenterbackend\\sportscenter.core\\entities\\activityschedule.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{217EA6B9-B1CC-4497-A494-1A809B507A2E}|SportsCenter.Core\\SportsCenter.Core.csproj|solutionrelative:sportscenter.core\\entities\\activityschedule.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1520B005-20E6-4F53-BFDB-456B93D4D37A}|SportsCenter.Infrastructure\\SportsCenter.Infrastructure.csproj|c:\\users\\48660\\sportscenter\\backend\\sportscenterbackend\\sportscenter.infrastructure\\dal\\sportscenterdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1520B005-20E6-4F53-BFDB-456B93D4D37A}|SportsCenter.Infrastructure\\SportsCenter.Infrastructure.csproj|solutionrelative:sportscenter.infrastructure\\dal\\sportscenterdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{217EA6B9-B1CC-4497-A494-1A809B507A2E}|SportsCenter.Core\\SportsCenter.Core.csproj|c:\\users\\48660\\sportscenter\\backend\\sportscenterbackend\\sportscenter.core\\entities\\certyfikat.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{217EA6B9-B1CC-4497-A494-1A809B507A2E}|SportsCenter.Core\\SportsCenter.Core.csproj|solutionrelative:sportscenter.core\\entities\\certyfikat.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1520B005-20E6-4F53-BFDB-456B93D4D37A}|SportsCenter.Infrastructure\\SportsCenter.Infrastructure.csproj|c:\\users\\48660\\sportscenter\\backend\\sportscenterbackend\\sportscenter.infrastructure\\dal\\repositories\\clientrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1520B005-20E6-4F53-BFDB-456B93D4D37A}|SportsCenter.Infrastructure\\SportsCenter.Infrastructure.csproj|solutionrelative:sportscenter.infrastructure\\dal\\repositories\\clientrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1520B005-20E6-4F53-BFDB-456B93D4D37A}|SportsCenter.Infrastructure\\SportsCenter.Infrastructure.csproj|c:\\users\\48660\\sportscenter\\backend\\sportscenterbackend\\sportscenter.infrastructure\\dal\\repositories\\employeerepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1520B005-20E6-4F53-BFDB-456B93D4D37A}|SportsCenter.Infrastructure\\SportsCenter.Infrastructure.csproj|solutionrelative:sportscenter.infrastructure\\dal\\repositories\\employeerepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1C4DC8AC-CE62-490B-B5CE-1C974879A2BF}|SportsCenter.Application\\SportsCenter.Application.csproj|c:\\users\\48660\\sportscenter\\backend\\sportscenterbackend\\sportscenter.application\\clients\\commands\\registerclient\\registerclient.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1C4DC8AC-CE62-490B-B5CE-1C974879A2BF}|SportsCenter.Application\\SportsCenter.Application.csproj|solutionrelative:sportscenter.application\\clients\\commands\\registerclient\\registerclient.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1C4DC8AC-CE62-490B-B5CE-1C974879A2BF}|SportsCenter.Application\\SportsCenter.Application.csproj|c:\\users\\48660\\sportscenter\\backend\\sportscenterbackend\\sportscenter.application\\exceptions\\clientsexceptions\\clientnotfoundexception.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1C4DC8AC-CE62-490B-B5CE-1C974879A2BF}|SportsCenter.Application\\SportsCenter.Application.csproj|solutionrelative:sportscenter.application\\exceptions\\clientsexceptions\\clientnotfoundexception.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{217EA6B9-B1CC-4497-A494-1A809B507A2E}|SportsCenter.Core\\SportsCenter.Core.csproj|c:\\users\\48660\\sportscenter\\backend\\sportscenterbackend\\sportscenter.core\\entities\\rezerwacja.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{217EA6B9-B1CC-4497-A494-1A809B507A2E}|SportsCenter.Core\\SportsCenter.Core.csproj|solutionrelative:sportscenter.core\\entities\\rezerwacja.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{217EA6B9-B1CC-4497-A494-1A809B507A2E}|SportsCenter.Core\\SportsCenter.Core.csproj|c:\\users\\48660\\sportscenter\\backend\\sportscenterbackend\\sportscenter.core\\entities\\osoba.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{217EA6B9-B1CC-4497-A494-1A809B507A2E}|SportsCenter.Core\\SportsCenter.Core.csproj|solutionrelative:sportscenter.core\\entities\\osoba.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{217EA6B9-B1CC-4497-A494-1A809B507A2E}|SportsCenter.Core\\SportsCenter.Core.csproj|c:\\users\\48660\\sportscenter\\backend\\sportscenterbackend\\sportscenter.core\\entities\\ocena.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{217EA6B9-B1CC-4497-A494-1A809B507A2E}|SportsCenter.Core\\SportsCenter.Core.csproj|solutionrelative:sportscenter.core\\entities\\ocena.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1C4DC8AC-CE62-490B-B5CE-1C974879A2BF}|SportsCenter.Application\\SportsCenter.Application.csproj|c:\\users\\48660\\sportscenter\\backend\\sportscenterbackend\\sportscenter.application\\clients\\commands\\addclienttags\\addclienttagshandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1C4DC8AC-CE62-490B-B5CE-1C974879A2BF}|SportsCenter.Application\\SportsCenter.Application.csproj|solutionrelative:sportscenter.application\\clients\\commands\\addclienttags\\addclienttagshandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1C4DC8AC-CE62-490B-B5CE-1C974879A2BF}|SportsCenter.Application\\SportsCenter.Application.csproj|c:\\users\\48660\\sportscenter\\backend\\sportscenterbackend\\sportscenter.application\\clients\\commands\\adddeposit\\adddeposithandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1C4DC8AC-CE62-490B-B5CE-1C974879A2BF}|SportsCenter.Application\\SportsCenter.Application.csproj|solutionrelative:sportscenter.application\\clients\\commands\\adddeposit\\adddeposithandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1C4DC8AC-CE62-490B-B5CE-1C974879A2BF}|SportsCenter.Application\\SportsCenter.Application.csproj|c:\\users\\48660\\sportscenter\\backend\\sportscenterbackend\\sportscenter.application\\clients\\commands\\adddeposit\\adddepositvalidator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1C4DC8AC-CE62-490B-B5CE-1C974879A2BF}|SportsCenter.Application\\SportsCenter.Application.csproj|solutionrelative:sportscenter.application\\clients\\commands\\adddeposit\\adddepositvalidator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{217EA6B9-B1CC-4497-A494-1A809B507A2E}|SportsCenter.Core\\SportsCenter.Core.csproj|c:\\users\\48660\\sportscenter\\backend\\sportscenterbackend\\sportscenter.core\\repositories\\itagrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{217EA6B9-B1CC-4497-A494-1A809B507A2E}|SportsCenter.Core\\SportsCenter.Core.csproj|solutionrelative:sportscenter.core\\repositories\\itagrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{217EA6B9-B1CC-4497-A494-1A809B507A2E}|SportsCenter.Core\\SportsCenter.Core.csproj|c:\\users\\48660\\sportscenter\\backend\\sportscenterbackend\\sportscenter.core\\repositories\\iclientrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{217EA6B9-B1CC-4497-A494-1A809B507A2E}|SportsCenter.Core\\SportsCenter.Core.csproj|solutionrelative:sportscenter.core\\repositories\\iclientrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1C4DC8AC-CE62-490B-B5CE-1C974879A2BF}|SportsCenter.Application\\SportsCenter.Application.csproj|c:\\users\\48660\\sportscenter\\backend\\sportscenterbackend\\sportscenter.application\\clients\\commands\\adddeposit\\adddeposit.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1C4DC8AC-CE62-490B-B5CE-1C974879A2BF}|SportsCenter.Application\\SportsCenter.Application.csproj|solutionrelative:sportscenter.application\\clients\\commands\\adddeposit\\adddeposit.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1C4DC8AC-CE62-490B-B5CE-1C974879A2BF}|SportsCenter.Application\\SportsCenter.Application.csproj|c:\\users\\48660\\sportscenter\\backend\\sportscenterbackend\\sportscenter.application\\activities\\commands\\addsportactivity\\addsportactivityhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1C4DC8AC-CE62-490B-B5CE-1C974879A2BF}|SportsCenter.Application\\SportsCenter.Application.csproj|solutionrelative:sportscenter.application\\activities\\commands\\addsportactivity\\addsportactivityhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1C4DC8AC-CE62-490B-B5CE-1C974879A2BF}|SportsCenter.Application\\SportsCenter.Application.csproj|c:\\users\\48660\\sportscenter\\backend\\sportscenterbackend\\sportscenter.application\\activities\\commands\\addsportactivity\\addsportactivityvalidator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1C4DC8AC-CE62-490B-B5CE-1C974879A2BF}|SportsCenter.Application\\SportsCenter.Application.csproj|solutionrelative:sportscenter.application\\activities\\commands\\addsportactivity\\addsportactivityvalidator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1C4DC8AC-CE62-490B-B5CE-1C974879A2BF}|SportsCenter.Application\\SportsCenter.Application.csproj|c:\\users\\48660\\sportscenter\\backend\\sportscenterbackend\\sportscenter.application\\activities\\commands\\addsportactivity\\addsportactivity.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1C4DC8AC-CE62-490B-B5CE-1C974879A2BF}|SportsCenter.Application\\SportsCenter.Application.csproj|solutionrelative:sportscenter.application\\activities\\commands\\addsportactivity\\addsportactivity.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1520B005-20E6-4F53-BFDB-456B93D4D37A}|SportsCenter.Infrastructure\\SportsCenter.Infrastructure.csproj|c:\\users\\48660\\sportscenter\\backend\\sportscenterbackend\\sportscenter.infrastructure\\security\\jwttokengenerator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{1520B005-20E6-4F53-BFDB-456B93D4D37A}|SportsCenter.Infrastructure\\SportsCenter.Infrastructure.csproj|solutionrelative:sportscenter.infrastructure\\security\\jwttokengenerator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{1520B005-20E6-4F53-BFDB-456B93D4D37A}|SportsCenter.Infrastructure\\SportsCenter.Infrastructure.csproj|c:\\users\\alan\\desktop\\sportscenter\\backend\\sportscenterbackend\\sportscenter.infrastructure\\dal\\repositories\\userrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{1520B005-20E6-4F53-BFDB-456B93D4D37A}|SportsCenter.Infrastructure\\SportsCenter.Infrastructure.csproj|c:\\users\\48660\\sportscenter\\backend\\sportscenterbackend\\sportscenter.infrastructure\\behaviors\\unitofworkbehavior.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1520B005-20E6-4F53-BFDB-456B93D4D37A}|SportsCenter.Infrastructure\\SportsCenter.Infrastructure.csproj|solutionrelative:sportscenter.infrastructure\\behaviors\\unitofworkbehavior.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1C4DC8AC-CE62-490B-B5CE-1C974879A2BF}|SportsCenter.Application\\SportsCenter.Application.csproj|c:\\users\\48660\\sportscenter\\backend\\sportscenterbackend\\sportscenter.application\\security\\ijwttokengenerator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1C4DC8AC-CE62-490B-B5CE-1C974879A2BF}|SportsCenter.Application\\SportsCenter.Application.csproj|solutionrelative:sportscenter.application\\security\\ijwttokengenerator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1520B005-20E6-4F53-BFDB-456B93D4D37A}|SportsCenter.Infrastructure\\SportsCenter.Infrastructure.csproj|c:\\users\\48660\\sportscenter\\backend\\sportscenterbackend\\sportscenter.infrastructure\\security\\passwordmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1520B005-20E6-4F53-BFDB-456B93D4D37A}|SportsCenter.Infrastructure\\SportsCenter.Infrastructure.csproj|solutionrelative:sportscenter.infrastructure\\security\\passwordmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1C4DC8AC-CE62-490B-B5CE-1C974879A2BF}|SportsCenter.Application\\SportsCenter.Application.csproj|c:\\users\\48660\\sportscenter\\backend\\sportscenterbackend\\sportscenter.application\\security\\ipasswordmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1C4DC8AC-CE62-490B-B5CE-1C974879A2BF}|SportsCenter.Application\\SportsCenter.Application.csproj|solutionrelative:sportscenter.application\\security\\ipasswordmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C0CFB4B0-02D2-4257-A9B0-A5ADAF990E5D}|SportsCenter.Api\\SportsCenter.Api.csproj|c:\\users\\48660\\sportscenter\\backend\\sportscenterbackend\\sportscenter.api\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{C0CFB4B0-02D2-4257-A9B0-A5ADAF990E5D}|SportsCenter.Api\\SportsCenter.Api.csproj|solutionrelative:sportscenter.api\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C0CFB4B0-02D2-4257-A9B0-A5ADAF990E5D}|SportsCenter.Api\\SportsCenter.Api.csproj|c:\\users\\48660\\sportscenter\\backend\\sportscenterbackend\\sportscenter.api\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{C0CFB4B0-02D2-4257-A9B0-A5ADAF990E5D}|SportsCenter.Api\\SportsCenter.Api.csproj|solutionrelative:sportscenter.api\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1520B005-20E6-4F53-BFDB-456B93D4D37A}|SportsCenter.Infrastructure\\SportsCenter.Infrastructure.csproj|c:\\users\\48660\\sportscenter\\backend\\sportscenterbackend\\sportscenter.infrastructure\\dal\\mssqlserveroptions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1520B005-20E6-4F53-BFDB-456B93D4D37A}|SportsCenter.Infrastructure\\SportsCenter.Infrastructure.csproj|solutionrelative:sportscenter.infrastructure\\dal\\mssqlserveroptions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1520B005-20E6-4F53-BFDB-456B93D4D37A}|SportsCenter.Infrastructure\\SportsCenter.Infrastructure.csproj|c:\\users\\48660\\sportscenter\\backend\\sportscenterbackend\\sportscenter.infrastructure\\dal\\repositories\\userrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{1520B005-20E6-4F53-BFDB-456B93D4D37A}|SportsCenter.Infrastructure\\SportsCenter.Infrastructure.csproj|solutionrelative:sportscenter.infrastructure\\dal\\repositories\\userrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{217EA6B9-B1CC-4497-A494-1A809B507A2E}|SportsCenter.Core\\SportsCenter.Core.csproj|c:\\users\\alan\\desktop\\sportscenter\\backend\\sportscenterbackend\\sportscenter.core\\repositories\\iuserrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{217EA6B9-B1CC-4497-A494-1A809B507A2E}|SportsCenter.Core\\SportsCenter.Core.csproj|c:\\users\\48660\\sportscenter\\backend\\sportscenterbackend\\sportscenter.core\\repositories\\iuserrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{217EA6B9-B1CC-4497-A494-1A809B507A2E}|SportsCenter.Core\\SportsCenter.Core.csproj|solutionrelative:sportscenter.core\\repositories\\iuserrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{1C4DC8AC-CE62-490B-B5CE-1C974879A2BF}|SportsCenter.Application\\SportsCenter.Application.csproj|c:\\users\\alan\\desktop\\sportscenter\\backend\\sportscenterbackend\\sportscenter.application\\exceptions\\usersexception\\invalidloginexception.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{1C4DC8AC-CE62-490B-B5CE-1C974879A2BF}|SportsCenter.Application\\SportsCenter.Application.csproj|c:\\users\\48660\\sportscenter\\backend\\sportscenterbackend\\sportscenter.application\\exceptions\\usersexception\\invalidloginexception.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{1C4DC8AC-CE62-490B-B5CE-1C974879A2BF}|SportsCenter.Application\\SportsCenter.Application.csproj|solutionrelative:sportscenter.application\\exceptions\\usersexception\\invalidloginexception.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{1C4DC8AC-CE62-490B-B5CE-1C974879A2BF}|SportsCenter.Application\\SportsCenter.Application.csproj|c:\\users\\alan\\desktop\\sportscenter\\backend\\sportscenterbackend\\sportscenter.application\\exceptions\\usersexception\\invaliduserroleexception.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{1C4DC8AC-CE62-490B-B5CE-1C974879A2BF}|SportsCenter.Application\\SportsCenter.Application.csproj|c:\\users\\48660\\sportscenter\\backend\\sportscenterbackend\\sportscenter.application\\exceptions\\usersexception\\invaliduserroleexception.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{1C4DC8AC-CE62-490B-B5CE-1C974879A2BF}|SportsCenter.Application\\SportsCenter.Application.csproj|solutionrelative:sportscenter.application\\exceptions\\usersexception\\invaliduserroleexception.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{1C4DC8AC-CE62-490B-B5CE-1C974879A2BF}|SportsCenter.Application\\SportsCenter.Application.csproj|c:\\users\\alan\\desktop\\sportscenter\\backend\\sportscenterbackend\\sportscenter.application\\users\\commands\\login\\loginhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{1C4DC8AC-CE62-490B-B5CE-1C974879A2BF}|SportsCenter.Application\\SportsCenter.Application.csproj|c:\\users\\48660\\sportscenter\\backend\\sportscenterbackend\\sportscenter.application\\users\\commands\\login\\loginhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{1C4DC8AC-CE62-490B-B5CE-1C974879A2BF}|SportsCenter.Application\\SportsCenter.Application.csproj|solutionrelative:sportscenter.application\\users\\commands\\login\\loginhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{1C4DC8AC-CE62-490B-B5CE-1C974879A2BF}|SportsCenter.Application\\SportsCenter.Application.csproj|c:\\users\\alan\\desktop\\sportscenter\\backend\\sportscenterbackend\\sportscenter.application\\users\\commands\\login\\login.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{1C4DC8AC-CE62-490B-B5CE-1C974879A2BF}|SportsCenter.Application\\SportsCenter.Application.csproj|c:\\users\\48660\\sportscenter\\backend\\sportscenterbackend\\sportscenter.application\\users\\commands\\login\\login.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{1C4DC8AC-CE62-490B-B5CE-1C974879A2BF}|SportsCenter.Application\\SportsCenter.Application.csproj|solutionrelative:sportscenter.application\\users\\commands\\login\\login.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
@@ -54,154 +282,872 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 7,
+          "SelectedChildIndex": 20,
           "Children": [
             {
               "$type": "Bookmark",
-              "Name": "ST:128:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+              "Name": "ST:0:0:{e5c86464-96be-4d7c-9a8b-abcb3bbf5f92}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{cce594b6-0c39-4442-ba28-10c64ac7e89f}"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "MsSqlServerOptions.cs",
-              "DocumentMoniker": "C:\\Users\\Alan\\Desktop\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Infrastructure\\DAL\\MsSqlServerOptions.cs",
-              "RelativeDocumentMoniker": "SportsCenter.Infrastructure\\DAL\\MsSqlServerOptions.cs",
-              "ToolTip": "C:\\Users\\Alan\\Desktop\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Infrastructure\\DAL\\MsSqlServerOptions.cs",
-              "RelativeToolTip": "SportsCenter.Infrastructure\\DAL\\MsSqlServerOptions.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAQAAAAiAAAA",
+              "DocumentIndex": 5,
+              "Title": "RemoveTaskHandler.cs",
+              "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Application\\Employees\\Commands\\RemoveTask\\RemoveTaskHandler.cs",
+              "RelativeDocumentMoniker": "SportsCenter.Application\\Employees\\Commands\\RemoveTask\\RemoveTaskHandler.cs",
+              "ToolTip": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Application\\Employees\\Commands\\RemoveTask\\RemoveTaskHandler.cs",
+              "RelativeToolTip": "SportsCenter.Application\\Employees\\Commands\\RemoveTask\\RemoveTaskHandler.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAABIAAAByAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-07T19:16:58.979Z",
+              "WhenOpened": "2025-02-03T21:02:08.395Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "RemoveTask.cs",
+              "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Application\\Employees\\Commands\\RemoveTask\\RemoveTask.cs",
+              "RelativeDocumentMoniker": "SportsCenter.Application\\Employees\\Commands\\RemoveTask\\RemoveTask.cs",
+              "ToolTip": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Application\\Employees\\Commands\\RemoveTask\\RemoveTask.cs",
+              "RelativeToolTip": "SportsCenter.Application\\Employees\\Commands\\RemoveTask\\RemoveTask.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-03T21:01:54.302Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
+              "Title": "RemoveReservationHandler.cs",
+              "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Application\\Reservations\\Commands\\RemoveReservation\\RemoveReservationHandler.cs",
+              "RelativeDocumentMoniker": "SportsCenter.Application\\Reservations\\Commands\\RemoveReservation\\RemoveReservationHandler.cs",
+              "ToolTip": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Application\\Reservations\\Commands\\RemoveReservation\\RemoveReservationHandler.cs",
+              "RelativeToolTip": "SportsCenter.Application\\Reservations\\Commands\\RemoveReservation\\RemoveReservationHandler.cs",
+              "ViewState": "AgIAAB4AAAAAAAAAAAAowCYAAAANAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-03T21:01:50.584Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "RemoveReservation.cs",
+              "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Application\\Reservations\\Commands\\RemoveReservation\\RemoveReservation.cs",
+              "RelativeDocumentMoniker": "SportsCenter.Application\\Reservations\\Commands\\RemoveReservation\\RemoveReservation.cs",
+              "ToolTip": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Application\\Reservations\\Commands\\RemoveReservation\\RemoveReservation.cs",
+              "RelativeToolTip": "SportsCenter.Application\\Reservations\\Commands\\RemoveReservation\\RemoveReservation.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAASAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-03T21:01:39.172Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "EditTaskValidator.cs",
+              "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Application\\Employees\\Commands\\EditTask\\EditTaskValidator.cs",
+              "RelativeDocumentMoniker": "SportsCenter.Application\\Employees\\Commands\\EditTask\\EditTaskValidator.cs",
+              "ToolTip": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Application\\Employees\\Commands\\EditTask\\EditTaskValidator.cs",
+              "RelativeToolTip": "SportsCenter.Application\\Employees\\Commands\\EditTask\\EditTaskValidator.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAABAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-03T20:39:57.003Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "NotAdmEmployeeException.cs",
+              "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Application\\Exceptions\\EmployeesException\\NotAdmEmployeeException.cs",
+              "RelativeDocumentMoniker": "SportsCenter.Application\\Exceptions\\EmployeesException\\NotAdmEmployeeException.cs",
+              "ToolTip": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Application\\Exceptions\\EmployeesException\\NotAdmEmployeeException.cs",
+              "RelativeToolTip": "SportsCenter.Application\\Exceptions\\EmployeesException\\NotAdmEmployeeException.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-03T20:39:12.96Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "EmployeeNotFoundException.cs",
+              "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Application\\Exceptions\\EmployeesException\\EmployeeNotFoundException.cs",
+              "RelativeDocumentMoniker": "SportsCenter.Application\\Exceptions\\EmployeesException\\EmployeeNotFoundException.cs",
+              "ToolTip": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Application\\Exceptions\\EmployeesException\\EmployeeNotFoundException.cs",
+              "RelativeToolTip": "SportsCenter.Application\\Exceptions\\EmployeesException\\EmployeeNotFoundException.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-03T20:39:09.987Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "ReservationNotFoundException.cs",
+              "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Application\\Exceptions\\ReservationExceptions\\ReservationNotFoundException.cs",
+              "RelativeDocumentMoniker": "SportsCenter.Application\\Exceptions\\ReservationExceptions\\ReservationNotFoundException.cs",
+              "ToolTip": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Application\\Exceptions\\ReservationExceptions\\ReservationNotFoundException.cs",
+              "RelativeToolTip": "SportsCenter.Application\\Exceptions\\ReservationExceptions\\ReservationNotFoundException.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAABgAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-03T20:38:10.391Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "MoveReservationValidator.cs",
+              "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Application\\Reservations\\Commands\\MoveReservation\\MoveReservationValidator.cs",
+              "RelativeDocumentMoniker": "SportsCenter.Application\\Reservations\\Commands\\MoveReservation\\MoveReservationValidator.cs",
+              "ToolTip": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Application\\Reservations\\Commands\\MoveReservation\\MoveReservationValidator.cs",
+              "RelativeToolTip": "SportsCenter.Application\\Reservations\\Commands\\MoveReservation\\MoveReservationValidator.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAABIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-03T20:32:13.483Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "MoveReservationHandler.cs",
+              "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Application\\Reservations\\Commands\\MoveReservation\\MoveReservationHandler.cs",
+              "RelativeDocumentMoniker": "SportsCenter.Application\\Reservations\\Commands\\MoveReservation\\MoveReservationHandler.cs",
+              "ToolTip": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Application\\Reservations\\Commands\\MoveReservation\\MoveReservationHandler.cs",
+              "RelativeToolTip": "SportsCenter.Application\\Reservations\\Commands\\MoveReservation\\MoveReservationHandler.cs",
+              "ViewState": "AgIAAA0AAAAAAAAAAAAqwCYAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-03T20:31:56.086Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "EditTaskHandler.cs",
+              "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Application\\Employees\\Commands\\EditTask\\EditTaskHandler.cs",
+              "RelativeDocumentMoniker": "SportsCenter.Application\\Employees\\Commands\\EditTask\\EditTaskHandler.cs",
+              "ToolTip": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Application\\Employees\\Commands\\EditTask\\EditTaskHandler.cs",
+              "RelativeToolTip": "SportsCenter.Application\\Employees\\Commands\\EditTask\\EditTaskHandler.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAABEAAABDAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-03T20:29:32.812Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "MoveReservation.cs",
+              "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Application\\Reservations\\Commands\\MoveReservation\\MoveReservation.cs",
+              "RelativeDocumentMoniker": "SportsCenter.Application\\Reservations\\Commands\\MoveReservation\\MoveReservation.cs",
+              "ToolTip": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Application\\Reservations\\Commands\\MoveReservation\\MoveReservation.cs",
+              "RelativeToolTip": "SportsCenter.Application\\Reservations\\Commands\\MoveReservation\\MoveReservation.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAAA8AAAAyAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-03T20:28:14.206Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 19,
+              "Title": "EditTask.cs",
+              "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Application\\Employees\\Commands\\EditTask\\EditTask.cs",
+              "RelativeDocumentMoniker": "SportsCenter.Application\\Employees\\Commands\\EditTask\\EditTask.cs",
+              "ToolTip": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Application\\Employees\\Commands\\EditTask\\EditTask.cs",
+              "RelativeToolTip": "SportsCenter.Application\\Employees\\Commands\\EditTask\\EditTask.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAABcAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-03T20:28:00.837Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 25,
+              "Title": "UsersController.cs",
+              "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Api\\Controllers\\UsersController.cs",
+              "RelativeDocumentMoniker": "SportsCenter.Api\\Controllers\\UsersController.cs",
+              "ToolTip": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Api\\Controllers\\UsersController.cs",
+              "RelativeToolTip": "SportsCenter.Api\\Controllers\\UsersController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-03T19:43:58.37Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 26,
+              "Title": "ActivitiesController.cs",
+              "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Api\\Controllers\\ActivitiesController.cs",
+              "RelativeDocumentMoniker": "SportsCenter.Api\\Controllers\\ActivitiesController.cs",
+              "ToolTip": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Api\\Controllers\\ActivitiesController.cs",
+              "RelativeToolTip": "SportsCenter.Api\\Controllers\\ActivitiesController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-03T19:41:44.48Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 21,
+              "Title": "EmployeesController.cs",
+              "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Api\\Controllers\\EmployeesController.cs",
+              "RelativeDocumentMoniker": "SportsCenter.Api\\Controllers\\EmployeesController.cs",
+              "ToolTip": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Api\\Controllers\\EmployeesController.cs",
+              "RelativeToolTip": "SportsCenter.Api\\Controllers\\EmployeesController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-03T19:41:03.876Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 20,
+              "Title": "ClientsController.cs",
+              "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Api\\Controllers\\ClientsController.cs",
+              "RelativeDocumentMoniker": "SportsCenter.Api\\Controllers\\ClientsController.cs",
+              "ToolTip": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Api\\Controllers\\ClientsController.cs",
+              "RelativeToolTip": "SportsCenter.Api\\Controllers\\ClientsController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-03T19:40:51.055Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 27,
+              "Title": "BaseController.cs",
+              "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Api\\Controllers\\BaseController.cs",
+              "RelativeDocumentMoniker": "SportsCenter.Api\\Controllers\\BaseController.cs",
+              "ToolTip": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Api\\Controllers\\BaseController.cs",
+              "RelativeToolTip": "SportsCenter.Api\\Controllers\\BaseController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-03T19:40:49.47Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "ReservationController.cs",
+              "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Api\\Controllers\\ReservationController.cs",
+              "RelativeDocumentMoniker": "SportsCenter.Api\\Controllers\\ReservationController.cs",
+              "ToolTip": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Api\\Controllers\\ReservationController.cs",
+              "RelativeToolTip": "SportsCenter.Api\\Controllers\\ReservationController.cs",
+              "ViewState": "AgIAACQAAAAAAAAAAAAwwDEAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-03T19:40:46.777Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 32,
+              "Title": "ClientWithGivenIdNotFoundException.cs",
+              "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Application\\Exceptions\\ClientsExceptions\\ClientWithGivenIdNotFoundException.cs",
+              "RelativeDocumentMoniker": "SportsCenter.Application\\Exceptions\\ClientsExceptions\\ClientWithGivenIdNotFoundException.cs",
+              "ToolTip": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Application\\Exceptions\\ClientsExceptions\\ClientWithGivenIdNotFoundException.cs",
+              "RelativeToolTip": "SportsCenter.Application\\Exceptions\\ClientsExceptions\\ClientWithGivenIdNotFoundException.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-03T19:28:25.298Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 30,
+              "Title": "TrainerNotAvaliableException.cs",
+              "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Application\\Exceptions\\ReservationExceptions\\TrainerNotAvaliableException.cs",
+              "RelativeDocumentMoniker": "SportsCenter.Application\\Exceptions\\ReservationExceptions\\TrainerNotAvaliableException.cs",
+              "ToolTip": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Application\\Exceptions\\ReservationExceptions\\TrainerNotAvaliableException.cs",
+              "RelativeToolTip": "SportsCenter.Application\\Exceptions\\ReservationExceptions\\TrainerNotAvaliableException.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-03T19:27:20.016Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "CourtNotAvaliableException.cs",
+              "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Application\\Exceptions\\ReservationExceptions\\CourtNotAvaliableException.cs",
+              "RelativeDocumentMoniker": "SportsCenter.Application\\Exceptions\\ReservationExceptions\\CourtNotAvaliableException.cs",
+              "ToolTip": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Application\\Exceptions\\ReservationExceptions\\CourtNotAvaliableException.cs",
+              "RelativeToolTip": "SportsCenter.Application\\Exceptions\\ReservationExceptions\\CourtNotAvaliableException.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-03T19:26:54.054Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 33,
+              "Title": "SportActivityRepository.cs",
+              "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Infrastructure\\DAL\\Repositories\\SportActivityRepository.cs",
+              "RelativeDocumentMoniker": "SportsCenter.Infrastructure\\DAL\\Repositories\\SportActivityRepository.cs",
+              "ToolTip": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Infrastructure\\DAL\\Repositories\\SportActivityRepository.cs",
+              "RelativeToolTip": "SportsCenter.Infrastructure\\DAL\\Repositories\\SportActivityRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-03T19:20:47.223Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 34,
+              "Title": "20241017072609_InitialMigration.cs",
+              "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Infrastructure\\Migrations\\20241017072609_InitialMigration.cs",
+              "RelativeDocumentMoniker": "SportsCenter.Infrastructure\\Migrations\\20241017072609_InitialMigration.cs",
+              "ToolTip": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Infrastructure\\Migrations\\20241017072609_InitialMigration.cs",
+              "RelativeToolTip": "SportsCenter.Infrastructure\\Migrations\\20241017072609_InitialMigration.cs",
+              "ViewState": "AgIAAEAAAAAAAAAAAAAgwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-03T18:45:48.849Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 37,
+              "Title": "Certyfikat.cs",
+              "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Core\\Entities\\Certyfikat.cs",
+              "RelativeDocumentMoniker": "SportsCenter.Core\\Entities\\Certyfikat.cs",
+              "ToolTip": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Core\\Entities\\Certyfikat.cs",
+              "RelativeToolTip": "SportsCenter.Core\\Entities\\Certyfikat.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-03T18:30:48.404Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 35,
+              "Title": "ActivitySchedule.cs",
+              "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Core\\Entities\\ActivitySchedule.cs",
+              "RelativeDocumentMoniker": "SportsCenter.Core\\Entities\\ActivitySchedule.cs",
+              "ToolTip": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Core\\Entities\\ActivitySchedule.cs",
+              "RelativeToolTip": "SportsCenter.Core\\Entities\\ActivitySchedule.cs",
+              "ViewState": "AgIAAAgAAAAAAAAAAAA9wAUAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-03T18:30:35.358Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 39,
+              "Title": "EmployeeRepository.cs",
+              "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Infrastructure\\DAL\\Repositories\\EmployeeRepository.cs",
+              "RelativeDocumentMoniker": "SportsCenter.Infrastructure\\DAL\\Repositories\\EmployeeRepository.cs",
+              "ToolTip": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Infrastructure\\DAL\\Repositories\\EmployeeRepository.cs",
+              "RelativeToolTip": "SportsCenter.Infrastructure\\DAL\\Repositories\\EmployeeRepository.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAABYAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-03T18:26:30.507Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 38,
+              "Title": "ClientRepository.cs",
+              "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Infrastructure\\DAL\\Repositories\\ClientRepository.cs",
+              "RelativeDocumentMoniker": "SportsCenter.Infrastructure\\DAL\\Repositories\\ClientRepository.cs",
+              "ToolTip": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Infrastructure\\DAL\\Repositories\\ClientRepository.cs",
+              "RelativeToolTip": "SportsCenter.Infrastructure\\DAL\\Repositories\\ClientRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-03T18:26:12.883Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "ReservationRepository.cs",
+              "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Infrastructure\\DAL\\Repositories\\ReservationRepository.cs",
+              "RelativeDocumentMoniker": "SportsCenter.Infrastructure\\DAL\\Repositories\\ReservationRepository.cs",
+              "ToolTip": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Infrastructure\\DAL\\Repositories\\ReservationRepository.cs",
+              "RelativeToolTip": "SportsCenter.Infrastructure\\DAL\\Repositories\\ReservationRepository.cs",
+              "ViewState": "AgIAAD8AAAAAAAAAAAAqwFAAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-03T18:26:06.429Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 28,
+              "Title": "RegisterClientValidator.cs",
+              "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Application\\Clients\\Commands\\RegisterClient\\RegisterClientValidator.cs",
+              "RelativeDocumentMoniker": "SportsCenter.Application\\Clients\\Commands\\RegisterClient\\RegisterClientValidator.cs",
+              "ToolTip": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Application\\Clients\\Commands\\RegisterClient\\RegisterClientValidator.cs",
+              "RelativeToolTip": "SportsCenter.Application\\Clients\\Commands\\RegisterClient\\RegisterClientValidator.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAB8AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-03T12:32:52.953Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 41,
+              "Title": "ClientNotFoundException.cs",
+              "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Application\\Exceptions\\ClientsExceptions\\ClientNotFoundException.cs",
+              "RelativeDocumentMoniker": "SportsCenter.Application\\Exceptions\\ClientsExceptions\\ClientNotFoundException.cs",
+              "ToolTip": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Application\\Exceptions\\ClientsExceptions\\ClientNotFoundException.cs",
+              "RelativeToolTip": "SportsCenter.Application\\Exceptions\\ClientsExceptions\\ClientNotFoundException.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-03T12:29:41.324Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 31,
+              "Title": "TooManyParticipantsException.cs",
+              "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Application\\Exceptions\\ReservationExceptions\\TooManyParticipantsException.cs",
+              "RelativeDocumentMoniker": "SportsCenter.Application\\Exceptions\\ReservationExceptions\\TooManyParticipantsException.cs",
+              "ToolTip": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Application\\Exceptions\\ReservationExceptions\\TooManyParticipantsException.cs",
+              "RelativeToolTip": "SportsCenter.Application\\Exceptions\\ReservationExceptions\\TooManyParticipantsException.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-03T12:29:37.575Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 43,
+              "Title": "Osoba.cs",
+              "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Core\\Entities\\Osoba.cs",
+              "RelativeDocumentMoniker": "SportsCenter.Core\\Entities\\Osoba.cs",
+              "ToolTip": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Core\\Entities\\Osoba.cs",
+              "RelativeToolTip": "SportsCenter.Core\\Entities\\Osoba.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-03T12:21:07.213Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 44,
+              "Title": "Ocena.cs",
+              "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Core\\Entities\\Ocena.cs",
+              "RelativeDocumentMoniker": "SportsCenter.Core\\Entities\\Ocena.cs",
+              "ToolTip": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Core\\Entities\\Ocena.cs",
+              "RelativeToolTip": "SportsCenter.Core\\Entities\\Ocena.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-03T12:21:04.134Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 42,
+              "Title": "Rezerwacja.cs",
+              "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Core\\Entities\\Rezerwacja.cs",
+              "RelativeDocumentMoniker": "SportsCenter.Core\\Entities\\Rezerwacja.cs",
+              "ToolTip": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Core\\Entities\\Rezerwacja.cs",
+              "RelativeToolTip": "SportsCenter.Core\\Entities\\Rezerwacja.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAwAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-03T12:20:42.241Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 40,
+              "Title": "RegisterClient.cs",
+              "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Application\\Clients\\Commands\\RegisterClient\\RegisterClient.cs",
+              "RelativeDocumentMoniker": "SportsCenter.Application\\Clients\\Commands\\RegisterClient\\RegisterClient.cs",
+              "ToolTip": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Application\\Clients\\Commands\\RegisterClient\\RegisterClient.cs",
+              "RelativeToolTip": "SportsCenter.Application\\Clients\\Commands\\RegisterClient\\RegisterClient.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAUAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-03T12:15:03.714Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 29,
+              "Title": "RegisterClientHandler.cs",
+              "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Application\\Clients\\Commands\\RegisterClient\\RegisterClientHandler.cs",
+              "RelativeDocumentMoniker": "SportsCenter.Application\\Clients\\Commands\\RegisterClient\\RegisterClientHandler.cs",
+              "ToolTip": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Application\\Clients\\Commands\\RegisterClient\\RegisterClientHandler.cs",
+              "RelativeToolTip": "SportsCenter.Application\\Clients\\Commands\\RegisterClient\\RegisterClientHandler.cs",
+              "ViewState": "AgIAAA4AAAAAAAAAAAAQwAkAAAAPAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-03T12:14:26.093Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 45,
+              "Title": "AddClientTagsHandler.cs",
+              "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Application\\Clients\\Commands\\AddClientTags\\AddClientTagsHandler.cs",
+              "RelativeDocumentMoniker": "SportsCenter.Application\\Clients\\Commands\\AddClientTags\\AddClientTagsHandler.cs",
+              "ToolTip": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Application\\Clients\\Commands\\AddClientTags\\AddClientTagsHandler.cs",
+              "RelativeToolTip": "SportsCenter.Application\\Clients\\Commands\\AddClientTags\\AddClientTagsHandler.cs",
+              "ViewState": "AgIAAA0AAAAAAAAAAAAgwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-03T12:14:14.009Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 47,
+              "Title": "AddDepositValidator.cs",
+              "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Application\\Clients\\Commands\\AddDeposit\\AddDepositValidator.cs",
+              "RelativeDocumentMoniker": "SportsCenter.Application\\Clients\\Commands\\AddDeposit\\AddDepositValidator.cs",
+              "ToolTip": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Application\\Clients\\Commands\\AddDeposit\\AddDepositValidator.cs",
+              "RelativeToolTip": "SportsCenter.Application\\Clients\\Commands\\AddDeposit\\AddDepositValidator.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-03T12:13:58.683Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 48,
+              "Title": "ITagRepository.cs",
+              "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Core\\Repositories\\ITagRepository.cs",
+              "RelativeDocumentMoniker": "SportsCenter.Core\\Repositories\\ITagRepository.cs",
+              "ToolTip": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Core\\Repositories\\ITagRepository.cs",
+              "RelativeToolTip": "SportsCenter.Core\\Repositories\\ITagRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-03T12:12:06.29Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 49,
+              "Title": "IClientRepository.cs",
+              "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Core\\Repositories\\IClientRepository.cs",
+              "RelativeDocumentMoniker": "SportsCenter.Core\\Repositories\\IClientRepository.cs",
+              "ToolTip": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Core\\Repositories\\IClientRepository.cs",
+              "RelativeToolTip": "SportsCenter.Core\\Repositories\\IClientRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAABQAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-03T12:11:48.951Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "IReservationRepository.cs",
+              "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Core\\Repositories\\IReservationRepository.cs",
+              "RelativeDocumentMoniker": "SportsCenter.Core\\Repositories\\IReservationRepository.cs",
+              "ToolTip": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Core\\Repositories\\IReservationRepository.cs",
+              "RelativeToolTip": "SportsCenter.Core\\Repositories\\IReservationRepository.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAABMAAABhAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-03T12:06:27.91Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "AddReservationValidator.cs",
+              "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Application\\Reservations\\Commands\\AddReservation\\AddReservationValidator.cs",
+              "RelativeDocumentMoniker": "SportsCenter.Application\\Reservations\\Commands\\AddReservation\\AddReservationValidator.cs",
+              "ToolTip": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Application\\Reservations\\Commands\\AddReservation\\AddReservationValidator.cs",
+              "RelativeToolTip": "SportsCenter.Application\\Reservations\\Commands\\AddReservation\\AddReservationValidator.cs",
+              "ViewState": "AgIAAAUAAAAAAAAAAAAAABgAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-03T12:03:55.417Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "AddReservationHandler.cs",
+              "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Application\\Reservations\\Commands\\AddReservation\\AddReservationHandler.cs",
+              "RelativeDocumentMoniker": "SportsCenter.Application\\Reservations\\Commands\\AddReservation\\AddReservationHandler.cs",
+              "ToolTip": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Application\\Reservations\\Commands\\AddReservation\\AddReservationHandler.cs",
+              "RelativeToolTip": "SportsCenter.Application\\Reservations\\Commands\\AddReservation\\AddReservationHandler.cs",
+              "ViewState": "AgIAADQAAAAAAAAAAAAQwEMAAAAsAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-03T12:03:44.635Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 46,
+              "Title": "AddDepositHandler.cs",
+              "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Application\\Clients\\Commands\\AddDeposit\\AddDepositHandler.cs",
+              "RelativeDocumentMoniker": "SportsCenter.Application\\Clients\\Commands\\AddDeposit\\AddDepositHandler.cs",
+              "ToolTip": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Application\\Clients\\Commands\\AddDeposit\\AddDepositHandler.cs",
+              "RelativeToolTip": "SportsCenter.Application\\Clients\\Commands\\AddDeposit\\AddDepositHandler.cs",
+              "ViewState": "AgIAAAwAAAAAAAAAAAAAABUAAAAxAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-03T12:03:34.186Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 50,
+              "Title": "AddDeposit.cs",
+              "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Application\\Clients\\Commands\\AddDeposit\\AddDeposit.cs",
+              "RelativeDocumentMoniker": "SportsCenter.Application\\Clients\\Commands\\AddDeposit\\AddDeposit.cs",
+              "ToolTip": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Application\\Clients\\Commands\\AddDeposit\\AddDeposit.cs",
+              "RelativeToolTip": "SportsCenter.Application\\Clients\\Commands\\AddDeposit\\AddDeposit.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAA0AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-03T11:53:11.785Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
+              "Title": "AddReservation.cs",
+              "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Application\\Reservations\\Commands\\AddReservation\\AddReservation.cs",
+              "RelativeDocumentMoniker": "SportsCenter.Application\\Reservations\\Commands\\AddReservation\\AddReservation.cs",
+              "ToolTip": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Application\\Reservations\\Commands\\AddReservation\\AddReservation.cs",
+              "RelativeToolTip": "SportsCenter.Application\\Reservations\\Commands\\AddReservation\\AddReservation.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAvAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-03T11:51:34.837Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 52,
+              "Title": "AddSportActivityValidator.cs",
+              "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Application\\Activities\\Commands\\AddSportActivity\\AddSportActivityValidator.cs",
+              "RelativeDocumentMoniker": "SportsCenter.Application\\Activities\\Commands\\AddSportActivity\\AddSportActivityValidator.cs",
+              "ToolTip": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Application\\Activities\\Commands\\AddSportActivity\\AddSportActivityValidator.cs",
+              "RelativeToolTip": "SportsCenter.Application\\Activities\\Commands\\AddSportActivity\\AddSportActivityValidator.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAkAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-03T11:03:43.386Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 51,
+              "Title": "AddSportActivityHandler.cs",
+              "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Application\\Activities\\Commands\\AddSportActivity\\AddSportActivityHandler.cs",
+              "RelativeDocumentMoniker": "SportsCenter.Application\\Activities\\Commands\\AddSportActivity\\AddSportActivityHandler.cs",
+              "ToolTip": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Application\\Activities\\Commands\\AddSportActivity\\AddSportActivityHandler.cs",
+              "RelativeToolTip": "SportsCenter.Application\\Activities\\Commands\\AddSportActivity\\AddSportActivityHandler.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-03T11:03:32.825Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 53,
+              "Title": "AddSportActivity.cs",
+              "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Application\\Activities\\Commands\\AddSportActivity\\AddSportActivity.cs",
+              "RelativeDocumentMoniker": "SportsCenter.Application\\Activities\\Commands\\AddSportActivity\\AddSportActivity.cs",
+              "ToolTip": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Application\\Activities\\Commands\\AddSportActivity\\AddSportActivity.cs",
+              "RelativeToolTip": "SportsCenter.Application\\Activities\\Commands\\AddSportActivity\\AddSportActivity.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAAAcAAAAnAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-03T10:59:12.179Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 55,
+              "Title": "UnitOfWorkBehavior.cs",
+              "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Infrastructure\\Behaviors\\UnitOfWorkBehavior.cs",
+              "RelativeDocumentMoniker": "SportsCenter.Infrastructure\\Behaviors\\UnitOfWorkBehavior.cs",
+              "ToolTip": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Infrastructure\\Behaviors\\UnitOfWorkBehavior.cs",
+              "RelativeToolTip": "SportsCenter.Infrastructure\\Behaviors\\UnitOfWorkBehavior.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-03T10:33:07.636Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 57,
+              "Title": "PasswordManager.cs",
+              "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Infrastructure\\Security\\PasswordManager.cs",
+              "RelativeDocumentMoniker": "SportsCenter.Infrastructure\\Security\\PasswordManager.cs",
+              "ToolTip": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Infrastructure\\Security\\PasswordManager.cs",
+              "RelativeToolTip": "SportsCenter.Infrastructure\\Security\\PasswordManager.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-03T10:12:42.772Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 23,
               "Title": "Extensions.cs",
-              "DocumentMoniker": "C:\\Users\\Alan\\Desktop\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Infrastructure\\Extensions.cs",
+              "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Application\\Extensions.cs",
+              "RelativeDocumentMoniker": "SportsCenter.Application\\Extensions.cs",
+              "ToolTip": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Application\\Extensions.cs",
+              "RelativeToolTip": "SportsCenter.Application\\Extensions.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-03T10:12:03.794Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 58,
+              "Title": "IPasswordManager.cs",
+              "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Application\\Security\\IPasswordManager.cs",
+              "RelativeDocumentMoniker": "SportsCenter.Application\\Security\\IPasswordManager.cs",
+              "ToolTip": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Application\\Security\\IPasswordManager.cs",
+              "RelativeToolTip": "SportsCenter.Application\\Security\\IPasswordManager.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-03T10:11:55.687Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 56,
+              "Title": "IJWTTokenGenerator.cs",
+              "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Application\\Security\\IJWTTokenGenerator.cs",
+              "RelativeDocumentMoniker": "SportsCenter.Application\\Security\\IJWTTokenGenerator.cs",
+              "ToolTip": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Application\\Security\\IJWTTokenGenerator.cs",
+              "RelativeToolTip": "SportsCenter.Application\\Security\\IJWTTokenGenerator.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-03T10:11:49.898Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 24,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Api\\Program.cs",
+              "RelativeDocumentMoniker": "SportsCenter.Api\\Program.cs",
+              "ToolTip": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Api\\Program.cs",
+              "RelativeToolTip": "SportsCenter.Api\\Program.cs",
+              "ViewState": "AgIAACQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-03T10:11:27.383Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 60,
+              "Title": "launchSettings.json",
+              "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Api\\Properties\\launchSettings.json",
+              "RelativeDocumentMoniker": "SportsCenter.Api\\Properties\\launchSettings.json",
+              "ToolTip": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Api\\Properties\\launchSettings.json",
+              "RelativeToolTip": "SportsCenter.Api\\Properties\\launchSettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-02-03T10:11:03.508Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 61,
+              "Title": "MsSqlServerOptions.cs",
+              "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Infrastructure\\DAL\\MsSqlServerOptions.cs",
+              "RelativeDocumentMoniker": "SportsCenter.Infrastructure\\DAL\\MsSqlServerOptions.cs",
+              "ToolTip": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Infrastructure\\DAL\\MsSqlServerOptions.cs",
+              "RelativeToolTip": "SportsCenter.Infrastructure\\DAL\\MsSqlServerOptions.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAQAAAAiAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-07T19:16:58.979Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 22,
+              "Title": "Extensions.cs",
+              "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Infrastructure\\Extensions.cs",
               "RelativeDocumentMoniker": "SportsCenter.Infrastructure\\Extensions.cs",
-              "ToolTip": "C:\\Users\\Alan\\Desktop\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Infrastructure\\Extensions.cs",
+              "ToolTip": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Infrastructure\\Extensions.cs",
               "RelativeToolTip": "SportsCenter.Infrastructure\\Extensions.cs",
-              "ViewState": "AQIAACIAAAAAAAAAAAAAACIAAABpAAAA",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACkAAAAeAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-12-07T19:16:57.042Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 65,
               "Title": "InvalidUserRoleException.cs",
-              "DocumentMoniker": "C:\\Users\\Alan\\Desktop\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Application\\Exceptions\\UsersException\\InvalidUserRoleException.cs",
+              "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Application\\Exceptions\\UsersException\\InvalidUserRoleException.cs",
               "RelativeDocumentMoniker": "SportsCenter.Application\\Exceptions\\UsersException\\InvalidUserRoleException.cs",
-              "ToolTip": "C:\\Users\\Alan\\Desktop\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Application\\Exceptions\\UsersException\\InvalidUserRoleException.cs",
+              "ToolTip": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Application\\Exceptions\\UsersException\\InvalidUserRoleException.cs",
               "RelativeToolTip": "SportsCenter.Application\\Exceptions\\UsersException\\InvalidUserRoleException.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAgAAAABAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-06T22:32:30.266Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-12-06T22:32:30.266Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 64,
               "Title": "InvalidLoginException.cs",
-              "DocumentMoniker": "C:\\Users\\Alan\\Desktop\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Application\\Exceptions\\UsersException\\InvalidLoginException.cs",
+              "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Application\\Exceptions\\UsersException\\InvalidLoginException.cs",
               "RelativeDocumentMoniker": "SportsCenter.Application\\Exceptions\\UsersException\\InvalidLoginException.cs",
-              "ToolTip": "C:\\Users\\Alan\\Desktop\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Application\\Exceptions\\UsersException\\InvalidLoginException.cs",
+              "ToolTip": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Application\\Exceptions\\UsersException\\InvalidLoginException.cs",
               "RelativeToolTip": "SportsCenter.Application\\Exceptions\\UsersException\\InvalidLoginException.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAkAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-06T22:32:03.641Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-12-06T22:32:03.641Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 63,
               "Title": "IUserRepository.cs",
-              "DocumentMoniker": "C:\\Users\\Alan\\Desktop\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Core\\Repositories\\IUserRepository.cs",
+              "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Core\\Repositories\\IUserRepository.cs",
               "RelativeDocumentMoniker": "SportsCenter.Core\\Repositories\\IUserRepository.cs",
-              "ToolTip": "C:\\Users\\Alan\\Desktop\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Core\\Repositories\\IUserRepository.cs",
+              "ToolTip": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Core\\Repositories\\IUserRepository.cs",
               "RelativeToolTip": "SportsCenter.Core\\Repositories\\IUserRepository.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAoAAAABAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-06T21:42:02.708Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-12-06T21:42:02.708Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 62,
               "Title": "UserRepository.cs",
-              "DocumentMoniker": "C:\\Users\\Alan\\Desktop\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Infrastructure\\DAL\\Repositories\\UserRepository.cs",
+              "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Infrastructure\\DAL\\Repositories\\UserRepository.cs",
               "RelativeDocumentMoniker": "SportsCenter.Infrastructure\\DAL\\Repositories\\UserRepository.cs",
-              "ToolTip": "C:\\Users\\Alan\\Desktop\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Infrastructure\\DAL\\Repositories\\UserRepository.cs",
+              "ToolTip": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Infrastructure\\DAL\\Repositories\\UserRepository.cs",
               "RelativeToolTip": "SportsCenter.Infrastructure\\DAL\\Repositories\\UserRepository.cs",
               "ViewState": "AQIAAAgAAAAAAAAAAAAQwBkAAAA6AAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-06T21:42:25.271Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-12-06T21:42:25.271Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 36,
               "Title": "SportsCenterDbContext.cs",
-              "DocumentMoniker": "C:\\Users\\Alan\\Desktop\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Infrastructure\\DAL\\SportsCenterDbContext.cs",
+              "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Infrastructure\\DAL\\SportsCenterDbContext.cs",
               "RelativeDocumentMoniker": "SportsCenter.Infrastructure\\DAL\\SportsCenterDbContext.cs",
-              "ToolTip": "C:\\Users\\Alan\\Desktop\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Infrastructure\\DAL\\SportsCenterDbContext.cs*",
-              "RelativeToolTip": "SportsCenter.Infrastructure\\DAL\\SportsCenterDbContext.cs*",
-              "ViewState": "AQIAACkAAAAAAAAAAAAqwDgAAACQAAAA",
+              "ToolTip": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Infrastructure\\DAL\\SportsCenterDbContext.cs",
+              "RelativeToolTip": "SportsCenter.Infrastructure\\DAL\\SportsCenterDbContext.cs",
+              "ViewState": "AgIAAE0AAAAAAAAAAAAmwGAAAAApAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-12-06T21:30:42.913Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 54,
               "Title": "JWTTokenGenerator.cs",
-              "DocumentMoniker": "C:\\Users\\Alan\\Desktop\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Infrastructure\\Security\\JWTTokenGenerator.cs",
+              "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Infrastructure\\Security\\JWTTokenGenerator.cs",
               "RelativeDocumentMoniker": "SportsCenter.Infrastructure\\Security\\JWTTokenGenerator.cs",
-              "ToolTip": "C:\\Users\\Alan\\Desktop\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Infrastructure\\Security\\JWTTokenGenerator.cs*",
-              "RelativeToolTip": "SportsCenter.Infrastructure\\Security\\JWTTokenGenerator.cs*",
-              "ViewState": "AQIAABMAAAAAAAAAAAAEwCkAAAAOAAAA",
+              "ToolTip": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Infrastructure\\Security\\JWTTokenGenerator.cs",
+              "RelativeToolTip": "SportsCenter.Infrastructure\\Security\\JWTTokenGenerator.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAADMAAAAvAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-06T21:17:30.631Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-12-06T21:17:30.631Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 66,
               "Title": "LoginHandler.cs",
-              "DocumentMoniker": "C:\\Users\\Alan\\Desktop\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Application\\Users\\Commands\\Login\\LoginHandler.cs",
+              "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Application\\Users\\Commands\\Login\\LoginHandler.cs",
               "RelativeDocumentMoniker": "SportsCenter.Application\\Users\\Commands\\Login\\LoginHandler.cs",
-              "ToolTip": "C:\\Users\\Alan\\Desktop\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Application\\Users\\Commands\\Login\\LoginHandler.cs",
+              "ToolTip": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Application\\Users\\Commands\\Login\\LoginHandler.cs",
               "RelativeToolTip": "SportsCenter.Application\\Users\\Commands\\Login\\LoginHandler.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAIAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-06T21:16:59.852Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-12-06T21:16:59.852Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 67,
               "Title": "Login.cs",
-              "DocumentMoniker": "C:\\Users\\Alan\\Desktop\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Application\\Users\\Commands\\Login\\Login.cs",
+              "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Application\\Users\\Commands\\Login\\Login.cs",
               "RelativeDocumentMoniker": "SportsCenter.Application\\Users\\Commands\\Login\\Login.cs",
-              "ToolTip": "C:\\Users\\Alan\\Desktop\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Application\\Users\\Commands\\Login\\Login.cs",
+              "ToolTip": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Application\\Users\\Commands\\Login\\Login.cs",
               "RelativeToolTip": "SportsCenter.Application\\Users\\Commands\\Login\\Login.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-06T21:16:58.314Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-12-06T21:16:58.314Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 59,
               "Title": "appsettings.json",
-              "DocumentMoniker": "C:\\Users\\Alan\\Desktop\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Api\\appsettings.json",
+              "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Api\\appsettings.json",
               "RelativeDocumentMoniker": "SportsCenter.Api\\appsettings.json",
-              "ToolTip": "C:\\Users\\Alan\\Desktop\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Api\\appsettings.json*",
-              "RelativeToolTip": "SportsCenter.Api\\appsettings.json*",
-              "ViewState": "AQIAAAAAAAAAAAAAAAASwBIAAAAVAAAA",
+              "ToolTip": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Api\\appsettings.json",
+              "RelativeToolTip": "SportsCenter.Api\\appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAASwBIAAAAVAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2024-12-06T21:12:51.439Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-12-06T21:12:51.439Z"
             }
           ]
         }

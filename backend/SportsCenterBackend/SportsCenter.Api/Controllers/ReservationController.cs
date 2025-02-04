@@ -5,6 +5,7 @@ using SportsCenter.Application.Exceptions.ReservationExceptions;
 using SportsCenter.Application.Reservations.Commands.AddReservation;
 using SportsCenter.Application.Reservations.Commands.MoveReservation;
 using SportsCenter.Application.Reservations.Commands.RemoveReservation;
+using SportsCenter.Application.Reservations.Commands.AddRecurringReservation;
 
 namespace SportsCenter.Api.Controllers;
 
@@ -15,11 +16,11 @@ public class ReservationController : BaseController
     {
     }
 
-    [HttpPost("Create-reservation")]
-    public async Task<IActionResult> CreateReservation([FromBody] AddReservation addReservation)
+    [HttpPost("Create-single-reservation")]
+    public async Task<IActionResult> CreateSingleReservation([FromBody] AddSingleReservation addReservation)
     {
 
-        var validationResults = new AddReservationValidator().Validate(addReservation);
+        var validationResults = new AddSingleReservationValidator().Validate(addReservation);
         if (!validationResults.IsValid)
         {
             return BadRequest(validationResults.Errors);
@@ -40,6 +41,38 @@ public class ReservationController : BaseController
         }
         catch (TrainerNotAvaliableException)
         {               
+            return Conflict(new { Message = "The selected trainer is not available for the requested time." });
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError, new { Message = "An unexpected error occurred.", Details = ex.Message });
+        }
+    }
+
+    [HttpPost("Create-recurring-reservation")]
+    public async Task<IActionResult> CreateRecurringReservation([FromBody] AddRecurringReservation addRecurringReservation)
+    {      
+        var validationResults = new AddRecurringReservationValidator().Validate(addRecurringReservation);
+        if (!validationResults.IsValid)
+        {
+            return BadRequest(validationResults.Errors);
+        }
+
+        try
+        {           
+            await Mediator.Send(addRecurringReservation);
+            return Ok(new { Message = "Recurring reservation created successfully" });
+        }
+        catch (TooManyParticipantsException)
+        {
+            return BadRequest(new { Message = "Too many participants. The maximum is 8." });
+        }
+        catch (CourtNotAvaliableException)
+        {
+            return Conflict(new { Message = $"The court {addRecurringReservation.CourtId} is not available for the requested time." });
+        }
+        catch (TrainerNotAvaliableException)
+        {
             return Conflict(new { Message = "The selected trainer is not available for the requested time." });
         }
         catch (Exception ex)

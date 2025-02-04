@@ -84,6 +84,48 @@ namespace SportsCenter.Infrastructure.DAL.Repositories
             _dbContext.Rezerwacjas.Remove(reservation);
             await _dbContext.SaveChangesAsync(cancellationToken);
         }
+        public async Task<IEnumerable<Kort>> GetAvailableCourtsAsync(DateTime startTime, DateTime endTime, CancellationToken cancellationToken)
+        {          
+            var availableCourts = await _dbContext.Korts
+                .Where(c => !(_dbContext.Rezerwacjas
+                    .Any(r => r.KortId == c.KortId &&
+                              r.DataOd < endTime &&
+                              r.DataDo > startTime)))
+                .Where(c => !(_dbContext.GrafikZajecs
+                    .Where(gz => gz.KortId == c.KortId)
+                    .Join(_dbContext.DataZajecs,
+                        gz => gz.GrafikZajecId,
+                        dz => dz.GrafikZajecId,
+                        (gz, dz) => new { gz, dz })
+                    .Where(x =>
+                        (x.dz.Date >= startTime && x.dz.Date < endTime) ||
+                        (x.dz.Date.AddMinutes(x.gz.CzasTrwania) > startTime && x.dz.Date < endTime))
+                    .Any()))
+                .ToListAsync(cancellationToken);
+
+            return availableCourts;
+        }
+        public async Task<IEnumerable<Pracownik>> GetAvailableTrainersAsync(DateTime startTime, DateTime endTime, CancellationToken cancellationToken)
+        {
+            var availableTrainers = await _dbContext.Pracowniks
+                .Where(t => !(_dbContext.Rezerwacjas
+                    .Any(r => r.TrenerId == t.PracownikId &&
+                              r.DataOd < endTime &&
+                              r.DataDo > startTime)))
+                .Where(t => !(_dbContext.GrafikZajecs
+                    .Where(gz => gz.PracownikId == t.PracownikId)
+                    .Join(_dbContext.DataZajecs,
+                        gz => gz.GrafikZajecId,
+                        dz => dz.GrafikZajecId,
+                        (gz, dz) => new { gz, dz })
+                    .Where(x =>
+                        (x.dz.Date >= startTime && x.dz.Date < endTime) ||
+                        (x.dz.Date.AddMinutes(x.gz.CzasTrwania) > startTime && x.dz.Date < endTime))
+                    .Any()))
+                .ToListAsync(cancellationToken);
+
+            return availableTrainers;
+        }
 
     }
 }

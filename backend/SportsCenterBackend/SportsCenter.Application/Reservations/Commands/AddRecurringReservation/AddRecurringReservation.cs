@@ -6,9 +6,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SportsCenter.Application.Reservations.Commands.AddReservation
+namespace SportsCenter.Application.Reservations.Commands.AddRecurringReservation
 {
-    public sealed record AddReservation : ICommand<Unit>
+    public sealed record AddRecurringReservation : ICommand<Unit>
     {
         public int ClientId { get; set; }
         public int CourtId { get; set; }
@@ -18,5 +18,7 @@ namespace SportsCenter.Application.Reservations.Commands.AddReservation
         public int? TrainerId { get; set; }
         public int ParticipantsCount { get; set; }
         public bool IsEquipmentReserved { get; set; }
+        public string Recurrence { get; set; } 
+        public DateTime RecurrenceEndDate { get; set; }
     }
 }

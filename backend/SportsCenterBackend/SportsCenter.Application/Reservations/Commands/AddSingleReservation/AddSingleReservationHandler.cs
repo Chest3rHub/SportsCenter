@@ -10,23 +10,21 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-//jak sprawdzac czy kort i trener sa wolni
-//jak dodawac koszt rezerwacji? musi byc liczony na jakiejs podstawie 
 
 namespace SportsCenter.Application.Reservations.Commands.AddReservation
 {
-    internal sealed class AddReservationHandler : IRequestHandler<AddReservation, Unit>
+    internal sealed class AddSingleReservationHandler : IRequestHandler<AddSingleReservation, Unit>
     {
         private readonly IReservationRepository _reservationRepository;
         private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public AddReservationHandler(IReservationRepository reservationRepository, IHttpContextAccessor httpContextAccessor)
+        public AddSingleReservationHandler(IReservationRepository reservationRepository, IHttpContextAccessor httpContextAccessor)
         {
             _reservationRepository = reservationRepository;
             _httpContextAccessor = httpContextAccessor;
         }
 
-        public async Task<Unit> Handle(AddReservation request, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(AddSingleReservation request, CancellationToken cancellationToken)
         {
 
             if (request.ParticipantsCount > 8)

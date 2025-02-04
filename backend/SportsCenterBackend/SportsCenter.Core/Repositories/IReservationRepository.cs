@@ -18,5 +18,7 @@ namespace SportsCenter.Core.Repositories
         Task<Rezerwacja> GetReservationByIdAsync(int reservationId, CancellationToken cancellationToken);
         Task UpdateReservationAsync(Rezerwacja reservation, CancellationToken cancellationToken);
         Task DeleteReservationAsync(Rezerwacja reservation, CancellationToken cancellationToken);
+        Task<IEnumerable<Kort>> GetAvailableCourtsAsync(DateTime startTime, DateTime endTime, CancellationToken cancellationToken);
+        Task<IEnumerable<Pracownik>> GetAvailableTrainersAsync(DateTime startTime, DateTime endTime, CancellationToken cancellationToken);
     }
 }

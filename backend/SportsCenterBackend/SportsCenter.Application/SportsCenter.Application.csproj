@@ -23,6 +23,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <Folder Include="Schedule\Commands\" />
       <Folder Include="Users\Queries\" />
     </ItemGroup>
 

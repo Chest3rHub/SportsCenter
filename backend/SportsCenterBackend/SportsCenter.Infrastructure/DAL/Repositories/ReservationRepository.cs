@@ -126,6 +126,5 @@ namespace SportsCenter.Infrastructure.DAL.Repositories
 
             return availableTrainers;
         }
-
     }
 }

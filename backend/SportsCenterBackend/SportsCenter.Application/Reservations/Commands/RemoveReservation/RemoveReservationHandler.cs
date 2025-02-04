@@ -30,10 +30,15 @@ namespace SportsCenter.Application.Reservations.Commands.RemoveReservation
             {
                 throw new ReservationNotFoundException(request.Id);
             }
+
+            //w przyszlosci dodac ze jesli rola wlasciel to mozna odwolac w dowolnym czasie
+            //var userRole = _httpContextAccessor.HttpContext?.User?.Claims
+            //    .FirstOrDefault(c => c.Type == "role")?.Value;
            
+            //bool isAdmin = userRole == "wlasciciel";
             var remainingTime = reservation.DataOd - DateTime.UtcNow;
            
-            if (remainingTime.TotalHours < 24)
+            if (remainingTime.TotalHours < 24) //!isAdmin dodac do warunku
             {
                 throw new InvalidOperationException("Reservation can only be canceled if the remaining time is greater than or equal to 24 hours.");
             }         

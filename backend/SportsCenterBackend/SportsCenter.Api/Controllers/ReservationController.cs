@@ -6,6 +6,7 @@ using SportsCenter.Application.Reservations.Commands.AddReservation;
 using SportsCenter.Application.Reservations.Commands.MoveReservation;
 using SportsCenter.Application.Reservations.Commands.RemoveReservation;
 using SportsCenter.Application.Reservations.Commands.AddRecurringReservation;
+using SportsCenter.Application.Reservations.Queries.GetReservationSummary;
 
 namespace SportsCenter.Api.Controllers;
 
@@ -130,5 +131,19 @@ public class ReservationController : BaseController
         {
             return NotFound(ex.Message);
         }
+    }
+
+    [HttpGet("Reservation-summary")]
+    public async Task<IActionResult> GetReservationSummary([FromQuery] DateTime startDate, [FromQuery] DateTime endDate)
+    {
+        if (startDate > endDate) //nie jestem pewna gdzie ten warunek umiescic
+        {
+            return BadRequest("StartDate cannot be greater than EndDate.");
+        }
+
+        var query = new GetReservationSummary(startDate, endDate);
+        var result = await Mediator.Send(query);
+
+        return Ok(result);
     }
 }

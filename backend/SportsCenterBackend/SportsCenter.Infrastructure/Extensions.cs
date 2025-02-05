@@ -40,6 +40,7 @@ public static class Extensions
         services.AddScoped<ISportActivityRepository, SportActivityRepository>();
         services.AddScoped<ITagRepository, TagRepository>();
         services.AddScoped<IReservationRepository, ReservationRepository>();
+        services.AddScoped<IReviewRepository, ReviewRepository>();
         services.AddScoped<IJWTTokenGenerator, JWTTokenGenerator>();
 
         //Security

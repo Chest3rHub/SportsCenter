@@ -10,7 +10,7 @@ public partial class Ocena
 
     public int GrafikZajecKlientId { get; set; }
 
-    public DateOnly DataWystawienia { get; set; }
+    public DateTime DataWystawienia { get; set; }
 
     public virtual GrafikZajecKlient GrafikZajecKlient { get; set; } = null!;
 }

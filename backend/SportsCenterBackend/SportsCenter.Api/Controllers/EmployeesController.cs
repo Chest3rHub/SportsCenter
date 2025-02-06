@@ -10,6 +10,7 @@ using SportsCenter.Application.Employees.Queries.GetEmployees;
 using SportsCenter.Application.Employees.Queries.GetTasks;
 using SportsCenter.Application.Employees.Commands.EditTask;
 using SportsCenter.Application.Exceptions.UsersException;
+using SportsCenter.Application.Employees.Commands.DismissEmployee;
 
 
 namespace SportsCenter.Api.Controllers
@@ -55,7 +56,30 @@ namespace SportsCenter.Api.Controllers
                     return StatusCode(500, new { message = "An error occurred while sending the request", details = ex.Message });
                 }
             }
-        
+
+        [HttpDelete("{employeeId}")]
+        //[Authorize(Roles = "Owner")]
+        public async Task<IActionResult> DismissEmployee(int employeeId)
+        {
+            try
+            {
+                await Mediator.Send(new DismissEmployee(employeeId));
+                return NoContent();
+            }
+            catch (EmployeeNotFoundException ex)
+            {
+                return NotFound(new { Message = ex.Message });
+            }
+            //catch (UnauthorizedAccessException)
+            //{
+            //    return Forbid();
+            //}
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "An error occurred while sending the request", details = ex.Message });
+            }
+        }
+
         //dodawanie zadan samemu sobie
         [HttpPost("Self-Add-task")]
         public async Task<IActionResult> AddTask([FromBody] AddTask task)

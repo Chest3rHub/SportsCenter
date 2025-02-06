@@ -40,7 +40,11 @@ namespace SportsCenter.Infrastructure.DAL.Repositories
                 .Include(p => p.PracownikNavigation)
                 .FirstOrDefaultAsync(p => p.PracownikNavigation.OsobaId == id, cancellationToken);
         }
-
+        public async Task DeleteEmployeeAsync(Pracownik employee, CancellationToken cancellationToken)
+        {
+            _dbContext.Pracowniks.Remove(employee);
+            await _dbContext.SaveChangesAsync();
+        }
         public async Task AddTaskAsync(Zadanie task, CancellationToken cancellationToken)
         {
             await _dbContext.Zadanies.AddAsync(task, cancellationToken);

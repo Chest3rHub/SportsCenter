@@ -16,5 +16,6 @@ namespace SportsCenter.Core.Repositories
 
         Task<Tag?> GetTagById(int id, CancellationToken cancellationToken);
         Task<bool> RemoveClientTagsAsync(int clientId, List<int> tagIds, CancellationToken cancellationToken);
+        Task<int?> GetDiscountForClientAsync(int clientId, CancellationToken cancellationToken);
     }
 }

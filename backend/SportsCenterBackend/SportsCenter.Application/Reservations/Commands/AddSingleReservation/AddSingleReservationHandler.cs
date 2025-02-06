@@ -16,11 +16,13 @@ namespace SportsCenter.Application.Reservations.Commands.AddReservation
     internal sealed class AddSingleReservationHandler : IRequestHandler<AddSingleReservation, Unit>
     {
         private readonly IReservationRepository _reservationRepository;
+        private readonly IClientRepository _clientRepository;
         private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public AddSingleReservationHandler(IReservationRepository reservationRepository, IHttpContextAccessor httpContextAccessor)
+        public AddSingleReservationHandler(IReservationRepository reservationRepository, IClientRepository clientRepository, IHttpContextAccessor httpContextAccessor)
         {
             _reservationRepository = reservationRepository;
+            _clientRepository = clientRepository;
             _httpContextAccessor = httpContextAccessor;
         }
 
@@ -59,6 +61,12 @@ namespace SportsCenter.Application.Reservations.Commands.AddReservation
             if (request.IsEquipmentReserved)
             {
                 cost += 10;
+            }
+
+            var discount = await _clientRepository.GetDiscountForClientAsync(request.ClientId, cancellationToken);
+            if (discount.HasValue && discount.Value > 0)
+            {
+                cost *= (1 - discount.Value / 100m);
             }
 
             var newReservation = new Rezerwacja

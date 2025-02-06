@@ -15,11 +15,13 @@ namespace SportsCenter.Application.Reservations.Commands.AddRecurringReservation
     internal sealed class AddRecurringReservationHandler : IRequestHandler<AddRecurringReservation, Unit>
     {
         private readonly IReservationRepository _reservationRepository;
+        private readonly IClientRepository _clientRepository;
         private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public AddRecurringReservationHandler(IReservationRepository reservationRepository, IHttpContextAccessor httpContextAccessor)
+        public AddRecurringReservationHandler(IReservationRepository reservationRepository, IClientRepository clientRepository, IHttpContextAccessor httpContextAccessor)
         {
             _reservationRepository = reservationRepository;
+            _clientRepository = clientRepository;
             _httpContextAccessor = httpContextAccessor;
         }
 
@@ -61,7 +63,7 @@ namespace SportsCenter.Application.Reservations.Commands.AddRecurringReservation
                 }
                 else
                 {                 
-                    decimal cost = CalculateCost(request, currentDate, endDate);
+                    decimal cost = await CalculateCostAsync(request, currentDate, endDate, cancellationToken);
 
                     var newReservation = new Rezerwacja
                     {
@@ -129,7 +131,7 @@ namespace SportsCenter.Application.Reservations.Commands.AddRecurringReservation
 
 
 
-        private decimal CalculateCost(AddRecurringReservation request, DateTime startTime, DateTime endTime)
+        private async Task<decimal> CalculateCostAsync(AddRecurringReservation request, DateTime startTime, DateTime endTime, CancellationToken cancellationToken)
         {          
             var reservationDurationInHours = (endTime - startTime).TotalHours;
 
@@ -145,6 +147,12 @@ namespace SportsCenter.Application.Reservations.Commands.AddRecurringReservation
             if (request.IsEquipmentReserved)
             {
                 cost += 10;
+            }
+
+            var discount = await _clientRepository.GetDiscountForClientAsync(request.ClientId, cancellationToken);
+            if (discount.HasValue && discount.Value > 0)
+            {
+                cost *= (1 - discount.Value / 100m);
             }
 
             return cost;

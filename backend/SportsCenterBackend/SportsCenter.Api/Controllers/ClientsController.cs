@@ -11,6 +11,7 @@ using SportsCenter.Application.Exceptions.UsersException;
 using SportsCenter.Application.Clients.Queries.GetClients;
 using SportsCenter.Application.Clients.Queries.GetClientsByAge;
 using SportsCenter.Application.Clients.Queries.GetClientsByTags;
+using SportsCenter.Application.Clients.Commands.AddDiscount;
 
 namespace SportsCenter.Api.Controllers;
 
@@ -137,6 +138,24 @@ public class ClientsController : BaseController
         catch (Exception ex)
         {
             return StatusCode(500, new { message = "Wystąpił błąd podczas usuwania tagów", details = ex.Message });
+        }
+    }
+
+    [HttpPost("addDiscount")]
+    public async Task<IActionResult> AddDiscountAsync([FromBody] AddDiscount addDiscount)
+    {
+        try
+        {            
+            await Mediator.Send(addDiscount);
+            return NoContent();
+        }
+        catch (ClientWithGivenIdNotFoundException ex)
+        {
+            return NotFound(new { message = ex.Message });
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, new { message = "Wystąpił błąd podczas dodawania zniżki", details = ex.Message });
         }
     }
 }

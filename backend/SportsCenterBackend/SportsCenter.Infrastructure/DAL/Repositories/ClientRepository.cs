@@ -71,5 +71,13 @@ namespace SportsCenter.Infrastructure.DAL.Repositories
             await _dbContext.SaveChangesAsync(cancellationToken);
             return true;
         }
+        public async Task<int?> GetDiscountForClientAsync(int clientId, CancellationToken cancellationToken)
+        {
+            var client = await _dbContext.Klients
+                .Where(c => c.KlientId == clientId)
+                .FirstOrDefaultAsync(cancellationToken);
+
+            return client?.ZnizkaNaZajecia;
+        }
     }
 }

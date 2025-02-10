@@ -13,6 +13,7 @@ public partial class Zamowienie
     public DateOnly? DataRealizacji { get; set; }
 
     public int PracownikId { get; set; }
+    public string Status { get; set; }
 
     public virtual Klient Klient { get; set; } = null!;
 

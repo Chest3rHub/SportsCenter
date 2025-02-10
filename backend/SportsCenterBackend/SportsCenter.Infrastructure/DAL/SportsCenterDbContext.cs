@@ -368,6 +368,11 @@ public partial class SportsCenterDbContext : DbContext
             entity.Property(e => e.KlientId).HasColumnName("KlientID");
             entity.Property(e => e.PracownikId).HasColumnName("PracownikID");
 
+            entity.Property(e => e.Status)
+                .HasColumnName("Status")
+                .HasMaxLength(50)
+                .IsRequired();
+
             entity.HasOne(d => d.Klient).WithMany(p => p.Zamowienies)
                 .HasForeignKey(d => d.KlientId)
                 .OnDelete(DeleteBehavior.ClientSetNull)

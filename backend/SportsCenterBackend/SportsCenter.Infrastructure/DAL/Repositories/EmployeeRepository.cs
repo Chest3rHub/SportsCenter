@@ -68,6 +68,12 @@ namespace SportsCenter.Infrastructure.DAL.Repositories
             _dbContext.Zadanies.Update(task);
             await _dbContext.SaveChangesAsync(cancellationToken);
         }
-    
+        public async Task<Pracownik> GetEmployeeWithLeastOrdersAsync(CancellationToken cancellationToken)
+        {
+            return await _dbContext.Pracowniks
+                .OrderBy(p => _dbContext.Zamowienies.Count(z => z.PracownikId == p.PracownikId && z.Status != "Zamknięte"))
+                .FirstOrDefaultAsync(cancellationToken);
+        }
+
     }
 }

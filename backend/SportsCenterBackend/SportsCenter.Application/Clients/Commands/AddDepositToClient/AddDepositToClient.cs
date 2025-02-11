@@ -8,12 +8,12 @@ using System.Threading.Tasks;
 
 namespace SportsCenter.Application.Clients.Commands.AddDeposit
 {
-    public sealed record AddDeposit : ICommand<Unit>
+    public sealed record AddDepositToClient : ICommand<Unit>
     {
         public decimal Deposit { get; set; }
         public string Email { get; set; }
 
-        public AddDeposit(decimal deposit, string email)
+        public AddDepositToClient(decimal deposit, string email)
         {
             Deposit = deposit;
             Email = email;

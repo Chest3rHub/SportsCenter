@@ -13,7 +13,6 @@ namespace SportsCenter.Application.Employees.Commands.EditTask
     {
         public int ZadanieId { get; set; }
         public string Opis { get; set; } = null!;
-
         public DateTime DataDo { get; set; }
 
         public EditTask(int zadanieId, string opis, DateTime dataDo)

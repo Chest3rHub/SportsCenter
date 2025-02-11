@@ -74,6 +74,12 @@ namespace SportsCenter.Infrastructure.DAL.Repositories
                 .OrderBy(p => _dbContext.Zamowienies.Count(z => z.PracownikId == p.PracownikId && z.Status != "Zamknięte"))
                 .FirstOrDefaultAsync(cancellationToken);
         }
-
+        public async Task<int?> GetEmployeeTypeByNameAsync(string name, CancellationToken cancellationToken)
+        {
+            return await _dbContext.TypPracownikas
+                .Where(t => t.Nazwa == name)
+                .Select(t => (int?)t.IdTypPracownika)
+                .FirstOrDefaultAsync(cancellationToken);
+        }
     }
 }

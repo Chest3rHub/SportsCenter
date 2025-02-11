@@ -2,9 +2,9 @@
 
 namespace SportsCenter.Application.Clients.Commands.AddDeposit
 {
-    internal class AddDepositValidator : AbstractValidator<AddDeposit>
+    internal class AddDepositToClientValidator : AbstractValidator<AddDepositToClient>
     {
-        public AddDepositValidator()
+        public AddDepositToClientValidator()
         {
             RuleFor(x => x.Deposit)
                 .Must(BeAValidAmount)

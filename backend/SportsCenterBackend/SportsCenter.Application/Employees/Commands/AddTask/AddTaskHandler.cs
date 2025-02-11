@@ -6,6 +6,7 @@ using SportsCenter.Core.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -27,21 +28,25 @@ namespace SportsCenter.Application.Employees.Commands.AddTask
 
         public async Task<Unit> Handle(AddTask request, CancellationToken cancellationToken)
         {
-            //dodac wyciaganie id pracownika z sesji zeby sam sobie dodawal
+            var userIdClaim = _httpContextAccessor.HttpContext?.User.FindFirst("userId")?.Value;
 
-            var pracownik = await _employeeRepository.GetEmployeeByIdAsync(request.PracownikId, cancellationToken);
+            if (string.IsNullOrEmpty(userIdClaim) || !int.TryParse(userIdClaim, out int userId))
+            {
+                throw new UnauthorizedAccessException("No permissions to add tasks.");
+            }
 
+            var pracownik = await _employeeRepository.GetEmployeeByIdAsync(userId, cancellationToken);
             if (pracownik == null)
             {
-                throw new EmployeeNotFoundException(request.PracownikId);
+                throw new EmployeeNotFoundException(userId);
             }
 
             var newTask = new Zadanie
             {
                 Opis = request.Opis,
                 DataDo = DateOnly.FromDateTime(request.DataDo),
-                PracownikId = request.PracownikId,
-                PracownikZlecajacyId = request.PracownikZlecajacyId,
+                PracownikId = userId,         
+                PracownikZlecajacyId = userId 
             };
 
             await _employeeRepository.AddTaskAsync(newTask, cancellationToken);

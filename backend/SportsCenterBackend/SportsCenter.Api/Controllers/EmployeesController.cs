@@ -11,6 +11,8 @@ using SportsCenter.Application.Employees.Queries.GetTasks;
 using SportsCenter.Application.Employees.Commands.EditTask;
 using SportsCenter.Application.Exceptions.UsersException;
 using SportsCenter.Application.Employees.Commands.DismissEmployee;
+using System.Security.Claims;
+using SportsCenter.Application.Employees.Commands.AddAdmTask;
 
 
 namespace SportsCenter.Api.Controllers
@@ -28,8 +30,8 @@ namespace SportsCenter.Api.Controllers
             return Ok(await Mediator.Send(new GetEmployees()));
         }
 
-        [AllowAnonymous]
-            [HttpPost("Register")]
+        [Authorize(Roles = "Wlasciciel")]
+        [HttpPost("Register")]
             public async Task<IActionResult> RegisterEmployeesAsync([FromBody] RegisterEmployee registerEmployee)
             {
                 var validationResults = new RegisterEmployeeValidator().Validate(registerEmployee);
@@ -81,6 +83,7 @@ namespace SportsCenter.Api.Controllers
         }
 
         //dodawanie zadan samemu sobie
+        [Authorize(Roles = "Pracownik administracyjny,Wlasciciel")]
         [HttpPost("Self-Add-task")]
         public async Task<IActionResult> AddTask([FromBody] AddTask task)
         {
@@ -100,9 +103,10 @@ namespace SportsCenter.Api.Controllers
             }
         }
 
-        //dodawanie zadan pracownikowi administracyjunemu
+        //dodawanie zadan pracownikowi administracyjnemu
+        [Authorize(Roles = "Wlasciciel")]
         [HttpPost("Add-task")]
-        public async Task<IActionResult> AddTaskForAdmEmployee([FromBody] AddTask task)
+        public async Task<IActionResult> AddTaskForAdmEmployee([FromBody] AddAdmTask task)
         {
             try
             {
@@ -124,6 +128,7 @@ namespace SportsCenter.Api.Controllers
             }
         }
 
+        [Authorize(Roles = "Pracownik administracyjny,Wlasciciel")]
         [HttpDelete("Delete-task")]
         public async Task<IActionResult> DeleteTaskAsync(RemoveTask task, CancellationToken cancellationToken)
         {
@@ -142,9 +147,22 @@ namespace SportsCenter.Api.Controllers
             }
         }
 
+        [Authorize(Roles = "Pracownik administracyjny,Wlasciciel")]
         [HttpGet("{pracownikId}/tasks")]
         public async Task<IActionResult> GetTasksForEmployee(int pracownikId, CancellationToken cancellationToken)
-        {     
+        {
+            var userId = User.FindFirst("userId")?.Value;
+
+            if (string.IsNullOrEmpty(userId))
+            {
+                return Unauthorized("User not authenticated");
+            }
+
+            if (int.Parse(userId) != pracownikId)
+            {
+                return Forbid("You can only view your own tasks");
+            }
+
             var tasks = await Mediator.Send(new GetTasks(pracownikId), cancellationToken);
 
             if (tasks == null || !tasks.Any())
@@ -154,6 +172,7 @@ namespace SportsCenter.Api.Controllers
             return Ok(tasks);  
         }
 
+        [Authorize(Roles = "Pracownik administracyjny,Wlasciciel")]
         [HttpPut("Edit-task")]
         public async Task<IActionResult> UpdateTask(EditTask task, CancellationToken cancellationToken)
         {

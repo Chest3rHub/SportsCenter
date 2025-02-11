@@ -12,6 +12,7 @@ using SportsCenter.Application.Clients.Queries.GetClients;
 using SportsCenter.Application.Clients.Queries.GetClientsByAge;
 using SportsCenter.Application.Clients.Queries.GetClientsByTags;
 using SportsCenter.Application.Clients.Commands.AddDiscount;
+using SportsCenter.Application.Clients.Commands.AddDepositYourself;
 
 namespace SportsCenter.Api.Controllers;
 
@@ -23,14 +24,14 @@ public class ClientsController : BaseController
     }
 
     [HttpGet]
-    public async Task<IActionResult> RegisterClientAsync()
+    public async Task<IActionResult> GetClientAsync()
     {
         return Ok(await Mediator.Send(new GetClients()));
     }
 
     [AllowAnonymous]
     [HttpPost]
-    public async Task<IActionResult> GetClientAsync([FromBody] RegisterClient registerClient)
+    public async Task<IActionResult> RegisterClientAsync([FromBody] RegisterClient registerClient)
     {
         var validationResults = new RegisterClientValidator().Validate(registerClient);
         if (!validationResults.IsValid)
@@ -53,6 +54,32 @@ public class ClientsController : BaseController
         }
     }
 
+    [Authorize(Roles = "Pracownik administracyjny,Wlasciciel")]
+    [HttpPost("register-client-by-admin")]
+    public async Task<IActionResult> RegisterClientByAdminAsync([FromBody] RegisterClient registerClient)
+    {
+        var validationResults = new RegisterClientValidator().Validate(registerClient);
+        if (!validationResults.IsValid)
+        {
+            return BadRequest(validationResults.Errors);
+        }
+
+        try
+        {
+            await Mediator.Send(registerClient);
+            return NoContent();
+        }
+        catch (UserAlreadyExistsException ex)
+        {
+            return Conflict(new { message = ex.Message });
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, new { message = "Wystąpił błąd podczas wysyłania żądania", details = ex.Message });
+        }
+    }
+
+    [Authorize(Roles = "Pracownik administracyjny,Wlasciciel")]
     [HttpGet("byAge")]
     public async Task<IActionResult> GetClientsByAgeAsync([FromQuery] int minAge, [FromQuery] int maxAge)
     {
@@ -78,8 +105,9 @@ public class ClientsController : BaseController
         return Ok(clients);
     }
 
-    [HttpPost("accountDeposit")]
-    public async Task<IActionResult> AddAccountDepositAsync([FromBody] AddDeposit deposit)
+    [Authorize(Roles = "Pracownik administracyjny,Wlasciciel")]
+    [HttpPost("add-deposit-to-client")]
+    public async Task<IActionResult> AddAccountDepositToClientAsync([FromBody] AddDepositToClient deposit)
     {
         try
         {
@@ -95,7 +123,26 @@ public class ClientsController : BaseController
             return StatusCode(500, new { message = "Wystąpił błąd podczas doładowania salda", details = ex.Message });
         }
     }
-    
+
+    [Authorize(Roles = "Klient")]
+    [HttpPost("add-deposit")]
+    public async Task<IActionResult> AddAccountDepositYourselfAsync([FromBody] AddDepositYourself deposit)
+    {
+        try
+        {
+            await Mediator.Send(deposit);
+            return NoContent();
+        }
+        catch (ClientNotFoundException ex)
+        {
+            return NotFound(new { message = ex.Message });
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, new { message = "Wystąpił błąd podczas doładowania salda", details = ex.Message });
+        }
+    }
+
     [HttpPost("addTags")]
     public async Task<IActionResult> AddClientTagsAsync([FromBody] AddClientTags addClientTags)
     {

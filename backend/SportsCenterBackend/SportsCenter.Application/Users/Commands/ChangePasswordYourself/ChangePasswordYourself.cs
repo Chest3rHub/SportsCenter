@@ -8,16 +8,13 @@ using System.Threading.Tasks;
 
 namespace SportsCenter.Application.Users.Commands.ChangePassowrd
 {
-    public sealed record ChangePassword : ICommand<Unit>
+    public sealed record ChangePasswordYourself : ICommand<Unit>
     {
         public string Value { get; set; } = null!;
-
-        public int UserId { get; set; }
-
-        public ChangePassword(string value, int userId)
+ 
+        public ChangePasswordYourself(string value)
         {
             Value = value;
-            UserId = userId;
         }
     }
 }

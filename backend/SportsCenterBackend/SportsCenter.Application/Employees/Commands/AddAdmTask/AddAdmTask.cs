@@ -1,24 +1,25 @@
 ﻿using MediatR;
 using SportsCenter.Application.Abstractions;
-using SportsCenter.Core.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SportsCenter.Application.Employees.Commands.AddTask
+namespace SportsCenter.Application.Employees.Commands.AddAdmTask
 {
-    public sealed record AddTask : ICommand<Unit>
+    public sealed record AddAdmTask : ICommand<Unit>
     {
         public string Opis { get; set; } = null!;
 
         public DateTime DataDo { get; set; }
-
-        public AddTask(string opis, DateTime dataDo)
+        public int PracownikId { get; set; }
+        
+        public AddAdmTask(string opis, DateTime dataDo, int pracownikId)
         {
             Opis = opis;
             DataDo = dataDo;
+            PracownikId = pracownikId;
         }
     }
 }

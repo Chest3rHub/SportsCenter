@@ -8,8 +8,7 @@ namespace SportsCenter.Application.Schedule.Queries.GetScheduleInfo
     {
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
-
-        // Konstruktor umożliwiający przekazywanie dat
+      
         public GetScheduleInfo(DateTime startDate, DateTime endDate)
         {
             StartDate = startDate;

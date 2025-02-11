@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SportsCenter.Application.Employees.Commands.AddTask
+namespace SportsCenter.Application.Employees.Commands.AddAdmTask
 {
-    public class AddTaskForAdmEmployeeValidator : AbstractValidator<AddTask>
+    public class AddTaskForAdmEmployeeValidator : AbstractValidator<AddAdmTask>
     {
         public AddTaskForAdmEmployeeValidator()
         {

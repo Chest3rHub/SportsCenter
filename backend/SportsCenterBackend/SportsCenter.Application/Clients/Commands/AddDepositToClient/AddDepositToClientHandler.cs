@@ -12,18 +12,18 @@ using System.Threading.Tasks;
 
 namespace SportsCenter.Application.Clients.Commands.AddDeposit
 {
-    internal sealed class AddDepositHandler : IRequestHandler<AddDeposit, Unit>
+    internal sealed class AddDepositToClientHandler : IRequestHandler<AddDepositToClient, Unit>
     {
         private readonly IClientRepository _clientRepository;
         private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public AddDepositHandler(IClientRepository clientRepository, IHttpContextAccessor httpContextAccessor)
+        public AddDepositToClientHandler(IClientRepository clientRepository, IHttpContextAccessor httpContextAccessor)
         {
             _clientRepository = clientRepository;
             _httpContextAccessor = httpContextAccessor;
         }
 
-        public async Task<Unit> Handle(AddDeposit request, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(AddDepositToClient request, CancellationToken cancellationToken)
         {
 
             var client = await _clientRepository.GetClientByEmailAsync(request.Email, cancellationToken);

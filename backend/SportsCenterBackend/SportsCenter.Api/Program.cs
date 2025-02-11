@@ -8,11 +8,11 @@ using Serilog;
 using SportsCenter.Api.Middlewares;
 using SportsCenter.Application;
 using SportsCenter.Infrastructure;
+using System.Security.Claims;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Konfiguracja logowania z Serilog
 builder.Host.UseSerilog((context, loggerConfiguration) =>
 {
     loggerConfiguration.WriteTo
@@ -23,14 +23,12 @@ builder.Host.UseSerilog((context, loggerConfiguration) =>
     // .Seq("http://localhost:5341");
 });
 
-// Dodanie us³ug
 builder.Services.AddControllers();
 
-// Dodanie Swaggera
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
-    // Dodanie definicji dla tokenów JWT w Swaggerze
+
     c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
         Description = "JWT Authorization header using the Bearer scheme. Example: \"Authorization: Bearer {token}\"",
@@ -53,7 +51,6 @@ builder.Services.AddSwaggerGen(c =>
     });
 });
 
-// Konfiguracja JWT Bearer Authentication
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
@@ -63,6 +60,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 
         options.TokenValidationParameters = new TokenValidationParameters
         {
+            RoleClaimType = ClaimTypes.Role,         
             ValidateIssuer = true,
             ValidateAudience = true,
             ValidateLifetime = true,
@@ -72,13 +70,11 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         };
     });
 
-// Dodanie dodatkowych us³ug
 builder.Services.AddSingleton<ExceptionMiddleware>();
 builder.Services.AddApplicationLayer();
 builder.Services.AddInfrastructureLayer(builder.Configuration);
 builder.Services.AddHttpContextAccessor();
 
-// Konfiguracja CORS
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("CorsPolicy", builder =>
@@ -92,28 +88,21 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
-// Middleware aplikacji
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
 
-// Middleware dla wyj¹tków
 app.UseMiddleware<ExceptionMiddleware>();
 
-// W³¹czenie HTTPS
 app.UseHttpsRedirection();
 
-// W³¹czenie CORS
 app.UseCors("CorsPolicy");
 
-// Middleware autentykacji i autoryzacji
-app.UseAuthentication();  // Dodanie middleware dla JWT
-app.UseAuthorization();   // Dodanie middleware do autoryzacji
+app.UseAuthentication();
+app.UseAuthorization(); 
 
-// Mapowanie kontrolerów
 app.MapControllers();
 
-// Uruchomienie aplikacji
 app.Run();

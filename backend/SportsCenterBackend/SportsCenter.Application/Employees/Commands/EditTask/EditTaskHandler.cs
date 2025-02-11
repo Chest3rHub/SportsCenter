@@ -25,14 +25,24 @@ namespace SportsCenter.Application.Employees.Commands.EditTask
 
         public async Task<Unit> Handle(EditTask request, CancellationToken cancellationToken)
         {
-            //tu bedzie sprawdzenie czy id osoby z sesji jest takie jak id zlecajacego
-            //zadanie i tylko wtedy bedzie mozna je edytowac inaczej blad
+            
+            var userIdClaim = _httpContextAccessor.HttpContext?.User.FindFirst("userId")?.Value;
+
+            if (string.IsNullOrEmpty(userIdClaim) || !int.TryParse(userIdClaim, out int userId))
+            {
+                throw new UnauthorizedAccessException("No permission to edit task.");
+            }
 
             var existingTask = await _employeeRepository.GetTaskByIdAsync(request.ZadanieId, cancellationToken);
 
             if (existingTask == null)
             {
                 throw new TaskNotFoundException(request.ZadanieId);
+            }
+
+            if (existingTask.PracownikZlecajacyId != userId)
+            {
+                throw new UnauthorizedAccessException("You can only edit your own tasks.");
             }
 
             existingTask.Opis = request.Opis;

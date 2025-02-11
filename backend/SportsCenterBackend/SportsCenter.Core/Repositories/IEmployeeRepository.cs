@@ -20,6 +20,6 @@ namespace SportsCenter.Core.Repositories
         Task RemoveTaskAsync(Zadanie task, CancellationToken cancellationToken);
         Task UpdateTaskAsync(Zadanie task, CancellationToken cancellationToken);
         Task<Pracownik> GetEmployeeWithLeastOrdersAsync(CancellationToken cancellationToken);
-
+        Task<int?> GetEmployeeTypeByNameAsync(string name, CancellationToken cancellationToken);
     }
 }

@@ -39,16 +39,15 @@ namespace SportsCenter.Application.Products.Commands.BuyCartProduct
                 throw new NoActiveOrdersForCLientException(request.ClientId);
             }
 
-            var discount = await _clientRepository.GetDiscountForClientAsync(request.ClientId, cancellationToken);
-
+            var discount = await _clientRepository.GetProductDiscountForClientAsync(request.ClientId, cancellationToken);
+            Console.WriteLine(discount.ToString());
             decimal totalCost = await _orderRepository.GetTotalOrderCostAsync(order.ZamowienieId, (decimal)discount, cancellationToken);
+            Console.WriteLine(totalCost.ToString());
 
             if (totalCost == 0m)
             {
                 throw new NoOrderedProductsException();
             }
-            Console.WriteLine(client.Saldo);
-            Console.WriteLine(totalCost);
 
             if (client.Saldo < totalCost)
             {

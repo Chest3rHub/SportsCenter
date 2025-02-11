@@ -65,7 +65,9 @@ namespace SportsCenter.Infrastructure.DAL.Repositories
                 return 0m;
             }
 
-            return order.ZamowienieProdukts.Sum(op => op.Koszt * (1 - discount / 100m));
+            decimal totalCost = order.ZamowienieProdukts.Sum(op => op.Koszt);
+
+            return totalCost * (1 - discount / 100m);
         }
     }
 }

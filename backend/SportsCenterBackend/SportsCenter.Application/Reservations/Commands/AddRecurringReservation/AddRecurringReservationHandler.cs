@@ -149,7 +149,7 @@ namespace SportsCenter.Application.Reservations.Commands.AddRecurringReservation
                 cost += 10;
             }
 
-            var discount = await _clientRepository.GetDiscountForClientAsync(request.ClientId, cancellationToken);
+            var discount = await _clientRepository.GetActivityDiscountForClientAsync(request.ClientId, cancellationToken);
             if (discount.HasValue && discount.Value > 0)
             {
                 cost *= (1 - discount.Value / 100m);

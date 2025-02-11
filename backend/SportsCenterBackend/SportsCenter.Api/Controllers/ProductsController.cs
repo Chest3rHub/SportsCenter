@@ -1,10 +1,12 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using SportsCenter.Application.Exceptions.ClientsExceptions;
 using SportsCenter.Application.Exceptions.EmployeesExceptions;
 using SportsCenter.Application.Exceptions.ProductsExceptions;
 using SportsCenter.Application.Exceptions.ReservationExceptions;
 using SportsCenter.Application.Products.Commands.AddProduct;
 using SportsCenter.Application.Products.Commands.AddProductToCart;
+using SportsCenter.Application.Products.Commands.BuyCartProduct;
 using SportsCenter.Application.Products.Commands.RemoveCartProduct;
 using SportsCenter.Application.Products.Commands.RemoveProduct;
 using SportsCenter.Application.Products.Commands.UpdateProduct;
@@ -142,6 +144,46 @@ namespace SportsCenter.Api.Controllers
                 return NotFound(ex.Message);
             }
             catch (NoOrderedProductsException ex)
+            {
+                return NotFound(new { Message = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new { Message = "An unexpected error occurred.", Details = ex.Message });
+            }
+        }
+        [HttpPost("cart-product-purchase")]
+        public async Task<IActionResult> BuyCartProduct(CancellationToken cancellationToken)
+        {
+            var userId = 1;//tymczasowo  
+
+            var command = new BuyCartProduct(userId);
+            try
+            {
+                await Mediator.Send(command, cancellationToken);
+                return Ok(new { message = "Purchase completed successfully" });
+            }
+            catch (ClientWithGivenIdNotFoundException ex)
+            {
+                return NotFound(ex.Message);
+            }
+            catch (NoActiveOrdersForCLientException ex)
+            {
+                return NotFound(new { Message = ex.Message });
+            }
+            catch (NoOrderedProductsException ex)
+            {
+                return NotFound(new { Message = ex.Message });
+            }
+            catch (NotEnoughFundsInAccountBalance ex)
+            {
+                return NotFound(new { Message = ex.Message });
+            }
+            catch (ProductNotFoundException ex)
+            {
+                return NotFound(new { Message = ex.Message });
+            }
+            catch (NotEnoughProductInStockException ex)
             {
                 return NotFound(new { Message = ex.Message });
             }

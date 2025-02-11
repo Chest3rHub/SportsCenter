@@ -53,5 +53,19 @@ namespace SportsCenter.Infrastructure.DAL.Repositories
             _dbContext.ZamowienieProdukts.Remove(orderProduct);
             await _dbContext.SaveChangesAsync(cancellationToken);
         }
+        public async Task<decimal> GetTotalOrderCostAsync(int orderId, decimal discount, CancellationToken cancellationToken)
+        {
+            var order = await _dbContext.Zamowienies
+                .Where(z => z.ZamowienieId == orderId)
+                .Include(z => z.ZamowienieProdukts)
+                .FirstOrDefaultAsync(cancellationToken);
+
+            if (order == null || !order.ZamowienieProdukts.Any())
+            {
+                return 0m;
+            }
+
+            return order.ZamowienieProdukts.Sum(op => op.Koszt * (1 - discount / 100m));
+        }
     }
 }

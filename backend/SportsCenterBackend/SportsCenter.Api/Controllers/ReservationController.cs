@@ -7,6 +7,8 @@ using SportsCenter.Application.Reservations.Commands.MoveReservation;
 using SportsCenter.Application.Reservations.Commands.RemoveReservation;
 using SportsCenter.Application.Reservations.Commands.AddRecurringReservation;
 using SportsCenter.Application.Reservations.Queries.GetReservationSummary;
+using Microsoft.AspNetCore.Authorization;
+using SportsCenter.Application.Reservations.Commands.AddSingleReservationYourself;
 
 namespace SportsCenter.Api.Controllers;
 
@@ -17,8 +19,9 @@ public class ReservationController : BaseController
     {
     }
 
-    [HttpPost("Create-single-reservation")]
-    public async Task<IActionResult> CreateSingleReservation([FromBody] AddSingleReservation addReservation)
+    [Authorize(Roles = "Pracownik administracyjny, Wlasciciel")]
+    [HttpPost("Create-single-reservation-for-client")]
+    public async Task<IActionResult> CreateSingleReservationForClient([FromBody] AddSingleReservation addReservation)
     {
 
         var validationResults = new AddSingleReservationValidator().Validate(addReservation);
@@ -50,6 +53,41 @@ public class ReservationController : BaseController
         }
     }
 
+    [Authorize(Roles = "Klient")]
+    [HttpPost("Create-single-reservation-yourself")]
+    public async Task<IActionResult> CreateSingleReservationYourself([FromBody] AddSingleReservationYourself addReservation)
+    {
+
+        var validationResults = new AddSingleReservationYourselfValidator().Validate(addReservation);
+        if (!validationResults.IsValid)
+        {
+            return BadRequest(validationResults.Errors);
+        }
+
+        try
+        {
+            await Mediator.Send(addReservation);
+            return Ok(new { Message = "Reservation created successfully" });
+        }
+        catch (TooManyParticipantsException)
+        {
+            return BadRequest(new { Message = "Too many participants. The maximum is 8." });
+        }
+        catch (CourtNotAvaliableException)
+        {
+            return Conflict(new { Message = $"The court {addReservation.CourtId} is not available for the requested time." });
+        }
+        catch (TrainerNotAvaliableException)
+        {
+            return Conflict(new { Message = "The selected trainer is not available for the requested time." });
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError, new { Message = "An unexpected error occurred.", Details = ex.Message });
+        }
+    }
+
+    [Authorize(Roles = "Pracownik administracyjny, Wlasciciel")]
     [HttpPost("Create-recurring-reservation")]
     public async Task<IActionResult> CreateRecurringReservation([FromBody] AddRecurringReservation addRecurringReservation)
     {      
@@ -82,6 +120,7 @@ public class ReservationController : BaseController
         }
     }
 
+    [Authorize(Roles = "Klient")]
     [HttpPut("Move-reservation")]
     public async Task<IActionResult> MoveReservation([FromBody] MoveReservation moveReservation)
     {
@@ -114,6 +153,7 @@ public class ReservationController : BaseController
         }
     }
 
+    [Authorize(Roles = "Klient, Wlasciciel")]
     [HttpDelete("{reservationId}")]
     public async Task<IActionResult> RemoveReservation(int reservationId, CancellationToken cancellationToken)
     {
@@ -133,6 +173,7 @@ public class ReservationController : BaseController
         }
     }
 
+    [Authorize(Roles = "Wlasciciel")]
     [HttpGet("Reservation-summary")]
     public async Task<IActionResult> GetReservationSummary([FromQuery] DateTime startDate, [FromQuery] DateTime endDate)
     {

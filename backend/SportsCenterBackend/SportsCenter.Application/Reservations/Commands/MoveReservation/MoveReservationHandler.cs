@@ -5,6 +5,7 @@ using SportsCenter.Core.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -20,19 +21,19 @@ namespace SportsCenter.Application.Reservations.Commands.MoveReservation
             _reservationRepository = reservationRepository;
             _httpContextAccessor = httpContextAccessor;
         }
-
+        
         public async Task<Unit> Handle(MoveReservation request, CancellationToken cancellationToken)
         {          
             var reservation = await _reservationRepository.GetReservationByIdAsync(request.ReservationId, cancellationToken);
 
             if (reservation == null)
                 throw new ReservationNotFoundException(request.ReservationId);
-
-            //if ((reservation.DataOd - DateTime.UtcNow).TotalHours < 24)
-            //{
-            //    throw new InvalidOperationException("Reservation can only be moved if the remaining time is greater than or equal to 24 hours.");
-            //}
        
+                if ((reservation.DataOd - DateTime.UtcNow).TotalHours < 24)
+                {
+                    throw new InvalidOperationException("Client can only postpone the reservation up to 24 hours before its start date.");
+                }
+
             bool isCourtAvailable = await _reservationRepository.IsCourtAvailableAsync(reservation.KortId, request.NewStartTime, request.NewEndTime, cancellationToken);
             if (!isCourtAvailable)
                 throw new CourtNotAvaliableException(reservation.KortId);

@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SportsCenter.Application.Exceptions.ReviewsExceptions;
 using SportsCenter.Application.Reservations.Commands.AddReservation;
@@ -15,6 +16,8 @@ namespace SportsCenter.Api.Controllers
         public ReviewsController(IMediator mediator) : base(mediator)
         {
         }
+
+        [Authorize(Roles = "Klient")]
         [HttpPost("Add-review")]
         public async Task<IActionResult> AddReview([FromBody] AddReview addReview)
         {
@@ -42,6 +45,7 @@ namespace SportsCenter.Api.Controllers
             }
         }
 
+        [Authorize(Roles = "Wlasciciel")]
         [HttpGet("Get-reviews")]
         public async Task<IActionResult> GetReviewsSummary([FromQuery] DateTime startDate, [FromQuery] DateTime endDate)
         {

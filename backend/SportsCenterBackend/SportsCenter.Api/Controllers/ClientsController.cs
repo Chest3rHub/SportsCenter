@@ -191,6 +191,7 @@ public class ClientsController : BaseController
         }
     }
 
+    [Authorize(Roles = "Wlasciciel,Pracownik administracyjny")]
     [HttpPost("addDiscount")]
     public async Task<IActionResult> AddDiscountAsync([FromBody] AddDiscount addDiscount)
     {

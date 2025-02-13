@@ -24,6 +24,7 @@ namespace SportsCenter.Api.Controllers
         {
         }
 
+        [Authorize(Roles = "Wlasciciel")]
         [HttpGet]
         public async Task<IActionResult> ShowEmployeeAsync()
         {
@@ -60,7 +61,7 @@ namespace SportsCenter.Api.Controllers
             }
 
         [HttpDelete("{employeeId}")]
-        //[Authorize(Roles = "Owner")]
+        [Authorize(Roles = "Wlasciciel")]
         public async Task<IActionResult> DismissEmployee(int employeeId)
         {
             try
@@ -72,10 +73,6 @@ namespace SportsCenter.Api.Controllers
             {
                 return NotFound(new { Message = ex.Message });
             }
-            //catch (UnauthorizedAccessException)
-            //{
-            //    return Forbid();
-            //}
             catch (Exception ex)
             {
                 return StatusCode(500, new { message = "An error occurred while sending the request", details = ex.Message });

@@ -47,4 +47,11 @@ public class SportActivityRepository : ISportActivityRepository
         _dbContext.Zajecia.Remove(sportActivity);
         await _dbContext.SaveChangesAsync(cancellationToken);
     }
+
+    public async Task<IEnumerable<SportActivitySchedule>> GetSchedulesByTrainerIdAsync(int trainerId, CancellationToken cancellationToken)
+    {
+        return await _dbContext.GrafikZajecs
+            .Where(gz => gz.PracownikId == trainerId)
+            .ToListAsync(cancellationToken);
+    }
 }

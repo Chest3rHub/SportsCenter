@@ -93,6 +93,7 @@ public class ClientsController : BaseController
         return Ok(clients);
     }
 
+    [Authorize(Roles = "Pracownik administracyjny,Wlasciciel")]
     [HttpGet("byTags")]
     public async Task<IActionResult> GetClientsByTagsAsync([FromQuery] List<int> tagIds)
     {
@@ -143,6 +144,7 @@ public class ClientsController : BaseController
         }
     }
 
+    [Authorize(Roles = "Pracownik administracyjny,Wlasciciel")]
     [HttpPost("addTags")]
     public async Task<IActionResult> AddClientTagsAsync([FromBody] AddClientTags addClientTags)
     {
@@ -165,6 +167,7 @@ public class ClientsController : BaseController
         }
     }
 
+    [Authorize(Roles = "Pracownik administracyjny,Wlasciciel")]
     [HttpPost("removeTags")]
     public async Task<IActionResult> RemoveClientTagsAsync([FromBody] RemoveClientTags removeClientTags)
     {

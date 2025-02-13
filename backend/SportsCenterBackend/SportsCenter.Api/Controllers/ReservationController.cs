@@ -9,6 +9,7 @@ using SportsCenter.Application.Reservations.Commands.AddRecurringReservation;
 using SportsCenter.Application.Reservations.Queries.GetReservationSummary;
 using Microsoft.AspNetCore.Authorization;
 using SportsCenter.Application.Reservations.Commands.AddSingleReservationYourself;
+using SportsCenter.Application.Reservations.Commands.UpdateReservation;
 
 namespace SportsCenter.Api.Controllers;
 
@@ -170,6 +171,29 @@ public class ReservationController : BaseController
         catch (ReservationNotFoundException ex)
         {
             return NotFound(ex.Message);
+        }
+    }
+
+    [Authorize(Roles = "Wlasciciel,Pracownik administracyjny")]
+    [HttpPut("Update-trainer-in-reservation")]
+    public async Task<IActionResult> UpdateTrainerInReservation([FromBody] UpdateReservation updateReservation)
+    {
+        try
+        {
+            await Mediator.Send(updateReservation);
+            return Ok(new { Message = "Reservation updated successfully." });
+        }
+        catch (ReservationNotFoundException)
+        {
+            return NotFound(new { Message = "Reservation not found." });
+        }
+        catch (TrainerNotAvaliableException)
+        {
+            return NotFound(new { Message = "Trainer not avaliable." });
+        }
+        catch (InvalidOperationException ex)
+        {
+            return BadRequest(new { Message = ex.Message });
         }
     }
 

@@ -10,10 +10,6 @@ namespace SportsCenter.Application.Products.Queries.GetCartProducts
 {
     public class GetCartProducts : IQuery<IEnumerable<CartProductDto>>
     {
-        public int ClientId { get; set; }
-        public GetCartProducts(int clientId)
-        {
-           ClientId = clientId;
-        }
+       
     }
 }

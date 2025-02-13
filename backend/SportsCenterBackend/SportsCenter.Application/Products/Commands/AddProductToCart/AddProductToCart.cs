@@ -10,16 +10,12 @@ namespace SportsCenter.Application.Products.Commands.AddProductToCart
 {
     public sealed record AddProductToCart : ICommand<Unit>
     {
-        public int ProductId { get; set; }
-       // public string Name { get; set; } = null!;      
-        public int Quantity { get; set; }
-       // public decimal Price { get; set; }      
+        public int ProductId { get; set; }        
+        public int Quantity { get; set; }   
         public AddProductToCart(int productId, int quantity)
         {
-            ProductId = productId;
-          //  Name = name;           
-            Quantity = quantity;
-          //  Price = price;          
+            ProductId = productId;           
+            Quantity = quantity;   
         }
     }
 }

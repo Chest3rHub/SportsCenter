@@ -69,5 +69,17 @@ namespace SportsCenter.Infrastructure.DAL.Repositories
 
             return totalCost * (1 - discount / 100m);
         }
+        public async Task RemoveOrderAsync(Zamowienie order, CancellationToken cancellationToken)
+        {
+            _dbContext.Zamowienies.Remove(order);
+            await _dbContext.SaveChangesAsync(cancellationToken);
+        }
+        public async Task<List<ZamowienieProdukt>> GetOrderProductsAsync(int orderId, CancellationToken cancellationToken)
+        {
+            return await _dbContext.ZamowienieProdukts
+                .Where(op => op.ZamowienieId == orderId)
+                .ToListAsync(cancellationToken);
+        }
+
     }
 }

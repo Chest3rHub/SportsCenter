@@ -10,11 +10,9 @@ namespace SportsCenter.Application.Products.Commands.RemoveCartProduct
 {
     public sealed record RemoveCartProduct : ICommand<Unit>
     {
-        public int ClientId { get; set; }
         public int ProductId { get; set; }
-        public RemoveCartProduct(int clientId, int productId)
-        {
-            ClientId = clientId;
+        public RemoveCartProduct(int productId)
+        {          
             ProductId = productId;
         }
     }

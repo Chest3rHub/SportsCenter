@@ -5,6 +5,7 @@ using SportsCenter.Core.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -22,12 +23,16 @@ namespace SportsCenter.Application.Products.Commands.RemoveCartProduct
         }
         public async Task<Unit> Handle(RemoveCartProduct request, CancellationToken cancellationToken)
         {
-            var userId = request.ClientId;
+            var userIdClaim = _httpContextAccessor.HttpContext?.User?.FindFirst("userId")?.Value;
+            if (string.IsNullOrEmpty(userIdClaim) || !int.TryParse(userIdClaim, out int userId))
+            {
+                throw new UnauthorizedAccessException("You cannot remove product from your cart without logging in.");
+            }
 
             var order = await _orderRepository.GetActiveOrderByUserIdAsync(userId, cancellationToken);
             if (order == null)
             {
-                throw new NoActiveOrdersForCLientException(request.ClientId);
+                throw new NoActiveOrdersForCLientException(userId);
             }
 
             var orderProduct = await _orderRepository.GetOrderProductAsync(order.ZamowienieId, request.ProductId, cancellationToken);
@@ -37,6 +42,12 @@ namespace SportsCenter.Application.Products.Commands.RemoveCartProduct
             }
 
             await _orderRepository.RemoveOrderProductAsync(orderProduct, cancellationToken);
+
+            var remainingProducts = await _orderRepository.GetOrderProductsAsync(order.ZamowienieId, cancellationToken);
+            if (remainingProducts == null || remainingProducts.Count == 0)
+            {
+                await _orderRepository.RemoveOrderAsync(order, cancellationToken);
+            }
 
             return Unit.Value;
         }

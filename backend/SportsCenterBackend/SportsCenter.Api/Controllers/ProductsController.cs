@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SportsCenter.Application.Exceptions.ClientsExceptions;
 using SportsCenter.Application.Exceptions.EmployeesExceptions;
@@ -23,6 +24,8 @@ namespace SportsCenter.Api.Controllers
         public ProductsController(IMediator mediator) : base(mediator)
         {
         }
+
+        [Authorize(Roles = "Wlasciciel")]
         [HttpPost("Add-product")]
         public async Task<IActionResult> AddProduct([FromBody] AddProduct product)
         {
@@ -42,7 +45,8 @@ namespace SportsCenter.Api.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, new { Message = "An unexpected error occurred.", Details = ex.Message });
             }
         }
-        
+
+        [Authorize(Roles = "Wlasciciel,Pracownik administracyjny")]
         [HttpPut(("update-products"))]
         public async Task<IActionResult> UpdateProduct([FromBody] UpdateProduct updateProduct)
         {
@@ -66,6 +70,8 @@ namespace SportsCenter.Api.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, new { Message = "An unexpected error occurred.", Details = ex.Message });
             }
         }
+
+        [Authorize(Roles = "Wlasciciel")]
         [HttpDelete("delete-products")]
         public async Task<IActionResult> DeleteProduct(int id, CancellationToken cancellationToken)
         {
@@ -85,6 +91,7 @@ namespace SportsCenter.Api.Controllers
             }
         }
 
+        [Authorize(Roles = "Wlasciciel,Pracownik administracyjny,Klient")]
         [HttpGet("get-products")]
         public async Task<IActionResult> GetProducts()
         {
@@ -92,6 +99,7 @@ namespace SportsCenter.Api.Controllers
             return Ok(products);
         }
 
+        [Authorize(Roles = "Klient")]
         [HttpPost("Add-product-to-cart")]
         public async Task<IActionResult> AddProductToCart([FromBody] AddProductToCart product)
         {
@@ -124,19 +132,21 @@ namespace SportsCenter.Api.Controllers
             }
         }
 
+        [Authorize(Roles = "Klient")]
         [HttpGet("client-cart")]
-        public async Task<IActionResult> GetCartProducts(int clientId)
+        public async Task<IActionResult> GetCartProducts()
         {
-            var products = await Mediator.Send(new GetCartProducts(clientId));
+            var products = await Mediator.Send(new GetCartProducts());
             return Ok(products);
         }
 
+        [Authorize(Roles = "Klient")]
         [HttpDelete("remove-cart-product")]
-        public async Task<IActionResult> RemoveCartProduct([FromQuery] int userId, [FromQuery] int productId)
+        public async Task<IActionResult> RemoveCartProduct([FromQuery] int productId)
         {
             try
             {
-                await Mediator.Send(new RemoveCartProduct(userId,productId));
+                await Mediator.Send(new RemoveCartProduct(productId));
                 return Ok("Product removed from cart successfully");
             }
             catch (NoActiveOrdersForCLientException ex)
@@ -152,12 +162,13 @@ namespace SportsCenter.Api.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, new { Message = "An unexpected error occurred.", Details = ex.Message });
             }
         }
+
+        [Authorize(Roles = "Klient")]
         [HttpPost("cart-product-purchase")]
         public async Task<IActionResult> BuyCartProduct(CancellationToken cancellationToken)
-        {
-            var userId = 1;//tymczasowo  
+        {          
 
-            var command = new BuyCartProduct(userId);
+            var command = new BuyCartProduct();
             try
             {
                 await Mediator.Send(command, cancellationToken);

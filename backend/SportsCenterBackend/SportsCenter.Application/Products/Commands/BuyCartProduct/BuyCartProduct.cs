@@ -9,12 +9,11 @@ using System.Threading.Tasks;
 namespace SportsCenter.Application.Products.Commands.BuyCartProduct
 {
     public sealed record BuyCartProduct : ICommand<Unit>
-    {
-        public int ClientId { get; set; }
+    {    
 
-        public BuyCartProduct(int clientId)
+        public BuyCartProduct()
         {
-            ClientId = clientId;
+
         }
     }
 }

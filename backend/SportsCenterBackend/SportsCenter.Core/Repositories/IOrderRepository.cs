@@ -17,5 +17,7 @@ namespace SportsCenter.Core.Repositories
         Task AddOrderProductAsync(ZamowienieProdukt orderProduct, CancellationToken cancellationToken);
         Task RemoveOrderProductAsync(ZamowienieProdukt orderProduct, CancellationToken cancellationToken);
         Task<decimal> GetTotalOrderCostAsync(int orderId, decimal discount, CancellationToken cancellationToken);
+        Task RemoveOrderAsync(Zamowienie order, CancellationToken cancellationToken);
+        Task<List<ZamowienieProdukt>> GetOrderProductsAsync(int orderId, CancellationToken cancellationToken);
     }
 }

@@ -31,12 +31,11 @@ namespace SportsCenter.Application.Products.Commands.AddProductToCart
         public async Task<Unit> Handle(AddProductToCart request, CancellationToken cancellationToken)
         {
 
-            //var userId = _httpContextAccessor.HttpContext?.User?.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-            //if (string.IsNullOrEmpty(userId))
-            //{
-            //    throw new UnauthorizedAccessException("Nie można dodać produktu do koszyka bez zalogowania.");
-            //}
-            var userId = 1; //na razie wersja testowa bez autoryzacji
+            var userId = GetUserIdFromSession();
+            if (userId == null)
+            {
+                throw new UnauthorizedAccessException("You cannot add a product to your cart without logging in.");
+            }
 
             var product = await _productRepository.GetProductByIdAsync(request.ProductId, cancellationToken);
             if (product == null)
@@ -44,7 +43,7 @@ namespace SportsCenter.Application.Products.Commands.AddProductToCart
                 throw new ProductNotFoundException(request.ProductId);
             }
 
-            var order = await _orderRepository.GetActiveOrderByUserIdAsync(userId, cancellationToken);
+            var order = await _orderRepository.GetActiveOrderByUserIdAsync((int)userId, cancellationToken);
             if (order == null)
             {
                 var pracownik = await _employeeRepository.GetEmployeeWithLeastOrdersAsync(cancellationToken);
@@ -54,7 +53,7 @@ namespace SportsCenter.Application.Products.Commands.AddProductToCart
                 }
                 order = new Zamowienie
                 {
-                    KlientId = userId,
+                    KlientId = (int)userId,
                     Status = "Koszyk",
                     PracownikId = pracownik.PracownikId,
                     ZamowienieProdukts = new List<ZamowienieProdukt>()
@@ -92,5 +91,15 @@ namespace SportsCenter.Application.Products.Commands.AddProductToCart
 
             return Unit.Value;
         }
+        private int? GetUserIdFromSession()
+        {
+            var userIdClaim = _httpContextAccessor.HttpContext?.User?.FindFirst("userId")?.Value;
+            if (int.TryParse(userIdClaim, out int userId))
+            {
+                return userId;
+            }
+            return null;
+        }
+
     }
 }

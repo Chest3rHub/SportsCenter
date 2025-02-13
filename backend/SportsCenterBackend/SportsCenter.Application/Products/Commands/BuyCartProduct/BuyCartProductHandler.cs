@@ -18,7 +18,7 @@ namespace SportsCenter.Application.Products.Commands.BuyCartProduct
         private readonly IClientRepository _clientRepository;
         private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public BuyCartProductHandler(IOrderRepository orderRepository, IProductRepository productRepository,IClientRepository clientRepository,IHttpContextAccessor httpContextAccessor)
+        public BuyCartProductHandler(IOrderRepository orderRepository, IProductRepository productRepository, IClientRepository clientRepository, IHttpContextAccessor httpContextAccessor)
         {
             _orderRepository = orderRepository;
             _productRepository = productRepository;
@@ -27,22 +27,27 @@ namespace SportsCenter.Application.Products.Commands.BuyCartProduct
         }
         public async Task<Unit> Handle(BuyCartProduct request, CancellationToken cancellationToken)
         {
-            var client = await _clientRepository.GetClientByIdAsync(request.ClientId, cancellationToken);
+            var userIdClaim = _httpContextAccessor.HttpContext?.User?.FindFirst("userId")?.Value;
+            if (string.IsNullOrEmpty(userIdClaim) || !int.TryParse(userIdClaim, out int userId))
+            {
+                throw new UnauthorizedAccessException("You cannot purchase a product into your cart without logging in.");
+            }
+        
+            var client = await _clientRepository.GetClientByIdAsync(userId, cancellationToken);
             if (client == null)
             {
-                throw new ClientWithGivenIdNotFoundException(request.ClientId);
+                throw new ClientWithGivenIdNotFoundException(userId);
             }
 
-            var order = await _orderRepository.GetActiveOrderByUserIdAsync(request.ClientId, cancellationToken);
+            var order = await _orderRepository.GetActiveOrderByUserIdAsync(userId, cancellationToken);
             if (order == null || !order.ZamowienieProdukts.Any())
             {
-                throw new NoActiveOrdersForCLientException(request.ClientId);
+                throw new NoActiveOrdersForCLientException(userId);
             }
-
-            var discount = await _clientRepository.GetProductDiscountForClientAsync(request.ClientId, cancellationToken);
-            Console.WriteLine(discount.ToString());
-            decimal totalCost = await _orderRepository.GetTotalOrderCostAsync(order.ZamowienieId, (decimal)discount, cancellationToken);
-            Console.WriteLine(totalCost.ToString());
+           
+            var discount = await _clientRepository.GetProductDiscountForClientAsync(userId, cancellationToken);
+         
+            decimal totalCost = await _orderRepository.GetTotalOrderCostAsync(order.ZamowienieId, (decimal)discount, cancellationToken);        
 
             if (totalCost == 0m)
             {
@@ -53,15 +58,15 @@ namespace SportsCenter.Application.Products.Commands.BuyCartProduct
             {
                 throw new NotEnoughFundsInAccountBalance();
             }
-
+       
             client.Saldo -= totalCost;
             await _clientRepository.UpdateClientAsync(client, cancellationToken);
-
+ 
             order.Status = "W realizacji";
             await _orderRepository.UpdateOrderAsync(order, cancellationToken);
 
             foreach (var orderProduct in order.ZamowienieProdukts)
-            {
+            {              
                 var product = await _productRepository.GetProductByIdAsync(orderProduct.ProduktId, cancellationToken);
                 if (product == null)
                 {
@@ -79,5 +84,7 @@ namespace SportsCenter.Application.Products.Commands.BuyCartProduct
 
             return Unit.Value;
         }
+
+
     }
 }

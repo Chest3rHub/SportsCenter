@@ -1,52 +1,84 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Http;
+using SportsCenter.Application.Employees.Commands.DismissEmployee;
 using SportsCenter.Application.Exceptions.EmployeesException;
 using SportsCenter.Core.Repositories;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Claims;
-using System.Text;
 
-namespace SportsCenter.Application.Employees.Commands.DismissEmployee
+internal sealed class DismissEmployeeHandler : IRequestHandler<DismissEmployee, ReservationFailureResponse>
 {
-    internal sealed class DismissEmployeeHandler : IRequestHandler<DismissEmployee, Unit>
+    private readonly IEmployeeRepository _employeeRepository;
+    private readonly IReservationRepository _reservationRepository;
+    private readonly ISportActivityRepository _sportActivityRepository;
+    private readonly IOrderRepository _orderRepository;
+    private readonly IHttpContextAccessor _httpContextAccessor;
+
+    public DismissEmployeeHandler(IEmployeeRepository employeeRepository, IReservationRepository reservationRepository,
+         ISportActivityRepository sportActivityRepository, IOrderRepository orderRepository, IHttpContextAccessor httpContextAccessor)
     {
-        private readonly IEmployeeRepository _employeeRepository;
-        private readonly IReservationRepository _reservationRepository; 
-        private readonly ISportActivityRepository _sportActivityRepository; 
-        private readonly IHttpContextAccessor _httpContextAccessor;
+        _employeeRepository = employeeRepository;
+        _reservationRepository = reservationRepository;
+        _sportActivityRepository = sportActivityRepository;
+        _orderRepository = orderRepository;
+        _httpContextAccessor = httpContextAccessor;
+    }
 
-        public DismissEmployeeHandler(IEmployeeRepository employeeRepository, IReservationRepository reservationRepository,
-             ISportActivityRepository sportActivityRepository, IHttpContextAccessor httpContextAccessor)
+    public async Task<ReservationFailureResponse> Handle(DismissEmployee request, CancellationToken cancellationToken)
+    {
+        var employee = await _employeeRepository.GetEmployeeByIdAsync(request.DismissedEmployeeId, cancellationToken);
+        if (employee == null)
         {
-            _employeeRepository = employeeRepository;
-            _reservationRepository = reservationRepository;
-            _sportActivityRepository = sportActivityRepository;
-            _httpContextAccessor = httpContextAccessor;
+            throw new EmployeeNotFoundException(request.DismissedEmployeeId);
         }
-        public async Task<Unit> Handle(DismissEmployee request, CancellationToken cancellationToken)
+
+        var position = await _employeeRepository.GetEmployeePositionNameByIdAsync(request.DismissedEmployeeId, cancellationToken);
+
+        List<int> failedReservations = new List<int>();
+
+        if (position == "Trener")
         {
-            var employee = await _employeeRepository.GetEmployeeByIdAsync(request.EmployeeId, cancellationToken);
-            if (employee == null)
-            {
-                throw new EmployeeNotFoundException(request.EmployeeId);
-            }
+            var reservations = await _reservationRepository.GetReservationsByTrainerIdAsync(request.DismissedEmployeeId, cancellationToken);
 
-            var reservations = await _reservationRepository.GetReservationsByTrainerIdAsync(request.EmployeeId, cancellationToken);
-            if (reservations.Any())
+            foreach (var reservation in reservations)
             {
-                throw new InvalidOperationException($"Pracownik o ID {request.EmployeeId} ma przypisane rezerwacje. Nie można go zwolnić.");
-            }
+                var startTime = reservation.DataOd;
+                var endTime = reservation.DataDo;
 
-            var activitySchedules = await _sportActivityRepository.GetSchedulesByTrainerIdAsync(request.EmployeeId, cancellationToken);
-            if (activitySchedules.Any())
-            {
-                throw new InvalidOperationException($"Pracownik o ID {request.EmployeeId} ma przypisane zajęcia w grafiku. Nie można go zwolnić.");
+                var substituteTrainers = await _reservationRepository.GetAvailableTrainersAsync(startTime, endTime, cancellationToken);
+                if (substituteTrainers == null || !substituteTrainers.Any())
+                {
+                    failedReservations.Add(reservation.RezerwacjaId);
+                }
+                else
+                {
+                    var trainerToAssign = substituteTrainers.FirstOrDefault();
+                    if (trainerToAssign != null)
+                    {
+                        reservation.TrenerId = trainerToAssign.PracownikId;
+                        await _reservationRepository.UpdateReservationAsync(reservation, cancellationToken);
+                    }
+                }
             }
+        }
+        else if (position == "Pracownik administracyjny")
+        {
+            var orders = await _orderRepository.GetOrdersByEmployeeIdAsync(request.DismissedEmployeeId, cancellationToken);
+            if (orders.Any())
+            {
+                var employeeWithFewestOrders = await _employeeRepository.GetEmployeeWithFewestOrdersAsync(cancellationToken);
+                foreach (var order in orders)
+                {
+                    order.PracownikId = employeeWithFewestOrders.PracownikId;
+                    await _orderRepository.UpdateOrderAsync(order, cancellationToken);
+                }
+            }
+        }
+        else
+        {
             await _employeeRepository.DeleteEmployeeAsync(employee, cancellationToken);
-
-            return Unit.Value;
         }
+
+        await _employeeRepository.DeleteEmployeeAsync(employee, cancellationToken);
+
+        return new ReservationFailureResponse(failedReservations);
     }
 }

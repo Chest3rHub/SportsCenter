@@ -66,7 +66,17 @@ namespace SportsCenter.Api.Controllers
         {
             try
             {
-                await Mediator.Send(new DismissEmployee(employeeId));
+                var response = await Mediator.Send(new DismissEmployee(employeeId));
+          
+                if (response.FailedReservationIds.Any())
+                {
+                    return BadRequest(new
+                    {
+                        message = "Some reservations are removed.",
+                        failedReservations = response.FailedReservationIds
+                    });
+                }
+
                 return NoContent();
             }
             catch (EmployeeNotFoundException ex)
@@ -75,7 +85,7 @@ namespace SportsCenter.Api.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, new { message = "An error occurred while sending the request", details = ex.Message });
+                return StatusCode(500, new { message = "An error occurred while sending the request.", details = ex.Message });
             }
         }
 

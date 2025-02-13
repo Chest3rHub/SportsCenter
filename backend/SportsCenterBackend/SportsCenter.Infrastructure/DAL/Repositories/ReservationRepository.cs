@@ -126,6 +126,7 @@ namespace SportsCenter.Infrastructure.DAL.Repositories
 
             return availableTrainers;
         }
+
         public async Task<IEnumerable<Rezerwacja>> GetReservationsByTrainerIdAsync(int trainerId, CancellationToken cancellationToken)
         {
             return await _dbContext.Rezerwacjas

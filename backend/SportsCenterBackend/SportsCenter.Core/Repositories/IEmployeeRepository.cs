@@ -21,5 +21,7 @@ namespace SportsCenter.Core.Repositories
         Task UpdateTaskAsync(Zadanie task, CancellationToken cancellationToken);
         Task<Pracownik> GetEmployeeWithLeastOrdersAsync(CancellationToken cancellationToken);
         Task<int?> GetEmployeeTypeByNameAsync(string name, CancellationToken cancellationToken);
+        Task<string> GetEmployeePositionNameByIdAsync(int employeeId, CancellationToken cancellationToken);
+        Task<Pracownik> GetEmployeeWithFewestOrdersAsync(CancellationToken cancellationToken);
     }
 }

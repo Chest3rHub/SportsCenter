@@ -41,10 +41,37 @@ namespace SportsCenter.Infrastructure.DAL.Repositories
                 .FirstOrDefaultAsync(p => p.PracownikNavigation.OsobaId == id, cancellationToken);
         }
         public async Task DeleteEmployeeAsync(Pracownik employee, CancellationToken cancellationToken)
-        {
+        {         
+            var ocenaRecords = _dbContext.Ocenas
+                .Where(o => o.GrafikZajecKlientId == employee.PracownikId); 
+            _dbContext.Ocenas.RemoveRange(ocenaRecords);
+            
+            var grafikZajecIds = await _dbContext.GrafikZajecs
+                .Where(gz => gz.PracownikId == employee.PracownikId)
+                .Select(gz => gz.GrafikZajecId)
+                .ToListAsync(cancellationToken);
+
+            var grafikZajecKlientRecords = _dbContext.GrafikZajecKlients
+                .Where(zk => grafikZajecIds.Contains(zk.GrafikZajecId)); 
+            _dbContext.GrafikZajecKlients.RemoveRange(grafikZajecKlientRecords);
+
+            var dataZajecRecords = _dbContext.DataZajecs
+                .Where(dz => grafikZajecIds.Contains(dz.GrafikZajecId)); 
+            _dbContext.DataZajecs.RemoveRange(dataZajecRecords);
+
+            var grafikZajecRecords = _dbContext.GrafikZajecs
+                .Where(gz => grafikZajecIds.Contains(gz.GrafikZajecId)); 
+            _dbContext.GrafikZajecs.RemoveRange(grafikZajecRecords);
+
+            var rezerwacjaRecords = _dbContext.Rezerwacjas
+                .Where(r => r.TrenerId == employee.PracownikId); 
+            _dbContext.Rezerwacjas.RemoveRange(rezerwacjaRecords);
+
             _dbContext.Pracowniks.Remove(employee);
-            await _dbContext.SaveChangesAsync();
+
+            await _dbContext.SaveChangesAsync(cancellationToken);
         }
+
         public async Task AddTaskAsync(Zadanie task, CancellationToken cancellationToken)
         {
             await _dbContext.Zadanies.AddAsync(task, cancellationToken);
@@ -79,6 +106,31 @@ namespace SportsCenter.Infrastructure.DAL.Repositories
             return await _dbContext.TypPracownikas
                 .Where(t => t.Nazwa == name)
                 .Select(t => (int?)t.IdTypPracownika)
+                .FirstOrDefaultAsync(cancellationToken);
+        }
+        public async Task<string> GetEmployeePositionNameByIdAsync(int employeeId, CancellationToken cancellationToken)
+        {
+            var employee = await _dbContext.Pracowniks
+                .Where(p => p.PracownikId == employeeId)
+                .FirstOrDefaultAsync(cancellationToken);
+
+            if (employee == null)
+            {
+                return null;
+            }
+
+            var position = await _dbContext.TypPracownikas
+                .Where(tp => tp.IdTypPracownika== employee.IdTypPracownika)
+                .Select(tp => tp.Nazwa) 
+                .FirstOrDefaultAsync(cancellationToken);
+
+            return position;
+        }
+
+        public async Task<Pracownik> GetEmployeeWithFewestOrdersAsync(CancellationToken cancellationToken)
+        {
+            return await _dbContext.Pracowniks
+                .OrderBy(p => _dbContext.Zamowienies.Count(o => o.PracownikId == p.PracownikId))
                 .FirstOrDefaultAsync(cancellationToken);
         }
     }

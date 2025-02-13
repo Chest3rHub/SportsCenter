@@ -7,12 +7,12 @@ using System.Text;
 
 namespace SportsCenter.Application.Employees.Commands.DismissEmployee
 {
-    public sealed record DismissEmployee : ICommand<Unit>
+    public sealed record DismissEmployee : ICommand<ReservationFailureResponse>
     {
-        public int EmployeeId { get; set; }
-        public DismissEmployee(int employeeId)
+        public int DismissedEmployeeId { get; set; }
+        public DismissEmployee(int dismissedEmployeeId)
         {
-            EmployeeId = employeeId;
+            DismissedEmployeeId = dismissedEmployeeId;
         }
     }
 }

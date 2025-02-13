@@ -80,6 +80,11 @@ namespace SportsCenter.Infrastructure.DAL.Repositories
                 .Where(op => op.ZamowienieId == orderId)
                 .ToListAsync(cancellationToken);
         }
-
+        public async Task<IEnumerable<Zamowienie>> GetOrdersByEmployeeIdAsync(int employeeId, CancellationToken cancellationToken)
+        {
+            return await _dbContext.Zamowienies
+                .Where(o => o.PracownikId == employeeId)
+                .ToListAsync(cancellationToken);
+        }
     }
 }

@@ -4,8 +4,9 @@ using Microsoft.EntityFrameworkCore;
 using SportsCenter.Application.Schedule.Queries.GetScheduleInfo;
 using SportsCenter.Infrastructure.DAL;
 using System.Security.Claims;
+using Newtonsoft.Json;
 
-internal class GetScheduleInfoHandler : IRequestHandler<GetScheduleInfo, List<ScheduleInfoDto>>
+internal class GetScheduleInfoHandler : IRequestHandler<GetScheduleInfo, List<ScheduleInfoBaseDto>>
 {
     private readonly SportsCenterDbContext _dbContext;
     private readonly IHttpContextAccessor _httpContextAccessor;
@@ -16,7 +17,7 @@ internal class GetScheduleInfoHandler : IRequestHandler<GetScheduleInfo, List<Sc
         _httpContextAccessor = httpContextAccessor;
     }
 
-    public async Task<List<ScheduleInfoDto>> Handle(GetScheduleInfo request, CancellationToken cancellationToken)
+    public async Task<List<ScheduleInfoBaseDto>> Handle(GetScheduleInfo request, CancellationToken cancellationToken)
     {
         var user = _httpContextAccessor.HttpContext.User;
         var userRole = user.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value
@@ -25,7 +26,7 @@ internal class GetScheduleInfoHandler : IRequestHandler<GetScheduleInfo, List<Sc
 
         bool isAdminRole = userRole == "Wlasciciel" || userRole == "Pracownik administracyjny";
         bool isTrainerRole = userRole == "Trener";
-
+     
         var reservations = await _dbContext.Rezerwacjas
             .Where(r => r.DataOd >= request.StartDate && r.DataDo <= request.EndDate)
             .Include(r => r.Klient)
@@ -47,38 +48,54 @@ internal class GetScheduleInfoHandler : IRequestHandler<GetScheduleInfo, List<Sc
             .Include(g => g.GrafikZajecKlients)
             .ToListAsync(cancellationToken);
 
-        var scheduleInfoDtos = new List<ScheduleInfoDto>();
-
+        var scheduleInfoDtos = new List<ScheduleInfoBaseDto>();
+      
         foreach (var reservation in reservations)
         {
-            var dto = new ScheduleInfoDto
-            {
-                Date = reservation.DataOd,
-                StartTime = reservation.DataOd.TimeOfDay,
-                EndTime = reservation.DataDo.TimeOfDay,
-                CourtNumber = reservation.KortId,
-            };
-        
-            if (isTrainerRole || isAdminRole)
-            {
-                dto.TrainerName = reservation.Trener?.PracownikNavigation != null
+            ScheduleInfoBaseDto dto;
+
+            if (isAdminRole)
+            {             
+                dto = new ScheduleInfoAdminDto
+                {   
+                    Type = "Admin",
+                    Date = reservation.DataOd,
+                    StartTime = reservation.DataOd.TimeOfDay,
+                    EndTime = reservation.DataDo.TimeOfDay,
+                    CourtNumber = reservation.KortId,
+                    TrainerName = reservation.Trener?.PracownikNavigation != null
                     ? $"{reservation.Trener.PracownikNavigation.Imie} {reservation.Trener.PracownikNavigation.Nazwisko}"
-                    : "Brak trenera";
+                    : "Brak trenera",
+                    Participants = new List<string> { $"{reservation.Klient.KlientNavigation.Imie} {reservation.Klient.KlientNavigation.Nazwisko}" },
+                    ReservationCost = reservation.Koszt,
+                    Discount = reservation.Klient?.ZnizkaNaZajecia ?? 0
+                };              
             }
-
-            if (isTrainerRole || isAdminRole)
+            else if (isTrainerRole)
+            {               
+                dto = new ScheduleInfoTrainerDto
+                {
+                    Type = "Trainer",
+                    Date = reservation.DataOd,
+                    StartTime = reservation.DataOd.TimeOfDay,
+                    EndTime = reservation.DataDo.TimeOfDay,
+                    CourtNumber = reservation.KortId,
+                    TrainerName = reservation.Trener?.PracownikNavigation != null
+                    ? $"{reservation.Trener.PracownikNavigation.Imie} {reservation.Trener.PracownikNavigation.Nazwisko}"
+                    : "Brak trenera",
+                    Participants = new List<string> { $"{reservation.Klient.KlientNavigation.Imie} {reservation.Klient.KlientNavigation.Nazwisko}" }
+                };
+            }
+            else
             {
-                dto.Participants = new List<string> { $"{reservation.Klient.KlientNavigation.Imie} {reservation.Klient.KlientNavigation.Nazwisko}" };
-            }
-
-            if (isAdminRole)
-            {                
-                dto.ReservationCost = reservation.Koszt;
-            }
-
-            if (isAdminRole)
-            {
-                dto.Discount = reservation.Klient?.ZnizkaNaZajecia ?? null;
+                dto = new ScheduleInfoBasicDto
+                {
+                    Type = "Basic",
+                    Date = reservation.DataOd,
+                    StartTime = reservation.DataOd.TimeOfDay,
+                    EndTime = reservation.DataDo.TimeOfDay,
+                    CourtNumber = reservation.KortId,
+                };
             }
 
             scheduleInfoDtos.Add(dto);
@@ -87,43 +104,65 @@ internal class GetScheduleInfoHandler : IRequestHandler<GetScheduleInfo, List<Sc
 
         foreach (var scheduledClass in scheduledClasses)
         {
-            var dto = new ScheduleInfoDto
-            {
-                Date = scheduledClass.DataZajecs.FirstOrDefault()?.Date ?? DateTime.MinValue,
-                StartTime = scheduledClass.DataZajecs.FirstOrDefault()?.Date.TimeOfDay ?? TimeSpan.Zero,
-                EndTime = scheduledClass.DataZajecs.FirstOrDefault()?.Date.AddMinutes(scheduledClass.CzasTrwania).TimeOfDay ?? TimeSpan.Zero,
-                CourtNumber = scheduledClass.KortId,
-            };
-
-            if (isTrainerRole || isAdminRole)
-            {
-                dto.TrainerName = scheduledClass.Pracownik?.PracownikNavigation != null
-                    ? $"{scheduledClass.Pracownik.PracownikNavigation.Imie} {scheduledClass.Pracownik.PracownikNavigation.Nazwisko}"
-                    : "Brak trenera";
-            }
-         
-            if (isTrainerRole || isAdminRole)
-            {
-                dto.GroupName = scheduledClass.Zajecia?.Nazwa;
-                dto.SkillLevel = scheduledClass.Zajecia?.IdPoziomZajecNavigation?.Nazwa;
-            }
+            ScheduleInfoBaseDto dto;
 
             if (isAdminRole)
-            {                
-                dto.ReservationCost = scheduledClass.KoszZeSprzetem > 0
-                                      ? scheduledClass.KoszZeSprzetem
-                                      : (decimal?)null;
-            }
-
-            if (isTrainerRole || isAdminRole)
             {
-                dto.Participants = scheduledClass.GrafikZajecKlients
+                dto = new ScheduleInfoAdminDto
+                {
+                    Type = "Admin",
+                    Date = scheduledClass.DataZajecs.FirstOrDefault()?.Date ?? DateTime.MinValue,
+                    StartTime = scheduledClass.DataZajecs.FirstOrDefault()?.Date.TimeOfDay ?? TimeSpan.Zero,
+                    EndTime = scheduledClass.DataZajecs.FirstOrDefault()?.Date.AddMinutes(scheduledClass.CzasTrwania).TimeOfDay ?? TimeSpan.Zero,
+                    CourtNumber = scheduledClass.KortId,
+                    TrainerName = scheduledClass.Pracownik?.PracownikNavigation != null
+                    ? $"{scheduledClass.Pracownik.PracownikNavigation.Imie} {scheduledClass.Pracownik.PracownikNavigation.Nazwisko}"
+                    : "Brak trenera",
+                    GroupName = scheduledClass.Zajecia?.Nazwa,
+                    SkillLevel = scheduledClass.Zajecia?.IdPoziomZajecNavigation?.Nazwa,
+                    ReservationCost = scheduledClass.KoszZeSprzetem > 0
+                                      ? scheduledClass.KoszZeSprzetem
+                                      : (decimal?)0,
+                    Participants = scheduledClass.GrafikZajecKlients
                     .Select(g => $"{g.Klient.KlientNavigation.Imie} {g.Klient.KlientNavigation.Nazwisko}")
-                    .ToList();
+                    .ToList()
+                };
+            }else if (isTrainerRole)
+            {
+                dto = new ScheduleInfoTrainerDto
+                {
+                    Type = "Trainer",
+                    Date = scheduledClass.DataZajecs.FirstOrDefault()?.Date ?? DateTime.MinValue,
+                    StartTime = scheduledClass.DataZajecs.FirstOrDefault()?.Date.TimeOfDay ?? TimeSpan.Zero,
+                    EndTime = scheduledClass.DataZajecs.FirstOrDefault()?.Date.AddMinutes(scheduledClass.CzasTrwania).TimeOfDay ?? TimeSpan.Zero,
+                    CourtNumber = scheduledClass.KortId,
+                    TrainerName = scheduledClass.Pracownik?.PracownikNavigation != null
+                   ? $"{scheduledClass.Pracownik.PracownikNavigation.Imie} {scheduledClass.Pracownik.PracownikNavigation.Nazwisko}"
+                   : "Brak trenera",
+                    GroupName = scheduledClass.Zajecia?.Nazwa,
+                    SkillLevel = scheduledClass.Zajecia?.IdPoziomZajecNavigation?.Nazwa,
+                    Participants = scheduledClass.GrafikZajecKlients
+                    .Select(g => $"{g.Klient.KlientNavigation.Imie} {g.Klient.KlientNavigation.Nazwisko}")
+                    .ToList()
+                };
+            }
+            else
+            {
+                dto = new ScheduleInfoBasicDto
+                {
+                    Type = "Basic",
+                    Date = scheduledClass.DataZajecs.FirstOrDefault()?.Date ?? DateTime.MinValue,
+                    StartTime = scheduledClass.DataZajecs.FirstOrDefault()?.Date.TimeOfDay ?? TimeSpan.Zero,
+                    EndTime = scheduledClass.DataZajecs.FirstOrDefault()?.Date.AddMinutes(scheduledClass.CzasTrwania).TimeOfDay ?? TimeSpan.Zero,
+                    CourtNumber = scheduledClass.KortId,
+                };
             }
 
             scheduleInfoDtos.Add(dto);
         }
+
+        var json = JsonConvert.SerializeObject(scheduleInfoDtos, Formatting.Indented);
+
         return scheduleInfoDtos;
     }
 }

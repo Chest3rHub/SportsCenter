@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace SportsCenter.Application.Schedule.Queries.GetScheduleInfo
 {
-    public class GetScheduleInfo : IQuery<List<ScheduleInfoDto>>
+    public class GetScheduleInfo : IQuery<List<ScheduleInfoBaseDto>>
     {
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }

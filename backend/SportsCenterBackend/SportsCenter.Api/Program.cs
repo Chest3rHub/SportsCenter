@@ -10,6 +10,7 @@ using SportsCenter.Application;
 using SportsCenter.Infrastructure;
 using System.Security.Claims;
 using System.Text;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,7 +24,13 @@ builder.Host.UseSerilog((context, loggerConfiguration) =>
     // .Seq("http://localhost:5341");
 });
 
-builder.Services.AddControllers();
+builder.Services.AddControllers()
+    .AddNewtonsoftJson(options =>
+    {
+        options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+        options.SerializerSettings.NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore;
+    });
+
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
@@ -49,6 +56,8 @@ builder.Services.AddSwaggerGen(c =>
             new string[] {}
         }
     });
+    c.UseAllOfToExtendReferenceSchemas();
+    c.SchemaFilter<SchemaFilter>();
 });
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)

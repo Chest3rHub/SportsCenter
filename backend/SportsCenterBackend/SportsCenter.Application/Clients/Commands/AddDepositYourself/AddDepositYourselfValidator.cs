@@ -15,6 +15,10 @@ namespace SportsCenter.Application.Clients.Commands.AddDepositYourself
             RuleFor(x => x.Deposit)
                 .Must(BeAValidAmount)
                 .WithMessage("The deposit must be greater than zero and a maximum of 5000.");
+
+                RuleFor(x => x.StripeToken)
+                .NotEmpty()
+                .WithMessage("Stripe token is required.");
         }
 
         private bool BeAValidAmount(decimal amount)

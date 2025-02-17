@@ -10,11 +10,13 @@ namespace SportsCenter.Application.Clients.Commands.AddDepositYourself
 {
     public sealed record AddDepositYourself : ICommand<Unit>
     {
-        public decimal Deposit { get; set; }  
+        public decimal Deposit { get; set; }
+        public string StripeToken { get; set; }
 
-        public AddDepositYourself(decimal deposit)
+        public AddDepositYourself(decimal deposit, string stripeToken)
         {
-            Deposit = deposit;          
+            Deposit = deposit; 
+            StripeToken = stripeToken;
         }
     }
 }

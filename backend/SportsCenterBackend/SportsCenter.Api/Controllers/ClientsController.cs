@@ -125,6 +125,7 @@ public class ClientsController : BaseController
         }
     }
 
+    //rozwiazanie bezfrontendowe tymczasowe wpisac w swaggerze w StripeToken "tok_visa"
     [Authorize(Roles = "Klient")]
     [HttpPost("add-deposit")]
     public async Task<IActionResult> AddAccountDepositYourselfAsync([FromBody] AddDepositYourself deposit)

@@ -8,11 +8,14 @@ using Serilog;
 using SportsCenter.Api.Middlewares;
 using SportsCenter.Application;
 using SportsCenter.Infrastructure;
+using Stripe;
 using System.Security.Claims;
 using System.Text;
 using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.Configure<StripeSettings>(builder.Configuration.GetSection("Stripe"));
 
 builder.Host.UseSerilog((context, loggerConfiguration) =>
 {

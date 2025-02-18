@@ -23,6 +23,7 @@ public class ClientsController : BaseController
     {
     }
 
+    [Authorize(Roles = "Pracownik administracyjny,Wlasciciel")]
     [HttpGet]
     public async Task<IActionResult> GetClientAsync()
     {

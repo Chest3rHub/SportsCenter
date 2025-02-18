@@ -7,6 +7,7 @@ using SportsCenter.Core.Repositories;
 using Stripe;
 using Stripe.Checkout;
 
+//rozwiazanie bezfrontendowe tymczasowe wpisac w swaggerze w StripeToken "tok_visa"
 public class AddDepositYourselfHandler : IRequestHandler<AddDepositYourself, Unit>
 {
     private readonly IClientRepository _clientRepository;
@@ -20,15 +21,14 @@ public class AddDepositYourselfHandler : IRequestHandler<AddDepositYourself, Uni
     {
         _clientRepository = clientRepository;
         _httpContextAccessor = httpContextAccessor;
-        _stripeSettings = stripeSettings.Value;  // Wczytujemy konfigurację z DI
+        _stripeSettings = stripeSettings.Value;
     }
 
     public async Task<Unit> Handle(AddDepositYourself request, CancellationToken cancellationToken)
     {
-        // Inicjalizacja Stripe API
+       
         StripeConfiguration.ApiKey = _stripeSettings.SecretKey;
 
-        // Pobieramy userId z kontekstu HTTP
         var userIdClaim = _httpContextAccessor.HttpContext?.User.FindFirst("userId")?.Value;
         if (string.IsNullOrEmpty(userIdClaim) || !int.TryParse(userIdClaim, out int userId))
         {
@@ -41,35 +41,30 @@ public class AddDepositYourselfHandler : IRequestHandler<AddDepositYourself, Uni
             throw new ClientWithGivenIdNotFoundException(userId);
         }
 
-        // Sprawdzamy token Stripe, który został przesłany z frontendu
-        var stripeToken = request.StripeToken; // Zakładając, że token jest przesyłany z frontendu
+        var stripeToken = request.StripeToken; 
         if (string.IsNullOrEmpty(stripeToken))
         {
             throw new ArgumentException("Stripe token cannot be null or empty.");
         }
 
-        // Tworzymy PaymentMethod za pomocą tokenu
         var paymentMethodOptions = new PaymentMethodCreateOptions
         {
             Type = "card",
             Card = new PaymentMethodCardOptions
             {
-                Token = stripeToken // Używamy tokenu karty, a nie numeru karty
+                Token = stripeToken 
             }
         };
 
         var paymentMethodService = new PaymentMethodService();
         var paymentMethod = await paymentMethodService.CreateAsync(paymentMethodOptions);
 
-        // Tworzymy sesję Checkout
         var session = await CreateCheckoutSession(request.Deposit);
 
-        // Zwiększamy saldo klienta
         client.Saldo += request.Deposit;
         await _clientRepository.UpdateClientAsync(client, cancellationToken);
 
-        // Możesz zwrócić URL sesji Stripe, aby użytkownik mógł zakończyć płatność
-        return Unit.Value; // Możesz zwrócić session.Url, jeśli chcesz przekazać go klientowi
+        return Unit.Value;
     }
 
     private async Task<Session> CreateCheckoutSession(decimal depositAmount)
@@ -88,7 +83,7 @@ public class AddDepositYourselfHandler : IRequestHandler<AddDepositYourself, Uni
                         {
                             Name = "Deposit"
                         },
-                        UnitAmount = (long)(depositAmount * 100)  // Stripe expects the amount in cents
+                        UnitAmount = (long)(depositAmount * 100) 
                     },
                     Quantity = 1,
                 },

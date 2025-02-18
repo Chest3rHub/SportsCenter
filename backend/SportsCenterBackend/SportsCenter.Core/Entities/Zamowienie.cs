@@ -1,4 +1,7 @@
-﻿namespace SportsCenter.Core.Entities;
+﻿using System;
+using System.Collections.Generic;
+
+namespace SportsCenter.Core.Entities;
 
 public partial class Zamowienie
 {
@@ -13,7 +16,8 @@ public partial class Zamowienie
     public DateOnly? DataRealizacji { get; set; }
 
     public int PracownikId { get; set; }
-    public string Status { get; set; }
+
+    public string Status { get; set; } = null!;
 
     public virtual Klient Klient { get; set; } = null!;
 

@@ -14,27 +14,27 @@ public class SportActivityRepository : ISportActivityRepository
         _dbContext = dbContext;
     }
 
-    public async Task<int> AddSportActivityAsync(SportActivity sportActivity, CancellationToken cancellationToken = default)
+    public async Task<int> AddSportActivityAsync(Zajecium sportActivity, CancellationToken cancellationToken = default)
     {
         _dbContext.Zajecia.Add(sportActivity);
         await _dbContext.SaveChangesAsync();
         return sportActivity.ZajeciaId;
     }
 
-    public async Task AddScheduleAsync(SportActivitySchedule schedule, CancellationToken cancellationToken = default)
+    public async Task AddScheduleAsync(GrafikZajec schedule, CancellationToken cancellationToken = default)
     {
         _dbContext.GrafikZajecs.Add(schedule);
         await _dbContext.SaveChangesAsync();
     }
     
-    public async Task<SportActivity> GetSportActivityByIdAsync(int sportActivityId, CancellationToken cancellationToken)
+    public async Task<Zajecium> GetSportActivityByIdAsync(int sportActivityId, CancellationToken cancellationToken)
     {
         return await _dbContext.Zajecia
             .Include(sa => sa.IdPoziomZajecNavigation)
             .Include(sa => sa.GrafikZajecs)
             .FirstOrDefaultAsync(sa => sa.IdPoziomZajec == sportActivityId, cancellationToken);
     }
-    public async Task<IEnumerable<SportActivity>> GetAllSportActivitiesAsync(CancellationToken cancellationToken)
+    public async Task<IEnumerable<Zajecium>> GetAllSportActivitiesAsync(CancellationToken cancellationToken)
     {
         return await _dbContext.Zajecia
             .Include(sa => sa.IdPoziomZajec)
@@ -42,13 +42,13 @@ public class SportActivityRepository : ISportActivityRepository
             .AsNoTracking()
             .ToListAsync(cancellationToken);
     }
-    public async Task RemoveSportActivityAsync(SportActivity sportActivity, CancellationToken cancellationToken)
+    public async Task RemoveSportActivityAsync(Zajecium sportActivity, CancellationToken cancellationToken)
     {
         _dbContext.Zajecia.Remove(sportActivity);
         await _dbContext.SaveChangesAsync(cancellationToken);
     }
 
-    public async Task<IEnumerable<SportActivitySchedule>> GetSchedulesByTrainerIdAsync(int trainerId, CancellationToken cancellationToken)
+    public async Task<IEnumerable<GrafikZajec>> GetSchedulesByTrainerIdAsync(int trainerId, CancellationToken cancellationToken)
     {
         return await _dbContext.GrafikZajecs
             .Where(gz => gz.PracownikId == trainerId)

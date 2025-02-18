@@ -1,4 +1,7 @@
-﻿namespace SportsCenter.Core.Entities;
+﻿using System;
+using System.Collections.Generic;
+
+namespace SportsCenter.Core.Entities;
 
 public partial class ZamowienieProdukt
 {

@@ -1,4 +1,7 @@
-﻿namespace SportsCenter.Core.Entities;
+﻿using System;
+using System.Collections.Generic;
+
+namespace SportsCenter.Core.Entities;
 
 public partial class DataZajec
 {
@@ -8,5 +11,5 @@ public partial class DataZajec
 
     public int GrafikZajecId { get; set; }
 
-    public virtual SportActivitySchedule SportActivitySchedule { get; set; } = null!;
+    public virtual GrafikZajec GrafikZajec { get; set; } = null!;
 }

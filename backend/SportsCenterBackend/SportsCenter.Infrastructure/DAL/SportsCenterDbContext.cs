@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System;
+using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
 using SportsCenter.Core.Entities;
 
 namespace SportsCenter.Infrastructure.DAL;
@@ -14,11 +16,17 @@ public partial class SportsCenterDbContext : DbContext
     {
     }
 
+    public virtual DbSet<Aktualnosci> Aktualnoscis { get; set; }
+
     public virtual DbSet<Certyfikat> Certyfikats { get; set; }
 
     public virtual DbSet<DataZajec> DataZajecs { get; set; }
 
-    public virtual DbSet<SportActivitySchedule> GrafikZajecs { get; set; }
+    public virtual DbSet<DzienTygodnium> DzienTygodnia { get; set; }
+
+    public virtual DbSet<GodzinyPracyKlubu> GodzinyPracyKlubus { get; set; }
+
+    public virtual DbSet<GrafikZajec> GrafikZajecs { get; set; }
 
     public virtual DbSet<GrafikZajecKlient> GrafikZajecKlients { get; set; }
 
@@ -46,7 +54,7 @@ public partial class SportsCenterDbContext : DbContext
 
     public virtual DbSet<Zadanie> Zadanies { get; set; }
 
-    public virtual DbSet<SportActivity> Zajecia { get; set; }
+    public virtual DbSet<Zajecium> Zajecia { get; set; }
 
     public virtual DbSet<Zamowienie> Zamowienies { get; set; }
 
@@ -54,17 +62,34 @@ public partial class SportsCenterDbContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Server=localhost;Database=SportsCenter;Integrated Security=True;Encrypt=True;TrustServerCertificate=True;");
+        => optionsBuilder.UseSqlServer("Server=localhost;Database=SportsCenter;Integrated Security=True;Encrypt=True;TrustServerCertificate=True");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Entity<Aktualnosci>(entity =>
+        {
+            entity.HasKey(e => e.AktualnosciId).HasName("Aktualnosci_pk");
+
+            entity.ToTable("Aktualnosci");
+
+            entity.Property(e => e.AktualnosciId).HasColumnName("AktualnosciID");
+            entity.Property(e => e.Nazwa)
+                .HasMaxLength(20)
+                .IsUnicode(false);
+            entity.Property(e => e.Opis).HasMaxLength(4000);
+            entity.Property(e => e.WazneDo).HasColumnType("datetime");
+            entity.Property(e => e.WazneOd).HasColumnType("datetime");
+        });
+
         modelBuilder.Entity<Certyfikat>(entity =>
         {
             entity.HasKey(e => e.CertyfikatId).HasName("Certyfikat_pk");
 
             entity.ToTable("Certyfikat");
 
-            entity.Property(e => e.CertyfikatId).HasColumnName("CertyfikatID");
+            entity.Property(e => e.CertyfikatId)
+                .ValueGeneratedNever()
+                .HasColumnName("CertyfikatID");
             entity.Property(e => e.Nazwa).HasMaxLength(255);
         });
 
@@ -74,23 +99,51 @@ public partial class SportsCenterDbContext : DbContext
 
             entity.ToTable("DataZajec");
 
-            entity.Property(e => e.DataZajecId).HasColumnName("DataZajecID");
+            entity.Property(e => e.DataZajecId)
+                .ValueGeneratedNever()
+                .HasColumnName("DataZajecID");
             entity.Property(e => e.Date).HasColumnType("datetime");
             entity.Property(e => e.GrafikZajecId).HasColumnName("GrafikZajecID");
 
-            entity.HasOne(d => d.SportActivitySchedule).WithMany(p => p.DataZajecs)
+            entity.HasOne(d => d.GrafikZajec).WithMany(p => p.DataZajecs)
                 .HasForeignKey(d => d.GrafikZajecId)
-                .OnDelete(DeleteBehavior.Cascade)
+                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("DataZajec_GrafikZajec");
         });
 
-        modelBuilder.Entity<SportActivitySchedule>(entity =>
+        modelBuilder.Entity<DzienTygodnium>(entity =>
+        {
+            entity.HasKey(e => e.DzienTygodniaId).HasName("GodzinyPracyKlubuId");
+
+            entity.Property(e => e.DzienTygodniaId).HasColumnName("DzienTygodniaID");
+            entity.Property(e => e.Nazwa)
+                .HasMaxLength(20)
+                .IsUnicode(false);
+        });
+
+        modelBuilder.Entity<GodzinyPracyKlubu>(entity =>
+        {
+            entity
+                .HasNoKey()
+                .ToTable("GodzinyPracyKlubu");
+
+            entity.Property(e => e.DzienTygodniaId).HasColumnName("DzienTygodniaID");
+            entity.Property(e => e.GodzinaOtwarcia).HasPrecision(0);
+            entity.Property(e => e.GodzinaZamkniecia).HasPrecision(0);
+            entity.Property(e => e.GodzinyPracyKlubuId)
+                .ValueGeneratedOnAdd()
+                .HasColumnName("GodzinyPracyKlubuID");
+        });
+
+        modelBuilder.Entity<GrafikZajec>(entity =>
         {
             entity.HasKey(e => e.GrafikZajecId).HasName("GrafikZajec_pk");
 
             entity.ToTable("GrafikZajec");
 
-            entity.Property(e => e.GrafikZajecId).HasColumnName("GrafikZajecID");
+            entity.Property(e => e.GrafikZajecId)
+                .ValueGeneratedNever()
+                .HasColumnName("GrafikZajecID");
             entity.Property(e => e.KortId).HasColumnName("KortID");
             entity.Property(e => e.KoszBezSprzetu).HasColumnType("decimal(5, 2)");
             entity.Property(e => e.KoszZeSprzetem).HasColumnType("decimal(5, 2)");
@@ -99,17 +152,17 @@ public partial class SportsCenterDbContext : DbContext
 
             entity.HasOne(d => d.Kort).WithMany(p => p.GrafikZajecs)
                 .HasForeignKey(d => d.KortId)
-                .OnDelete(DeleteBehavior.Cascade)
+                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("GrafikZajec_Kort");
 
             entity.HasOne(d => d.Pracownik).WithMany(p => p.GrafikZajecs)
                 .HasForeignKey(d => d.PracownikId)
-                .OnDelete(DeleteBehavior.Cascade)
+                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("GrafikZajec_Pracownik");
 
             entity.HasOne(d => d.Zajecia).WithMany(p => p.GrafikZajecs)
                 .HasForeignKey(d => d.ZajeciaId)
-                .OnDelete(DeleteBehavior.Cascade)
+                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("GrafikZajec_Zajecia");
         });
 
@@ -119,11 +172,13 @@ public partial class SportsCenterDbContext : DbContext
 
             entity.ToTable("GrafikZajec_Klient");
 
-            entity.Property(e => e.GrafikZajecKlientId).HasColumnName("GrafikZajecKlientID");
+            entity.Property(e => e.GrafikZajecKlientId)
+                .ValueGeneratedNever()
+                .HasColumnName("GrafikZajecKlientID");
             entity.Property(e => e.GrafikZajecId).HasColumnName("GrafikZajecID");
             entity.Property(e => e.KlientId).HasColumnName("KlientID");
 
-            entity.HasOne(d => d.SportActivitySchedule).WithMany(p => p.GrafikZajecKlients)
+            entity.HasOne(d => d.GrafikZajec).WithMany(p => p.GrafikZajecKlients)
                 .HasForeignKey(d => d.GrafikZajecId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("Table_34_GrafikZajec");
@@ -155,11 +210,11 @@ public partial class SportsCenterDbContext : DbContext
                     "KlientTag",
                     r => r.HasOne<Tag>().WithMany()
                         .HasForeignKey("TagId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.ClientSetNull)
                         .HasConstraintName("Posiadanie_Tag"),
                     l => l.HasOne<Klient>().WithMany()
                         .HasForeignKey("KlientId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.ClientSetNull)
                         .HasConstraintName("Posiadanie_Klient"),
                     j =>
                     {
@@ -176,7 +231,9 @@ public partial class SportsCenterDbContext : DbContext
 
             entity.ToTable("Kort");
 
-            entity.Property(e => e.KortId).HasColumnName("KortID");
+            entity.Property(e => e.KortId)
+                .ValueGeneratedNever()
+                .HasColumnName("KortID");
             entity.Property(e => e.Nazwa).HasMaxLength(50);
         });
 
@@ -186,7 +243,9 @@ public partial class SportsCenterDbContext : DbContext
 
             entity.ToTable("Ocena");
 
-            entity.Property(e => e.OcenaId).HasColumnName("OcenaID");
+            entity.Property(e => e.OcenaId)
+                .ValueGeneratedNever()
+                .HasColumnName("OcenaID");
             entity.Property(e => e.GrafikZajecKlientId).HasColumnName("GrafikZajecKlientID");
             entity.Property(e => e.Opis).HasMaxLength(255);
 
@@ -202,10 +261,12 @@ public partial class SportsCenterDbContext : DbContext
 
             entity.ToTable("Osoba");
 
-            entity.Property(e => e.OsobaId).HasColumnName("OsobaID");
+            entity.Property(e => e.OsobaId)
+                .ValueGeneratedNever()
+                .HasColumnName("OsobaID");
             entity.Property(e => e.Adres).HasMaxLength(255);
             entity.Property(e => e.Email).HasMaxLength(50);
-            entity.Property(e => e.Haslo).HasMaxLength(250);
+            entity.Property(e => e.Haslo).HasMaxLength(255);
             entity.Property(e => e.Imie).HasMaxLength(50);
             entity.Property(e => e.Nazwisko).HasMaxLength(50);
             entity.Property(e => e.NrTel).HasMaxLength(15);
@@ -218,6 +279,7 @@ public partial class SportsCenterDbContext : DbContext
 
             entity.ToTable("PoziomZajec");
 
+            entity.Property(e => e.IdPoziomZajec).ValueGeneratedNever();
             entity.Property(e => e.Nazwa).HasMaxLength(100);
         });
 
@@ -248,7 +310,9 @@ public partial class SportsCenterDbContext : DbContext
 
             entity.ToTable("Produkt");
 
-            entity.Property(e => e.ProduktId).HasColumnName("ProduktID");
+            entity.Property(e => e.ProduktId)
+                .ValueGeneratedNever()
+                .HasColumnName("ProduktID");
             entity.Property(e => e.Koszt).HasColumnType("decimal(5, 2)");
             entity.Property(e => e.Nazwa).HasMaxLength(100);
             entity.Property(e => e.Producent).HasMaxLength(100);
@@ -261,7 +325,9 @@ public partial class SportsCenterDbContext : DbContext
 
             entity.ToTable("Rezerwacja");
 
-            entity.Property(e => e.RezerwacjaId).HasColumnName("RezerwacjaID");
+            entity.Property(e => e.RezerwacjaId)
+                .ValueGeneratedNever()
+                .HasColumnName("RezerwacjaID");
             entity.Property(e => e.DataDo).HasColumnType("datetime");
             entity.Property(e => e.DataOd).HasColumnType("datetime");
             entity.Property(e => e.KlientId).HasColumnName("KlientID");
@@ -290,7 +356,9 @@ public partial class SportsCenterDbContext : DbContext
 
             entity.ToTable("Tag");
 
-            entity.Property(e => e.TagId).HasColumnName("TagID");
+            entity.Property(e => e.TagId)
+                .ValueGeneratedNever()
+                .HasColumnName("TagID");
             entity.Property(e => e.Nazwa).HasMaxLength(70);
         });
 
@@ -320,6 +388,7 @@ public partial class SportsCenterDbContext : DbContext
 
             entity.ToTable("TypPracownika");
 
+            entity.Property(e => e.IdTypPracownika).ValueGeneratedNever();
             entity.Property(e => e.Nazwa).HasMaxLength(200);
         });
 
@@ -329,7 +398,9 @@ public partial class SportsCenterDbContext : DbContext
 
             entity.ToTable("Zadanie");
 
-            entity.Property(e => e.ZadanieId).HasColumnName("ZadanieID");
+            entity.Property(e => e.ZadanieId)
+                .ValueGeneratedNever()
+                .HasColumnName("ZadanieID");
             entity.Property(e => e.Opis).HasMaxLength(500);
             entity.Property(e => e.PracownikId).HasColumnName("PracownikID");
             entity.Property(e => e.PracownikZlecajacyId).HasColumnName("PracownikZlecajacyID");
@@ -345,16 +416,18 @@ public partial class SportsCenterDbContext : DbContext
                 .HasConstraintName("Zadanie_PracownikZlecajacy");
         });
 
-        modelBuilder.Entity<SportActivity>(entity =>
+        modelBuilder.Entity<Zajecium>(entity =>
         {
             entity.HasKey(e => e.ZajeciaId).HasName("Zajecia_pk");
 
-            entity.Property(e => e.ZajeciaId).HasColumnName("ZajeciaID");
+            entity.Property(e => e.ZajeciaId)
+                .ValueGeneratedNever()
+                .HasColumnName("ZajeciaID");
             entity.Property(e => e.Nazwa).HasMaxLength(100);
 
             entity.HasOne(d => d.IdPoziomZajecNavigation).WithMany(p => p.Zajecia)
                 .HasForeignKey(d => d.IdPoziomZajec)
-                .OnDelete(DeleteBehavior.Cascade)
+                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("Zajecia_PoziomZajec");
         });
 
@@ -364,14 +437,12 @@ public partial class SportsCenterDbContext : DbContext
 
             entity.ToTable("Zamowienie");
 
-            entity.Property(e => e.ZamowienieId).HasColumnName("ZamowienieID");
+            entity.Property(e => e.ZamowienieId)
+                .ValueGeneratedNever()
+                .HasColumnName("ZamowienieID");
             entity.Property(e => e.KlientId).HasColumnName("KlientID");
             entity.Property(e => e.PracownikId).HasColumnName("PracownikID");
-
-            entity.Property(e => e.Status)
-                .HasColumnName("Status")
-                .HasMaxLength(50)
-                .IsRequired();
+            entity.Property(e => e.Status).HasMaxLength(50);
 
             entity.HasOne(d => d.Klient).WithMany(p => p.Zamowienies)
                 .HasForeignKey(d => d.KlientId)

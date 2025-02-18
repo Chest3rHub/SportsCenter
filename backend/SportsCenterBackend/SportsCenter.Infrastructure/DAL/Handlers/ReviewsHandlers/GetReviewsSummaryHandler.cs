@@ -28,11 +28,11 @@ namespace SportsCenter.Infrastructure.DAL.Handlers.ReviewsHandler
         .ThenInclude(gzk => gzk.Klient)
         .ThenInclude(k => k.KlientNavigation) 
     .Include(o => o.GrafikZajecKlient)
-        .ThenInclude(gzk => gzk.SportActivitySchedule)
+        .ThenInclude(gzk => gzk.GrafikZajec)
         .ThenInclude(gz => gz.Pracownik)
         .ThenInclude(p => p.PracownikNavigation)
     .Include(o => o.GrafikZajecKlient)
-        .ThenInclude(gzk => gzk.SportActivitySchedule)
+        .ThenInclude(gzk => gzk.GrafikZajec)
         .ThenInclude(gz => gz.Zajecia)
         .ThenInclude(z => z.IdPoziomZajecNavigation)
     .Select(o => new ReviewsSummaryDto
@@ -41,11 +41,11 @@ namespace SportsCenter.Infrastructure.DAL.Handlers.ReviewsHandler
         Stars = o.Gwiazdki,
         Date = o.DataWystawienia,
         ClientName = o.GrafikZajecKlient.Klient.KlientNavigation.Imie, 
-        TrainerName = o.GrafikZajecKlient.SportActivitySchedule.Pracownik.PracownikNavigation.Imie,
+        TrainerName = o.GrafikZajecKlient.GrafikZajec.Pracownik.PracownikNavigation.Imie,
         ClientSurname = o.GrafikZajecKlient.Klient.KlientNavigation.Nazwisko,
-        TrainerSurname = o.GrafikZajecKlient.SportActivitySchedule.Pracownik.PracownikNavigation.Nazwisko,
-        ActivityName = o.GrafikZajecKlient.SportActivitySchedule.Zajecia.Nazwa,
-        ActivityLevel = o.GrafikZajecKlient.SportActivitySchedule.Zajecia.IdPoziomZajecNavigation.Nazwa
+        TrainerSurname = o.GrafikZajecKlient.GrafikZajec.Pracownik.PracownikNavigation.Nazwisko,
+        ActivityName = o.GrafikZajecKlient.GrafikZajec.Zajecia.Nazwa,
+        ActivityLevel = o.GrafikZajecKlient.GrafikZajec.Zajecia.IdPoziomZajecNavigation.Nazwa
     })
     .ToListAsync(cancellationToken);
 

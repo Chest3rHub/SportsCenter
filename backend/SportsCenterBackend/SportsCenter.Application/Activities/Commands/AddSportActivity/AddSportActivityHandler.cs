@@ -25,7 +25,7 @@ public class AddSportActivityHandler : IRequestHandler<AddSportActivity, Unit>
             throw new InvalidOperationException("Assigned employee must be a trainer.");
         }
         
-        var newActivity = new SportActivity
+        var newActivity = new Zajecium
         {
             Nazwa = request.SportActivityName,
             IdPoziomZajec = request.LevelId
@@ -33,7 +33,7 @@ public class AddSportActivityHandler : IRequestHandler<AddSportActivity, Unit>
 
         await _SportActivityRepository.AddSportActivityAsync(newActivity, cancellationToken);
         
-        var newSchedule = new SportActivitySchedule
+        var newSchedule = new GrafikZajec
         {
             ZajeciaId = newActivity.ZajeciaId,
             CzasTrwania = request.Duration,

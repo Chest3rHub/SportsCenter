@@ -3,11 +3,11 @@ namespace SportsCenter.Core.Repositories;
 
 public interface ISportActivityRepository
 { 
-    Task<int> AddSportActivityAsync(SportActivity sportActivity, CancellationToken cancellationToken);
-    Task AddScheduleAsync(SportActivitySchedule schedule, CancellationToken cancellationToken);
-    Task<SportActivity> GetSportActivityByIdAsync(int sportActivityId, CancellationToken cancellationToken); 
-    Task<IEnumerable<SportActivity>> GetAllSportActivitiesAsync(CancellationToken cancellationToken);
-    Task RemoveSportActivityAsync(SportActivity sportActivity, CancellationToken cancellationToken);
-    Task<IEnumerable<SportActivitySchedule>> GetSchedulesByTrainerIdAsync(int trainerId, CancellationToken cancellationToken);
+    Task<int> AddSportActivityAsync(Zajecium sportActivity, CancellationToken cancellationToken);
+    Task AddScheduleAsync(GrafikZajec schedule, CancellationToken cancellationToken);
+    Task<Zajecium> GetSportActivityByIdAsync(int sportActivityId, CancellationToken cancellationToken); 
+    Task<IEnumerable<Zajecium>> GetAllSportActivitiesAsync(CancellationToken cancellationToken);
+    Task RemoveSportActivityAsync(Zajecium sportActivity, CancellationToken cancellationToken);
+    Task<IEnumerable<GrafikZajec>> GetSchedulesByTrainerIdAsync(int trainerId, CancellationToken cancellationToken);
 }
 

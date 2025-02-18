@@ -1,4 +1,7 @@
-﻿namespace SportsCenter.Core.Entities;
+﻿using System;
+using System.Collections.Generic;
+
+namespace SportsCenter.Core.Entities;
 
 public partial class Pracownik
 {
@@ -8,7 +11,9 @@ public partial class Pracownik
 
     public DateOnly DataZatrudnienia { get; set; }
 
-    public virtual ICollection<SportActivitySchedule> GrafikZajecs { get; set; } = new List<SportActivitySchedule>();
+    public DateOnly? DataZwolnienia { get; set; }
+
+    public virtual ICollection<GrafikZajec> GrafikZajecs { get; set; } = new List<GrafikZajec>();
 
     public virtual TypPracownika IdTypPracownikaNavigation { get; set; } = null!;
 

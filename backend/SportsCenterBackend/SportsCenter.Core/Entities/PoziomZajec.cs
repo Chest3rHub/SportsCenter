@@ -1,4 +1,7 @@
-﻿namespace SportsCenter.Core.Entities;
+﻿using System;
+using System.Collections.Generic;
+
+namespace SportsCenter.Core.Entities;
 
 public partial class PoziomZajec
 {
@@ -6,5 +9,5 @@ public partial class PoziomZajec
 
     public string Nazwa { get; set; } = null!;
 
-    public virtual ICollection<SportActivity> Zajecia { get; set; } = new List<SportActivity>();
+    public virtual ICollection<Zajecium> Zajecia { get; set; } = new List<Zajecium>();
 }

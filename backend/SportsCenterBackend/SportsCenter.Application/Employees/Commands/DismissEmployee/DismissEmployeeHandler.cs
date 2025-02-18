@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using SportsCenter.Application.Employees.Commands.DismissEmployee;
 using SportsCenter.Application.Exceptions.EmployeesException;
+using SportsCenter.Application.Exceptions.EmployeesExceptions;
 using SportsCenter.Core.Repositories;
 
 internal sealed class DismissEmployeeHandler : IRequestHandler<DismissEmployee, ReservationFailureResponse>
@@ -28,6 +29,11 @@ internal sealed class DismissEmployeeHandler : IRequestHandler<DismissEmployee, 
         if (employee == null)
         {
             throw new EmployeeNotFoundException(request.DismissedEmployeeId);
+        }
+
+        if (employee.DataZwolnienia != null)
+        {
+            throw new EmployeeAlreadyDismissedException(request.DismissedEmployeeId);
         }
 
         var position = await _employeeRepository.GetEmployeePositionNameByIdAsync(request.DismissedEmployeeId, cancellationToken);
@@ -74,10 +80,10 @@ internal sealed class DismissEmployeeHandler : IRequestHandler<DismissEmployee, 
         }
         else
         {
-            await _employeeRepository.DeleteEmployeeAsync(employee, cancellationToken);
+            await _employeeRepository.DeleteEmployeeAsync(request.DismissedEmployeeId, request.DismissalDate, cancellationToken);
         }
 
-        await _employeeRepository.DeleteEmployeeAsync(employee, cancellationToken);
+        await _employeeRepository.DeleteEmployeeAsync(request.DismissedEmployeeId, request.DismissalDate, cancellationToken);
 
         return new ReservationFailureResponse(failedReservations);
     }

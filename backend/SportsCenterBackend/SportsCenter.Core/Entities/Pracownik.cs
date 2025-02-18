@@ -11,7 +11,7 @@ public partial class Pracownik
 
     public DateOnly DataZatrudnienia { get; set; }
 
-    public DateOnly? DataZwolnienia { get; set; }
+    public DateTime? DataZwolnienia { get; set; }
 
     public virtual ICollection<GrafikZajec> GrafikZajecs { get; set; } = new List<GrafikZajec>();
 

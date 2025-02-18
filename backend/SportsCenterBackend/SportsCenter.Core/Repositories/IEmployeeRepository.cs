@@ -13,8 +13,7 @@ namespace SportsCenter.Core.Repositories
         Task AddEmployeeAsync(Pracownik employee, CancellationToken cancellationToken);
         Task<Pracownik?> GetEmployeeByEmailAsync(string email, CancellationToken cancellationToken);
         Task<Pracownik?> GetEmployeeByIdAsync(int id, CancellationToken cancellationToken);
-        Task DeleteEmployeeAsync(Pracownik employee, CancellationToken cancellationToken);
-
+        Task DeleteEmployeeAsync(int id, DateTime dismissalDate, CancellationToken cancellationToken);
         Task AddTaskAsync(Zadanie task, CancellationToken cancellationToken);
         Task<Zadanie?> GetTaskByIdAsync(int id, CancellationToken cancellationToken);
         Task RemoveTaskAsync(Zadanie task, CancellationToken cancellationToken);

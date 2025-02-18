@@ -40,35 +40,13 @@ namespace SportsCenter.Infrastructure.DAL.Repositories
                 .Include(p => p.PracownikNavigation)
                 .FirstOrDefaultAsync(p => p.PracownikNavigation.OsobaId == id, cancellationToken);
         }
-        public async Task DeleteEmployeeAsync(Pracownik employee, CancellationToken cancellationToken)
-        {         
-            var ocenaRecords = _dbContext.Ocenas
-                .Where(o => o.GrafikZajecKlientId == employee.PracownikId); 
-            _dbContext.Ocenas.RemoveRange(ocenaRecords);
-            
-            var grafikZajecIds = await _dbContext.GrafikZajecs
-                .Where(gz => gz.PracownikId == employee.PracownikId)
-                .Select(gz => gz.GrafikZajecId)
-                .ToListAsync(cancellationToken);
+        public async Task DeleteEmployeeAsync(int id, DateTime dismissalDate, CancellationToken cancellationToken)
+        {
+            var pracownik = await _dbContext.Pracowniks
+                .Where(p => p.PracownikId == id)
+                .FirstOrDefaultAsync(cancellationToken);
 
-            var grafikZajecKlientRecords = _dbContext.GrafikZajecKlients
-                .Where(zk => grafikZajecIds.Contains(zk.GrafikZajecId)); 
-            _dbContext.GrafikZajecKlients.RemoveRange(grafikZajecKlientRecords);
-
-            var dataZajecRecords = _dbContext.DataZajecs
-                .Where(dz => grafikZajecIds.Contains(dz.GrafikZajecId)); 
-            _dbContext.DataZajecs.RemoveRange(dataZajecRecords);
-
-            var grafikZajecRecords = _dbContext.GrafikZajecs
-                .Where(gz => grafikZajecIds.Contains(gz.GrafikZajecId)); 
-            _dbContext.GrafikZajecs.RemoveRange(grafikZajecRecords);
-
-            var rezerwacjaRecords = _dbContext.Rezerwacjas
-                .Where(r => r.TrenerId == employee.PracownikId); 
-            _dbContext.Rezerwacjas.RemoveRange(rezerwacjaRecords);
-
-            _dbContext.Pracowniks.Remove(employee);
-
+            pracownik.DataZwolnienia = dismissalDate;
             await _dbContext.SaveChangesAsync(cancellationToken);
         }
 

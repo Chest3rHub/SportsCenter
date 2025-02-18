@@ -13,6 +13,7 @@ using SportsCenter.Application.Exceptions.UsersException;
 using SportsCenter.Application.Employees.Commands.DismissEmployee;
 using System.Security.Claims;
 using SportsCenter.Application.Employees.Commands.AddAdmTask;
+using SportsCenter.Application.Exceptions.EmployeesExceptions;
 
 
 namespace SportsCenter.Api.Controllers
@@ -60,13 +61,13 @@ namespace SportsCenter.Api.Controllers
                 }
             }
 
-        [HttpDelete("{employeeId}")]
+        [HttpDelete("dismiss-employee")]
         [Authorize(Roles = "Wlasciciel")]
-        public async Task<IActionResult> DismissEmployee(int employeeId)
+        public async Task<IActionResult> DismissEmployee([FromBody] DismissEmployee dismissEmployee)
         {
             try
             {
-                var response = await Mediator.Send(new DismissEmployee(employeeId));
+                var response = await Mediator.Send(new DismissEmployee(dismissEmployee.DismissedEmployeeId, dismissEmployee.DismissalDate));
           
                 if (response.FailedReservationIds.Any())
                 {
@@ -82,6 +83,10 @@ namespace SportsCenter.Api.Controllers
             catch (EmployeeNotFoundException ex)
             {
                 return NotFound(new { Message = ex.Message });
+            }
+            catch (EmployeeAlreadyDismissedException ex)
+            {
+                return Conflict(new { message = ex.Message });
             }
             catch (Exception ex)
             {

@@ -10,9 +10,11 @@ namespace SportsCenter.Application.Employees.Commands.DismissEmployee
     public sealed record DismissEmployee : ICommand<ReservationFailureResponse>
     {
         public int DismissedEmployeeId { get; set; }
-        public DismissEmployee(int dismissedEmployeeId)
+        public DateTime DismissalDate { get; set; }
+        public DismissEmployee(int dismissedEmployeeId, DateTime dismissalDate)
         {
             DismissedEmployeeId = dismissedEmployeeId;
+            DismissalDate = dismissalDate;
         }
     }
 }

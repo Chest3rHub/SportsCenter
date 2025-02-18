@@ -43,12 +43,20 @@ internal sealed class DismissEmployeeHandler : IRequestHandler<DismissEmployee, 
         if (position == "Trener")
         {
             var reservations = await _reservationRepository.GetReservationsByTrainerIdAsync(request.DismissedEmployeeId, cancellationToken);
+            var today = DateOnly.FromDateTime(DateTime.UtcNow);
 
-            foreach (var reservation in reservations)
+            var upcomingReservations = reservations
+                .Where(r => DateOnly.FromDateTime(r.DataOd) >= today)
+                .ToList();
+
+            foreach (var reservation in upcomingReservations)
             {
                 var startTime = reservation.DataOd;
                 var endTime = reservation.DataDo;
 
+                //na razie system sam znajduje dostepnego trenra i mu przydziela calosc zastepstw
+                //po integracji z frontendem zostanie dodane okienko obslugujace interakcje
+                //wyboru dostepnych trenerow na poszczegolne zajecia/rezerwacje
                 var substituteTrainers = await _reservationRepository.GetAvailableTrainersAsync(startTime, endTime, cancellationToken);
                 if (substituteTrainers == null || !substituteTrainers.Any())
                 {
@@ -68,10 +76,16 @@ internal sealed class DismissEmployeeHandler : IRequestHandler<DismissEmployee, 
         else if (position == "Pracownik administracyjny")
         {
             var orders = await _orderRepository.GetOrdersByEmployeeIdAsync(request.DismissedEmployeeId, cancellationToken);
-            if (orders.Any())
+
+            var currentOrders = orders.Where(o => o.Status != "Zrealizowane").ToList();
+
+            if (currentOrders.Any())
             {
+                //na razie system znajduje pracownika majacego najmniej zamowien i mu przydziela 
+                //aktywne zamowienia pracownika zwalnianego 
+                //w przyszlosci mozna zrobic jakas interakcje na frontendzie
                 var employeeWithFewestOrders = await _employeeRepository.GetEmployeeWithFewestOrdersAsync(cancellationToken);
-                foreach (var order in orders)
+                foreach (var order in currentOrders)
                 {
                     order.PracownikId = employeeWithFewestOrders.PracownikId;
                     await _orderRepository.UpdateOrderAsync(order, cancellationToken);

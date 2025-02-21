@@ -186,7 +186,7 @@ public partial class SportsCenterDbContext : DbContext
             entity.ToTable("Klient");
 
             entity.Property(e => e.KlientId)
-                .ValueGeneratedNever()
+               // .ValueGeneratedNever()
                 .HasColumnName("KlientID");
             entity.Property(e => e.Saldo).HasColumnType("decimal(5, 2)");
 
@@ -253,8 +253,7 @@ public partial class SportsCenterDbContext : DbContext
             entity.Property(e => e.Haslo).HasMaxLength(250);
             entity.Property(e => e.Imie).HasMaxLength(50);
             entity.Property(e => e.Nazwisko).HasMaxLength(50);
-            entity.Property(e => e.NrTel).HasMaxLength(15);
-            entity.Property(e => e.Pesel).HasMaxLength(11);
+            entity.Property(e => e.NrTel).HasMaxLength(15);      
         });
 
         modelBuilder.Entity<PoziomZajec>(entity =>

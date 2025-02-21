@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SportsCenter.Application.Orders.Queries.GetOrdersToProcess;
+using Stripe.Climate;
 
 namespace SportsCenter.Infrastructure.DAL.Repositories
 {
@@ -85,6 +87,10 @@ namespace SportsCenter.Infrastructure.DAL.Repositories
             return await _dbContext.Zamowienies
                 .Where(o => o.PracownikId == employeeId)
                 .ToListAsync(cancellationToken);
+        }
+        public async Task<Zamowienie> GetOrderByIdAsync(int orderId, CancellationToken cancellationToken)
+        {
+            return await _dbContext.Zamowienies.FindAsync(orderId);
         }
     }
 }

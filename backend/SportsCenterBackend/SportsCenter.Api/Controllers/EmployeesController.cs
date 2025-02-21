@@ -14,6 +14,7 @@ using SportsCenter.Application.Employees.Commands.DismissEmployee;
 using System.Security.Claims;
 using SportsCenter.Application.Employees.Commands.AddAdmTask;
 using SportsCenter.Application.Exceptions.EmployeesExceptions;
+using SportsCenter.Application.Employees.Commands.AddTrainerCertificate;
 
 
 namespace SportsCenter.Api.Controllers
@@ -199,6 +200,30 @@ namespace SportsCenter.Api.Controllers
             }catch (Exception ex)
             {
                 return StatusCode(500, new { message = "An error occurred while updating the task", error = ex.Message });
+            }
+        }
+
+        [Authorize(Roles = "Pracownik administracyjny,Wlasciciel")]
+        [HttpPost("Add-trainer-certificate")]
+        public async Task<IActionResult> AddTrainerCertificate([FromBody] AddTrainerCertificate trainerCertificate)
+        {
+            try
+            {
+                await Mediator.Send(trainerCertificate);
+                return NoContent();
+            }
+            catch (EmployeeNotFoundException ex)
+            {
+                return NotFound(new { message = ex.Message });
+            }
+            catch (NotTrainerEmployeeException ex)
+            {
+                return Conflict(new { message = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "An error occurred while sending the request", details = ex.Message });
+
             }
         }
     }

@@ -111,5 +111,11 @@ namespace SportsCenter.Infrastructure.DAL.Repositories
                 .OrderBy(p => _dbContext.Zamowienies.Count(o => o.PracownikId == p.PracownikId))
                 .FirstOrDefaultAsync(cancellationToken);
         }
+
+        public async Task AddTrainerCertificateAsync(TrenerCertifikat trainerCertificate, CancellationToken cancellationToken)
+        {
+            await _dbContext.TrenerCertifikats.AddAsync(trainerCertificate, cancellationToken);
+            await _dbContext.SaveChangesAsync(cancellationToken);
+        }
     }
 }

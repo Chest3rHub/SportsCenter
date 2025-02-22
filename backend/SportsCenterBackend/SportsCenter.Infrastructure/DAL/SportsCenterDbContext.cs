@@ -24,7 +24,7 @@ public partial class SportsCenterDbContext : DbContext
 
     public virtual DbSet<DzienTygodnium> DzienTygodnia { get; set; }
 
-    public virtual DbSet<GodzinyPracyKlubu> GodzinyPracyKlubus { get; set; }
+    public virtual DbSet<GodzinyPracyKlubu> GodzinyPracyKlubu { get; set; }
 
     public virtual DbSet<GrafikZajec> GrafikZajecs { get; set; }
 
@@ -109,25 +109,29 @@ public partial class SportsCenterDbContext : DbContext
 
         modelBuilder.Entity<DzienTygodnium>(entity =>
         {
-            entity.HasKey(e => e.DzienTygodniaId).HasName("GodzinyPracyKlubuId");
+            entity.HasKey(e => e.DzienTygodniaId).HasName("PK_DzienTygodnia");
 
             entity.Property(e => e.DzienTygodniaId).HasColumnName("DzienTygodniaID");
             entity.Property(e => e.Nazwa)
                 .HasMaxLength(20)
                 .IsUnicode(false);
+
+            entity.HasOne(d => d.GodzinyPracyKlubu)
+                  .WithOne(g => g.DzienTygodnia)
+                  .HasForeignKey<GodzinyPracyKlubu>(g => g.DzienTygodniaId)
+                  .IsRequired();
         });
 
         modelBuilder.Entity<GodzinyPracyKlubu>(entity =>
         {
-            entity
-                .HasNoKey()
-                .ToTable("GodzinyPracyKlubu");
+            entity.HasKey(e => e.GodzinyPracyKlubuId).HasName("PK_GodzinyPracyKlubu");
 
             entity.Property(e => e.DzienTygodniaId).HasColumnName("DzienTygodniaID");
-            entity.Property(e => e.GodzinaOtwarcia).HasPrecision(0);
-            entity.Property(e => e.GodzinaZamkniecia).HasPrecision(0);
+            entity.Property(e => e.GodzinaOtwarcia).HasColumnType("time");
+            entity.Property(e => e.GodzinaZamkniecia).HasColumnType("time");
             entity.Property(e => e.GodzinyPracyKlubuId).HasColumnName("GodzinyPracyKlubuID");
         });
+
 
         modelBuilder.Entity<GrafikZajec>(entity =>
         {

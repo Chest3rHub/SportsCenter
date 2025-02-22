@@ -15,6 +15,10 @@ using System.Security.Claims;
 using SportsCenter.Application.Employees.Commands.AddAdmTask;
 using SportsCenter.Application.Exceptions.EmployeesExceptions;
 using SportsCenter.Application.Employees.Commands.AddTrainerCertificate;
+using SportsCenter.Application.Employees.Commands.DeleteTrainerCertificate;
+using SportsCenter.Application.Employees.Commands.UpdateTrainerCertificate;
+using SportsCenter.Application.Employees.Queries.GetTrainerCertificates;
+using SportsCenter.Application.Employees.Queries.GetYourCertificates;
 
 
 namespace SportsCenter.Api.Controllers
@@ -35,32 +39,32 @@ namespace SportsCenter.Api.Controllers
 
         [Authorize(Roles = "Wlasciciel")]
         [HttpPost("Register")]
-            public async Task<IActionResult> RegisterEmployeesAsync([FromBody] RegisterEmployee registerEmployee)
+        public async Task<IActionResult> RegisterEmployeesAsync([FromBody] RegisterEmployee registerEmployee)
+        {
+            var validationResults = new RegisterEmployeeValidator().Validate(registerEmployee);
+            if (!validationResults.IsValid)
             {
-                var validationResults = new RegisterEmployeeValidator().Validate(registerEmployee);
-                if (!validationResults.IsValid)
-                {
-                    return BadRequest(validationResults.Errors);
-                }
+                return BadRequest(validationResults.Errors);
+            }
 
-                try
-                {
-                    await Mediator.Send(registerEmployee);
-                    return NoContent();
-                }
-                catch (UserAlreadyExistsException ex)
-                {
-                    return Conflict(new { message = ex.Message });
-                }
-                catch(WrongPositionNameException ex)
-                {
-                    return Conflict(new { message = ex.Message });
+            try
+            {
+                await Mediator.Send(registerEmployee);
+                return NoContent();
             }
-                catch (Exception ex)
-                {
-                    return StatusCode(500, new { message = "An error occurred while sending the request", details = ex.Message });
-                }
+            catch (UserAlreadyExistsException ex)
+            {
+                return Conflict(new { message = ex.Message });
             }
+            catch (WrongPositionNameException ex)
+            {
+                return Conflict(new { message = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "An error occurred while sending the request", details = ex.Message });
+            }
+        }
 
         [HttpDelete("dismiss-employee")]
         [Authorize(Roles = "Wlasciciel")]
@@ -69,7 +73,7 @@ namespace SportsCenter.Api.Controllers
             try
             {
                 var response = await Mediator.Send(new DismissEmployee(dismissEmployee.DismissedEmployeeId, dismissEmployee.DismissalDate));
-          
+
                 if (response.FailedReservationIds.Any())
                 {
                     return BadRequest(new
@@ -130,7 +134,7 @@ namespace SportsCenter.Api.Controllers
             {
                 return Conflict(new { message = ex.Message });
             }
-            catch(NotAdmEmployeeException ex)
+            catch (NotAdmEmployeeException ex)
             {
                 return Conflict(new { message = ex.Message });
             }
@@ -182,7 +186,7 @@ namespace SportsCenter.Api.Controllers
             {
                 return NotFound("No tasks found for the given employee");
             }
-            return Ok(tasks);  
+            return Ok(tasks);
         }
 
         [Authorize(Roles = "Pracownik administracyjny,Wlasciciel")]
@@ -197,7 +201,8 @@ namespace SportsCenter.Api.Controllers
             catch (TaskNotFoundException ex)
             {
                 return NotFound(new { message = ex.Message });
-            }catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 return StatusCode(500, new { message = "An error occurred while updating the task", error = ex.Message });
             }
@@ -225,6 +230,91 @@ namespace SportsCenter.Api.Controllers
                 return StatusCode(500, new { message = "An error occurred while sending the request", details = ex.Message });
 
             }
+        }
+
+        [Authorize(Roles = "Wlasciciel")]
+        [HttpDelete("Remove-trainer-certificate")]
+        public async Task<IActionResult> RemoveTrainerCertificate([FromBody] RemoveTrainerCertificate trainerCertificate)
+        {
+            try
+            {
+                await Mediator.Send(trainerCertificate);
+                return NoContent();
+            }
+            catch (EmployeeNotFoundException ex)
+            {
+                return NotFound(new { message = ex.Message });
+            }
+            catch (NotTrainerEmployeeException ex)
+            {
+                return Conflict(new { message = ex.Message });
+            }
+            catch (TrainerCertificateNotFoundException ex)
+            {
+                return NotFound(new { message = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "An error occurred while sending the request", details = ex.Message });
+            }
+        }
+
+        [Authorize(Roles = "Wlasciciel")]
+        [HttpPut("Update-trainer-certificate")]
+        public async Task<IActionResult> UpdateTrainerCertificate([FromBody] UpdateTrainerCertificate trainerCertificate)
+        {
+            try
+            {
+                await Mediator.Send(trainerCertificate);
+                return NoContent();
+            }
+            catch (EmployeeNotFoundException ex)
+            {
+                return NotFound(new { message = ex.Message });
+            }
+            catch (NotTrainerEmployeeException ex)
+            {
+                return Conflict(new { message = ex.Message });
+            }
+            catch (TrainerCertificateNotFoundException ex)
+            {
+                return NotFound(new { message = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "An error occurred while sending the request", details = ex.Message });
+
+            }
+        }
+
+        [Authorize(Roles = "Wlasciciel")]
+        [HttpGet("Get-trainer-certificates")]
+        public async Task<IActionResult> GetTrainerCertificates(int trainerId)
+        {
+            try
+            {
+                return Ok(await Mediator.Send(new GetTrainerCertificates(trainerId)));
+            }
+            catch (EmployeeNotFoundException ex)
+            {
+                return NotFound(new { message = ex.Message });
+            }
+            catch (NotTrainerEmployeeException ex)
+            {
+                return NotFound(new { message = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "An error occurred while sending the request", details = ex.Message });
+
+            }
+        }
+
+        [Authorize(Roles = "Trener")]
+        [HttpGet("Get-your-certificates")]
+        public async Task<IActionResult> GetYourCertificates()
+        {
+            return Ok(await Mediator.Send(new GetYourCertificates()));
         }
     }
 }

@@ -117,5 +117,33 @@ namespace SportsCenter.Infrastructure.DAL.Repositories
             await _dbContext.TrenerCertifikats.AddAsync(trainerCertificate, cancellationToken);
             await _dbContext.SaveChangesAsync(cancellationToken);
         }
+        public async Task<TrenerCertifikat?> GetTrainerCertificateByIdAsync(int trainerId, int certificateId, CancellationToken cancellationToken)
+        {
+            return await _dbContext.TrenerCertifikats
+                .FirstOrDefaultAsync(tc => tc.PracownikId == trainerId && tc.CertyfikatId == certificateId, cancellationToken);
+        }
+
+        public async Task DeleteTrainerCertificateAsync(TrenerCertifikat certificate, CancellationToken cancellationToken)
+        {
+            _dbContext.TrenerCertifikats.Remove(certificate);
+            await _dbContext.SaveChangesAsync(cancellationToken);
+        }
+        public async Task<TrenerCertifikat?> GetTrainerCertificateWithDetailsByIdAsync(int trainerId, int certificateId, CancellationToken cancellationToken)
+        {
+            return await _dbContext.TrenerCertifikats
+                .Include(tc => tc.Certyfikat)
+                .FirstOrDefaultAsync(tc => tc.PracownikId == trainerId && tc.CertyfikatId == certificateId, cancellationToken);
+        }
+        public async Task UpdateTrainerCertificateAsync(TrenerCertifikat trainerCertificate, CancellationToken cancellationToken)
+        {        
+            _dbContext.TrenerCertifikats.Update(trainerCertificate);
+
+            var certificate = await _dbContext.Certyfikats
+                .FirstAsync(c => c.CertyfikatId == trainerCertificate.CertyfikatId, cancellationToken);
+
+            certificate.Nazwa = trainerCertificate.Certyfikat.Nazwa;
+            await _dbContext.SaveChangesAsync(cancellationToken);
+        }
+
     }
 }

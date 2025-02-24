@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using SportsCenter.Application.Exceptions;
 using SportsCenter.Application.Exceptions.UsersException;
+using SportsCenter.Application.Exceptions.UsersExceptions;
 using SportsCenter.Application.Security;
 using SportsCenter.Core.Repositories;
 
@@ -25,6 +26,12 @@ namespace SportsCenter.Application.Users.Commands.Login
             if (user == null || !_passwordManager.Validate(request.Password, user.Haslo))
             {
                 throw new InvalidLoginException();
+            }
+
+
+            if (user.Pracownik != null && user.Pracownik.DataZwolnienia != null)
+            {
+                throw new InactiveAccountException();
             }
 
             var token = _jwtTokenGenerator.GenerateToken(user);

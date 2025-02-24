@@ -40,7 +40,7 @@ namespace SportsCenter.Api.Controllers
         }
 
         [Authorize(Roles = "Wlasciciel,Klient,Pomoc sprzatajaca,Trener,Pracownik administracyjny")]
-        [HttpPost("change-password-yourself")]
+        [HttpPut("change-password-yourself")]
         public async Task<IActionResult> ChangePasswordYourselfAsync([FromBody] ChangePasswordYourself changePassword)
         {
             var validationResults = new ChangePasswordYourselfValidator().Validate(changePassword);
@@ -62,7 +62,7 @@ namespace SportsCenter.Api.Controllers
         }
 
         [Authorize(Roles = "Wlasciciel")]
-        [HttpPost("change-other-user-password")]
+        [HttpPut("change-other-user-password")]
         public async Task<IActionResult> ChangeOtherUserPasswordAsync([FromBody] ChangeOtherUserPassword changePassword)
         {
             var validationResults = new ChangeOtherUserPasswordValidator().Validate(changePassword);

@@ -170,7 +170,7 @@ public class ClientsController : BaseController
     }
 
     [Authorize(Roles = "Pracownik administracyjny,Wlasciciel")]
-    [HttpPost("removeTags")]
+    [HttpDelete("removeTags")]
     public async Task<IActionResult> RemoveClientTagsAsync([FromBody] RemoveClientTags removeClientTags)
     {
         var validationResults = new RemoveClientTagsValidator().Validate(removeClientTags);

@@ -1,8 +1,10 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using SportsCenter.Application.Clients.Queries.GetClients;
 using SportsCenter.Application.Exceptions.SportsCenterExceptions;
 using SportsCenter.Application.SportsCenterManagement.Commands.SetSpecialSportsCenterWorkingHours;
+using SportsCenter.Application.SportsCenterManagement.Queries.GetSportsCenterWorkingHours;
 using SportsCenter.Application.SportsClubManagement.Commands.AddSportsClubWorkingHours;
 
 namespace SportsCenter.Api.Controllers
@@ -59,5 +61,13 @@ namespace SportsCenter.Api.Controllers
                 return StatusCode(500, new { message = "An error occurred while sending the request", details = ex.Message });
             }
         }
+
+        [HttpGet("get-sports-club-working-hours")]
+        public async Task<IActionResult> GetWorkingHoursForWeek([FromQuery] DateOnly startDate)
+        {
+            var workingHours = await Mediator.Send(new GetSportsCenterWorkingHours(startDate));
+            return Ok(workingHours);
+        }
+
     }
 }

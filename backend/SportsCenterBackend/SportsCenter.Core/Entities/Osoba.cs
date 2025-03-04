@@ -19,6 +19,8 @@ public partial class Osoba
 
     public string NrTel { get; set; } = null!;
 
+    public string? Pesel { get; set; }
+
     public string Adres { get; set; } = null!;
 
     public virtual Klient? Klient { get; set; }

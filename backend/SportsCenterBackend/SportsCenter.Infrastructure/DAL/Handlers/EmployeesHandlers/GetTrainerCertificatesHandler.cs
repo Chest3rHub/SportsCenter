@@ -41,7 +41,7 @@ namespace SportsCenter.Infrastructure.DAL.Handlers.EmployeesHandlers
                 throw new NotTrainerEmployeeException(request.TrainerId);
             }
 
-            var trainerCertificates = await _dbContext.TrenerCertifikats
+            var trainerCertificates = await _dbContext.TrenerCertyfikats
                 .Where(tc => tc.PracownikId == request.TrainerId)
                 .Join(_dbContext.Certyfikats,
                     tc => tc.CertyfikatId,

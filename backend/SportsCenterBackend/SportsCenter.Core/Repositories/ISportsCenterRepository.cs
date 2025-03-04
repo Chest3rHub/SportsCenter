@@ -9,9 +9,9 @@ namespace SportsCenter.Core.Repositories
 {
     public interface ISportsCenterRepository
     {
-        Task<bool> CheckIfDayExistsAsync(int dzienTygodniaId, CancellationToken cancellationToken);
-        Task AddWorkingHoursForGivenDay(GodzinyPracyKlubu workingHoursOfDay, CancellationToken cancellationToken);
-        Task UpdateWorkingHours(GodzinyPracyKlubu godzinyPracy, CancellationToken cancellationToken);
-        Task<GodzinyPracyKlubu> GetWorkingHoursByDayAsync(int dayOfWeekId, CancellationToken cancellationToken);
+        //Task<bool> CheckIfDayExistsAsync(int dzienTygodniaId, CancellationToken cancellationToken);
+       // Task AddWorkingHoursForGivenDay(GodzinyPracyKlubu workingHoursOfDay, CancellationToken cancellationToken);
+       // Task UpdateWorkingHours(GodzinyPracyKlubu godzinyPracy, CancellationToken cancellationToken);
+       // Task<GodzinyPracyKlubu> GetWorkingHoursByDayAsync(int dayOfWeekId, CancellationToken cancellationToken);
     }
 }

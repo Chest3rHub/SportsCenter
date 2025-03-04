@@ -30,7 +30,7 @@ namespace SportsCenter.Infrastructure.DAL.Handlers.EmployeesHandlers
                 throw new UnauthorizedAccessException("You cannot access certificates without being logged in on your trainer account.");
             }
 
-            var certificates = await _dbContext.TrenerCertifikats
+            var certificates = await _dbContext.TrenerCertyfikats
                 .Where(tc => tc.PracownikId == trainerId)
                 .Join(_dbContext.Certyfikats, tc => tc.CertyfikatId, c => c.CertyfikatId, (tc, c) => new YourCertificatesDto
                 {

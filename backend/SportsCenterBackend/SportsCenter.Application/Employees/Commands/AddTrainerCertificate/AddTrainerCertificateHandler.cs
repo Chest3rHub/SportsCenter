@@ -43,7 +43,7 @@ namespace SportsCenter.Application.Employees.Commands.AddTrainerCertificate
                 Nazwa = request.CertificateName
             };
 
-            var newTrainerCertificate = new TrenerCertifikat
+            var newTrainerCertificate = new TrenerCertyfikat
             {
                 Certyfikat = newCertificate,
                 PracownikId = request.TrainerId,

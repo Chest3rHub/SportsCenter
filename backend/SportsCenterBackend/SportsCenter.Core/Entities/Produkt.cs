@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 
 namespace SportsCenter.Core.Entities;
+
 public partial class Produkt
 {
     public int ProduktId { get; set; }

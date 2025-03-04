@@ -10,15 +10,16 @@ namespace SportsCenter.Application.SportsClubManagement.Commands.AddSportsClubWo
 {
     public sealed record SetSportsCenterWorkingHours : ICommand<Unit>
     {
-        public int DayOfWeekId { get; set; }   
+         
         public TimeSpan OpenHour { get; set; }
         public TimeSpan CloseHour { get; set; }
+        public string DayOfWeek { get; set; }
 
-        public SetSportsCenterWorkingHours(int dayOfWeek, TimeSpan openHour, TimeSpan closeHour)
+        public SetSportsCenterWorkingHours( TimeSpan openHour, TimeSpan closeHour, string dayOfWeek )
         {
-            DayOfWeekId = dayOfWeek;
             OpenHour = openHour;
             CloseHour = closeHour;
+            DayOfWeek = dayOfWeek;
         }
 
     }

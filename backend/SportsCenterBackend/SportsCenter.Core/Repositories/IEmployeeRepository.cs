@@ -22,10 +22,10 @@ namespace SportsCenter.Core.Repositories
         Task<int?> GetEmployeeTypeByNameAsync(string name, CancellationToken cancellationToken);
         Task<string> GetEmployeePositionNameByIdAsync(int employeeId, CancellationToken cancellationToken);
         Task<Pracownik> GetEmployeeWithFewestOrdersAsync(CancellationToken cancellationToken);
-        Task AddTrainerCertificateAsync(TrenerCertifikat trainerCertificate, CancellationToken cancellationToken);
-        Task<TrenerCertifikat?> GetTrainerCertificateByIdAsync(int trainerId, int certificateId, CancellationToken cancellationToken);
-        Task DeleteTrainerCertificateAsync(TrenerCertifikat certificate, CancellationToken cancellationToken);
-        Task<TrenerCertifikat?> GetTrainerCertificateWithDetailsByIdAsync(int trainerId, int certificateId, CancellationToken cancellationToken);
-        Task UpdateTrainerCertificateAsync(TrenerCertifikat trainerCertificate, CancellationToken cancellationToken);
+        Task AddTrainerCertificateAsync(TrenerCertyfikat trainerCertificate, CancellationToken cancellationToken);
+        Task<TrenerCertyfikat?> GetTrainerCertificateByIdAsync(int trainerId, int certificateId, CancellationToken cancellationToken);
+        Task DeleteTrainerCertificateAsync(TrenerCertyfikat certificate, CancellationToken cancellationToken);
+        Task<TrenerCertyfikat?> GetTrainerCertificateWithDetailsByIdAsync(int trainerId, int certificateId, CancellationToken cancellationToken);
+        Task UpdateTrainerCertificateAsync(TrenerCertyfikat trainerCertificate, CancellationToken cancellationToken);
     }
 }

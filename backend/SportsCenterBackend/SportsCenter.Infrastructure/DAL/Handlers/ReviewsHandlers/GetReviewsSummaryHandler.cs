@@ -23,7 +23,7 @@ namespace SportsCenter.Infrastructure.DAL.Handlers.ReviewsHandler
         {
             var reviews = await _dbContext.Ocenas
     .Where(o =>
-        o.DataWystawienia >= request.StartDate && o.DataWystawienia <= request.EndDate)
+        o.DataWystawienia >= DateOnly.FromDateTime(request.StartDate) && o.DataWystawienia <= DateOnly.FromDateTime(request.EndDate))
     .Include(o => o.GrafikZajecKlient)  
         .ThenInclude(gzk => gzk.Klient)
         .ThenInclude(k => k.KlientNavigation) 
@@ -39,7 +39,7 @@ namespace SportsCenter.Infrastructure.DAL.Handlers.ReviewsHandler
     {
         Description = o.Opis,
         Stars = o.Gwiazdki,
-        Date = o.DataWystawienia,
+        Date = o.DataWystawienia.ToDateTime(TimeOnly.MinValue), //sprawdzic czy ta konwersja jest dobra
         ClientName = o.GrafikZajecKlient.Klient.KlientNavigation.Imie, 
         TrainerName = o.GrafikZajecKlient.GrafikZajec.Pracownik.PracownikNavigation.Imie,
         ClientSurname = o.GrafikZajecKlient.Klient.KlientNavigation.Nazwisko,

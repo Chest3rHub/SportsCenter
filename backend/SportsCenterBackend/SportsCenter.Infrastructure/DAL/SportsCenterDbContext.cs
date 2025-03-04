@@ -18,13 +18,13 @@ public partial class SportsCenterDbContext : DbContext
 
     public virtual DbSet<Aktualnosci> Aktualnoscis { get; set; }
 
+    public virtual DbSet<BrakDostepnosci> BrakDostepnoscis { get; set; }
+
     public virtual DbSet<Certyfikat> Certyfikats { get; set; }
 
     public virtual DbSet<DataZajec> DataZajecs { get; set; }
 
-    public virtual DbSet<DzienTygodnium> DzienTygodnia { get; set; }
-
-    public virtual DbSet<GodzinyPracyKlubu> GodzinyPracyKlubu { get; set; }
+    public virtual DbSet<GodzinyPracyKlubu> GodzinyPracyKlubus { get; set; }
 
     public virtual DbSet<GrafikZajec> GrafikZajecs { get; set; }
 
@@ -48,9 +48,11 @@ public partial class SportsCenterDbContext : DbContext
 
     public virtual DbSet<Tag> Tags { get; set; }
 
-    public virtual DbSet<TrenerCertifikat> TrenerCertifikats { get; set; }
+    public virtual DbSet<TrenerCertyfikat> TrenerCertyfikats { get; set; }
 
     public virtual DbSet<TypPracownika> TypPracownikas { get; set; }
+
+    public virtual DbSet<WyjatkoweGodzinyPracy> WyjatkoweGodzinyPracies { get; set; }
 
     public virtual DbSet<Zadanie> Zadanies { get; set; }
 
@@ -60,9 +62,11 @@ public partial class SportsCenterDbContext : DbContext
 
     public virtual DbSet<ZamowienieProdukt> ZamowienieProdukts { get; set; }
 
+    public virtual DbSet<Zastepstwo> Zastepstwos { get; set; }
+
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Server=localhost;Database=SportsCenter;Integrated Security=True;Encrypt=True;TrustServerCertificate=True");
+        => optionsBuilder.UseSqlServer("Server=localhost;Database=SportsCenter;Integrated Security=True;Encrypt=True;TrustServerCertificate=True;");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -79,6 +83,25 @@ public partial class SportsCenterDbContext : DbContext
             entity.Property(e => e.Opis).HasMaxLength(4000);
             entity.Property(e => e.WazneDo).HasColumnType("datetime");
             entity.Property(e => e.WazneOd).HasColumnType("datetime");
+        });
+
+        modelBuilder.Entity<BrakDostepnosci>(entity =>
+        {
+            entity.HasKey(e => e.BrakDostepnosciId).HasName("BrakDostepnosci_pk");
+
+            entity.ToTable("BrakDostepnosci");
+
+            entity.Property(e => e.BrakDostepnosciId)
+                .ValueGeneratedNever()
+                .HasColumnName("BrakDostepnosciID");
+            entity.Property(e => e.GodzinaDo).HasPrecision(0);
+            entity.Property(e => e.GodzinaOd).HasPrecision(0);
+            entity.Property(e => e.PracownikId).HasColumnName("PracownikID");
+
+            entity.HasOne(d => d.Pracownik).WithMany(p => p.BrakDostepnoscis)
+                .HasForeignKey(d => d.PracownikId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("BrakDostepnosci_Pracownik");
         });
 
         modelBuilder.Entity<Certyfikat>(entity =>
@@ -103,35 +126,21 @@ public partial class SportsCenterDbContext : DbContext
 
             entity.HasOne(d => d.GrafikZajec).WithMany(p => p.DataZajecs)
                 .HasForeignKey(d => d.GrafikZajecId)
-                .OnDelete(DeleteBehavior.Cascade)
+                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("DataZajec_GrafikZajec");
-        });
-
-        modelBuilder.Entity<DzienTygodnium>(entity =>
-        {
-            entity.HasKey(e => e.DzienTygodniaId).HasName("PK_DzienTygodnia");
-
-            entity.Property(e => e.DzienTygodniaId).HasColumnName("DzienTygodniaID");
-            entity.Property(e => e.Nazwa)
-                .HasMaxLength(20)
-                .IsUnicode(false);
-
-            entity.HasOne(d => d.GodzinyPracyKlubu)
-                  .WithOne(g => g.DzienTygodnia)
-                  .HasForeignKey<GodzinyPracyKlubu>(g => g.DzienTygodniaId)
-                  .IsRequired();
         });
 
         modelBuilder.Entity<GodzinyPracyKlubu>(entity =>
         {
-            entity.HasKey(e => e.GodzinyPracyKlubuId).HasName("PK_GodzinyPracyKlubu");
+            entity.HasKey(e => e.GodzinyPracyKlubuId).HasName("GodzinyPracyKlubuId");
 
-            entity.Property(e => e.DzienTygodniaId).HasColumnName("DzienTygodniaID");
-            entity.Property(e => e.GodzinaOtwarcia).HasColumnType("time");
-            entity.Property(e => e.GodzinaZamkniecia).HasColumnType("time");
+            entity.ToTable("GodzinyPracyKlubu");
+
             entity.Property(e => e.GodzinyPracyKlubuId).HasColumnName("GodzinyPracyKlubuID");
+            entity.Property(e => e.DzienTygodnia).HasMaxLength(20);
+            entity.Property(e => e.GodzinaOtwarcia).HasPrecision(0);
+            entity.Property(e => e.GodzinaZamkniecia).HasPrecision(0);
         });
-
 
         modelBuilder.Entity<GrafikZajec>(entity =>
         {
@@ -148,17 +157,17 @@ public partial class SportsCenterDbContext : DbContext
 
             entity.HasOne(d => d.Kort).WithMany(p => p.GrafikZajecs)
                 .HasForeignKey(d => d.KortId)
-                .OnDelete(DeleteBehavior.Cascade)
+                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("GrafikZajec_Kort");
 
             entity.HasOne(d => d.Pracownik).WithMany(p => p.GrafikZajecs)
                 .HasForeignKey(d => d.PracownikId)
-                .OnDelete(DeleteBehavior.Cascade)
+                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("GrafikZajec_Pracownik");
 
             entity.HasOne(d => d.Zajecia).WithMany(p => p.GrafikZajecs)
                 .HasForeignKey(d => d.ZajeciaId)
-                .OnDelete(DeleteBehavior.Cascade)
+                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("GrafikZajec_Zajecia");
         });
 
@@ -168,7 +177,9 @@ public partial class SportsCenterDbContext : DbContext
 
             entity.ToTable("GrafikZajec_Klient");
 
-            entity.Property(e => e.GrafikZajecKlientId).HasColumnName("GrafikZajecKlientID");
+            entity.Property(e => e.GrafikZajecKlientId)
+                .ValueGeneratedNever()
+                .HasColumnName("GrafikZajecKlientID");
             entity.Property(e => e.GrafikZajecId).HasColumnName("GrafikZajecID");
             entity.Property(e => e.KlientId).HasColumnName("KlientID");
 
@@ -190,7 +201,7 @@ public partial class SportsCenterDbContext : DbContext
             entity.ToTable("Klient");
 
             entity.Property(e => e.KlientId)
-               // .ValueGeneratedNever()
+                .ValueGeneratedNever()
                 .HasColumnName("KlientID");
             entity.Property(e => e.Saldo).HasColumnType("decimal(5, 2)");
 
@@ -204,11 +215,10 @@ public partial class SportsCenterDbContext : DbContext
                     "KlientTag",
                     r => r.HasOne<Tag>().WithMany()
                         .HasForeignKey("TagId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.ClientSetNull)
                         .HasConstraintName("Posiadanie_Tag"),
                     l => l.HasOne<Klient>().WithMany()
                         .HasForeignKey("KlientId")
-                        .OnDelete(DeleteBehavior.Cascade)
                         .HasConstraintName("Posiadanie_Klient"),
                     j =>
                     {
@@ -254,10 +264,11 @@ public partial class SportsCenterDbContext : DbContext
             entity.Property(e => e.OsobaId).HasColumnName("OsobaID");
             entity.Property(e => e.Adres).HasMaxLength(255);
             entity.Property(e => e.Email).HasMaxLength(50);
-            entity.Property(e => e.Haslo).HasMaxLength(250);
+            entity.Property(e => e.Haslo).HasMaxLength(255);
             entity.Property(e => e.Imie).HasMaxLength(50);
             entity.Property(e => e.Nazwisko).HasMaxLength(50);
-            entity.Property(e => e.NrTel).HasMaxLength(15);      
+            entity.Property(e => e.NrTel).HasMaxLength(15);
+            entity.Property(e => e.Pesel).HasMaxLength(11);
         });
 
         modelBuilder.Entity<PoziomZajec>(entity =>
@@ -265,8 +276,7 @@ public partial class SportsCenterDbContext : DbContext
             entity.HasKey(e => e.IdPoziomZajec).HasName("PoziomZajec_pk");
 
             entity.ToTable("PoziomZajec");
-            //
-            entity.Property(e => e.IdPoziomZajec).HasColumnName("IdPoziomZajec");
+
             entity.Property(e => e.Nazwa).HasMaxLength(100);
         });
 
@@ -343,24 +353,23 @@ public partial class SportsCenterDbContext : DbContext
             entity.Property(e => e.Nazwa).HasMaxLength(70);
         });
 
-        modelBuilder.Entity<TrenerCertifikat>(entity =>
+        modelBuilder.Entity<TrenerCertyfikat>(entity =>
         {
-            entity.HasKey(e => new { e.PracownikId, e.CertyfikatId }).HasName("Trener_Certifikat_pk");
+            entity.HasKey(e => new { e.PracownikId, e.CertyfikatId }).HasName("Trener_Certyfikat_pk");
 
-            entity.ToTable("Trener_Certifikat");
+            entity.ToTable("Trener_Certyfikat");
 
             entity.Property(e => e.PracownikId).HasColumnName("PracownikID");
             entity.Property(e => e.CertyfikatId).HasColumnName("CertyfikatID");
 
-            entity.HasOne(d => d.Certyfikat).WithMany(p => p.TrenerCertifikats)
+            entity.HasOne(d => d.Certyfikat).WithMany(p => p.TrenerCertyfikats)
                 .HasForeignKey(d => d.CertyfikatId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("Posiadanie_Certyfikat");
 
-            entity.HasOne(d => d.Pracownik).WithMany(p => p.TrenerCertifikats)
+            entity.HasOne(d => d.Pracownik).WithMany(p => p.TrenerCertyfikats)
                 .HasForeignKey(d => d.PracownikId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("Trener_Certifikat_Pracownik");
+                .HasConstraintName("Trener_Certyfikat_Pracownik");
         });
 
         modelBuilder.Entity<TypPracownika>(entity =>
@@ -368,9 +377,21 @@ public partial class SportsCenterDbContext : DbContext
             entity.HasKey(e => e.IdTypPracownika).HasName("TypPracownika_pk");
 
             entity.ToTable("TypPracownika");
-            //
-            entity.Property(e => e.IdTypPracownika).HasColumnName("IdTypPracownika");
+
             entity.Property(e => e.Nazwa).HasMaxLength(200);
+        });
+
+        modelBuilder.Entity<WyjatkoweGodzinyPracy>(entity =>
+        {
+            entity.HasKey(e => e.WyjatkoweGodzinyPracyId).HasName("WyjatkoweGodzinyPracy_pk");
+
+            entity.ToTable("WyjatkoweGodzinyPracy");
+
+            entity.Property(e => e.WyjatkoweGodzinyPracyId)
+                .ValueGeneratedNever()
+                .HasColumnName("WyjatkoweGodzinyPracyID");
+            entity.Property(e => e.GodzinaOtwarcia).HasPrecision(0);
+            entity.Property(e => e.GodzinaZamkniecia).HasPrecision(0);
         });
 
         modelBuilder.Entity<Zadanie>(entity =>
@@ -404,7 +425,7 @@ public partial class SportsCenterDbContext : DbContext
 
             entity.HasOne(d => d.IdPoziomZajecNavigation).WithMany(p => p.Zajecia)
                 .HasForeignKey(d => d.IdPoziomZajec)
-                .OnDelete(DeleteBehavior.Cascade)
+                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("Zajecia_PoziomZajec");
         });
 
@@ -447,8 +468,38 @@ public partial class SportsCenterDbContext : DbContext
 
             entity.HasOne(d => d.Zamowienie).WithMany(p => p.ZamowienieProdukts)
                 .HasForeignKey(d => d.ZamowienieId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("Zamowienie_Produkt_Zamowienie");
+        });
+
+        modelBuilder.Entity<Zastepstwo>(entity =>
+        {
+            entity.HasKey(e => e.ZastepstwoId).HasName("Zastepstwo_pk");
+
+            entity.ToTable("Zastepstwo");
+
+            entity.Property(e => e.ZastepstwoId)
+                .ValueGeneratedNever()
+                .HasColumnName("ZastepstwoID");
+            entity.Property(e => e.GodzinaDo).HasPrecision(0);
+            entity.Property(e => e.GodzinaOd).HasPrecision(0);
+            entity.Property(e => e.PracownikNieobecnyId).HasColumnName("PracownikNieobecnyID");
+            entity.Property(e => e.PracownikZastepujacyId).HasColumnName("PracownikZastepujacyID");
+            entity.Property(e => e.PracownikZatwierdzajacyId).HasColumnName("PracownikZatwierdzajacyID");
+
+            entity.HasOne(d => d.PracownikNieobecny).WithMany(p => p.ZastepstwoPracownikNieobecnies)
+                .HasForeignKey(d => d.PracownikNieobecnyId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("Zastepstwo_PracownikNieobecny");
+
+            entity.HasOne(d => d.PracownikZastepujacy).WithMany(p => p.ZastepstwoPracownikZastepujacies)
+                .HasForeignKey(d => d.PracownikZastepujacyId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("Zastepstwo_PracownikZastepujacy");
+
+            entity.HasOne(d => d.PracownikZatwierdzajacy).WithMany(p => p.ZastepstwoPracownikZatwierdzajacies)
+                .HasForeignKey(d => d.PracownikZatwierdzajacyId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("Zastepstwo_PracownikZatwierdzajacy");
         });
 
         OnModelCreatingPartial(modelBuilder);

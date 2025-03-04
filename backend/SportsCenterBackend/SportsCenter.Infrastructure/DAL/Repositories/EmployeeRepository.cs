@@ -45,8 +45,8 @@ namespace SportsCenter.Infrastructure.DAL.Repositories
             var pracownik = await _dbContext.Pracowniks
                 .Where(p => p.PracownikId == id)
                 .FirstOrDefaultAsync(cancellationToken);
-
-            pracownik.DataZwolnienia = dismissalDate;
+            
+            pracownik.DataZwolnienia = DateOnly.FromDateTime(dismissalDate);
             await _dbContext.SaveChangesAsync(cancellationToken);
         }
 
@@ -112,31 +112,31 @@ namespace SportsCenter.Infrastructure.DAL.Repositories
                 .FirstOrDefaultAsync(cancellationToken);
         }
 
-        public async Task AddTrainerCertificateAsync(TrenerCertifikat trainerCertificate, CancellationToken cancellationToken)
+        public async Task AddTrainerCertificateAsync(TrenerCertyfikat trainerCertificate, CancellationToken cancellationToken)
         {
-            await _dbContext.TrenerCertifikats.AddAsync(trainerCertificate, cancellationToken);
+            await _dbContext.TrenerCertyfikats.AddAsync(trainerCertificate, cancellationToken);
             await _dbContext.SaveChangesAsync(cancellationToken);
         }
-        public async Task<TrenerCertifikat?> GetTrainerCertificateByIdAsync(int trainerId, int certificateId, CancellationToken cancellationToken)
+        public async Task<TrenerCertyfikat?> GetTrainerCertificateByIdAsync(int trainerId, int certificateId, CancellationToken cancellationToken)
         {
-            return await _dbContext.TrenerCertifikats
+            return await _dbContext.TrenerCertyfikats
                 .FirstOrDefaultAsync(tc => tc.PracownikId == trainerId && tc.CertyfikatId == certificateId, cancellationToken);
         }
 
-        public async Task DeleteTrainerCertificateAsync(TrenerCertifikat certificate, CancellationToken cancellationToken)
+        public async Task DeleteTrainerCertificateAsync(TrenerCertyfikat certificate, CancellationToken cancellationToken)
         {
-            _dbContext.TrenerCertifikats.Remove(certificate);
+            _dbContext.TrenerCertyfikats.Remove(certificate);
             await _dbContext.SaveChangesAsync(cancellationToken);
         }
-        public async Task<TrenerCertifikat?> GetTrainerCertificateWithDetailsByIdAsync(int trainerId, int certificateId, CancellationToken cancellationToken)
+        public async Task<TrenerCertyfikat?> GetTrainerCertificateWithDetailsByIdAsync(int trainerId, int certificateId, CancellationToken cancellationToken)
         {
-            return await _dbContext.TrenerCertifikats
+            return await _dbContext.TrenerCertyfikats
                 .Include(tc => tc.Certyfikat)
                 .FirstOrDefaultAsync(tc => tc.PracownikId == trainerId && tc.CertyfikatId == certificateId, cancellationToken);
         }
-        public async Task UpdateTrainerCertificateAsync(TrenerCertifikat trainerCertificate, CancellationToken cancellationToken)
+        public async Task UpdateTrainerCertificateAsync(TrenerCertyfikat trainerCertificate, CancellationToken cancellationToken)
         {        
-            _dbContext.TrenerCertifikats.Update(trainerCertificate);
+            _dbContext.TrenerCertyfikats.Update(trainerCertificate);
 
             var certificate = await _dbContext.Certyfikats
                 .FirstAsync(c => c.CertyfikatId == trainerCertificate.CertyfikatId, cancellationToken);

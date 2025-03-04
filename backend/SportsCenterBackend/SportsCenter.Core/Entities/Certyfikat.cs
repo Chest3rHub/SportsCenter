@@ -9,5 +9,5 @@ public partial class Certyfikat
 
     public string Nazwa { get; set; } = null!;
 
-    public virtual ICollection<TrenerCertifikat> TrenerCertifikats { get; set; } = new List<TrenerCertifikat>();
+    public virtual ICollection<TrenerCertyfikat> TrenerCertyfikats { get; set; } = new List<TrenerCertyfikat>();
 }

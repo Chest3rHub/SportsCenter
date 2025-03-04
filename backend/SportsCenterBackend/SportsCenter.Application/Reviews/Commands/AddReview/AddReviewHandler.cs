@@ -37,7 +37,7 @@ namespace SportsCenter.Application.Reviews.Commands.AddReview
                 GrafikZajecKlientId = request.ScheduleActivitiesClientId,
                 Opis = request.Description,
                 Gwiazdki = request.Stars,
-                DataWystawienia = DateTime.UtcNow
+                DataWystawienia = DateOnly.FromDateTime(DateTime.UtcNow)
             };
 
             await _reviewRepository.AddReviewAsync(ocena, cancellationToken);

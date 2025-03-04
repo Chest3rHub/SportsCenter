@@ -1,10 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
 using SportsCenter.Core.Entities;
 using SportsCenter.Core.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace SportsCenter.Infrastructure.DAL.Repositories
@@ -12,7 +14,7 @@ namespace SportsCenter.Infrastructure.DAL.Repositories
     public class EmployeeRepository : IEmployeeRepository
     {
         private SportsCenterDbContext _dbContext;
-
+  
         public EmployeeRepository(SportsCenterDbContext dbContext)
         {
             _dbContext = dbContext;
@@ -144,6 +146,41 @@ namespace SportsCenter.Infrastructure.DAL.Repositories
             certificate.Nazwa = trainerCertificate.Certyfikat.Nazwa;
             await _dbContext.SaveChangesAsync(cancellationToken);
         }
+        public async Task AddAbsenceRequestAsync(BrakDostepnosci absenceRequest, CancellationToken cancellationToken)
+        {
+            await _dbContext.BrakDostepnoscis.AddAsync(absenceRequest);
+            await _dbContext.SaveChangesAsync();
+        }
+        public async Task<BrakDostepnosci?> GetAbsenceRequestAsync(int employeeId, DateOnly date)
+        {
+            return await _dbContext.BrakDostepnoscis
+                .Where(a => a.PracownikId == employeeId && a.Data == date)
+                .FirstOrDefaultAsync();
+        }
+        public async Task UpdateAbsenceRequestAsync(BrakDostepnosci absenceRequest, CancellationToken cancellationToken)
+        {
+            _dbContext.BrakDostepnoscis.Update(absenceRequest);
+            await _dbContext.SaveChangesAsync(cancellationToken);
+        }
+        public async Task<bool> IsTrainerAvailableAsync(int trainerId, DateTime startTime, DateTime endTime, CancellationToken cancellationToken)
+        {
+            bool isReserved = await _dbContext.Rezerwacjas
+                .AnyAsync(r => r.TrenerId == trainerId &&
+                               r.DataOd < endTime &&
+                               r.DataDo > startTime, cancellationToken);
 
+            var overlappingReservations = await _dbContext.GrafikZajecs
+                .Where(gz => gz.PracownikId == trainerId)
+                .Join(_dbContext.DataZajecs,
+                    gz => gz.GrafikZajecId,
+                    dz => dz.GrafikZajecId,
+                    (gz, dz) => new { gz, dz })
+                .Where(x =>
+                    (x.dz.Date >= startTime && x.dz.Date < endTime) ||
+                    (x.dz.Date.AddMinutes(x.gz.CzasTrwania) > startTime && x.dz.Date < endTime))
+                .AnyAsync(cancellationToken);
+
+            return !isReserved && !overlappingReservations;
+        }      
     }
 }

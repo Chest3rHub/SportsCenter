@@ -19,6 +19,7 @@ using SportsCenter.Application.Employees.Commands.DeleteTrainerCertificate;
 using SportsCenter.Application.Employees.Commands.UpdateTrainerCertificate;
 using SportsCenter.Application.Employees.Queries.GetTrainerCertificates;
 using SportsCenter.Application.Employees.Queries.GetYourCertificates;
+using SportsCenter.Application.Employees.Commands.AddAbsenceRequest;
 
 
 namespace SportsCenter.Api.Controllers
@@ -315,6 +316,25 @@ namespace SportsCenter.Api.Controllers
         public async Task<IActionResult> GetYourCertificates()
         {
             return Ok(await Mediator.Send(new GetYourCertificates()));
+        }
+
+        [Authorize(Roles = "Trener")]
+        [HttpPost("add-absence-request")]
+        public async Task<IActionResult> AddAbsenceRequest([FromBody] AddAbsenceRequest request)
+        {
+            try
+            {
+                return Ok(await Mediator.Send(request));
+            }
+            catch(CantAddAbsenceRequestException ex)
+            {
+                return Conflict(new { message = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "An error occurred while sending the request", details = ex.Message });
+
+            }
         }
     }
 }

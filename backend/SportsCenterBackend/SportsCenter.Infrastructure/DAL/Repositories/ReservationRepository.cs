@@ -47,6 +47,7 @@ namespace SportsCenter.Infrastructure.DAL.Repositories
             return !isReserved && !overlappingReservations;
         }
 
+        //przeniesc to do employeeRepo bo to sprawdza i zajecia i rezerwacje
         public async Task<bool> IsTrainerAvailableAsync(int trainerId, DateTime startTime, DateTime endTime, CancellationToken cancellationToken)
         {
             bool isReserved = await _dbContext.Rezerwacjas

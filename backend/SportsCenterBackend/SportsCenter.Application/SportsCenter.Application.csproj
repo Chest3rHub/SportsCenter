@@ -28,6 +28,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <Folder Include="Employees\Queries\GetAbsenceRequest\" />
       <Folder Include="Schedule\Commands\" />
       <Folder Include="Users\Queries\" />
     </ItemGroup>

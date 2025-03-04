@@ -92,10 +92,12 @@ public partial class SportsCenterDbContext : DbContext
             entity.ToTable("BrakDostepnosci");
 
             entity.Property(e => e.BrakDostepnosciId)
-                .ValueGeneratedNever()
                 .HasColumnName("BrakDostepnosciID");
             entity.Property(e => e.GodzinaDo).HasPrecision(0);
             entity.Property(e => e.GodzinaOd).HasPrecision(0);
+            entity.Property(e => e.CzyZatwierdzone)
+            .HasColumnName("CzyZatwierdzone")
+            .HasConversion<bool>();
             entity.Property(e => e.PracownikId).HasColumnName("PracownikID");
 
             entity.HasOne(d => d.Pracownik).WithMany(p => p.BrakDostepnoscis)

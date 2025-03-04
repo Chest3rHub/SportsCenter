@@ -14,6 +14,6 @@ public partial class BrakDostepnosci
     public TimeOnly GodzinaDo { get; set; }
 
     public int PracownikId { get; set; }
-
+    public bool CzyZatwierdzone { get; set; }
     public virtual Pracownik Pracownik { get; set; } = null!;
 }

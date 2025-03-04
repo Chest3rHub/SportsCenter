@@ -37,7 +37,7 @@ namespace SportsCenter.Api.Controllers
             return Ok(await Mediator.Send(new GetEmployees()));
         }
 
-        //[Authorize(Roles = "Wlasciciel")]
+        [Authorize(Roles = "Wlasciciel")]
         [HttpPost("Register")]
         public async Task<IActionResult> RegisterEmployeesAsync([FromBody] RegisterEmployee registerEmployee)
         {

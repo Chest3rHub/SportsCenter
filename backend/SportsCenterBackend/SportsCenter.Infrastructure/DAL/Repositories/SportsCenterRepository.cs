@@ -18,26 +18,44 @@ public class SportsCenterRepository : ISportsCenterRepository
         _dbContext = dbContext;
     }
 
-    //public async Task<bool> CheckIfDayExistsAsync(int dzienTygodniaId, CancellationToken cancellationToken)
-    //{    
-    //    return await _dbContext.DzienTygodnium
-    //        .AnyAsync(d => d.DzienTygodniaId == dzienTygodniaId, cancellationToken);
-    //}
+    public async Task<bool> CheckIfDayExistsAsync(string dayOfWeek, CancellationToken cancellationToken)
+    {
+        return await _dbContext.GodzinyPracyKlubus
+            .AnyAsync(d => d.DzienTygodnia == dayOfWeek, cancellationToken);
+    }
 
-    //public async Task AddWorkingHoursForGivenDay(GodzinyPracyKlubu workingHoursOfDay, CancellationToken cancellationToken)
-    //{
-    //    await _dbContext.GodzinyPracyKlubu.AddAsync(workingHoursOfDay, cancellationToken);
-    //    await _dbContext.SaveChangesAsync(cancellationToken);
-    //}
+    public async Task AddWorkingHoursForGivenDay(GodzinyPracyKlubu workingHoursOfDay, CancellationToken cancellationToken)
+    {
+        await _dbContext.GodzinyPracyKlubus.AddAsync(workingHoursOfDay, cancellationToken);
+        await _dbContext.SaveChangesAsync(cancellationToken);
+    }
 
-    //public async Task<GodzinyPracyKlubu> GetWorkingHoursByDayAsync(int dayOfWeekId, CancellationToken cancellationToken)
-    //{
-    //    return await _dbContext.GodzinyPracyKlubu
-    //                         .FirstOrDefaultAsync(g => g.DzienTygodniaId == dayOfWeekId, cancellationToken);
-   // }
-    //public async Task UpdateWorkingHours(GodzinyPracyKlubu godzinyPracy, CancellationToken cancellationToken)
-    //{
-    //    _dbContext.GodzinyPracyKlubu.Update(godzinyPracy);
-    //    await _dbContext.SaveChangesAsync(cancellationToken);
-    //}
+    public async Task<GodzinyPracyKlubu> GetWorkingHoursByDayAsync(string dayOfWeek, CancellationToken cancellationToken)
+    {
+        return await _dbContext.GodzinyPracyKlubus
+                             .FirstOrDefaultAsync(g => g.DzienTygodnia == dayOfWeek, cancellationToken);
+    }
+    public async Task UpdateWorkingHours(GodzinyPracyKlubu workingHours, CancellationToken cancellationToken)
+    {
+        _dbContext.GodzinyPracyKlubus.Update(workingHours);
+        await _dbContext.SaveChangesAsync(cancellationToken);
+    }
+
+    public async Task<WyjatkoweGodzinyPracy> GetWorkingHoursByDateAsync(DateTime date, CancellationToken cancellationToken)
+    {
+        return await _dbContext.WyjatkoweGodzinyPracies
+                             .FirstOrDefaultAsync(g => g.Data == DateOnly.FromDateTime(date), cancellationToken);
+    }
+
+    public async Task UpdateDateWorkingHours(WyjatkoweGodzinyPracy workingHours, CancellationToken cancellationToken)
+    {
+        _dbContext.WyjatkoweGodzinyPracies.Update(workingHours);
+        await _dbContext.SaveChangesAsync(cancellationToken);
+    }
+
+    public async Task AddWorkingHoursForGivenDate(WyjatkoweGodzinyPracy workingHoursOfDay, CancellationToken cancellationToken)
+    {
+        await _dbContext.WyjatkoweGodzinyPracies.AddAsync(workingHoursOfDay, cancellationToken);
+        await _dbContext.SaveChangesAsync(cancellationToken);
+    }
 }

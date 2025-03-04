@@ -21,6 +21,5 @@ namespace SportsCenter.Application.SportsClubManagement.Commands.AddSportsClubWo
             CloseHour = closeHour;
             DayOfWeek = dayOfWeek;
         }
-
     }
 }

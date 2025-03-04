@@ -22,34 +22,34 @@ namespace SportsCenter.Application.SportsClubManagement.Commands.AddSportsClubWo
         public async Task<Unit> Handle(SetSportsCenterWorkingHours request, CancellationToken cancellationToken)
         {
 
-            //var dayOfWeekExists = await _sportsCenterRepository.CheckIfDayExistsAsync(request.DayOfWeekId, cancellationToken);
+            var dayOfWeekExists = await _sportsCenterRepository.CheckIfDayExistsAsync(request.DayOfWeek, cancellationToken);
 
-            //if (!dayOfWeekExists)
-            //{
-            //    throw new DayOfWeekNotFoundException(request.DayOfWeek);
-            //}
+            if (!dayOfWeekExists)
+            {
+                throw new DayOfWeekNotFoundException(request.DayOfWeek);
+            }
 
-            //var existingWorkingHours = await _sportsCenterRepository.GetWorkingHoursByDayAsync(request.DayOfWeekId, cancellationToken);
+            var existingWorkingHours = await _sportsCenterRepository.GetWorkingHoursByDayAsync(request.DayOfWeek, cancellationToken);
 
-            //if (existingWorkingHours != null)
-            //{
-                
-            //    existingWorkingHours.GodzinaOtwarcia = DateOnly.FromDateTime(request.OpenHour);
-            //    existingWorkingHours.GodzinaZamkniecia = DateOnly.FromDateTime(request.CloseHour);
+            if (existingWorkingHours != null)
+            {
 
-            //    await _sportsCenterRepository.UpdateWorkingHours(existingWorkingHours, cancellationToken);
-            //}
-            //else
-            //{
-            //    var newWorkingHours = new GodzinyPracyKlubu
-            //    {
-            //        GodzinaOtwarcia = DateOnly.FromDateTime(request.OpenHour),
-            //        GodzinaZamkniecia = DateOnly.FromDateTime(request.CloseHour),
-            //        DzienTygodnia = request.DayOfWeek
-            //    };
+                existingWorkingHours.GodzinaOtwarcia = TimeOnly.FromTimeSpan(request.OpenHour);
+                existingWorkingHours.GodzinaZamkniecia = TimeOnly.FromTimeSpan(request.CloseHour);
 
-            //    await _sportsCenterRepository.AddWorkingHoursForGivenDay(newWorkingHours, cancellationToken);
-            //}
+                await _sportsCenterRepository.UpdateWorkingHours(existingWorkingHours, cancellationToken);
+            }
+            else
+            {
+                var newWorkingHours = new GodzinyPracyKlubu
+                {
+                    GodzinaOtwarcia = TimeOnly.FromTimeSpan(request.OpenHour),
+                    GodzinaZamkniecia = TimeOnly.FromTimeSpan(request.CloseHour),
+                    DzienTygodnia = request.DayOfWeek
+                };
+
+                await _sportsCenterRepository.AddWorkingHoursForGivenDay(newWorkingHours, cancellationToken);
+            }
 
             return Unit.Value;
         }

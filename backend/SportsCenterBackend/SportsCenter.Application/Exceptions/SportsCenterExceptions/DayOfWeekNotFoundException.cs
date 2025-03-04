@@ -8,11 +8,11 @@ namespace SportsCenter.Application.Exceptions.SportsCenterExceptions
 {
     public sealed class DayOfWeekNotFoundException : Exception
     {
-        public int Id;
+        public string Name;
 
-        public DayOfWeekNotFoundException(int id) : base($"Day with id: {id} not found")
+        public DayOfWeekNotFoundException(string name) : base($"Day with name: {name} not found")
         {
-            Id = id;
+            Name = name;
         }
     }
 }

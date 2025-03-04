@@ -388,7 +388,7 @@ public partial class SportsCenterDbContext : DbContext
             entity.ToTable("WyjatkoweGodzinyPracy");
 
             entity.Property(e => e.WyjatkoweGodzinyPracyId)
-                .ValueGeneratedNever()
+                .ValueGeneratedOnAdd()
                 .HasColumnName("WyjatkoweGodzinyPracyID");
             entity.Property(e => e.GodzinaOtwarcia).HasPrecision(0);
             entity.Property(e => e.GodzinaZamkniecia).HasPrecision(0);

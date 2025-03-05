@@ -87,5 +87,9 @@ public class SportActivityRepository : ISportActivityRepository
             .Where(gz => gz.ZajeciaId == activityId && gz.PracownikId == trainerId)
             .AnyAsync();
     }
-
+    public async Task<bool> HasEmployeeAlreadyRequestedSubstitutionAsync(int zajeciaId, int pracownikId)
+    {
+        return await _dbContext.Zastepstwos
+            .AnyAsync(z => z.ZajeciaId == zajeciaId && z.PracownikNieobecnyId == pracownikId);
+    }
 }

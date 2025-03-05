@@ -135,5 +135,35 @@ namespace SportsCenter.Infrastructure.DAL.Repositories
                 .ToListAsync(cancellationToken);
         }
 
+        public async Task<bool> IsTrainerAssignedToReservationAsync(int reservationId, int trainerId)
+        {
+            return await _dbContext.Rezerwacjas
+                .Where(r => r.RezerwacjaId == reservationId && r.TrenerId == trainerId)
+                .AnyAsync();
+        }
+
+        public async Task<(DateTime DataOd, DateTime DataDo)> GetReservationDetailsByIdAsync(int reservationId)
+        {          
+            var reservation = await _dbContext.Rezerwacjas
+                .Where(r => r.RezerwacjaId == reservationId)
+                .Select(r => new { r.DataOd, r.DataDo })
+                .FirstOrDefaultAsync();
+
+            if (reservation == null)
+            {
+                return (DateTime.MinValue, DateTime.MinValue);
+            }
+            return (reservation.DataOd, reservation.DataDo);
+        }
+        public async Task AddSubstitutionForReservationAsync(Zastepstwo substitution)
+        {        
+            await _dbContext.Zastepstwos.AddAsync(substitution);
+            await _dbContext.SaveChangesAsync();
+        }
+        public async Task<bool> HasEmployeeAlreadyRequestedSubstitutionForReservationAsync(int reservationId, int pracownikId)
+        {
+            return await _dbContext.Zastepstwos
+                .AnyAsync(z => z.RezerwacjaId == reservationId && z.PracownikNieobecnyId == pracownikId);
+        }
     }
 }

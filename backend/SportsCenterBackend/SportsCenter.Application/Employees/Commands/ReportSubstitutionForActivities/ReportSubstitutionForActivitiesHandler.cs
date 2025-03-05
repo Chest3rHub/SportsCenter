@@ -50,7 +50,13 @@ namespace SportsCenter.Application.Employees.Commands.ReportSubstitutionNeed
 
             if (!isTrainerAssignedToActivity)
             {
-                throw new ReportingSubstitutionForActivitiesNotAllowedException(request.ActivitiesId);
+                throw new SubstitutionForActivitiesNotAllowedException(request.ActivitiesId);
+            }
+
+            var alreadyRequested = await _sportActivityRepository.HasEmployeeAlreadyRequestedSubstitutionAsync(request.ActivitiesId, userId);
+            if (alreadyRequested)
+            {
+                throw new DuplicateSubstitutionActivityRequestException(request.ActivitiesId);
             }
 
             var substitution = new Zastepstwo
@@ -58,6 +64,8 @@ namespace SportsCenter.Application.Employees.Commands.ReportSubstitutionNeed
                 Data = DateOnly.FromDateTime(date.Value),
                 GodzinaOd = startHourTimeOnly,
                 GodzinaDo = endHourTimeOnly,
+                ZajeciaId = request.ActivitiesId,
+                RezerwacjaId = null,
                 PracownikNieobecnyId = absentEmployee,
                 PracownikZastepujacy = null,
                 PracownikZatwierdzajacy = null

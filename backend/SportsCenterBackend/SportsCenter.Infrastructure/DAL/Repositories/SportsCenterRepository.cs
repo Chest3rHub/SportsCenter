@@ -58,4 +58,5 @@ public class SportsCenterRepository : ISportsCenterRepository
         await _dbContext.WyjatkoweGodzinyPracies.AddAsync(workingHoursOfDay, cancellationToken);
         await _dbContext.SaveChangesAsync(cancellationToken);
     }
+
 }

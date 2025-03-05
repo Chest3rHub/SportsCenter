@@ -18,6 +18,8 @@ namespace SportsCenter.Application.Employees.Queries.GetTrainerSchedule
         public string Name { get; set; }
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public string Level { get; set; }
-        
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        public string Status { get; set; }
+
     }
 }

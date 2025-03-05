@@ -483,6 +483,8 @@ public partial class SportsCenterDbContext : DbContext
                 .HasColumnName("ZastepstwoID");
             entity.Property(e => e.GodzinaDo).HasPrecision(0);
             entity.Property(e => e.GodzinaOd).HasPrecision(0);
+            entity.Property(e => e.ZajeciaId).HasColumnName("ZajeciaID");
+            entity.Property(e => e.RezerwacjaId).HasColumnName("RezerwacjaID");
             entity.Property(e => e.PracownikNieobecnyId).HasColumnName("PracownikNieobecnyID");
             entity.Property(e => e.PracownikZastepujacyId).HasColumnName("PracownikZastepujacyID");
             entity.Property(e => e.PracownikZatwierdzajacyId).HasColumnName("PracownikZatwierdzajacyID");

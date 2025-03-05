@@ -6,11 +6,10 @@ using System.Threading.Tasks;
 
 namespace SportsCenter.Application.Exceptions.SportActivitiesExceptions
 {
-    public class ReportingSubstitutionForActivitiesNotAllowedException : Exception
+    public class DuplicateSubstitutionActivityRequestException : Exception
     {
         public int Id { get; set; }
-
-        public ReportingSubstitutionForActivitiesNotAllowedException(int id) : base($"You are not a trainer for sport activity with id: {id}")
+        public DuplicateSubstitutionActivityRequestException(int id) : base($"Substitution request for activity with id: {id} has already been submitted.")
         {
             Id = id;
         }

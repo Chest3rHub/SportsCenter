@@ -12,12 +12,14 @@ public partial class Zastepstwo
     public TimeOnly GodzinaOd { get; set; }
 
     public TimeOnly GodzinaDo { get; set; }
+    public int? ZajeciaId { get; set; }
+    public int? RezerwacjaId { get; set; }
 
     public int PracownikNieobecnyId { get; set; }
 
-    public int PracownikZastepujacyId { get; set; }
+    public int? PracownikZastepujacyId { get; set; }
 
-    public int PracownikZatwierdzajacyId { get; set; }
+    public int? PracownikZatwierdzajacyId { get; set; }
 
     public virtual Pracownik PracownikNieobecny { get; set; } = null!;
 

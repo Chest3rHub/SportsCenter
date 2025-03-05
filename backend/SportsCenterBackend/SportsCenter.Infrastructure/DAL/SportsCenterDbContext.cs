@@ -480,7 +480,6 @@ public partial class SportsCenterDbContext : DbContext
             entity.ToTable("Zastepstwo");
 
             entity.Property(e => e.ZastepstwoId)
-                .ValueGeneratedNever()
                 .HasColumnName("ZastepstwoID");
             entity.Property(e => e.GodzinaDo).HasPrecision(0);
             entity.Property(e => e.GodzinaOd).HasPrecision(0);

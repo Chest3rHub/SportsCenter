@@ -23,6 +23,8 @@ using SportsCenter.Application.Employees.Commands.AddAbsenceRequest;
 using SportsCenter.Application.Employees.Queries.GetAbsenceRequest;
 using SportsCenter.Application.Employees.Commands.AcceptAbsenceRequest;
 using SportsCenter.Application.Employees.Queries.GetYourAbsenceRequests;
+using SportsCenter.Application.Employees.Queries.GetTrainerSchedule;
+using SportsCenter.Application.Employees.Commands.ReportSubstitutionNeed;
 
 
 namespace SportsCenter.Api.Controllers
@@ -348,7 +350,7 @@ namespace SportsCenter.Api.Controllers
         }
 
         [Authorize(Roles = "Wlasciciel,Pracownik administracyjny")]
-        [HttpPost("accept-absence-request")]
+        [HttpPut("accept-absence-request")]
         public async Task<IActionResult> AcceptAbsenceRequest([FromBody] AcceptAbsenceRequest request)
         {
             try
@@ -375,6 +377,32 @@ namespace SportsCenter.Api.Controllers
         public async Task<IActionResult> GetYourAbsenceRequests()
         {
             return Ok(await Mediator.Send(new GetYourAbsenceRequests()));
+        }
+
+        [Authorize(Roles = "Trener")]
+        [HttpGet("get-your-schedule")]
+        public async Task<IActionResult> GetYourSchedule()
+        {
+            return Ok(await Mediator.Send(new GetTrainerSchedule()));
+        }
+
+        [Authorize(Roles = "Trener")]
+        [HttpPost("report-substitution-for-activity")]
+        public async Task<IActionResult> ReportSubstitutionForActivities([FromBody] ReportSubstitutionForActivities request)
+        {
+            try
+            {
+                return Ok(await Mediator.Send(request));
+            }
+            catch (CantAddAbsenceRequestException ex)
+            {
+                return Conflict(new { message = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "An error occurred while sending the request", details = ex.Message });
+
+            }
         }
     }
 }

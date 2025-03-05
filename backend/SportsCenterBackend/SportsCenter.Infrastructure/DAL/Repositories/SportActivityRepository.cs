@@ -54,4 +54,38 @@ public class SportActivityRepository : ISportActivityRepository
             .Where(gz => gz.PracownikId == trainerId)
             .ToListAsync(cancellationToken);
     }
+
+    public async Task<(DateTime? date, int? duration)> GetActivityDetailsByIdAsync(int activitiesId)
+    {
+        var activityDetails = await _dbContext.GrafikZajecs
+            .Where(gz => gz.ZajeciaId == activitiesId)
+            .Select(gz => new
+            {
+                gz.CzasTrwania,
+                Date = _dbContext.DataZajecs
+                    .Where(dz => dz.GrafikZajecId == gz.GrafikZajecId)
+                    .Select(dz => dz.Date)
+                    .FirstOrDefault()
+            })
+            .FirstOrDefaultAsync();
+
+        if (activityDetails == null)
+        {
+            return (null, null);
+        }
+
+        return (activityDetails.Date, activityDetails.CzasTrwania);
+    }
+    public async Task AddSubstitutionForActivitiesAsync(Zastepstwo zastepstwo)
+    {
+        await _dbContext.Zastepstwos.AddAsync(zastepstwo);
+        await _dbContext.SaveChangesAsync();
+    }
+    public async Task<bool> IsTrainerAssignedToActivityAsync(int activityId, int trainerId)
+    {
+        return await _dbContext.GrafikZajecs
+            .Where(gz => gz.ZajeciaId == activityId && gz.PracownikId == trainerId)
+            .AnyAsync();
+    }
+
 }

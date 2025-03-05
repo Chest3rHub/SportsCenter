@@ -181,6 +181,25 @@ namespace SportsCenter.Infrastructure.DAL.Repositories
                 .AnyAsync(cancellationToken);
 
             return !isReserved && !overlappingReservations;
-        }      
+        }
+
+        public async Task UpdateAbsenceRequestAsync(int requestId, CancellationToken cancellationToken)
+        {
+            var absence = await _dbContext.BrakDostepnoscis
+           .FirstOrDefaultAsync(b => b.BrakDostepnosciId == requestId, cancellationToken);
+           
+            absence.CzyZatwierdzone = true;
+            await _dbContext.SaveChangesAsync(cancellationToken);            
+        }
+        public async Task<bool> ExistsAbsenceRequestAsync(int requestId, CancellationToken cancellationToken)
+        {
+            return await _dbContext.BrakDostepnoscis
+                .AnyAsync(b => b.BrakDostepnosciId == requestId, cancellationToken);
+        }
+        public async Task<bool> IsAbsenceRequestPendingAsync(int requestId, CancellationToken cancellationToken)
+        {
+            return await _dbContext.BrakDostepnoscis
+                .AnyAsync(b => b.BrakDostepnosciId == requestId && !b.CzyZatwierdzone, cancellationToken);
+        }
     }
 }

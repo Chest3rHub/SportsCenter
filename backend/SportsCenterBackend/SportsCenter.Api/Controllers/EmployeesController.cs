@@ -20,6 +20,9 @@ using SportsCenter.Application.Employees.Commands.UpdateTrainerCertificate;
 using SportsCenter.Application.Employees.Queries.GetTrainerCertificates;
 using SportsCenter.Application.Employees.Queries.GetYourCertificates;
 using SportsCenter.Application.Employees.Commands.AddAbsenceRequest;
+using SportsCenter.Application.Employees.Queries.GetAbsenceRequest;
+using SportsCenter.Application.Employees.Commands.AcceptAbsenceRequest;
+using SportsCenter.Application.Employees.Queries.GetYourAbsenceRequests;
 
 
 namespace SportsCenter.Api.Controllers
@@ -335,6 +338,43 @@ namespace SportsCenter.Api.Controllers
                 return StatusCode(500, new { message = "An error occurred while sending the request", details = ex.Message });
 
             }
+        }
+
+        [Authorize(Roles = "Wlasciciel,Pracownik administracyjny")]
+        [HttpGet("get-absence-requests")]
+        public async Task<IActionResult> GetAbsenceRequests()
+        {
+            return Ok(await Mediator.Send(new GetAbsenceRequests()));
+        }
+
+        [Authorize(Roles = "Wlasciciel,Pracownik administracyjny")]
+        [HttpPost("accept-absence-request")]
+        public async Task<IActionResult> AcceptAbsenceRequest([FromBody] AcceptAbsenceRequest request)
+        {
+            try
+            {
+                return Ok(await Mediator.Send(request));
+            }
+            catch (AbsenceRequestNotFoundException ex)
+            {
+                return NotFound(new { message = ex.Message });
+            }
+            catch (AbsenceRequestAlreadyAcceptedException ex)
+            {
+                return Conflict(new { message = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "An error occurred while sending the request", details = ex.Message });
+
+            }
+        }
+
+        [Authorize(Roles = "Trener")]
+        [HttpGet("get-your-absence-requests")]
+        public async Task<IActionResult> GetYourAbsenceRequests()
+        {
+            return Ok(await Mediator.Send(new GetYourAbsenceRequests()));
         }
     }
 }

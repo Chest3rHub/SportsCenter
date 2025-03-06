@@ -6,6 +6,8 @@ using SportsCenter.Application.Exceptions.SportActivitiesException;
 using SportsCenter.Application.Exceptions.SubstitutionsExceptions;
 using SportsCenter.Application.Substitutions.Commands.ReportSubstitutionForActivities;
 using SportsCenter.Application.Substitutions.Commands.ReportSubstitutionForReservation;
+using SportsCenter.Application.Substitutions.Queries.GetFreeTrainersForSubstitution;
+using SportsCenter.Application.Substitutions.Queries.GetSubstitutionRequestsForActivities;
 
 namespace SportsCenter.Api.Controllers
 {
@@ -69,6 +71,33 @@ namespace SportsCenter.Api.Controllers
                 return StatusCode(500, new { message = "An error occurred while sending the request", details = ex.Message });
 
             }
+        }
+        [Authorize(Roles = "Wlasciciel,Pracownik administracyjny")]
+        [HttpGet("get-substitution-requests")]
+        public async Task<IActionResult> GetSubstitutionRequests()
+        {
+            return Ok(await Mediator.Send(new GetSubstitutionRequests()));
+        }
+
+       // [Authorize(Roles = "Wlasciciel,Pracownik administracyjny")]
+        [HttpGet("get-free-trainers-for-substitution")]
+        public async Task<IActionResult> GetFreeTrainersForSubstitutions([FromQuery] DateTime date, [FromQuery] TimeSpan startHour, [FromQuery] TimeSpan endHour)
+        {
+            var query = new GetFreeTrainersForSubstitution
+            {
+                Date = date,
+                StartHour = startHour,
+                EndHour = endHour
+            };
+
+            var availableTrainers = await Mediator.Send(query);
+
+            if (availableTrainers == null || !availableTrainers.Any())
+            {
+                return NotFound(new { Message = "No avaliable trainers for the given time." });
+            }
+
+            return Ok(availableTrainers);
         }
     }
 }

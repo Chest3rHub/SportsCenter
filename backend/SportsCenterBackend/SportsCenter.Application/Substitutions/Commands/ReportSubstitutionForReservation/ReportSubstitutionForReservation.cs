@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SportsCenter.Application.Employees.Commands.ReportSubstitutionForReservation
+namespace SportsCenter.Application.Substitutions.Commands.ReportSubstitutionForReservation
 {
     public sealed record ReportSubstitutionForReservation : ICommand<Unit>
     {

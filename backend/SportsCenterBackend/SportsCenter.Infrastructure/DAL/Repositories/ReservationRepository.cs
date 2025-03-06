@@ -155,15 +155,5 @@ namespace SportsCenter.Infrastructure.DAL.Repositories
             }
             return (reservation.DataOd, reservation.DataDo);
         }
-        public async Task AddSubstitutionForReservationAsync(Zastepstwo substitution)
-        {        
-            await _dbContext.Zastepstwos.AddAsync(substitution);
-            await _dbContext.SaveChangesAsync();
-        }
-        public async Task<bool> HasEmployeeAlreadyRequestedSubstitutionForReservationAsync(int reservationId, int pracownikId)
-        {
-            return await _dbContext.Zastepstwos
-                .AnyAsync(z => z.RezerwacjaId == reservationId && z.PracownikNieobecnyId == pracownikId);
-        }
     }
 }

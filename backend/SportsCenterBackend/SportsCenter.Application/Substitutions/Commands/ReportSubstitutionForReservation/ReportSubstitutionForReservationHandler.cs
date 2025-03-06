@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Http;
 using SportsCenter.Application.Exceptions.ReservationExceptions;
+using SportsCenter.Application.Exceptions.SubstitutionsExceptions;
 using SportsCenter.Core.Entities;
 using SportsCenter.Core.Repositories;
 using System;
@@ -10,16 +11,18 @@ using System.Text;
 using System.Threading.Tasks;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
-namespace SportsCenter.Application.Employees.Commands.ReportSubstitutionForReservation
+namespace SportsCenter.Application.Substitutions.Commands.ReportSubstitutionForReservation
 {
     internal sealed class ReportSubstitutionForReservationHandler : IRequestHandler<ReportSubstitutionForReservation, Unit>
     {
         private readonly IReservationRepository _reservationRepository;
+        private readonly ISubstitutionRepository _substitutionRepository;
         private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public ReportSubstitutionForReservationHandler(IReservationRepository reservationRepository, IHttpContextAccessor httpContextAccessor)
+        public ReportSubstitutionForReservationHandler(IReservationRepository reservationRepository, ISubstitutionRepository substitutionRepository, IHttpContextAccessor httpContextAccessor)
         {
             _reservationRepository = reservationRepository;
+            _substitutionRepository = substitutionRepository;
             _httpContextAccessor = httpContextAccessor;
         }
 
@@ -40,7 +43,7 @@ namespace SportsCenter.Application.Employees.Commands.ReportSubstitutionForReser
                 throw new SubstitutionForReservationNotAllowedException(request.ReservationId);
             }
 
-            var alreadyRequested = await _reservationRepository.HasEmployeeAlreadyRequestedSubstitutionForReservationAsync(request.ReservationId, userId);
+            var alreadyRequested = await _substitutionRepository.HasEmployeeAlreadyRequestedSubstitutionForReservationAsync(request.ReservationId, userId);
             if (alreadyRequested)
             {
                 throw new DuplicateSubstitutionReservationRequestException(request.ReservationId);
@@ -68,7 +71,7 @@ namespace SportsCenter.Application.Employees.Commands.ReportSubstitutionForReser
                 PracownikZatwierdzajacy = null
             };
 
-            await _reservationRepository.AddSubstitutionForReservationAsync(substitution);
+            await _substitutionRepository.AddSubstitutionForReservationAsync(substitution);
 
             return Unit.Value;
         }

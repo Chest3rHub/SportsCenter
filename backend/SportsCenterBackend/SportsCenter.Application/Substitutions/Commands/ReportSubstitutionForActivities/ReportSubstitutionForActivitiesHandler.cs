@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Http;
 using SportsCenter.Application.Exceptions.SportActivitiesException;
-using SportsCenter.Application.Exceptions.SportActivitiesExceptions;
+using SportsCenter.Application.Exceptions.SubstitutionsExceptions;
 using SportsCenter.Core.Entities;
 using SportsCenter.Core.Repositories;
 using System;
@@ -10,16 +10,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SportsCenter.Application.Employees.Commands.ReportSubstitutionNeed
+namespace SportsCenter.Application.Substitutions.Commands.ReportSubstitutionForActivities
 {
     internal sealed class ReportSubstitutionForActivitiesHandler : IRequestHandler<ReportSubstitutionForActivities, Unit>
     {
         private readonly ISportActivityRepository _sportActivityRepository;
+        private readonly ISubstitutionRepository _substitutionRepository;
         private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public ReportSubstitutionForActivitiesHandler(ISportActivityRepository sportActivityRepository, IHttpContextAccessor httpContextAccessor)
+        public ReportSubstitutionForActivitiesHandler(ISportActivityRepository sportActivityRepository, ISubstitutionRepository substitutionRepository, IHttpContextAccessor httpContextAccessor)
         {
             _sportActivityRepository = sportActivityRepository;
+            _substitutionRepository = substitutionRepository;
             _httpContextAccessor = httpContextAccessor;
         }
         public async Task<Unit> Handle(ReportSubstitutionForActivities request, CancellationToken cancellationToken)
@@ -53,7 +55,7 @@ namespace SportsCenter.Application.Employees.Commands.ReportSubstitutionNeed
                 throw new SubstitutionForActivitiesNotAllowedException(request.ActivitiesId);
             }
 
-            var alreadyRequested = await _sportActivityRepository.HasEmployeeAlreadyRequestedSubstitutionAsync(request.ActivitiesId, userId);
+            var alreadyRequested = await _substitutionRepository.HasEmployeeAlreadyRequestedSubstitutionAsync(request.ActivitiesId, userId);
             if (alreadyRequested)
             {
                 throw new DuplicateSubstitutionActivityRequestException(request.ActivitiesId);
@@ -71,7 +73,7 @@ namespace SportsCenter.Application.Employees.Commands.ReportSubstitutionNeed
                 PracownikZatwierdzajacy = null
             };
 
-            await _sportActivityRepository.AddSubstitutionForActivitiesAsync(substitution);
+            await _substitutionRepository.AddSubstitutionForActivitiesAsync(substitution);
 
             return Unit.Value;
         }

@@ -76,20 +76,10 @@ public class SportActivityRepository : ISportActivityRepository
 
         return (activityDetails.Date, activityDetails.CzasTrwania);
     }
-    public async Task AddSubstitutionForActivitiesAsync(Zastepstwo zastepstwo)
-    {
-        await _dbContext.Zastepstwos.AddAsync(zastepstwo);
-        await _dbContext.SaveChangesAsync();
-    }
     public async Task<bool> IsTrainerAssignedToActivityAsync(int activityId, int trainerId)
     {
         return await _dbContext.GrafikZajecs
             .Where(gz => gz.ZajeciaId == activityId && gz.PracownikId == trainerId)
             .AnyAsync();
-    }
-    public async Task<bool> HasEmployeeAlreadyRequestedSubstitutionAsync(int zajeciaId, int pracownikId)
-    {
-        return await _dbContext.Zastepstwos
-            .AnyAsync(z => z.ZajeciaId == zajeciaId && z.PracownikNieobecnyId == pracownikId);
     }
 }

@@ -10,7 +10,5 @@ public interface ISportActivityRepository
     Task RemoveSportActivityAsync(Zajecium sportActivity, CancellationToken cancellationToken);
     Task<IEnumerable<GrafikZajec>> GetSchedulesByTrainerIdAsync(int trainerId, CancellationToken cancellationToken);
     Task<(DateTime? date, int? duration)> GetActivityDetailsByIdAsync(int activitiesId);
-    Task AddSubstitutionForActivitiesAsync(Zastepstwo zastepstwo);
     Task<bool> IsTrainerAssignedToActivityAsync(int activityId, int trainerId);
-    Task<bool> HasEmployeeAlreadyRequestedSubstitutionAsync(int zajeciaId, int pracownikId);
 }

@@ -23,7 +23,5 @@ namespace SportsCenter.Core.Repositories
         Task<IEnumerable<Rezerwacja>> GetReservationsByTrainerIdAsync(int trainerId, CancellationToken cancellationToken);
         Task<bool> IsTrainerAssignedToReservationAsync(int reservationId, int trainerId);
         Task<(DateTime DataOd, DateTime DataDo)> GetReservationDetailsByIdAsync(int reservationId);
-        Task AddSubstitutionForReservationAsync(Zastepstwo substitution);
-        Task<bool> HasEmployeeAlreadyRequestedSubstitutionForReservationAsync(int reservationId, int pracownikId);
     }
 }

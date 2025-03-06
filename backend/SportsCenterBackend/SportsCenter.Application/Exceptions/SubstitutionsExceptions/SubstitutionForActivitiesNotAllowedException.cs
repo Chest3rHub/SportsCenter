@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SportsCenter.Application.Exceptions.SportActivitiesExceptions
+namespace SportsCenter.Application.Exceptions.SubstitutionsExceptions
 {
     public class SubstitutionForActivitiesNotAllowedException : Exception
     {

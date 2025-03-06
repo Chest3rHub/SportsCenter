@@ -24,11 +24,6 @@ using SportsCenter.Application.Employees.Queries.GetAbsenceRequest;
 using SportsCenter.Application.Employees.Commands.AcceptAbsenceRequest;
 using SportsCenter.Application.Employees.Queries.GetYourAbsenceRequests;
 using SportsCenter.Application.Employees.Queries.GetTrainerSchedule;
-using SportsCenter.Application.Employees.Commands.ReportSubstitutionNeed;
-using SportsCenter.Application.Employees.Commands.ReportSubstitutionForReservation;
-using SportsCenter.Application.Exceptions.SportActivitiesException;
-using SportsCenter.Application.Exceptions.SportActivitiesExceptions;
-using SportsCenter.Application.Exceptions.ReservationExceptions;
 
 
 namespace SportsCenter.Api.Controllers
@@ -388,60 +383,6 @@ namespace SportsCenter.Api.Controllers
         public async Task<IActionResult> GetYourSchedule()
         {
             return Ok(await Mediator.Send(new GetTrainerSchedule()));
-        }
-
-        [Authorize(Roles = "Trener")]
-        [HttpPost("report-substitution-for-activity")]
-        public async Task<IActionResult> ReportSubstitutionForActivities([FromBody] ReportSubstitutionForActivities request)
-        {
-            try
-            {
-                return Ok(await Mediator.Send(request));
-            }
-            catch (SportActivityNotFoundException ex)
-            {
-                return NotFound(new { message = ex.Message });
-            }
-            catch (SubstitutionForActivitiesNotAllowedException ex)
-            {
-                return Conflict(new { message = ex.Message });
-            }
-            catch (DuplicateSubstitutionActivityRequestException ex)
-            {
-                return Conflict(new { message = ex.Message });
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new { message = "An error occurred while sending the request", details = ex.Message });
-
-            }
-        }
-
-        [Authorize(Roles = "Trener")]
-        [HttpPost("report-substitution-for-reservation")]
-        public async Task<IActionResult> ReportSubstitutionForReservation([FromBody] ReportSubstitutionForReservation request)
-        {
-            try
-            {
-                return Ok(await Mediator.Send(request));
-            }
-            catch (ReservationNotFoundException ex)
-            {
-                return NotFound(new { message = ex.Message });
-            }
-            catch (SubstitutionForReservationNotAllowedException ex)
-            {
-                return Conflict(new { message = ex.Message });
-            }
-            catch (DuplicateSubstitutionReservationRequestException ex)
-            {
-                return Conflict(new { message = ex.Message });
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new { message = "An error occurred while sending the request", details = ex.Message });
-
-            }
         }
     }
 }

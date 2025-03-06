@@ -13,5 +13,7 @@ namespace SportsCenter.Core.Repositories
         Task<bool> HasEmployeeAlreadyRequestedSubstitutionForReservationAsync(int reservationId, int pracownikId);
         Task AddSubstitutionForActivitiesAsync(Zastepstwo zastepstwo);
         Task<bool> HasEmployeeAlreadyRequestedSubstitutionAsync(int zajeciaId, int pracownikId);
+        Task<Zastepstwo> GetSubstitutionByIdAsync(int substitutionId, CancellationToken cancellationToken);
+        Task UpdateSubstitutionAsync(int substitutionId, int substituteEmployeeId, int approvedEmployeeId, CancellationToken cancellationToken);
     }
 }

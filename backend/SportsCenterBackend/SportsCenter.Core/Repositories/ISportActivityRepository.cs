@@ -11,4 +11,5 @@ public interface ISportActivityRepository
     Task<IEnumerable<GrafikZajec>> GetSchedulesByTrainerIdAsync(int trainerId, CancellationToken cancellationToken);
     Task<(DateTime? date, int? duration)> GetActivityDetailsByIdAsync(int activitiesId);
     Task<bool> IsTrainerAssignedToActivityAsync(int activityId, int trainerId);
+    Task<(DateTime date, TimeSpan startTime, TimeSpan endTime)?> GetActivityDetailsAsync(int activityId, CancellationToken cancellationToken);
 }

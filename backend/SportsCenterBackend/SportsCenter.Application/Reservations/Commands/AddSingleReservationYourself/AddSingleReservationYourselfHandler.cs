@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Http;
+using SportsCenter.Application.Exceptions.EmployeesExceptions;
 using SportsCenter.Application.Exceptions.ReservationExceptions;
 using SportsCenter.Application.Reservations.Commands.AddReservation;
 using SportsCenter.Core.Entities;

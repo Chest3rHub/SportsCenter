@@ -155,5 +155,17 @@ namespace SportsCenter.Infrastructure.DAL.Repositories
             }
             return (reservation.DataOd, reservation.DataDo);
         }
+        public async Task<(DateTime startDateTime, DateTime endDateTime)?> GetReservationDetailsAsync(int reservationId, CancellationToken cancellationToken)
+        {
+            var reservation = await _dbContext.Rezerwacjas
+                .Where(r => r.RezerwacjaId == reservationId)
+                .Select(r => new { r.DataOd, r.DataDo })
+                .FirstOrDefaultAsync(cancellationToken);
+
+            if (reservation == null)
+                return null;
+
+            return (reservation.DataOd, reservation.DataDo);
+        }
     }
 }

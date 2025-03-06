@@ -1,9 +1,12 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using SportsCenter.Application.Exceptions.EmployeesException;
+using SportsCenter.Application.Exceptions.EmployeesExceptions;
 using SportsCenter.Application.Exceptions.ReservationExceptions;
 using SportsCenter.Application.Exceptions.SportActivitiesException;
 using SportsCenter.Application.Exceptions.SubstitutionsExceptions;
+using SportsCenter.Application.Substitutions.Commands.AssignSubstitution;
 using SportsCenter.Application.Substitutions.Commands.ReportSubstitutionForActivities;
 using SportsCenter.Application.Substitutions.Commands.ReportSubstitutionForReservation;
 using SportsCenter.Application.Substitutions.Queries.GetFreeTrainersForSubstitution;
@@ -79,7 +82,7 @@ namespace SportsCenter.Api.Controllers
             return Ok(await Mediator.Send(new GetSubstitutionRequests()));
         }
 
-       // [Authorize(Roles = "Wlasciciel,Pracownik administracyjny")]
+        [Authorize(Roles = "Wlasciciel,Pracownik administracyjny")]
         [HttpGet("get-free-trainers-for-substitution")]
         public async Task<IActionResult> GetFreeTrainersForSubstitutions([FromQuery] DateTime date, [FromQuery] TimeSpan startHour, [FromQuery] TimeSpan endHour)
         {
@@ -98,6 +101,50 @@ namespace SportsCenter.Api.Controllers
             }
 
             return Ok(availableTrainers);
+        }
+
+        [Authorize(Roles = "Wlasciciel,Pracownik administracyjny")]
+        [HttpPut("assing-substitution")]
+        public async Task<IActionResult> AssingSubstitution([FromBody] AssignSubstitution request)
+        {
+            try
+            {         
+                var result = await Mediator.Send(request);
+
+                return Ok(result);
+            }
+            catch (EmployeeNotFoundException ex)
+            {
+                return NotFound(new { message = ex.Message });
+            }
+            catch (NotTrainerEmployeeException ex)
+            {
+                return NotFound(new { message = ex.Message });
+            }
+            catch (SubstitutionNotFoundException ex)
+            {             
+                return NotFound(new { message = ex.Message });
+            }
+            catch (SportActivityNotFoundException ex)
+            { 
+                return NotFound(new { message = ex.Message });
+            }
+            catch (ReservationNotFoundException ex)
+            {
+                return NotFound(new { message = ex.Message });
+            }    
+            catch (EmployeeAlreadyDismissedException ex)
+            {
+                return Conflict(new { message = ex.Message });
+            }
+            catch (TrainerNotAvaliableException ex)
+            {
+                return Conflict(new { message = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "An error occurred while sending the request", details = ex.Message });
+            }
         }
     }
 }

@@ -10,6 +10,7 @@ using SportsCenter.Application.Reservations.Queries.GetReservationSummary;
 using Microsoft.AspNetCore.Authorization;
 using SportsCenter.Application.Reservations.Commands.AddSingleReservationYourself;
 using SportsCenter.Application.Reservations.Commands.UpdateReservation;
+using SportsCenter.Application.Exceptions.EmployeesExceptions;
 
 namespace SportsCenter.Api.Controllers;
 

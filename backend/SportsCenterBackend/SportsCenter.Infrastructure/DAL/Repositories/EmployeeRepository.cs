@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using static SportsCenter.Core.Enums.TrainerAvailiabilityStatus;
 
 namespace SportsCenter.Infrastructure.DAL.Repositories
 {
@@ -201,5 +202,52 @@ namespace SportsCenter.Infrastructure.DAL.Repositories
             return await _dbContext.BrakDostepnoscis
                 .AnyAsync(b => b.BrakDostepnosciId == requestId && !b.CzyZatwierdzone, cancellationToken);
         }
+        public async Task<TrainerAvailabilityStatus> IsTrainerAvailableAsync(int trainerId, DateTime requestedStart, int startHourInMinutes, int endHourInMinutes, CancellationToken cancellationToken)
+        {
+            DateTime requestedStartTime = requestedStart.Date.AddMinutes(startHourInMinutes);
+            DateTime requestedEndTime = requestedStart.Date.AddMinutes(endHourInMinutes);
+
+            var isFired = await _dbContext.Pracowniks
+                .Where(p => p.PracownikId == trainerId)
+                .Select(p => p.DataZwolnienia)
+                .FirstOrDefaultAsync(cancellationToken);
+
+            if (isFired != null) return TrainerAvailabilityStatus.IsFired;
+
+            var hasReservations = await _dbContext.Rezerwacjas
+                .AnyAsync(r =>
+                    r.TrenerId == trainerId &&
+                    ((requestedStartTime >= r.DataOd && requestedStartTime < r.DataDo) ||
+                     (requestedEndTime > r.DataOd && requestedEndTime <= r.DataDo) ||
+                     (requestedStartTime <= r.DataOd && requestedEndTime >= r.DataDo)),
+                    cancellationToken);
+
+            if (hasReservations) return TrainerAvailabilityStatus.HasReservations;
+
+            var hasActivities = await _dbContext.DataZajecs
+                .AnyAsync(dz =>
+                    dz.GrafikZajec.PracownikId == trainerId &&
+                    dz.Date == requestedStart.Date &&
+                    ((startHourInMinutes < dz.GrafikZajec.CzasTrwania) ||
+                     (endHourInMinutes <= dz.GrafikZajec.CzasTrwania)),
+                    cancellationToken);
+
+            if (hasActivities) return TrainerAvailabilityStatus.HasActivities;
+
+            var isUnavailable = _dbContext.BrakDostepnoscis
+                .AsEnumerable()
+                .Any(bd =>
+                    bd.PracownikId == trainerId &&
+                    (
+                        (requestedStartTime >= bd.Data.ToDateTime(bd.GodzinaOd) && requestedStartTime < bd.Data.ToDateTime(bd.GodzinaDo)) ||
+                        (requestedEndTime > bd.Data.ToDateTime(bd.GodzinaOd) && requestedEndTime <= bd.Data.ToDateTime(bd.GodzinaDo)) ||
+                        (requestedStartTime <= bd.Data.ToDateTime(bd.GodzinaOd) && requestedEndTime >= bd.Data.ToDateTime(bd.GodzinaDo))
+                    ));
+
+            if (isUnavailable) return TrainerAvailabilityStatus.IsUnavailable;
+
+            return TrainerAvailabilityStatus.Available;
+        }
+
     }
 }

@@ -37,5 +37,22 @@ namespace SportsCenter.Infrastructure.DAL.Repositories
             return await _dbContext.Zastepstwos
                 .AnyAsync(z => z.ZajeciaId == zajeciaId && z.PracownikNieobecnyId == pracownikId);
         }
+        public async Task<Zastepstwo> GetSubstitutionByIdAsync(int substitutionId, CancellationToken cancellationToken)
+        {
+            return await _dbContext.Zastepstwos
+                .Where(s => s.ZastepstwoId == substitutionId)
+                .FirstOrDefaultAsync(cancellationToken);
+        }
+        public async Task UpdateSubstitutionAsync(int substitutionId, int substituteEmployeeId, int approvedEmployeeId, CancellationToken cancellationToken)
+        {
+            var substitution = await _dbContext.Zastepstwos
+                .Where(s => s.ZastepstwoId == substitutionId)
+                .FirstOrDefaultAsync(cancellationToken);
+
+            substitution.PracownikZastepujacyId = substituteEmployeeId;
+            substitution.PracownikZatwierdzajacyId = approvedEmployeeId;
+
+            await _dbContext.SaveChangesAsync(cancellationToken);
+        }
     }
 }

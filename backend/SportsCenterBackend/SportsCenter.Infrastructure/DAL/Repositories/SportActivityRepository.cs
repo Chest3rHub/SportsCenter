@@ -82,4 +82,20 @@ public class SportActivityRepository : ISportActivityRepository
             .Where(gz => gz.ZajeciaId == activityId && gz.PracownikId == trainerId)
             .AnyAsync();
     }
+    public async Task<(DateTime date, TimeSpan startTime, TimeSpan endTime)?> GetActivityDetailsAsync(int activityId, CancellationToken cancellationToken)
+    {
+        var activity = await _dbContext.DataZajecs
+            .Where(d => d.GrafikZajecId == activityId)
+            .Select(d => new { d.Date, d.GrafikZajec.CzasTrwania })
+            .FirstOrDefaultAsync(cancellationToken);
+
+        if (activity == null)
+            return null;
+
+        var startDateTime = activity.Date;
+        var startTime = startDateTime.TimeOfDay;
+        var endTime = startTime + TimeSpan.FromMinutes(activity.CzasTrwania);
+
+        return (startDateTime.Date, startTime, endTime);
+    }
 }

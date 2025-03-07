@@ -13,7 +13,7 @@ namespace SportsCenter.Core.Repositories
         Task AddWorkingHoursForGivenDay(GodzinyPracyKlubu workingHoursOfDay, CancellationToken cancellationToken);
         Task UpdateWorkingHours(GodzinyPracyKlubu workingHours, CancellationToken cancellationToken);
         Task<GodzinyPracyKlubu> GetWorkingHoursByDayAsync(string dayOfWeek, CancellationToken cancellationToken);
-        Task<WyjatkoweGodzinyPracy> GetWorkingHoursByDateAsync(DateTime date, CancellationToken cancellationToken);
+        Task<WyjatkoweGodzinyPracy> GetSpecialWorkingHoursByDateAsync(DateTime date, CancellationToken cancellationToken);
         Task UpdateDateWorkingHours(WyjatkoweGodzinyPracy workingHours, CancellationToken cancellationToken);
         Task AddWorkingHoursForGivenDate(WyjatkoweGodzinyPracy workingHoursOfDay, CancellationToken cancellationToken);
     }

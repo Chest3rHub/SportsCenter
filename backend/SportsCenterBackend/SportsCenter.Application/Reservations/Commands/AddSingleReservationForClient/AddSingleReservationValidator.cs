@@ -17,18 +17,18 @@ namespace SportsCenter.Application.Reservations.Commands.AddReservation
 
             RuleFor(x => x.EndTime)
                 .NotEmpty().WithMessage("End time is required.")
-                .GreaterThan(x => x.StartTime).WithMessage("End time must be later than start time."); // Sprawdza, czy endTime > startTime
+                .GreaterThan(x => x.StartTime).WithMessage("End time must be later than start time.") // Sprawdza, czy endTime > startTime
+                .LessThanOrEqualTo(x => x.StartTime.AddDays(1)).WithMessage("Reservation duration cannot exceed 1 day."); // Maksymalnie 1 dzień
 
             RuleFor(x => x.ParticipantsCount)
                 .NotEmpty().WithMessage("Participants count is required.")
-                .GreaterThanOrEqualTo(1).WithMessage("Participants count must be at least 1."); ;
+                .GreaterThanOrEqualTo(1).WithMessage("Participants count must be at least 1.");
 
-            //dodalam ograniczenie ze rezerwacja trwa maksymalnie 1 dzień (roboczy klubu)
-            //bo inaczej by bylo troche bez sensu 
-
-            RuleFor(x => x.EndTime)
-                .LessThanOrEqualTo(x => x.StartTime.AddDays(1))
-                .WithMessage("Reservation duration cannot exceed 1 day.");
+            RuleFor(x => x)
+                .Must(x => (x.EndTime - x.StartTime).TotalHours >= 1)
+                .WithMessage("Reservation must be at least 1 hour long.")
+                .Must(x => (x.EndTime - x.StartTime).TotalHours <= 5)
+                .WithMessage("Reservation cannot be longer than 5 hours.");
         }
     }
 }

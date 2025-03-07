@@ -41,7 +41,7 @@ public class SportsCenterRepository : ISportsCenterRepository
         await _dbContext.SaveChangesAsync(cancellationToken);
     }
 
-    public async Task<WyjatkoweGodzinyPracy> GetWorkingHoursByDateAsync(DateTime date, CancellationToken cancellationToken)
+    public async Task<WyjatkoweGodzinyPracy> GetSpecialWorkingHoursByDateAsync(DateTime date, CancellationToken cancellationToken)
     {
         return await _dbContext.WyjatkoweGodzinyPracies
                              .FirstOrDefaultAsync(g => g.Data == DateOnly.FromDateTime(date), cancellationToken);

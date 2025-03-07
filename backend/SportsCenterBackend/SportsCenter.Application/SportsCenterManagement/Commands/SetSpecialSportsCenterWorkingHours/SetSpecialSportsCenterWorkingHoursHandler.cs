@@ -21,7 +21,7 @@ namespace SportsCenter.Application.SportsCenterManagement.Commands.SetSpecialSpo
 
         public async Task<Unit> Handle(SetSpecialSportsCenterWorkingHours request, CancellationToken cancellationToken)
         {
-            var existingDate = await _sportsCenterRepository.GetWorkingHoursByDateAsync(request.Date, cancellationToken);
+            var existingDate = await _sportsCenterRepository.GetSpecialWorkingHoursByDateAsync(request.Date, cancellationToken);
 
             if (existingDate != null)
             {

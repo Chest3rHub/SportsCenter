@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using SportsCenter.Application.Reservations.Commands.AddReservation;
 using SportsCenter.Application.Exceptions.ReservationExceptions;
-using SportsCenter.Application.Reservations.Commands.AddReservation;
 using SportsCenter.Application.Reservations.Commands.MoveReservation;
 using SportsCenter.Application.Reservations.Commands.RemoveReservation;
 using SportsCenter.Application.Reservations.Commands.AddRecurringReservation;
@@ -11,6 +10,7 @@ using Microsoft.AspNetCore.Authorization;
 using SportsCenter.Application.Reservations.Commands.AddSingleReservationYourself;
 using SportsCenter.Application.Reservations.Commands.UpdateReservation;
 using SportsCenter.Application.Exceptions.EmployeesExceptions;
+using SportsCenter.Application.Exceptions.EmployeesException;
 
 namespace SportsCenter.Api.Controllers;
 
@@ -71,17 +71,33 @@ public class ReservationController : BaseController
             await Mediator.Send(addReservation);
             return Ok(new { Message = "Reservation created successfully" });
         }
-        catch (TooManyParticipantsException)
+        catch (ReservationOutsideWorkingHoursException ex)
         {
-            return BadRequest(new { Message = "Too many participants. The maximum is 8." });
+            return Conflict(new { message = ex.Message });
         }
-        catch (CourtNotAvaliableException)
+        catch (TooManyParticipantsException ex)
         {
-            return Conflict(new { Message = $"The court {addReservation.CourtId} is not available for the requested time." });
+            return Conflict(new { message = ex.Message });
         }
-        catch (TrainerNotAvaliableException)
+        catch (CourtNotAvaliableException ex)
         {
-            return Conflict(new { Message = "The selected trainer is not available for the requested time." });
+            return Conflict(new { message = ex.Message });
+        }
+        catch (EmployeeNotFoundException ex)
+        {
+            return Conflict(new { message = ex.Message });
+        }
+        catch (NotTrainerEmployeeException ex)
+        {
+            return Conflict(new { message = ex.Message });
+        }
+        catch (EmployeeAlreadyDismissedException ex)
+        {
+            return Conflict(new { message = ex.Message });
+        }
+        catch (TrainerNotAvaliableException ex)
+        {
+            return Conflict(new { message = ex.Message });
         }
         catch (Exception ex)
         {

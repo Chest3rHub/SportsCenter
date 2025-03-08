@@ -38,6 +38,12 @@ namespace SportsCenter.Application.Reservations.Commands.AddReservation
         public async Task<Unit> Handle(AddSingleReservation request, CancellationToken cancellationToken)
         {
 
+            var client = await _clientRepository.GetClientByIdAsync(request.ClientId, cancellationToken);
+            if (client == null)
+            {
+                throw new ClientWithGivenIdNotFoundException(request.ClientId);
+            }
+
             var dniTygodnia = new Dictionary<DayOfWeek, string>
             {
                 { DayOfWeek.Monday, "poniedzialek" },
@@ -84,6 +90,11 @@ namespace SportsCenter.Application.Reservations.Commands.AddReservation
             bool isCourtAvailable = await _reservationRepository.IsCourtAvailableAsync(request.CourtId, request.StartTime, request.EndTime, cancellationToken);
             if (!isCourtAvailable)
                 throw new CourtNotAvaliableException(request.CourtId);
+
+            if (request.TrainerId.HasValue && request.TrainerId.Value == 0)
+            {
+                request.TrainerId = null;
+            }
 
             if (request.TrainerId.HasValue)
             {

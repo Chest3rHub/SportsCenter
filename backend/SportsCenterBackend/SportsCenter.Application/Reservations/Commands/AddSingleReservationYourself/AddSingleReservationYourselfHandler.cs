@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Http;
+using SportsCenter.Application.Exceptions.EmployeesException;
 using SportsCenter.Application.Exceptions.EmployeesExceptions;
 using SportsCenter.Application.Exceptions.ReservationExceptions;
 using SportsCenter.Application.Reservations.Commands.AddReservation;
@@ -11,25 +12,29 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using static SportsCenter.Core.Enums.TrainerAvailiabilityStatus;
 
 namespace SportsCenter.Application.Reservations.Commands.AddSingleReservationYourself
 {
     internal sealed class AddSingleReservationYourselfHandler : IRequestHandler<AddSingleReservationYourself, Unit>
     {
         private readonly IReservationRepository _reservationRepository;
+        private readonly IEmployeeRepository _employeeRepository;
+        private readonly ISportsCenterRepository _sportsCenterRepository;
         private readonly IClientRepository _clientRepository;
         private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public AddSingleReservationYourselfHandler(IReservationRepository reservationRepository, IClientRepository clientRepository, IHttpContextAccessor httpContextAccessor)
+        public AddSingleReservationYourselfHandler(IReservationRepository reservationRepository, IClientRepository clientRepository, ISportsCenterRepository sportsCenterRepository, IEmployeeRepository employeeRepository, IHttpContextAccessor httpContextAccessor)
         {
             _reservationRepository = reservationRepository;
             _clientRepository = clientRepository;
+            _employeeRepository = employeeRepository;
+            _sportsCenterRepository = sportsCenterRepository;
             _httpContextAccessor = httpContextAccessor;
         }
 
         public async Task<Unit> Handle(AddSingleReservationYourself request, CancellationToken cancellationToken)
         {
-
             var user = _httpContextAccessor.HttpContext?.User;
             if (user == null)
             {
@@ -47,6 +52,43 @@ namespace SportsCenter.Application.Reservations.Commands.AddSingleReservationYou
                 throw new UnauthorizedAccessException("Only customers can make reservations.");
             }
 
+            var dniTygodnia = new Dictionary<DayOfWeek, string>
+            {
+                { DayOfWeek.Monday, "poniedzialek" },
+                { DayOfWeek.Tuesday, "wtorek" },
+                { DayOfWeek.Wednesday, "sroda" },
+                { DayOfWeek.Thursday, "czwartek" },
+                { DayOfWeek.Friday, "piatek" },
+                { DayOfWeek.Saturday, "sobota" },
+                { DayOfWeek.Sunday, "niedziela" }
+            };
+
+            var workingHours = await _sportsCenterRepository.GetSpecialWorkingHoursByDateAsync(request.StartTime.Date, cancellationToken);
+            if (workingHours == null)
+            {
+                string dayOfWeek = dniTygodnia[request.StartTime.DayOfWeek];
+                var standardWorkingHours = await _sportsCenterRepository.GetWorkingHoursByDayAsync(dayOfWeek, cancellationToken);
+                if (standardWorkingHours == null)
+                {
+                    throw new ReservationOutsideWorkingHoursException();
+                }
+
+                workingHours = new WyjatkoweGodzinyPracy
+                {
+                    GodzinaOtwarcia = standardWorkingHours.GodzinaOtwarcia,
+                    GodzinaZamkniecia = standardWorkingHours.GodzinaZamkniecia
+                };
+            }
+
+            int clubOpeningTimeInMinutes = workingHours.GodzinaOtwarcia.Hour * 60 + workingHours.GodzinaOtwarcia.Minute;
+            int clubClosingTimeInMinutes = workingHours.GodzinaZamkniecia.Hour * 60 + workingHours.GodzinaZamkniecia.Minute;
+            int reservationStartInMinutes = request.StartTime.Hour * 60 + request.StartTime.Minute;
+            int reservationEndInMinutes = request.EndTime.Hour * 60 + request.EndTime.Minute;
+
+            if (reservationStartInMinutes < clubOpeningTimeInMinutes || reservationEndInMinutes > clubClosingTimeInMinutes)
+            {
+                throw new ReservationOutsideWorkingHoursException();
+            }
 
             if (request.ParticipantsCount > 8)
                 throw new TooManyParticipantsException();
@@ -55,11 +97,35 @@ namespace SportsCenter.Application.Reservations.Commands.AddSingleReservationYou
             if (!isCourtAvailable)
                 throw new CourtNotAvaliableException(request.CourtId);
 
+            if (request.TrainerId.HasValue && request.TrainerId.Value == 0)
+            {
+                request.TrainerId = null;
+            }
+
             if (request.TrainerId.HasValue)
             {
-                bool isTrainerAvailable = await _reservationRepository.IsTrainerAvailableAsync(request.TrainerId.Value, request.StartTime, request.EndTime, cancellationToken);
-                if (!isTrainerAvailable)
+                var trainerPosition = await _employeeRepository.GetEmployeePositionNameByIdAsync(request.TrainerId.Value, cancellationToken);
+                if (trainerPosition == null)
+                {
+                    throw new EmployeeNotFoundException(request.TrainerId.Value);
+                }
+
+                if (trainerPosition != "Trener")
+                {
+                    throw new NotTrainerEmployeeException(request.TrainerId.Value);
+                }
+
+                var availabilityStatus = await _employeeRepository.IsTrainerAvailableAsync(request.TrainerId.Value, request.StartTime, request.StartTime.Hour * 60 + request.StartTime.Minute, request.EndTime.Hour * 60 + request.EndTime.Minute, cancellationToken);
+
+                if (availabilityStatus == TrainerAvailabilityStatus.IsFired)
+                {
+                    throw new EmployeeAlreadyDismissedException(request.TrainerId.Value);
+                }
+
+                if (availabilityStatus != TrainerAvailabilityStatus.Available)
+                {
                     throw new TrainerNotAvaliableException();
+                }
             }
 
             //proponowana logika liczenia kosztu

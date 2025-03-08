@@ -78,7 +78,7 @@ function Login() {
 
   return (
     <>
-      <Navbar />
+    
       <GreenBackground height={"50vh"} marginTop={"10vh"}>
         <Header>{dictionary.loginPage.title}</Header>
         <OrangeBackground width="70%">

@@ -171,7 +171,6 @@ function Register() {
 
   return (
     <>
-    <Navbar/>
     <OwnerSidebar/>
     <GreenBackground height={"80vh"} marginTop={"2vh"}>
         <Header>{dictionary.registerPage.title}</Header>

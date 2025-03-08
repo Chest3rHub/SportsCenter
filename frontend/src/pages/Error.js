@@ -18,7 +18,6 @@ export default function Error() {
     }
     return (
         <>
-        <Navbar />
         <div style={{marginTop:"10vh", fontSize: "50px"}}></div>
          <p>{errorMessage}</p>
         <div style={{display: "flex", justifyContent:"center"}}>

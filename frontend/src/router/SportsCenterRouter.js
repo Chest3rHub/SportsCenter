@@ -7,15 +7,37 @@ import Dashboard from "../pages/Dashboard";
 import Error from "../pages/Error";
 import BaseLayout from "../layouts/BaseLayout";
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
+import OwnerLayout from "../layouts/OwnerLayout";
 
 const clientRouter = [];
     // tutaj podobne routery bedzie mozna zrobic dla pracownika,
     // wlasciciela, klienta itd
-    const adminRouter = [];
+    const ownerRouter = [
+        {
+            path: "/",
+            element: <OwnerLayout />,
+            children: [
+                {
+                    path: "/",
+                    element: <Home />,
+                },
+                {
+                    path: "/dashboard",  
+                    element: <Dashboard />,
+                },
+                {
+                    path: "/error",  
+                    element: <Error />,
+                },
+                {
+                    path: "*",
+                    element: <NotFound />,
+                }
+            ]
+        }
+    ];
     
 
-    // potem przerobic routery z layoutami dla kazdej roli i w layoutach dodac
-    // sidemenu, poki co base router ma wszystko po prostu
     const baseRouter = [
         {
             path: "/",
@@ -53,8 +75,8 @@ const clientRouter = [];
         let router;
         if(role==="client"){
             router = clientRouter;
-        } else if (role === "admin"){
-            router = adminRouter;
+        } else if (role === "owner"){
+            router = ownerRouter;
         } else {
             router = baseRouter;
         }

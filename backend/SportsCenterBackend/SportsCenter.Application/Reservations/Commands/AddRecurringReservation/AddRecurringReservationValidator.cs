@@ -37,9 +37,11 @@ namespace SportsCenter.Application.Reservations.Commands.AddRecurringReservation
             RuleFor(x => x.ParticipantsCount)
                 .GreaterThanOrEqualTo(1).WithMessage("Participants count must be at least 1.");
 
-            RuleFor(x => x.EndTime)
-                .LessThanOrEqualTo(x => x.StartTime.AddDays(1))
-                .WithMessage("Reservation duration cannot exceed 1 day.");
+            RuleFor(x => x)
+                .Must(x => (x.EndTime - x.StartTime).TotalHours >= 1)
+                .WithMessage("Reservation must be at least 1 hour long.")
+                .Must(x => (x.EndTime - x.StartTime).TotalHours <= 5)
+                .WithMessage("Reservation cannot be longer than 5 hours.");
         }
     }
 }

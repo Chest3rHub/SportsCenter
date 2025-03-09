@@ -11,6 +11,7 @@ using SportsCenter.Application.Reservations.Commands.AddSingleReservationYoursel
 using SportsCenter.Application.Reservations.Commands.UpdateReservation;
 using SportsCenter.Application.Exceptions.EmployeesExceptions;
 using SportsCenter.Application.Exceptions.EmployeesException;
+using SportsCenter.Application.Exceptions.ClientsExceptions;
 
 namespace SportsCenter.Api.Controllers;
 
@@ -120,17 +121,25 @@ public class ReservationController : BaseController
             await Mediator.Send(addRecurringReservation);
             return Ok(new { Message = "Recurring reservation created successfully" });
         }
-        catch (TooManyParticipantsException)
+        catch (ClientWithGivenIdNotFoundException ex)
         {
-            return BadRequest(new { Message = "Too many participants. The maximum is 8." });
+            return NotFound(new { message = ex.Message });
         }
-        catch (CourtNotAvaliableException)
+        catch (TooManyParticipantsException ex)
         {
-            return Conflict(new { Message = $"The court {addRecurringReservation.CourtId} is not available for the requested time." });
+            return Conflict(new { message = ex.Message });
         }
-        catch (TrainerNotAvaliableException)
+        catch (EmployeeNotFoundException ex)
         {
-            return Conflict(new { Message = "The selected trainer is not available for the requested time." });
+            return NotFound(new { message = ex.Message });
+        }
+        catch (NotTrainerEmployeeException ex)
+        {
+            return Conflict(new { message = ex.Message });
+        }
+        catch (EmployeeAlreadyDismissedException ex)
+        {
+            return Conflict(new { message = ex.Message });
         }
         catch (Exception ex)
         {
@@ -153,17 +162,41 @@ public class ReservationController : BaseController
             await Mediator.Send(moveReservation);
             return Ok(new { Message = "Reservation moved successfully." });
         }
-        catch (ReservationNotFoundException)
+        catch (ReservationNotFoundException ex) 
         {
-            return NotFound(new { Message = "Reservation not found." });
+            return NotFound(new { message = ex.Message });
         }
-        catch (CourtNotAvaliableException)
+        catch (ReservationOutsideWorkingHoursException ex)
         {
-            return Conflict(new { Message = "The court is not available for the new time." });
+            return NotFound(new { message = ex.Message });
         }
-        catch (TrainerNotAvaliableException)
+        catch (NotThatClientReservationException ex)
         {
-            return Conflict(new { Message = "The trainer is not available for the new time." });
+            return NotFound(new { message = ex.Message });
+        }
+        catch (PostponeReservationNotAllowedException ex)
+        {
+            return NotFound(new { message = ex.Message });
+        }
+        catch (CourtNotAvaliableException ex)
+        {
+            return Conflict(new { message = ex.Message });
+        }
+        catch (EmployeeNotFoundException ex)
+        {
+            return Conflict(new { message = ex.Message });
+        }
+        catch (NotTrainerEmployeeException ex)
+        {
+            return Conflict(new { message = ex.Message });
+        }
+        catch (EmployeeAlreadyDismissedException ex)
+        {
+            return Conflict(new { message = ex.Message });
+        }
+        catch (TrainerNotAvaliableException ex)
+        {
+            return Conflict(new { message = ex.Message });
         }
         catch (InvalidOperationException ex)
         {
@@ -189,6 +222,10 @@ public class ReservationController : BaseController
         {
             return NotFound(ex.Message);
         }
+        catch (NotThatClientReservationException ex)
+        {
+            return NotFound(ex.Message);
+        }
     }
 
     [Authorize(Roles = "Wlasciciel,Pracownik administracyjny")]
@@ -200,13 +237,25 @@ public class ReservationController : BaseController
             await Mediator.Send(updateReservation);
             return Ok(new { Message = "Reservation updated successfully." });
         }
-        catch (ReservationNotFoundException)
+        catch (ReservationNotFoundException ex)
         {
-            return NotFound(new { Message = "Reservation not found." });
+            return NotFound(new { message = ex.Message });
         }
-        catch (TrainerNotAvaliableException)
+        catch (EmployeeNotFoundException ex)
         {
-            return NotFound(new { Message = "Trainer not avaliable." });
+            return NotFound(new { message = ex.Message });
+        }
+        catch (NotTrainerEmployeeException ex)
+        {
+            return Conflict(new { message = ex.Message });
+        }
+        catch (EmployeeAlreadyDismissedException ex)
+        {
+            return Conflict(new { message = ex.Message });
+        }
+        catch (TrainerNotAvaliableException ex)
+        {
+            return Conflict(new { message = ex.Message });
         }
         catch (InvalidOperationException ex)
         {

@@ -9,6 +9,7 @@ import "../styles/auth.css";
 import { SportsContext } from "../context/SportsContext";
 import loginRequest from "../api/loginRequest";
 import CustomInput from "../components/CustomInput";
+import { Box } from "@mui/material";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -83,7 +84,7 @@ function Login() {
         <Header>{dictionary.loginPage.title}</Header>
         <OrangeBackground width="70%">
           <form onSubmit={handleSubmit}>
-            <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
+            <Box sx={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
               <CustomInput
                 label={dictionary.loginPage.emailLabel}
                 type="email"
@@ -110,15 +111,15 @@ function Login() {
                 }
                 required
               />
-            <div style={{ textAlign: "center" }}>
+            <Box sx={{ textAlign: "center" }}>
               <GreenButton type="submit">
                 {dictionary.loginPage.signInLabel}
               </GreenButton>
               <Link to="/reset-password" className="forgot-password">
                 {dictionary.loginPage.forgotPasswordLabel}
               </Link>
-              </div>
-            </div>
+              </Box>
+            </Box>
           </form>
         </OrangeBackground>
       </GreenBackground>

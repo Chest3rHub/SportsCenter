@@ -4,10 +4,12 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SportsCenter.Application.Clients.Commands.RegisterClient;
 using SportsCenter.Application.Exceptions.UsersException;
+using SportsCenter.Application.Exceptions.UsersExceptions;
 using SportsCenter.Application.Users.Commands.ChangePassowrd;
 using SportsCenter.Application.Users.Commands.ChangePassword;
 using SportsCenter.Application.Users.Commands.ChangeUserPassword;
 using SportsCenter.Application.Users.Commands.Login;
+using SportsCenter.Application.Users.Commands.RefreshToken;
 
 namespace SportsCenter.Api.Controllers
 {
@@ -36,6 +38,29 @@ namespace SportsCenter.Api.Controllers
             catch (Exception ex)
             {
                 return StatusCode(500, new { message = "An error occurred while sending the request", details = ex.Message });
+            }
+        }
+        [Authorize]
+        [HttpPost("refresh-token")]
+        public async Task<IActionResult> RefreshTokenAsync()
+        {
+            try
+            {
+                var token = Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last();
+
+                if (string.IsNullOrEmpty(token))
+                {
+                    return Unauthorized(new { message = "Token is missing from the request." });
+                }
+                var refreshTokenRequest = new RefreshToken(token);
+
+                var refreshTokenResponse = await Mediator.Send(refreshTokenRequest);
+
+                return Ok(refreshTokenResponse);
+            }
+            catch (InvalidTokenException ex)
+            {
+                return Unauthorized(new { message = ex.Message });
             }
         }
 

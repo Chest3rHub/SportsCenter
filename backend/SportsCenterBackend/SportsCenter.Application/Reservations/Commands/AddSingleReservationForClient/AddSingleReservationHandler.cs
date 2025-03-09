@@ -54,35 +54,51 @@ namespace SportsCenter.Application.Reservations.Commands.AddReservation
                 { DayOfWeek.Saturday, "sobota" },
                 { DayOfWeek.Sunday, "niedziela" }
              };
-            var workingHours = await _sportsCenterRepository.GetSpecialWorkingHoursByDateAsync(request.StartTime.Date, cancellationToken);
 
-            if (workingHours == null)
+            var specialWorkingHours = await _sportsCenterRepository.GetSpecialWorkingHoursByDateAsync(request.StartTime.Date, cancellationToken);
+
+            if (specialWorkingHours != null)
+            {
+                WyjatkoweGodzinyPracy workingHours = specialWorkingHours;
+
+                int clubOpeningTimeInMinutes = workingHours.GodzinaOtwarcia.Hour * 60 + workingHours.GodzinaOtwarcia.Minute;
+                int clubClosingTimeInMinutes = workingHours.GodzinaZamkniecia.Hour * 60 + workingHours.GodzinaZamkniecia.Minute;
+
+                int reservationStartInMinutes = request.StartTime.Hour * 60 + request.StartTime.Minute;
+                int reservationEndInMinutes = request.EndTime.Hour * 60 + request.EndTime.Minute;
+
+                if (reservationStartInMinutes < clubOpeningTimeInMinutes || reservationEndInMinutes > clubClosingTimeInMinutes)
+                {
+                    throw new ReservationOutsideWorkingHoursException();
+                }
+            }
+            else
             {
                 string dayOfWeek = dniTygodnia[request.StartTime.DayOfWeek];
-
                 var standardWorkingHours = await _sportsCenterRepository.GetWorkingHoursByDayAsync(dayOfWeek, cancellationToken);
+
                 if (standardWorkingHours == null)
                 {
                     throw new ReservationOutsideWorkingHoursException();
                 }
 
-                workingHours = new WyjatkoweGodzinyPracy
+                GodzinyPracyKlubu workingHours = new GodzinyPracyKlubu
                 {
                     GodzinaOtwarcia = standardWorkingHours.GodzinaOtwarcia,
                     GodzinaZamkniecia = standardWorkingHours.GodzinaZamkniecia
                 };
+
+                int clubOpeningTimeInMinutes = workingHours.GodzinaOtwarcia.Hour * 60 + workingHours.GodzinaOtwarcia.Minute;
+                int clubClosingTimeInMinutes = workingHours.GodzinaZamkniecia.Hour * 60 + workingHours.GodzinaZamkniecia.Minute;
+
+                int reservationStartInMinutes = request.StartTime.Hour * 60 + request.StartTime.Minute;
+                int reservationEndInMinutes = request.EndTime.Hour * 60 + request.EndTime.Minute;
+
+                if (reservationStartInMinutes < clubOpeningTimeInMinutes || reservationEndInMinutes > clubClosingTimeInMinutes)
+                {
+                    throw new ReservationOutsideWorkingHoursException();
+                }
             }
-
-            int clubOpeningTimeInMinutes = workingHours.GodzinaOtwarcia.Hour * 60 + workingHours.GodzinaOtwarcia.Minute;
-            int clubClosingTimeInMinutes = workingHours.GodzinaZamkniecia.Hour * 60 + workingHours.GodzinaZamkniecia.Minute;
-            int reservationStartInMinutes = request.StartTime.Hour * 60 + request.StartTime.Minute;
-            int reservationEndInMinutes = request.EndTime.Hour * 60 + request.EndTime.Minute;
-
-            if (reservationStartInMinutes < clubOpeningTimeInMinutes || reservationEndInMinutes > clubClosingTimeInMinutes)
-            {
-                throw new ReservationOutsideWorkingHoursException();
-            }
-
 
             if (request.ParticipantsCount > 8)
                 throw new TooManyParticipantsException();

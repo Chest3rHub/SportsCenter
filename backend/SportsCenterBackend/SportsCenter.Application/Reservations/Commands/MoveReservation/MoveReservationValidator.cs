@@ -18,6 +18,12 @@ namespace SportsCenter.Application.Reservations.Commands.MoveReservation
             RuleFor(x => x.NewEndTime)
                 .GreaterThan(x => x.NewStartTime)
                 .WithMessage("End time must be later than start time.");
+
+            RuleFor(x => x)
+               .Must(x => (x.NewEndTime - x.NewStartTime).TotalHours >= 1)
+               .WithMessage("Reservation must be at least 1 hour long.")
+               .Must(x => (x.NewEndTime - x.NewStartTime).TotalHours <= 5)
+               .WithMessage("Reservation cannot be longer than 5 hours.");
         }
     }
 }

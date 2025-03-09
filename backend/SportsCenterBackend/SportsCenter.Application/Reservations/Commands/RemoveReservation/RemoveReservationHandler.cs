@@ -44,6 +44,20 @@ namespace SportsCenter.Application.Reservations.Commands.RemoveReservation
             bool isOwner = userRoles.Contains("Wlasciciel");
             bool isClient = userRoles.Contains("Klient");
 
+            var userIdClaim = _httpContextAccessor.HttpContext?.User.FindFirst("userId")?.Value;
+
+            if (string.IsNullOrEmpty(userIdClaim) || !int.TryParse(userIdClaim, out int userId))
+            {
+                throw new UnauthorizedAccessException("No permission to remove reservation.");
+            }
+
+            var hasClientReservation = await _reservationRepository.HasClientReservation(request.Id, userId, cancellationToken);
+
+            if (!hasClientReservation)
+            {
+                throw new NotThatClientReservationException(userId, request.Id);
+            }
+
             var remainingTime = reservation.DataOd - DateTime.UtcNow;
 
             if (isClient && !isOwner && remainingTime.TotalHours < 24)

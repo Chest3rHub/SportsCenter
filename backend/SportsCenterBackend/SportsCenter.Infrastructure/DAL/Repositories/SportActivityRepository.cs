@@ -14,14 +14,13 @@ public class SportActivityRepository : ISportActivityRepository
         _dbContext = dbContext;
     }
 
-    public async Task<int> AddSportActivityAsync(Zajecium sportActivity, CancellationToken cancellationToken = default)
+    public async Task AddSportActivityAsync(Zajecium sportActivity, CancellationToken cancellationToken)
     {
         _dbContext.Zajecia.Add(sportActivity);
         await _dbContext.SaveChangesAsync();
-        return sportActivity.ZajeciaId;
     }
 
-    public async Task AddScheduleAsync(GrafikZajec schedule, CancellationToken cancellationToken = default)
+    public async Task AddScheduleAsync(GrafikZajec schedule, CancellationToken cancellationToken)
     {
         _dbContext.GrafikZajecs.Add(schedule);
         await _dbContext.SaveChangesAsync();
@@ -32,7 +31,7 @@ public class SportActivityRepository : ISportActivityRepository
         return await _dbContext.Zajecia
             .Include(sa => sa.IdPoziomZajecNavigation)
             .Include(sa => sa.GrafikZajecs)
-            .FirstOrDefaultAsync(sa => sa.IdPoziomZajec == sportActivityId, cancellationToken);
+            .FirstOrDefaultAsync(sa => sa.ZajeciaId == sportActivityId, cancellationToken);
     }
     public async Task<IEnumerable<Zajecium>> GetAllSportActivitiesAsync(CancellationToken cancellationToken)
     {
@@ -44,9 +43,19 @@ public class SportActivityRepository : ISportActivityRepository
     }
     public async Task RemoveSportActivityAsync(Zajecium sportActivity, CancellationToken cancellationToken)
     {
+        var grafikZajec = await _dbContext.GrafikZajecs
+            .Where(g => g.ZajeciaId == sportActivity.ZajeciaId)
+            .ToListAsync(cancellationToken);
+
+        if (grafikZajec.Any())
+        {
+            _dbContext.GrafikZajecs.RemoveRange(grafikZajec);
+        }
+
         _dbContext.Zajecia.Remove(sportActivity);
         await _dbContext.SaveChangesAsync(cancellationToken);
     }
+
 
     public async Task<IEnumerable<GrafikZajec>> GetSchedulesByTrainerIdAsync(int trainerId, CancellationToken cancellationToken)
     {
@@ -124,5 +133,22 @@ public class SportActivityRepository : ISportActivityRepository
         TimeSpan endTime = startTime + TimeSpan.FromMinutes(activity.CzasTrwania);
 
         return (activityDate.Date, startTime, endTime);
+    }
+    public async Task<int> EnsureLevelNameExistsAsync(string levelName, CancellationToken cancellationToken = default)
+    {
+        var poziomZajec = await _dbContext.PoziomZajecs
+                                       .FirstOrDefaultAsync(pz => pz.Nazwa == levelName, cancellationToken);
+
+        if (poziomZajec != null)
+        {         
+            return poziomZajec.IdPoziomZajec;
+        }
+
+        var nowyPoziom = new PoziomZajec { Nazwa = levelName };
+        _dbContext.PoziomZajecs.Add(nowyPoziom);
+
+        await _dbContext.SaveChangesAsync(cancellationToken);
+
+        return nowyPoziom.IdPoziomZajec;
     }
 }

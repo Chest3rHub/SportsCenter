@@ -46,6 +46,7 @@ public static class Extensions
         services.AddScoped<INewsRepository, NewsRepository>();
         services.AddScoped<ISportsCenterRepository, SportsCenterRepository>();
         services.AddScoped<ISubstitutionRepository, SubstitutionRepository>();
+        services.AddScoped<ICourtRepository, CourtRepository>();
         services.AddScoped<IJWTTokenGenerator, JWTTokenGenerator>();
 
         //Security

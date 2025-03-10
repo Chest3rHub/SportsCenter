@@ -1,9 +1,10 @@
+using Microsoft.AspNetCore.Mvc;
 using SportsCenter.Core.Entities;
 namespace SportsCenter.Core.Repositories;
 
 public interface ISportActivityRepository
 {
-    Task<int> AddSportActivityAsync(Zajecium sportActivity, CancellationToken cancellationToken);
+    Task AddSportActivityAsync(Zajecium sportActivity, CancellationToken cancellationToken);
     Task AddScheduleAsync(GrafikZajec schedule, CancellationToken cancellationToken);
     Task<Zajecium> GetSportActivityByIdAsync(int sportActivityId, CancellationToken cancellationToken);
     Task<IEnumerable<Zajecium>> GetAllSportActivitiesAsync(CancellationToken cancellationToken);
@@ -12,4 +13,5 @@ public interface ISportActivityRepository
     Task<(DateTime? date, int? duration)> GetActivityDetailsByIdAsync(int activitiesId);
     Task<bool> IsTrainerAssignedToActivityAsync(int activityId, int trainerId);
     Task<(DateTime date, TimeSpan startTime, TimeSpan endTime)?> GetActivityDetailsAsync(int activityId, CancellationToken cancellationToken);
+    Task<int> EnsureLevelNameExistsAsync(string levelName, CancellationToken cancellationToken);
 }

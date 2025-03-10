@@ -12,6 +12,7 @@ using SportsCenter.Application.Reservations.Commands.UpdateReservation;
 using SportsCenter.Application.Exceptions.EmployeesExceptions;
 using SportsCenter.Application.Exceptions.EmployeesException;
 using SportsCenter.Application.Exceptions.ClientsExceptions;
+using SportsCenter.Application.Exceptions.CourtsExceptions;
 
 namespace SportsCenter.Api.Controllers;
 

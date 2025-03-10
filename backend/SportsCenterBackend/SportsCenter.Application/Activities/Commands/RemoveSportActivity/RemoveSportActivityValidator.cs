@@ -1,12 +1,14 @@
 using FluentValidation;
 
-namespace SportsCenter.Application.Activities.Commands.RemoveSportActivity;
-
-internal class RemoveSportActivityValidator : AbstractValidator<RemoveSportActivity>
+namespace SportsCenter.Application.Activities.Commands.RemoveSportActivity
 {
-    public RemoveSportActivityValidator()
+
+    public class RemoveSportActivityValidator : AbstractValidator<RemoveSportActivity>
     {
-        RuleFor(x => x.SportActivityId)
-            .GreaterThan(0).WithMessage("There is no such activity ID");
+        public RemoveSportActivityValidator()
+        {
+            RuleFor(x => x.SportActivityId)
+                .NotEmpty().WithMessage("Sport Activity Id is required.");
+        }
     }
 }

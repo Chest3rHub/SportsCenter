@@ -163,26 +163,26 @@ namespace SportsCenter.Infrastructure.DAL.Repositories
             _dbContext.BrakDostepnoscis.Update(absenceRequest);
             await _dbContext.SaveChangesAsync(cancellationToken);
         }
-        public async Task<bool> IsTrainerAvailableAsync(int trainerId, DateTime startTime, DateTime endTime, CancellationToken cancellationToken)
-        {
-            bool isReserved = await _dbContext.Rezerwacjas
-                .AnyAsync(r => r.TrenerId == trainerId &&
-                               r.DataOd < endTime &&
-                               r.DataDo > startTime, cancellationToken);
+        //public async Task<bool> IsTrainerAvailableAsync(int trainerId, DateTime startTime, DateTime endTime, CancellationToken cancellationToken)
+        //{
+        //    bool isReserved = await _dbContext.Rezerwacjas
+        //        .AnyAsync(r => r.TrenerId == trainerId &&
+        //                       r.DataOd < endTime &&
+        //                       r.DataDo > startTime, cancellationToken);
 
-            var overlappingReservations = await _dbContext.GrafikZajecs
-                .Where(gz => gz.PracownikId == trainerId)
-                .Join(_dbContext.DataZajecs,
-                    gz => gz.GrafikZajecId,
-                    dz => dz.GrafikZajecId,
-                    (gz, dz) => new { gz, dz })
-                .Where(x =>
-                    (x.dz.Date >= startTime && x.dz.Date < endTime) ||
-                    (x.dz.Date.AddMinutes(x.gz.CzasTrwania) > startTime && x.dz.Date < endTime))
-                .AnyAsync(cancellationToken);
+        //    var overlappingReservations = await _dbContext.GrafikZajecs
+        //        .Where(gz => gz.PracownikId == trainerId)
+        //        .Join(_dbContext.DataZajecs,
+        //            gz => gz.GrafikZajecId,
+        //            dz => dz.GrafikZajecId,
+        //            (gz, dz) => new { gz, dz })
+        //        .Where(x =>
+        //            (x.dz.Date >= startTime && x.dz.Date < endTime) ||
+        //            (x.dz.Date.AddMinutes(x.gz.CzasTrwania) > startTime && x.dz.Date < endTime))
+        //        .AnyAsync(cancellationToken);
 
-            return !isReserved && !overlappingReservations;
-        }
+        //    return !isReserved && !overlappingReservations;
+        //}
 
         public async Task UpdateAbsenceRequestAsync(int requestId, CancellationToken cancellationToken)
         {
@@ -224,30 +224,40 @@ namespace SportsCenter.Infrastructure.DAL.Repositories
 
             if (hasReservations) return TrainerAvailabilityStatus.HasReservations;
 
-            var hasActivities = await _dbContext.DataZajecs
-                .AnyAsync(dz =>
-                    dz.GrafikZajec.PracownikId == trainerId &&
-                    dz.Date == requestedStart.Date &&
-                    ((startHourInMinutes < dz.GrafikZajec.CzasTrwania) ||
-                     (endHourInMinutes <= dz.GrafikZajec.CzasTrwania)),
-                    cancellationToken);
+            string dzienTygodnia = requestedStart.ToString("dddd", new System.Globalization.CultureInfo("pl-PL"));
+            var grafikZajec = await _dbContext.GrafikZajecs
+                .Where(gz => gz.PracownikId == trainerId && gz.DzienTygodnia == dzienTygodnia)
+                .ToListAsync(cancellationToken);
 
-            if (hasActivities) return TrainerAvailabilityStatus.HasActivities;
+            foreach (var grafik in grafikZajec)
+            {              
+                int godzinaOdInMinutes = (int)grafik.GodzinaOd.TotalMinutes;
+                int godzinaDoInMinutes = godzinaOdInMinutes + grafik.CzasTrwania;
 
-            var isUnavailable = _dbContext.BrakDostepnoscis
-                .AsEnumerable()
-                .Any(bd =>
-                    bd.PracownikId == trainerId &&
-                    (
-                        (requestedStartTime >= bd.Data.ToDateTime(bd.GodzinaOd) && requestedStartTime < bd.Data.ToDateTime(bd.GodzinaDo)) ||
-                        (requestedEndTime > bd.Data.ToDateTime(bd.GodzinaOd) && requestedEndTime <= bd.Data.ToDateTime(bd.GodzinaDo)) ||
-                        (requestedStartTime <= bd.Data.ToDateTime(bd.GodzinaOd) && requestedEndTime >= bd.Data.ToDateTime(bd.GodzinaDo))
-                    ));
+                if ((startHourInMinutes < godzinaDoInMinutes && startHourInMinutes >= godzinaOdInMinutes) ||
+                    (endHourInMinutes > godzinaOdInMinutes && endHourInMinutes <= godzinaDoInMinutes))
+                {
+                    return TrainerAvailabilityStatus.HasActivities;
+                }
+            }
 
-            if (isUnavailable) return TrainerAvailabilityStatus.IsUnavailable;
+            var brakDostepnosci = await _dbContext.BrakDostepnoscis
+                .Where(bd => bd.PracownikId == trainerId)
+                .ToListAsync(cancellationToken);
 
+            foreach (var bd in brakDostepnosci)
+            {              
+                DateTime startDateTime = bd.Data.ToDateTime(bd.GodzinaOd);
+                DateTime endDateTime = bd.Data.ToDateTime(bd.GodzinaDo);
+
+                if ((requestedStartTime >= startDateTime && requestedStartTime < endDateTime) ||
+                    (requestedEndTime > startDateTime && requestedEndTime <= endDateTime) ||
+                    (requestedStartTime <= startDateTime && requestedEndTime >= endDateTime))
+                {
+                    return TrainerAvailabilityStatus.IsUnavailable;
+                }
+            }   
             return TrainerAvailabilityStatus.Available;
         }
-
     }
 }

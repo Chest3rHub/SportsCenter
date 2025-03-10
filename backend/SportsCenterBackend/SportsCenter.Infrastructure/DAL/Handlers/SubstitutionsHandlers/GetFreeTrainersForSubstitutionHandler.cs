@@ -13,27 +13,31 @@ internal sealed class GetFreeTrainersForSubstitutionHandler : IRequestHandler<Ge
         _dbContext = dbContext;
     }
     private bool IsTrainerBookedOrUnavailable(int trainerId, DateTime requestedStart, DateTime requestedEnd, int startHourInMinutes, int endHourInMinutes, CancellationToken cancellationToken)
-    {     
+    {
         var requestedStartDateTime = requestedStart;
         var requestedEndDateTime = requestedEnd;
 
         var isBookedInReservations = _dbContext.Rezerwacjas
             .Any(r =>
                 r.TrenerId == trainerId &&
-                ((requestedStartDateTime >= r.DataOd && requestedStartDateTime < r.DataDo) ||
+                ((requestedStartDateTime < r.DataDo && requestedEndDateTime > r.DataOd) ||
+                 (requestedStartDateTime >= r.DataOd && requestedStartDateTime < r.DataDo) ||
                  (requestedEndDateTime > r.DataOd && requestedEndDateTime <= r.DataDo) ||
                  (requestedStartDateTime <= r.DataOd && requestedEndDateTime >= r.DataDo))
             );
 
         if (isBookedInReservations)
             return true;
-  
-        var isBookedInActivities = _dbContext.DataZajecs
-            .Any(dz =>
-                dz.GrafikZajec.PracownikId == trainerId &&
-                dz.Date == requestedStartDateTime.Date &&
-                ((startHourInMinutes < dz.GrafikZajec.CzasTrwania) ||
-                 (endHourInMinutes <= dz.GrafikZajec.CzasTrwania))
+
+        string dzienTygodnia = requestedStart.ToString("dddd", new System.Globalization.CultureInfo("pl-PL"));
+
+        var isBookedInActivities = _dbContext.GrafikZajecs
+            .AsEnumerable()
+            .Any(gz =>
+                gz.PracownikId == trainerId &&
+                gz.DzienTygodnia == dzienTygodnia &&
+                (startHourInMinutes < (gz.GodzinaOd.TotalMinutes + gz.CzasTrwania) &&
+                 endHourInMinutes > gz.GodzinaOd.TotalMinutes)
             );
 
         if (isBookedInActivities)

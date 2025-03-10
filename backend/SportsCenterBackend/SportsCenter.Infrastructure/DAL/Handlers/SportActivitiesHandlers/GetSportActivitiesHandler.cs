@@ -27,8 +27,8 @@ internal sealed class GetSportActivitiesQueryHandler : IRequestHandler<GetSportA
                 Name = sa.Nazwa,
                 Level = sa.IdPoziomZajec,
                 MaxParticipants = sa.GrafikZajecs.FirstOrDefault().LimitOsob, 
-                CostWithoutEquipment = sa.GrafikZajecs.FirstOrDefault().KoszBezSprzetu,
-                CostWithEquipment = sa.GrafikZajecs.FirstOrDefault().KoszZeSprzetem
+                CostWithoutEquipment = sa.GrafikZajecs.FirstOrDefault().KosztBezSprzetu,
+                CostWithEquipment = sa.GrafikZajecs.FirstOrDefault().KosztZeSprzetem
             })
             .ToListAsync(cancellationToken);
     }

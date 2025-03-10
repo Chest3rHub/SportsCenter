@@ -7,6 +7,10 @@ public partial class GrafikZajec
 {
     public int GrafikZajecId { get; set; }
 
+    public string DzienTygodnia { get; set; }
+
+    public TimeSpan GodzinaOd {  get; set; }
+
     public int CzasTrwania { get; set; }
 
     public int ZajeciaId { get; set; }
@@ -17,11 +21,9 @@ public partial class GrafikZajec
 
     public int KortId { get; set; }
 
-    public decimal KoszBezSprzetu { get; set; }
+    public decimal KosztBezSprzetu { get; set; }
 
-    public decimal KoszZeSprzetem { get; set; }
-
-    public virtual ICollection<DataZajec> DataZajecs { get; set; } = new List<DataZajec>();
+    public decimal KosztZeSprzetem { get; set; }
 
     public virtual ICollection<GrafikZajecKlient> GrafikZajecKlients { get; set; } = new List<GrafikZajecKlient>();
 

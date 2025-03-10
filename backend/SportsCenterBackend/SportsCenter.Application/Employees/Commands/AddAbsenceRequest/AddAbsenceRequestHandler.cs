@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static SportsCenter.Core.Enums.TrainerAvailiabilityStatus;
 
 namespace SportsCenter.Application.Employees.Commands.AddAbsenceRequest
 {
@@ -33,11 +34,22 @@ namespace SportsCenter.Application.Employees.Commands.AddAbsenceRequest
             var startDateTime = request.Date.ToDateTime(TimeOnly.FromTimeSpan(request.StartHour));
             var endDateTime = request.Date.ToDateTime(TimeOnly.FromTimeSpan(request.EndHour));
 
-            var isTrainerFree = await _employeeRepository.IsTrainerAvailableAsync(userId, startDateTime, endDateTime, cancellationToken);
-
-            if (!isTrainerFree)
+            int startHourInMinutes = (int)startDateTime.TimeOfDay.TotalMinutes;
+            int endHourInMinutes = (int)endDateTime.TimeOfDay.TotalMinutes;
+       
+            var isTrainerFree = await _employeeRepository.IsTrainerAvailableAsync(userId,startDateTime,startHourInMinutes,endHourInMinutes,cancellationToken);
+            
+            if (isTrainerFree == TrainerAvailabilityStatus.HasReservations)
             {
                 throw new CantAddAbsenceRequestException();
+            }
+            if (isTrainerFree == TrainerAvailabilityStatus.HasActivities)
+            {
+                throw new CantAddAbsenceRequestException();
+            }
+            if (isTrainerFree == TrainerAvailabilityStatus.IsUnavailable)
+            {
+                throw new CantAddAbsenceRequestForNoAvailabilityDayException();
             }
 
             var existingAbsenceRequest = await _employeeRepository.GetAbsenceRequestAsync(userId, request.Date);

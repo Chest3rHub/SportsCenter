@@ -1,10 +1,10 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using SportsCenter.Application.Schedule.Queries.GetScheduleInfo;
 using SportsCenter.Infrastructure.DAL;
 using System.Security.Claims;
-using Newtonsoft.Json;
 
 internal class GetScheduleInfoHandler : IRequestHandler<GetScheduleInfo, List<ScheduleInfoBaseDto>>
 {
@@ -26,7 +26,7 @@ internal class GetScheduleInfoHandler : IRequestHandler<GetScheduleInfo, List<Sc
 
         bool isAdminRole = userRole == "Wlasciciel" || userRole == "Pracownik administracyjny";
         bool isTrainerRole = userRole == "Trener";
-     
+
         var reservations = await _dbContext.Rezerwacjas
             .Where(r => r.DataOd >= request.StartDate && r.DataDo <= request.EndDate)
             .Include(r => r.Klient)
@@ -36,28 +36,30 @@ internal class GetScheduleInfoHandler : IRequestHandler<GetScheduleInfo, List<Sc
             .ThenInclude(t => t.PracownikNavigation)
             .ToListAsync(cancellationToken);
 
+        var startDayOfWeek = request.StartDate.DayOfWeek.ToString();
+        var endDayOfWeek = request.EndDate.DayOfWeek.ToString();
 
         var scheduledClasses = await _dbContext.GrafikZajecs
-            .Where(g => g.DataZajecs.Any(d => d.Date >= request.StartDate && d.Date <= request.EndDate))
+            .Where(g => g.DzienTygodnia.CompareTo(startDayOfWeek) >= 0 &&
+                        g.DzienTygodnia.CompareTo(endDayOfWeek) <= 0)
             .Include(g => g.Zajecia)
             .ThenInclude(z => z.IdPoziomZajecNavigation)
             .Include(g => g.Pracownik)
             .ThenInclude(t => t.PracownikNavigation)
             .Include(g => g.Kort)
-            .Include(g => g.DataZajecs)
             .Include(g => g.GrafikZajecKlients)
             .ToListAsync(cancellationToken);
 
         var scheduleInfoDtos = new List<ScheduleInfoBaseDto>();
-      
+
         foreach (var reservation in reservations)
         {
             ScheduleInfoBaseDto dto;
 
             if (isAdminRole)
-            {             
+            {
                 dto = new ScheduleInfoAdminDto
-                {   
+                {
                     Type = "Admin",
                     Date = reservation.DataOd,
                     StartTime = reservation.DataOd.TimeOfDay,
@@ -69,10 +71,10 @@ internal class GetScheduleInfoHandler : IRequestHandler<GetScheduleInfo, List<Sc
                     Participants = new List<string> { $"{reservation.Klient.KlientNavigation.Imie} {reservation.Klient.KlientNavigation.Nazwisko}" },
                     ReservationCost = reservation.Koszt,
                     Discount = reservation.Klient?.ZnizkaNaZajecia ?? 0
-                };              
+                };
             }
             else if (isTrainerRole)
-            {               
+            {
                 dto = new ScheduleInfoTrainerDto
                 {
                     Type = "Trainer",
@@ -101,49 +103,74 @@ internal class GetScheduleInfoHandler : IRequestHandler<GetScheduleInfo, List<Sc
             scheduleInfoDtos.Add(dto);
         }
 
-
         foreach (var scheduledClass in scheduledClasses)
         {
             ScheduleInfoBaseDto dto;
+
+            var dayOfWeekMap = new Dictionary<string, DayOfWeek>
+            {
+                { "Poniedziałek", DayOfWeek.Monday },
+                { "Wtorek", DayOfWeek.Tuesday },
+                { "Środa", DayOfWeek.Wednesday },
+                { "Czwartek", DayOfWeek.Thursday },
+                { "Piątek", DayOfWeek.Friday },
+                { "Sobota", DayOfWeek.Saturday },
+                { "Niedziela", DayOfWeek.Sunday }
+            };
+
+            var dayOfWeekString = scheduledClass.DzienTygodnia;
+            DateTime startDate, startTime, endTime;
+
+            if (dayOfWeekMap.TryGetValue(dayOfWeekString, out DayOfWeek dayOfWeek))
+            {
+                startDate = request.StartDate.AddDays((int)dayOfWeek - (int)request.StartDate.DayOfWeek);
+                startTime = startDate.AddMinutes(scheduledClass.GodzinaOd.TotalMinutes);
+                endTime = startTime.AddMinutes(scheduledClass.CzasTrwania);
+            }
+            else
+            {       
+                throw new InvalidOperationException($"Nieznany dzień tygodnia: {dayOfWeekString}");
+            }
 
             if (isAdminRole)
             {
                 dto = new ScheduleInfoAdminDto
                 {
                     Type = "Admin",
-                    Date = scheduledClass.DataZajecs.FirstOrDefault()?.Date ?? DateTime.MinValue,
-                    StartTime = scheduledClass.DataZajecs.FirstOrDefault()?.Date.TimeOfDay ?? TimeSpan.Zero,
-                    EndTime = scheduledClass.DataZajecs.FirstOrDefault()?.Date.AddMinutes(scheduledClass.CzasTrwania).TimeOfDay ?? TimeSpan.Zero,
+                    Date = startDate,
+                    StartTime = startTime.TimeOfDay,
+                    EndTime = endTime.TimeOfDay,
                     CourtNumber = scheduledClass.KortId,
                     TrainerName = scheduledClass.Pracownik?.PracownikNavigation != null
-                    ? $"{scheduledClass.Pracownik.PracownikNavigation.Imie} {scheduledClass.Pracownik.PracownikNavigation.Nazwisko}"
-                    : "Brak trenera",
+                        ? $"{scheduledClass.Pracownik.PracownikNavigation.Imie} {scheduledClass.Pracownik.PracownikNavigation.Nazwisko}"
+                        : "Brak trenera",
                     GroupName = scheduledClass.Zajecia?.Nazwa,
                     SkillLevel = scheduledClass.Zajecia?.IdPoziomZajecNavigation?.Nazwa,
-                    ReservationCost = scheduledClass.KoszZeSprzetem > 0
-                                      ? scheduledClass.KoszZeSprzetem
+                    ReservationCost = scheduledClass.KosztZeSprzetem > 0
+                                      ? scheduledClass.KosztZeSprzetem
                                       : (decimal?)0,
                     Participants = scheduledClass.GrafikZajecKlients
-                    .Select(g => $"{g.Klient.KlientNavigation.Imie} {g.Klient.KlientNavigation.Nazwisko}")
-                    .ToList()
+                        .Select(g => $"{g.Klient.KlientNavigation.Imie} {g.Klient.KlientNavigation.Nazwisko}")
+                        .ToList()
                 };
-            }else if (isTrainerRole)
+            }
+            else if (isTrainerRole)
             {
                 dto = new ScheduleInfoTrainerDto
                 {
                     Type = "Trainer",
-                    Date = scheduledClass.DataZajecs.FirstOrDefault()?.Date ?? DateTime.MinValue,
-                    StartTime = scheduledClass.DataZajecs.FirstOrDefault()?.Date.TimeOfDay ?? TimeSpan.Zero,
-                    EndTime = scheduledClass.DataZajecs.FirstOrDefault()?.Date.AddMinutes(scheduledClass.CzasTrwania).TimeOfDay ?? TimeSpan.Zero,
+                    Date = startDate,
+                    StartTime = startTime.TimeOfDay,
+                    EndTime = endTime.TimeOfDay,
                     CourtNumber = scheduledClass.KortId,
                     TrainerName = scheduledClass.Pracownik?.PracownikNavigation != null
-                   ? $"{scheduledClass.Pracownik.PracownikNavigation.Imie} {scheduledClass.Pracownik.PracownikNavigation.Nazwisko}"
-                   : "Brak trenera",
+                        ? $"{scheduledClass.Pracownik.PracownikNavigation.Imie} {scheduledClass.Pracownik.PracownikNavigation.Nazwisko}"
+                        : "Brak trenera",
                     GroupName = scheduledClass.Zajecia?.Nazwa,
                     SkillLevel = scheduledClass.Zajecia?.IdPoziomZajecNavigation?.Nazwa,
                     Participants = scheduledClass.GrafikZajecKlients
-                    .Select(g => $"{g.Klient.KlientNavigation.Imie} {g.Klient.KlientNavigation.Nazwisko}")
-                    .ToList()
+                        .Select(g => $"{g.Klient.KlientNavigation.Imie} {g.Klient.KlientNavigation.Nazwisko}")
+                        .ToList()
                 };
             }
             else
@@ -151,16 +178,15 @@ internal class GetScheduleInfoHandler : IRequestHandler<GetScheduleInfo, List<Sc
                 dto = new ScheduleInfoBasicDto
                 {
                     Type = "Basic",
-                    Date = scheduledClass.DataZajecs.FirstOrDefault()?.Date ?? DateTime.MinValue,
-                    StartTime = scheduledClass.DataZajecs.FirstOrDefault()?.Date.TimeOfDay ?? TimeSpan.Zero,
-                    EndTime = scheduledClass.DataZajecs.FirstOrDefault()?.Date.AddMinutes(scheduledClass.CzasTrwania).TimeOfDay ?? TimeSpan.Zero,
+                    Date = startDate,
+                    StartTime = startTime.TimeOfDay,
+                    EndTime = endTime.TimeOfDay,
                     CourtNumber = scheduledClass.KortId,
                 };
             }
 
             scheduleInfoDtos.Add(dto);
         }
-
         var json = JsonConvert.SerializeObject(scheduleInfoDtos, Formatting.Indented);
 
         return scheduleInfoDtos;

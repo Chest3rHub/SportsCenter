@@ -62,10 +62,8 @@ public class SportActivityRepository : ISportActivityRepository
             .Select(gz => new
             {
                 gz.CzasTrwania,
-                Date = _dbContext.DataZajecs
-                    .Where(dz => dz.GrafikZajecId == gz.GrafikZajecId)
-                    .Select(dz => dz.Date)
-                    .FirstOrDefault()
+                gz.DzienTygodnia,
+                gz.GodzinaOd
             })
             .FirstOrDefaultAsync();
 
@@ -74,7 +72,23 @@ public class SportActivityRepository : ISportActivityRepository
             return (null, null);
         }
 
-        return (activityDetails.Date, activityDetails.CzasTrwania);
+        string dzienTygodnia = activityDetails.DzienTygodnia;
+        TimeSpan godzinaOd = activityDetails.GodzinaOd;
+
+        var currentDate = DateTime.Now;
+
+        var dayOfWeek = Enum.GetValues(typeof(DayOfWeek)).Cast<DayOfWeek>()
+            .FirstOrDefault(d => d.ToString() == dzienTygodnia);
+
+        DateTime activityDate = currentDate.AddDays((int)dayOfWeek - (int)currentDate.DayOfWeek);
+        if ((int)dayOfWeek <= (int)currentDate.DayOfWeek)
+        {
+            activityDate = activityDate.AddDays(7);
+        }
+
+        DateTime finalDate = activityDate.Add(godzinaOd);
+
+        return (finalDate, activityDetails.CzasTrwania);
     }
     public async Task<bool> IsTrainerAssignedToActivityAsync(int activityId, int trainerId)
     {
@@ -84,18 +98,31 @@ public class SportActivityRepository : ISportActivityRepository
     }
     public async Task<(DateTime date, TimeSpan startTime, TimeSpan endTime)?> GetActivityDetailsAsync(int activityId, CancellationToken cancellationToken)
     {
-        var activity = await _dbContext.DataZajecs
-            .Where(d => d.GrafikZajecId == activityId)
-            .Select(d => new { d.Date, d.GrafikZajec.CzasTrwania })
+
+        var activity = await _dbContext.GrafikZajecs
+            .Where(g => g.ZajeciaId == activityId)
+            .Select(g => new { g.DzienTygodnia, g.GodzinaOd, g.CzasTrwania })
             .FirstOrDefaultAsync(cancellationToken);
 
         if (activity == null)
             return null;
 
-        var startDateTime = activity.Date;
-        var startTime = startDateTime.TimeOfDay;
-        var endTime = startTime + TimeSpan.FromMinutes(activity.CzasTrwania);
+        var currentDate = DateTime.Now;
 
-        return (startDateTime.Date, startTime, endTime);
+        var dayOfWeek = Enum.GetValues(typeof(DayOfWeek))
+            .Cast<DayOfWeek>()
+            .FirstOrDefault(d => d.ToString() == activity.DzienTygodnia);
+
+        DateTime activityDate = currentDate.AddDays((int)dayOfWeek - (int)currentDate.DayOfWeek);
+
+        if ((int)dayOfWeek <= (int)currentDate.DayOfWeek)
+        {
+            activityDate = activityDate.AddDays(7);
+        }
+
+        TimeSpan startTime = activityDate.Date.Add(activity.GodzinaOd).TimeOfDay;
+        TimeSpan endTime = startTime + TimeSpan.FromMinutes(activity.CzasTrwania);
+
+        return (activityDate.Date, startTime, endTime);
     }
 }

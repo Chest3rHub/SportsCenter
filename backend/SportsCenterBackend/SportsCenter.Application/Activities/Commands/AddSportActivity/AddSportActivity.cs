@@ -6,23 +6,27 @@ namespace SportsCenter.Application.Activities.Commands.AddSportActivity;
 public sealed record AddSportActivity : ICommand<Unit>
 {
     public string SportActivityName { get; set; }
-    public int LevelId { get; set; }
-    public int Duration { get; set; }
+    public string LevelName { get; set; }
+    public int DurationInMinutes { get; set; }
     public int EmployeeId { get; set; }
     public int ParticipantLimit { get; set; }
-    public int CourtId { get; set; }
+    public string CourtName { get; set; }
     public decimal CostWithoutEquipment { get; set; }
     public decimal CostWithEquipment { get; set; }
-    
-    public AddSportActivity(string sportActivityName, int levelId, int duration, int employeeId, int participantLimit, int courtId, decimal costWithoutEquipment, decimal costWithEquipment)
+    public DateTime StartDate { get; set; }
+    public string Recurrence { get; set; }
+
+    public AddSportActivity(string sportActivityName, string levelName, int durationInMinutes, int employeeId, int participantLimit, string courtName, decimal costWithoutEquipment, decimal costWithEquipment, DateTime startDate, string recurrence)
     {
         SportActivityName = sportActivityName;
-        LevelId = levelId;
-        Duration = duration;
+        LevelName = levelName;
+        DurationInMinutes = durationInMinutes;
         EmployeeId = employeeId;
         ParticipantLimit = participantLimit;
-        CourtId = courtId;
+        CourtName = courtName;
         CostWithoutEquipment = costWithoutEquipment;
         CostWithEquipment = costWithEquipment;
+        StartDate = startDate;
+        Recurrence = recurrence;
     }
 }

@@ -22,8 +22,6 @@ public partial class SportsCenterDbContext : DbContext
 
     public virtual DbSet<Certyfikat> Certyfikats { get; set; }
 
-    public virtual DbSet<DataZajec> DataZajecs { get; set; }
-
     public virtual DbSet<GodzinyPracyKlubu> GodzinyPracyKlubus { get; set; }
 
     public virtual DbSet<GrafikZajec> GrafikZajecs { get; set; }
@@ -116,22 +114,6 @@ public partial class SportsCenterDbContext : DbContext
             entity.Property(e => e.Nazwa).HasMaxLength(255);
         });
 
-        modelBuilder.Entity<DataZajec>(entity =>
-        {
-            entity.HasKey(e => e.DataZajecId).HasName("DataZajec_pk");
-
-            entity.ToTable("DataZajec");
-
-            entity.Property(e => e.DataZajecId).HasColumnName("DataZajecID");
-            entity.Property(e => e.Date).HasColumnType("datetime");
-            entity.Property(e => e.GrafikZajecId).HasColumnName("GrafikZajecID");
-
-            entity.HasOne(d => d.GrafikZajec).WithMany(p => p.DataZajecs)
-                .HasForeignKey(d => d.GrafikZajecId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("DataZajec_GrafikZajec");
-        });
-
         modelBuilder.Entity<GodzinyPracyKlubu>(entity =>
         {
             entity.HasKey(e => e.GodzinyPracyKlubuId).HasName("GodzinyPracyKlubuId");
@@ -151,9 +133,15 @@ public partial class SportsCenterDbContext : DbContext
             entity.ToTable("GrafikZajec");
 
             entity.Property(e => e.GrafikZajecId).HasColumnName("GrafikZajecID");
+            entity.Property(e => e.DzienTygodnia)
+                .IsRequired()
+                .HasMaxLength(20)
+                .HasColumnName("DzienTygodnia");
+            entity.Property(e => e.GodzinaOd)
+                .HasColumnName("GodzinaOd");
             entity.Property(e => e.KortId).HasColumnName("KortID");
-            entity.Property(e => e.KoszBezSprzetu).HasColumnType("decimal(5, 2)");
-            entity.Property(e => e.KoszZeSprzetem).HasColumnType("decimal(5, 2)");
+            entity.Property(e => e.KosztBezSprzetu).HasColumnType("decimal(5, 2)");
+            entity.Property(e => e.KosztZeSprzetem).HasColumnType("decimal(5, 2)");
             entity.Property(e => e.PracownikId).HasColumnName("PracownikID");
             entity.Property(e => e.ZajeciaId).HasColumnName("ZajeciaID");
 

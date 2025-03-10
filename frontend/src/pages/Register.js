@@ -4,8 +4,6 @@ import Header from '../components/Header';
 import GreenButton from '../components/GreenButton';
 import GreenBackground from '../components/GreenBackground';
 import OrangeBackground from '../components/OrangeBackground';
-import Navbar from '../components/Navbar';
-import OwnerSidebar from '../components/OwnerSidebar'
 import '../styles/auth.css';
 import { SportsContext } from '../context/SportsContext';
 import registerRequest from '../api/registerRequest';
@@ -172,7 +170,6 @@ function Register() {
 
   return (
     <>
-      <OwnerSidebar />
       <GreenBackground height={"80vh"} marginTop={"2vh"}>
         <Header>{dictionary.registerPage.title}</Header>
         <OrangeBackground width="70%">
@@ -288,7 +285,6 @@ function Register() {
             </Box>
           </form>
         </OrangeBackground>
-
       </GreenBackground>
     </>
   );

@@ -1,5 +1,5 @@
 -- Created by Vertabelo (http://vertabelo.com)
--- Last modification date: 2025-03-10 09:16:05.91
+-- Last modification date: 2025-03-11 20:52:32.82
 
 -- tables
 -- Table: Aktualnosci
@@ -42,6 +42,7 @@ CREATE TABLE GodzinyPracyKlubu (
 -- Table: GrafikZajec
 CREATE TABLE GrafikZajec (
     GrafikZajecID int  NOT NULL IDENTITY(1, 1),
+    DataStartuZajec date  NOT NULL,
     DzienTygodnia nvarchar(20)  NOT NULL,
     GodzinaOd time(0)  NOT NULL,
     CzasTrwania int  NOT NULL,
@@ -54,15 +55,24 @@ CREATE TABLE GrafikZajec (
     CONSTRAINT GrafikZajec_pk PRIMARY KEY  (GrafikZajecID)
 );
 
--- Table: GrafikZajec_Klient
-CREATE TABLE GrafikZajec_Klient (
-    GrafikZajecKlientID int  NOT NULL,
+-- Table: InstancjaZajec
+CREATE TABLE InstancjaZajec (
+    InstancjaZajecID int  NOT NULL IDENTITY(1, 1),
+    Data date  NOT NULL,
+    CzyOdwolane bit  NULL,
     GrafikZajecID int  NOT NULL,
+    CONSTRAINT InstancjaZajec_pk PRIMARY KEY  (InstancjaZajecID)
+);
+
+-- Table: InstancjaZajec_Klient
+CREATE TABLE InstancjaZajec_Klient (
+    InstancjaZajecKlientID int  NOT NULL IDENTITY(1, 1),
     KlientID int  NOT NULL,
     DataZapisu date  NOT NULL,
     DataWypisu date  NULL,
     CzyUwzglednicSprzet bit  NOT NULL,
-    CONSTRAINT GrafikZajec_Klient_pk PRIMARY KEY  (GrafikZajecKlientID)
+    InstancjaZajecID int  NOT NULL,
+    CONSTRAINT InstancjaZajec_Klient_pk PRIMARY KEY  (InstancjaZajecKlientID)
 );
 
 -- Table: Klient
@@ -93,7 +103,7 @@ CREATE TABLE Ocena (
     OcenaID int  NOT NULL IDENTITY(1, 1),
     Opis nvarchar(255)  NOT NULL,
     Gwiazdki int  NOT NULL,
-    GrafikZajecKlientID int  NOT NULL,
+    InstancjaZajecKlientID int  NOT NULL,
     DataWystawienia date  NOT NULL,
     CONSTRAINT Ocena_pk PRIMARY KEY  (OcenaID)
 );
@@ -258,15 +268,30 @@ ALTER TABLE GrafikZajec ADD CONSTRAINT GrafikZajec_Zajecia
     FOREIGN KEY (ZajeciaID)
     REFERENCES Zajecia (ZajeciaID);
 
+-- Reference: InstancjaZajec_GrafikZajec (table: InstancjaZajec)
+ALTER TABLE InstancjaZajec ADD CONSTRAINT InstancjaZajec_GrafikZajec
+    FOREIGN KEY (GrafikZajecID)
+    REFERENCES GrafikZajec (GrafikZajecID);
+
+-- Reference: InstancjaZajec_Klient (table: InstancjaZajec_Klient)
+ALTER TABLE InstancjaZajec_Klient ADD CONSTRAINT InstancjaZajec_Klient
+    FOREIGN KEY (KlientID)
+    REFERENCES Klient (KlientID);
+
+-- Reference: InstancjaZajec_Klient_InstancjaZajec (table: InstancjaZajec_Klient)
+ALTER TABLE InstancjaZajec_Klient ADD CONSTRAINT InstancjaZajec_Klient_InstancjaZajec
+    FOREIGN KEY (InstancjaZajecID)
+    REFERENCES InstancjaZajec (InstancjaZajecID);
+
 -- Reference: Klient_Osoba (table: Klient)
 ALTER TABLE Klient ADD CONSTRAINT Klient_Osoba
     FOREIGN KEY (KlientID)
     REFERENCES Osoba (OsobaID);
 
--- Reference: Ocena_GrafikZajec_Klient (table: Ocena)
-ALTER TABLE Ocena ADD CONSTRAINT Ocena_GrafikZajec_Klient
-    FOREIGN KEY (GrafikZajecKlientID)
-    REFERENCES GrafikZajec_Klient (GrafikZajecKlientID);
+-- Reference: Ocena_InstancjaZajec_Klient (table: Ocena)
+ALTER TABLE Ocena ADD CONSTRAINT Ocena_InstancjaZajec_Klient
+    FOREIGN KEY (InstancjaZajecKlientID)
+    REFERENCES InstancjaZajec_Klient (InstancjaZajecKlientID);
 
 -- Reference: Posiadanie_Certyfikat (table: Trener_Certyfikat)
 ALTER TABLE Trener_Certyfikat ADD CONSTRAINT Posiadanie_Certyfikat
@@ -309,16 +334,6 @@ ALTER TABLE Rezerwacja ADD CONSTRAINT Rezerwacja_Kort
 ALTER TABLE Rezerwacja ADD CONSTRAINT Rezerwacja_Pracownik
     FOREIGN KEY (TrenerID)
     REFERENCES Pracownik (PracownikID);
-
--- Reference: Table_34_GrafikZajec (table: GrafikZajec_Klient)
-ALTER TABLE GrafikZajec_Klient ADD CONSTRAINT Table_34_GrafikZajec
-    FOREIGN KEY (GrafikZajecID)
-    REFERENCES GrafikZajec (GrafikZajecID);
-
--- Reference: Table_34_Klient (table: GrafikZajec_Klient)
-ALTER TABLE GrafikZajec_Klient ADD CONSTRAINT Table_34_Klient
-    FOREIGN KEY (KlientID)
-    REFERENCES Klient (KlientID);
 
 -- Reference: Trener_Certyfikat_Pracownik (table: Trener_Certyfikat)
 ALTER TABLE Trener_Certyfikat ADD CONSTRAINT Trener_Certyfikat_Pracownik

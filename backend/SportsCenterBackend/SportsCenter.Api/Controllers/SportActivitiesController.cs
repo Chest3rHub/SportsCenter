@@ -6,6 +6,7 @@ using SportsCenter.Application.Activities.Commands.CancelSportActivity;
 using SportsCenter.Application.Activities.Commands.RemoveSportActivity;
 using SportsCenter.Application.Activities.Commands.SignUpForActivity;
 using SportsCenter.Application.Activities.Queries;
+using SportsCenter.Application.Activities.Queries.GetActivitySummary;
 using SportsCenter.Application.Activities.Queries.GetAllSportActivities;
 using SportsCenter.Application.Activities.Queries.GetSportActivity;
 using SportsCenter.Application.Exceptions.CourtsExceptions;
@@ -13,6 +14,7 @@ using SportsCenter.Application.Exceptions.EmployeesException;
 using SportsCenter.Application.Exceptions.EmployeesExceptions;
 using SportsCenter.Application.Exceptions.SportActivitiesException;
 using SportsCenter.Application.Exceptions.SportActivitiesExceptions;
+using SportsCenter.Application.Reservations.Queries.GetReservationSummary;
 
 namespace SportsCenter.Api.Controllers;
 
@@ -178,5 +180,21 @@ namespace SportsCenter.Api.Controllers;
             return StatusCode(StatusCodes.Status500InternalServerError, new { Message = "An unexpected error occurred.", Details = ex.Message });
         }
     }
+
+    //[Authorize(Roles = "Wlasciciel")]
+    [HttpGet("get-activity-summary")]
+        public async Task<IActionResult> GetActivitySummaryAsync([FromQuery] DateTime startDate, [FromQuery] DateTime endDate)
+        {
+            if (startDate > endDate) //nie jestem pewna gdzie ten warunek umiescic
+            {
+                return BadRequest("StartDate cannot be greater than EndDate.");
+            }
+
+            var query = new GetActivitySummary(startDate, endDate);
+            var result = await Mediator.Send(query);
+
+            return Ok(result);
+        }
 }
+
 

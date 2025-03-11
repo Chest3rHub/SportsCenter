@@ -92,7 +92,7 @@ namespace SportsCenter.Api.Controllers;
             return Ok(activity);
         }
 
-    //[Authorize(Roles = "Wlasciciel")]
+    [Authorize(Roles = "Wlasciciel")]
     [HttpDelete("remove-sport-activity")]
     public async Task<IActionResult> RemoveSportActivityAsync([FromBody] RemoveSportActivity removeSportActivity)
     {
@@ -116,7 +116,7 @@ namespace SportsCenter.Api.Controllers;
         }
     }
 
-    //[Authorize(Roles = "Klient")]
+    [Authorize(Roles = "Klient")]
     [HttpPost("sign-up-for-activity")]
     public async Task<IActionResult> SignUpForActivityAsync([FromBody] SignUpForActivity signUpForActivity)
     {
@@ -152,7 +152,7 @@ namespace SportsCenter.Api.Controllers;
         }
     }
 
-    //[Authorize(Roles = "Wlasciciel")]
+    [Authorize(Roles = "Wlasciciel")]
     [HttpPut("cancel-activity-instance")]
     public async Task<IActionResult> CancelSignUpForActivityAsync([FromBody] CancelSportActivity cancelSportActivity)
     {
@@ -181,7 +181,7 @@ namespace SportsCenter.Api.Controllers;
         }
     }
 
-    //[Authorize(Roles = "Wlasciciel")]
+    [Authorize(Roles = "Wlasciciel")]
     [HttpGet("get-activity-summary")]
         public async Task<IActionResult> GetActivitySummaryAsync([FromQuery] DateTime startDate, [FromQuery] DateTime endDate)
         {

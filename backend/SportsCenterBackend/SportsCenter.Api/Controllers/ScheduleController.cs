@@ -15,9 +15,9 @@ namespace SportsCenter.Api.Controllers
 
         [Authorize(Roles = "Wlasciciel,Klient,Gosc,Pomoc sprzatajaca,Trener,Pracownik administracyjny")]
         [HttpGet("Schedule-info")]
-        public async Task<IActionResult> GetScheduleInfo([FromQuery] DateTime startDate, [FromQuery] DateTime endDate)
+        public async Task<IActionResult> GetScheduleInfo([FromQuery] int weekOffset = 0)
         {
-            var query = new GetScheduleInfo(startDate, endDate);
+            var query = new GetScheduleInfo(weekOffset);
             var result = await Mediator.Send(query);
 
             return Ok(result);

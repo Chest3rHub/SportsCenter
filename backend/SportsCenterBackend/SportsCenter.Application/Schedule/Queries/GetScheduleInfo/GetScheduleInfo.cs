@@ -6,13 +6,11 @@ namespace SportsCenter.Application.Schedule.Queries.GetScheduleInfo
 {
     public class GetScheduleInfo : IQuery<List<ScheduleInfoBaseDto>>
     {
-        public DateTime StartDate { get; set; }
-        public DateTime EndDate { get; set; }
-      
-        public GetScheduleInfo(DateTime startDate, DateTime endDate)
+        public int WeekOffset { get; set; } = 0;
+
+        public GetScheduleInfo(int weekOffSet)
         {
-            StartDate = startDate;
-            EndDate = endDate;
+            WeekOffset = weekOffSet;
         }
     }
 }

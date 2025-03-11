@@ -10,9 +10,8 @@ namespace SportsCenter.Application.Reviews.Commands.AddReview
 {
     public sealed record AddReview : ICommand<Unit>
     {
-        public int ScheduleActivitiesClientId { get; set; }
+        public int ActivityId { get; set; }
         public string Description { get; set; }
         public int Stars { get; set; }
-        public int ClientId { get; set; }
     }
 }

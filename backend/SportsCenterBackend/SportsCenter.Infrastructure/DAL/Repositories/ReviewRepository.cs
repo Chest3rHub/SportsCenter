@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static SportsCenter.Core.Enums.ClientReviewStatus;
 
 namespace SportsCenter.Infrastructure.DAL.Repositories
 {
@@ -22,22 +23,49 @@ namespace SportsCenter.Infrastructure.DAL.Repositories
             _dbContext.Ocenas.AddAsync(ocena, cancellationToken);
             await _dbContext.SaveChangesAsync();
         }
-        public async Task<bool> CanUserReviewAsync(int grafikZajecKlientId, int clientId, CancellationToken cancellationToken)
-        {
+
+        public async Task<ReviewStatus> CanUserReviewAsync(int zajeciaId, int klientId, CancellationToken cancellationToken)
+        {    
             var grafikZajecKlient = await _dbContext.InstancjaZajecKlients
-                .FirstOrDefaultAsync(gzk => gzk.InstancjaZajecKlientId == grafikZajecKlientId && gzk.KlientId == clientId);
+                .Where(gzk => gzk.KlientId == klientId)
+                .Where(gzk => gzk.InstancjaZajecId ==
+                              _dbContext.InstancjaZajecs
+                                  .Where(iz => iz.GrafikZajec.ZajeciaId == zajeciaId)
+                                  .Select(iz => iz.InstancjaZajecId)
+                                  .FirstOrDefault())
+                .FirstOrDefaultAsync(cancellationToken);
 
             if (grafikZajecKlient == null)
-                return false;
+                return ReviewStatus.NotSignedUp;
+
+            var instancjaZajec = await _dbContext.InstancjaZajecs
+                .Where(iz => iz.InstancjaZajecId == grafikZajecKlient.InstancjaZajecId)
+                .FirstOrDefaultAsync(cancellationToken);
+
+            if (instancjaZajec == null)
+                return ReviewStatus.NotSignedUp; 
 
             var lastPossibleDate = DateOnly.FromDateTime(DateTime.UtcNow.AddDays(-14));
 
-            return grafikZajecKlient.DataZapisu >= lastPossibleDate;
+            if (instancjaZajec.Data < lastPossibleDate)
+                return ReviewStatus.ReviewPeriodExpired;
+         
+            return ReviewStatus.CanReview;
         }
-        public async Task<bool> HasUserAlreadyReviewedAsync(int scheduleActivitiesClientId, int clientId, CancellationToken cancellationToken)
-        {           
-            return await _dbContext.Ocenas
-                .AnyAsync(o => o.GrafikZajecKlientId == scheduleActivitiesClientId && o.InstancjaZajecKlient.KlientId == clientId, cancellationToken);
+        public async Task<bool> HasUserAlreadyReviewedAsync(int zajeciaId, int klientId, CancellationToken cancellationToken)
+        {
+            var instancjaZajecKlientId = await _dbContext.InstancjaZajecKlients
+                .Where(gzk => gzk.KlientId == klientId && gzk.InstancjaZajec.GrafikZajec.ZajeciaId == zajeciaId)
+                .Select(gzk => gzk.InstancjaZajecKlientId)
+                .FirstOrDefaultAsync(cancellationToken);
+
+            if (instancjaZajecKlientId == 0)
+                return false;
+
+            var ocenaExists = await _dbContext.Ocenas
+                .AnyAsync(o => o.GrafikZajecKlientId == instancjaZajecKlientId, cancellationToken);
+
+            return ocenaExists;
         }
     }
 }

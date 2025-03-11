@@ -151,4 +151,33 @@ public class SportActivityRepository : ISportActivityRepository
 
         return nowyPoziom.IdPoziomZajec;
     }
+    public async Task<InstancjaZajec> GetInstanceByScheduleAndDateAsync(GrafikZajec activitySchedule, DateOnly selectedDate, CancellationToken cancellationToken)
+    {
+       var selectedDateTime = selectedDate.ToDateTime(TimeOnly.MinValue);
+        return await _dbContext.InstancjaZajecs
+            .Where(i => i.GrafikZajecId == activitySchedule.GrafikZajecId && i.Data == DateOnly.FromDateTime(selectedDateTime.Date))
+            .FirstOrDefaultAsync(cancellationToken);
+    }
+
+    public async Task AddInstanceAsync(InstancjaZajec instancjaZajec, CancellationToken cancellationToken)
+    {
+        await _dbContext.InstancjaZajecs.AddAsync(instancjaZajec, cancellationToken);
+        await _dbContext.SaveChangesAsync(cancellationToken);
+    }
+    public async Task<GrafikZajec?> GetScheduleByActivityIdAsync(int activityId, CancellationToken cancellationToken)
+    {
+        return await _dbContext.GrafikZajecs
+            .Where(g => g.ZajeciaId == activityId)
+            .FirstOrDefaultAsync(cancellationToken);
+    }
+    public async Task<bool> IsClientSignedUpAsync(int klientId, int instancjaZajecId, CancellationToken cancellationToken)
+    {
+        return await _dbContext.InstancjaZajecKlients
+            .AnyAsync(i => i.KlientId == klientId && i.InstancjaZajecId == instancjaZajecId);
+    }
+    public async Task AddClientToInstanceAsync(InstancjaZajecKlient zapis, CancellationToken cancellationToken)
+    {
+        await _dbContext.InstancjaZajecKlients.AddAsync(zapis, cancellationToken);
+        await _dbContext.SaveChangesAsync(cancellationToken);
+    }
 }

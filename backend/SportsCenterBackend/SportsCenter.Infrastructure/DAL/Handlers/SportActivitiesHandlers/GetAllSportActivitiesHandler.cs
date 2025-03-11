@@ -30,6 +30,7 @@ namespace SportsCenter.Infrastructure.DAL.Handlers.SportActivitiesHandler
                     MaxParticipants = sa.GrafikZajecs.FirstOrDefault().LimitOsob,
                     CostWithoutEquipment = sa.GrafikZajecs.FirstOrDefault().KosztBezSprzetu,
                     CostWithEquipment = sa.GrafikZajecs.FirstOrDefault().KosztZeSprzetem,
+                    StartDate = sa.GrafikZajecs.FirstOrDefault().DataStartuZajec,
                     DayOfWeek = sa.GrafikZajecs.FirstOrDefault().DzienTygodnia,
                     StartHour = TimeOnly.FromTimeSpan(sa.GrafikZajecs.FirstOrDefault().GodzinaOd),
                     DurationInMinutes = sa.GrafikZajecs.FirstOrDefault().CzasTrwania,

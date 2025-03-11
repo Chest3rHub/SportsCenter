@@ -15,5 +15,5 @@ public partial class Ocena
 
     public DateOnly DataWystawienia { get; set; }
 
-    public virtual GrafikZajecKlient GrafikZajecKlient { get; set; } = null!;
+    public virtual InstancjaZajecKlient InstancjaZajecKlient { get; set; } = null!;
 }

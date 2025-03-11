@@ -96,11 +96,11 @@ internal class AddSportActivityHandler : IRequestHandler<AddSportActivity, Unit>
 
         var daysOfWeekTranslation = new Dictionary<DayOfWeek, string>
         {
-            { DayOfWeek.Monday, "poniedzia³ek" },
+            { DayOfWeek.Monday, "poniedzialek" },
             { DayOfWeek.Tuesday, "wtorek" },
-            { DayOfWeek.Wednesday, "œroda" },
+            { DayOfWeek.Wednesday, "sroda" },
             { DayOfWeek.Thursday, "czwartek" },
-            { DayOfWeek.Friday, "pi¹tek" },
+            { DayOfWeek.Friday, "piatek" },
             { DayOfWeek.Saturday, "sobota" },
             { DayOfWeek.Sunday, "niedziela" }
         };
@@ -162,6 +162,7 @@ internal class AddSportActivityHandler : IRequestHandler<AddSportActivity, Unit>
         var newSchedule = new GrafikZajec
         {
             DzienTygodnia = request.DayOfWeek,
+            DataStartuZajec = request.StartDate,
             GodzinaOd = startTimeSpan,
             CzasTrwania = request.DurationInMinutes,
             ZajeciaId = newSportActivity.ZajeciaId,

@@ -34,6 +34,7 @@ namespace SportsCenter.Infrastructure.DAL.Handlers.SportActivitiesHandler
                CostWithoutEquipment = sa.GrafikZajecs.FirstOrDefault().KosztBezSprzetu,
                CostWithEquipment = sa.GrafikZajecs.FirstOrDefault().KosztZeSprzetem,
                DayOfWeek = sa.GrafikZajecs.FirstOrDefault().DzienTygodnia,
+               StartDate = sa.GrafikZajecs.FirstOrDefault().DataStartuZajec,
                StartHour = TimeOnly.FromTimeSpan(sa.GrafikZajecs.FirstOrDefault().GodzinaOd),
                DurationInMinutes = sa.GrafikZajecs.FirstOrDefault().CzasTrwania,
                CourtName = sa.GrafikZajecs.FirstOrDefault().Kort.Nazwa

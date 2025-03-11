@@ -24,8 +24,8 @@ namespace SportsCenter.Infrastructure.DAL.Repositories
         }
         public async Task<bool> CanUserReviewAsync(int grafikZajecKlientId, int clientId, CancellationToken cancellationToken)
         {
-            var grafikZajecKlient = await _dbContext.GrafikZajecKlients
-                .FirstOrDefaultAsync(gzk => gzk.GrafikZajecKlientId == grafikZajecKlientId && gzk.KlientId == clientId);
+            var grafikZajecKlient = await _dbContext.InstancjaZajecKlients
+                .FirstOrDefaultAsync(gzk => gzk.InstancjaZajecKlientId == grafikZajecKlientId && gzk.KlientId == clientId);
 
             if (grafikZajecKlient == null)
                 return false;
@@ -37,7 +37,7 @@ namespace SportsCenter.Infrastructure.DAL.Repositories
         public async Task<bool> HasUserAlreadyReviewedAsync(int scheduleActivitiesClientId, int clientId, CancellationToken cancellationToken)
         {           
             return await _dbContext.Ocenas
-                .AnyAsync(o => o.GrafikZajecKlientId == scheduleActivitiesClientId && o.GrafikZajecKlient.KlientId == clientId, cancellationToken);
+                .AnyAsync(o => o.GrafikZajecKlientId == scheduleActivitiesClientId && o.InstancjaZajecKlient.KlientId == clientId, cancellationToken);
         }
     }
 }

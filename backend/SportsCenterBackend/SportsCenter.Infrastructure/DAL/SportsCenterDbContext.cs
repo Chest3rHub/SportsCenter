@@ -26,7 +26,9 @@ public partial class SportsCenterDbContext : DbContext
 
     public virtual DbSet<GrafikZajec> GrafikZajecs { get; set; }
 
-    public virtual DbSet<GrafikZajecKlient> GrafikZajecKlients { get; set; }
+    public virtual DbSet<InstancjaZajecKlient> InstancjaZajecKlients { get; set; }
+
+    public virtual DbSet<InstancjaZajec> InstancjaZajecs { get; set; }
 
     public virtual DbSet<Klient> Klients { get; set; }
 
@@ -139,6 +141,10 @@ public partial class SportsCenterDbContext : DbContext
                 .HasColumnName("DzienTygodnia");
             entity.Property(e => e.GodzinaOd)
                 .HasColumnName("GodzinaOd");
+            entity.Property(e => e.DataStartuZajec)
+                .HasColumnName("DataStartuZajec");
+            entity.Property(e => e.CzasTrwania)
+                .HasColumnName("CzasTrwania");
             entity.Property(e => e.KortId).HasColumnName("KortID");
             entity.Property(e => e.KosztBezSprzetu).HasColumnType("decimal(5, 2)");
             entity.Property(e => e.KosztZeSprzetem).HasColumnType("decimal(5, 2)");
@@ -159,29 +165,83 @@ public partial class SportsCenterDbContext : DbContext
                 .HasForeignKey(d => d.ZajeciaId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("GrafikZajec_Zajecia");
-        });
 
-        modelBuilder.Entity<GrafikZajecKlient>(entity =>
-        {
-            entity.HasKey(e => e.GrafikZajecKlientId).HasName("GrafikZajec_Klient_pk");
-
-            entity.ToTable("GrafikZajec_Klient");
-
-            entity.Property(e => e.GrafikZajecKlientId)
-                .ValueGeneratedNever()
-                .HasColumnName("GrafikZajecKlientID");
-            entity.Property(e => e.GrafikZajecId).HasColumnName("GrafikZajecID");
-            entity.Property(e => e.KlientId).HasColumnName("KlientID");
-
-            entity.HasOne(d => d.GrafikZajec).WithMany(p => p.GrafikZajecKlients)
+            entity.HasMany(d => d.InstancjaZajec)
+                .WithOne(p => p.GrafikZajec)
                 .HasForeignKey(d => d.GrafikZajecId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("Table_34_GrafikZajec");
+                .HasConstraintName("InstancjaZajec_GrafikZajec");
+        });
 
-            entity.HasOne(d => d.Klient).WithMany(p => p.GrafikZajecKlients)
+        modelBuilder.Entity<InstancjaZajec>(entity =>
+        {
+            entity.HasKey(e => e.InstancjaZajecId).HasName("InstancjaZajec_pk");
+
+            entity.ToTable("InstancjaZajec");
+
+            entity.Property(e => e.InstancjaZajecId)
+                .HasColumnName("InstancjaZajecID");
+
+            entity.Property(e => e.GrafikZajecId).HasColumnName("GrafikZajecID");
+
+            entity.Property(e => e.Data)
+                .HasColumnName("Data")
+                .HasColumnType("date");
+
+            entity.Property(e => e.CzyOdwolane)
+                .HasColumnName("CzyOdwolane")
+                .HasDefaultValue(false)
+                .IsRequired(false);
+
+            entity.HasOne(d => d.GrafikZajec)
+                .WithMany(p => p.InstancjaZajec)
+                .HasForeignKey(d => d.GrafikZajecId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("InstancjaZajec_GrafikZajec");
+
+            entity.HasMany(d => d.InstancjaZajecKlients)
+                .WithOne(p => p.InstancjaZajec)
+                .HasForeignKey(d => d.InstancjaZajecId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("InstancjaZajec_Klient_InstancjaZajec");
+        });
+
+        modelBuilder.Entity<InstancjaZajecKlient>(entity =>
+        {
+            entity.HasKey(e => e.InstancjaZajecKlientId).HasName("InstancjaZajec_Klient_pk");
+
+            entity.ToTable("InstancjaZajec_Klient");
+
+            entity.Property(e => e.InstancjaZajecKlientId)
+                .HasColumnName("InstancjaZajecKlientID");
+
+            entity.Property(e => e.InstancjaZajecId).HasColumnName("InstancjaZajecID");
+            entity.Property(e => e.KlientId).HasColumnName("KlientID");
+
+            entity.Property(e => e.DataZapisu)
+                .HasColumnName("DataZapisu")
+                .HasColumnType("date");
+
+            entity.Property(e => e.DataWypisu)
+            .HasColumnName("DataWypisu")
+            .HasColumnType("date")
+            .IsRequired(false); 
+
+            entity.Property(e => e.CzyUwzglednicSprzet)
+                .HasColumnName("CzyUwzglednicSprzet")
+                .HasDefaultValue(false);
+
+            entity.HasOne(d => d.InstancjaZajec)
+                .WithMany(p => p.InstancjaZajecKlients)
+                .HasForeignKey(d => d.InstancjaZajecId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("InstancjaZajec_Klient_InstancjaZajec");
+
+            entity.HasOne(d => d.Klient)
+                .WithMany(p => p.InstancjaZajecKlients)
                 .HasForeignKey(d => d.KlientId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("Table_34_Klient");
+                .HasConstraintName("InstancjaZajec_Klient");
         });
 
         modelBuilder.Entity<Klient>(entity =>
@@ -236,13 +296,13 @@ public partial class SportsCenterDbContext : DbContext
             entity.ToTable("Ocena");
 
             entity.Property(e => e.OcenaId).HasColumnName("OcenaID");
-            entity.Property(e => e.GrafikZajecKlientId).HasColumnName("GrafikZajecKlientID");
+            entity.Property(e => e.GrafikZajecKlientId).HasColumnName("InstancjaZajecKlientID");
             entity.Property(e => e.Opis).HasMaxLength(255);
 
-            entity.HasOne(d => d.GrafikZajecKlient).WithMany(p => p.Ocenas)
+            entity.HasOne(d => d.InstancjaZajecKlient).WithMany(p => p.Ocenas)
                 .HasForeignKey(d => d.GrafikZajecKlientId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("Ocena_GrafikZajec_Klient");
+                .HasConstraintName("Ocena_InstancjaZajec_Klient");
         });
 
         modelBuilder.Entity<Osoba>(entity =>

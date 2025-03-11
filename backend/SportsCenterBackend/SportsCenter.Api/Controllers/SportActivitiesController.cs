@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SportsCenter.Application.Activities.Commands.AddSportActivity;
 using SportsCenter.Application.Activities.Commands.RemoveSportActivity;
+using SportsCenter.Application.Activities.Commands.SignUpForActivity;
 using SportsCenter.Application.Activities.Queries;
 using SportsCenter.Application.Activities.Queries.GetAllSportActivities;
 using SportsCenter.Application.Activities.Queries.GetSportActivity;
@@ -105,6 +106,42 @@ namespace SportsCenter.Api.Controllers;
         catch (SportActivityNotFoundException ex)
         {
             return NotFound(new { message = ex.Message });
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError, new { Message = "An unexpected error occurred.", Details = ex.Message });
+        }
+    }
+
+    //[Authorize(Roles = "Klient")]
+    [HttpPost("sign-up-for-activity")]
+    public async Task<IActionResult> SignUpForActivityAsync([FromBody] SignUpForActivity signUpForActivity)
+    {
+        var validationResults = new SignUpForActivityValidator().Validate(signUpForActivity);
+        if (!validationResults.IsValid)
+        {
+            return BadRequest(validationResults.Errors);
+        }
+        try
+        {
+            await Mediator.Send(signUpForActivity);
+            return Ok(new { Message = "Successfully signed up for the activity." });
+        }
+        catch (SportActivityNotFoundException ex)
+        {
+            return NotFound(new { message = ex.Message });
+        }
+        catch (InvalidDayOfWeekException ex)
+        {
+            return Conflict(new { message = ex.Message });
+        }
+        catch (ActivityTimeTooFarException ex)
+        {
+            return Conflict(new { message = ex.Message });
+        }
+        catch (ClientAlreadySignedUpException ex)
+        {
+            return Conflict(new { message = ex.Message });
         }
         catch (Exception ex)
         {

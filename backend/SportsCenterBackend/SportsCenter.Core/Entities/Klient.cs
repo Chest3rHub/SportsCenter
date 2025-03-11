@@ -13,7 +13,7 @@ public partial class Klient
 
     public int? ZnizkaNaProdukty { get; set; }
 
-    public virtual ICollection<GrafikZajecKlient> GrafikZajecKlients { get; set; } = new List<GrafikZajecKlient>();
+    public virtual ICollection<InstancjaZajecKlient> InstancjaZajecKlients { get; set; } = new List<InstancjaZajecKlient>();
 
     public virtual Osoba KlientNavigation { get; set; } = null!;
 

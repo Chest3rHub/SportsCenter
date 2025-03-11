@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using SportsCenter.Core.Entities;
+using Stripe.Forwarding;
 namespace SportsCenter.Core.Repositories;
 
 public interface ISportActivityRepository
@@ -14,4 +15,9 @@ public interface ISportActivityRepository
     Task<bool> IsTrainerAssignedToActivityAsync(int activityId, int trainerId);
     Task<(DateTime date, TimeSpan startTime, TimeSpan endTime)?> GetActivityDetailsAsync(int activityId, CancellationToken cancellationToken);
     Task<int> EnsureLevelNameExistsAsync(string levelName, CancellationToken cancellationToken);
+    Task<InstancjaZajec> GetInstanceByScheduleAndDateAsync(GrafikZajec activitySchedule, DateOnly selectedDate, CancellationToken cancellationToken);
+    Task AddInstanceAsync(InstancjaZajec instancjaZajec, CancellationToken cancellationToken);
+    Task<GrafikZajec?> GetScheduleByActivityIdAsync(int activityId, CancellationToken cancellationToken);
+    Task<bool> IsClientSignedUpAsync(int klientId, int instancjaZajecId, CancellationToken cancellationToken);
+    Task AddClientToInstanceAsync(InstancjaZajecKlient zapis, CancellationToken cancellationToken);
 }

@@ -79,20 +79,20 @@ namespace SportsCenter.Application.Activities.Commands.SignUpForActivity
                 throw new InvalidDayOfWeekException(scheduleActivity.DzienTygodnia, request.SelectedDate);
             }
 
-            var instancjaZajec = await _sportActivityRepository.GetInstanceByScheduleAndDateAsync(scheduleActivity, request.SelectedDate, cancellationToken);
+            var instanceOfActivity = await _sportActivityRepository.GetInstanceByScheduleAndDateAsync(scheduleActivity, request.SelectedDate, cancellationToken);
 
-            if (instancjaZajec == null)
+            if (instanceOfActivity == null)
             {
-                instancjaZajec = new InstancjaZajec
+                instanceOfActivity = new InstancjaZajec
                 {
                     Data = request.SelectedDate,
                     CzyOdwolane = false,
                     GrafikZajecId = scheduleActivity.GrafikZajecId       
                 };
-                await _sportActivityRepository.AddInstanceAsync(instancjaZajec, cancellationToken);
+                await _sportActivityRepository.AddInstanceAsync(instanceOfActivity, cancellationToken);
             }
 
-            var czyJuzZapisany = await _sportActivityRepository.IsClientSignedUpAsync(clientId, instancjaZajec.InstancjaZajecId, cancellationToken);
+            var czyJuzZapisany = await _sportActivityRepository.IsClientSignedUpAsync(clientId, instanceOfActivity.InstancjaZajecId, cancellationToken);
             if (czyJuzZapisany)
             {
                 throw new ClientAlreadySignedUpException(clientId);
@@ -104,7 +104,7 @@ namespace SportsCenter.Application.Activities.Commands.SignUpForActivity
                 DataZapisu = DateOnly.FromDateTime(DateTime.UtcNow),
                 DataWypisu = null,
                 CzyUwzglednicSprzet = request.IsEquipmentIncluded,
-                InstancjaZajecId = instancjaZajec.InstancjaZajecId   
+                InstancjaZajecId = instanceOfActivity.InstancjaZajecId   
             };
 
             await _sportActivityRepository.AddClientToInstanceAsync(zapis, cancellationToken);

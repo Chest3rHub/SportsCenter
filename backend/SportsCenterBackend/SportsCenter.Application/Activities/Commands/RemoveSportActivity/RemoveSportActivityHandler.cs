@@ -15,7 +15,7 @@ internal sealed class RemoveSportActivityHandler : IRequestHandler<RemoveSportAc
     }
 
     public async Task<Unit> Handle(RemoveSportActivity request, CancellationToken cancellationToken)
-    {
+    { 
         var activity = await _activityRepository.GetSportActivityByIdAsync(request.SportActivityId, cancellationToken);
 
         if (activity == null)

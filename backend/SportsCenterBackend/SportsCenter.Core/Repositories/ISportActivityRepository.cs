@@ -20,4 +20,5 @@ public interface ISportActivityRepository
     Task<GrafikZajec?> GetScheduleByActivityIdAsync(int activityId, CancellationToken cancellationToken);
     Task<bool> IsClientSignedUpAsync(int klientId, int instancjaZajecId, CancellationToken cancellationToken);
     Task AddClientToInstanceAsync(InstancjaZajecKlient zapis, CancellationToken cancellationToken);
+    Task CancelInstanceOfActivityAsync(int instancjaZajecId, CancellationToken cancellationToken);
 }

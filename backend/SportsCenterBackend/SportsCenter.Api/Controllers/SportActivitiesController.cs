@@ -2,6 +2,7 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SportsCenter.Application.Activities.Commands.AddSportActivity;
+using SportsCenter.Application.Activities.Commands.CancelSportActivity;
 using SportsCenter.Application.Activities.Commands.RemoveSportActivity;
 using SportsCenter.Application.Activities.Commands.SignUpForActivity;
 using SportsCenter.Application.Activities.Queries;
@@ -74,11 +75,11 @@ namespace SportsCenter.Api.Controllers;
             return StatusCode(StatusCodes.Status500InternalServerError, new { Message = "An unexpected error occurred.", Details = ex.Message });
         }
     }
-        
-    [HttpGet("Get-all-sport-activities")]
-        public async Task<IActionResult> GetAllSportActivitiesAsync()
+
+    [HttpGet("Get-schedule--activities")]
+    public async Task<IActionResult> GetAllSportActivitiesAsync([FromQuery] int weekOffset = 0)
         {
-            var activities = await Mediator.Send(new GetAllSportActivities());
+            var activities = await Mediator.Send(new GetAllSportActivities(weekOffset));
             return Ok(activities);
         }
 
@@ -140,6 +141,35 @@ namespace SportsCenter.Api.Controllers;
             return Conflict(new { message = ex.Message });
         }
         catch (ClientAlreadySignedUpException ex)
+        {
+            return Conflict(new { message = ex.Message });
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError, new { Message = "An unexpected error occurred.", Details = ex.Message });
+        }
+    }
+
+    //[Authorize(Roles = "Wlasciciel")]
+    [HttpPut("cancel-activity-instance")]
+    public async Task<IActionResult> CancelSignUpForActivityAsync([FromBody] CancelSportActivity cancelSportActivity)
+    {
+        var validationResults = new CancelSportActivityValidator().Validate(cancelSportActivity);
+        if (!validationResults.IsValid)
+        {
+            return BadRequest(validationResults.Errors);
+        }
+
+        try
+        {
+            await Mediator.Send(cancelSportActivity);
+            return Ok(new { Message = "Successfully canceled the activity instance." });
+        }
+        catch (SportActivityNotFoundException ex)
+        {
+            return NotFound(new { message = ex.Message });
+        }
+        catch (InvalidActivityDateException ex)
         {
             return Conflict(new { message = ex.Message });
         }

@@ -180,4 +180,12 @@ public class SportActivityRepository : ISportActivityRepository
         await _dbContext.InstancjaZajecKlients.AddAsync(zapis, cancellationToken);
         await _dbContext.SaveChangesAsync(cancellationToken);
     }
+    public async Task CancelInstanceOfActivityAsync(int instancjaZajecId, CancellationToken cancellationToken)
+    {
+        var instanceOfActivity = await _dbContext.InstancjaZajecs
+            .FirstOrDefaultAsync(i => i.InstancjaZajecId == instancjaZajecId);
+
+            instanceOfActivity.CzyOdwolane = true;
+            await _dbContext.SaveChangesAsync(cancellationToken);
+    }
 }

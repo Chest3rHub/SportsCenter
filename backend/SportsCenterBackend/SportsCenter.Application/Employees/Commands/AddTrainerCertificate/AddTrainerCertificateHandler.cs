@@ -38,6 +38,12 @@ namespace SportsCenter.Application.Employees.Commands.AddTrainerCertificate
                 throw new NotTrainerEmployeeException(trainer.PracownikId);
             }
 
+            bool isDismissed = await _employeeRepository.IsEmployeeDismissedAsync(request.TrainerId, cancellationToken);
+            if (isDismissed)
+            {
+                throw new EmployeeDismissedException(request.TrainerId);
+            }
+
             var newCertificate = new Certyfikat
             {
                 Nazwa = request.CertificateName

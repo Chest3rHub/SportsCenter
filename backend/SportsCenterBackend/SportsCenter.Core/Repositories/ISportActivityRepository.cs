@@ -16,9 +16,9 @@ public interface ISportActivityRepository
     Task<(DateTime date, TimeSpan startTime, TimeSpan endTime)?> GetActivityDetailsAsync(int activityId, CancellationToken cancellationToken);
     Task<int> EnsureLevelNameExistsAsync(string levelName, CancellationToken cancellationToken);
     Task<InstancjaZajec> GetInstanceByScheduleAndDateAsync(GrafikZajec activitySchedule, DateOnly selectedDate, CancellationToken cancellationToken);
-    Task AddInstanceAsync(InstancjaZajec instancjaZajec, CancellationToken cancellationToken);
+    Task AddInstanceAsync(InstancjaZajec instatnionOfActivity, CancellationToken cancellationToken);
     Task<GrafikZajec?> GetScheduleByActivityIdAsync(int activityId, CancellationToken cancellationToken);
-    Task<bool> IsClientSignedUpAsync(int klientId, int instancjaZajecId, CancellationToken cancellationToken);
+    Task<bool> IsClientSignedUpAsync(int clientId, int instatnionOfActivity, CancellationToken cancellationToken);
     Task AddClientToInstanceAsync(InstancjaZajecKlient zapis, CancellationToken cancellationToken);
-    Task CancelInstanceOfActivityAsync(int instancjaZajecId, CancellationToken cancellationToken);
+    Task CancelInstanceOfActivityAsync(int instatnionOfActivity, CancellationToken cancellationToken);
 }

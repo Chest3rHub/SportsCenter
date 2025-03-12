@@ -11,12 +11,10 @@ namespace SportsCenter.Core.Repositories
     {
         Task AddReservationAsync(Rezerwacja reservation, CancellationToken cancellationToken);
 
-        //metoda ponizej ma byc tylko w ICourtRepository
         Task<bool> IsCourtAvailableAsync(int courtId, DateTime startTime, DateTime endTime, CancellationToken cancellationToken);
         Task<Rezerwacja> GetReservationByIdAsync(int reservationId, CancellationToken cancellationToken);
         Task UpdateReservationAsync(Rezerwacja reservation, CancellationToken cancellationToken);
-        Task DeleteReservationAsync(Rezerwacja reservation, CancellationToken cancellationToken);
-        //metoda ponizej ma byc tylko w ICourtRepository
+        Task DeleteReservationAsync(Rezerwacja reservation, CancellationToken cancellationToken);       
         Task<IEnumerable<Kort>> GetAvailableCourtsAsync(DateTime startTime, DateTime endTime, CancellationToken cancellationToken);
         Task<IEnumerable<Pracownik>> GetAvailableTrainersAsync(DateTime startTime, DateTime endTime, CancellationToken cancellationToken);
         Task<IEnumerable<Rezerwacja>> GetReservationsByTrainerIdAsync(int trainerId, CancellationToken cancellationToken);

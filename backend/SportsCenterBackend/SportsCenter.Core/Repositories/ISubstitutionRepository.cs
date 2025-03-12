@@ -10,9 +10,9 @@ namespace SportsCenter.Core.Repositories
     public interface ISubstitutionRepository
     {
         Task AddSubstitutionForReservationAsync(Zastepstwo substitution);
-        Task<bool> HasEmployeeAlreadyRequestedSubstitutionForReservationAsync(int reservationId, int pracownikId);
-        Task AddSubstitutionForActivitiesAsync(Zastepstwo zastepstwo);
-        Task<bool> HasEmployeeAlreadyRequestedSubstitutionAsync(int zajeciaId, int pracownikId);
+        Task<bool> HasEmployeeAlreadyRequestedSubstitutionForReservationAsync(int reservationId, int employeeId);
+        Task AddSubstitutionForActivitiesAsync(Zastepstwo substitution);
+        Task<bool> HasEmployeeAlreadyRequestedSubstitutionAsync(int activityId, int employeeId);
         Task<Zastepstwo> GetSubstitutionByIdAsync(int substitutionId, CancellationToken cancellationToken);
         Task UpdateSubstitutionAsync(int substitutionId, int substituteEmployeeId, int approvedEmployeeId, CancellationToken cancellationToken);
     }

@@ -33,11 +33,11 @@ namespace SportsCenter.Application.Employees.Commands.EditTask
                 throw new UnauthorizedAccessException("No permission to edit task.");
             }
 
-            var existingTask = await _employeeRepository.GetTaskByIdAsync(request.ZadanieId, cancellationToken);
+            var existingTask = await _employeeRepository.GetTaskByIdAsync(request.TaskId, cancellationToken);
 
             if (existingTask == null)
             {
-                throw new TaskNotFoundException(request.ZadanieId);
+                throw new TaskNotFoundException(request.TaskId);
             }
 
             if (existingTask.PracownikZlecajacyId != userId)
@@ -45,8 +45,8 @@ namespace SportsCenter.Application.Employees.Commands.EditTask
                 throw new UnauthorizedAccessException("You can only edit your own tasks.");
             }
 
-            existingTask.Opis = request.Opis;
-            existingTask.DataDo = DateOnly.FromDateTime(request.DataDo);
+            existingTask.Opis = request.Description;
+            existingTask.DataDo = DateOnly.FromDateTime(request.DateTo);
 
             await _employeeRepository.UpdateTaskAsync(existingTask, cancellationToken);
 

@@ -170,20 +170,20 @@ public class SportActivityRepository : ISportActivityRepository
             .Where(g => g.ZajeciaId == activityId)
             .FirstOrDefaultAsync(cancellationToken);
     }
-    public async Task<bool> IsClientSignedUpAsync(int klientId, int instancjaZajecId, CancellationToken cancellationToken)
+    public async Task<bool> IsClientSignedUpAsync(int clientId, int instantionOfActivity, CancellationToken cancellationToken)
     {
         return await _dbContext.InstancjaZajecKlients
-            .AnyAsync(i => i.KlientId == klientId && i.InstancjaZajecId == instancjaZajecId);
+            .AnyAsync(i => i.KlientId == clientId && i.InstancjaZajecId == instantionOfActivity);
     }
-    public async Task AddClientToInstanceAsync(InstancjaZajecKlient zapis, CancellationToken cancellationToken)
+    public async Task AddClientToInstanceAsync(InstancjaZajecKlient signUp, CancellationToken cancellationToken)
     {
-        await _dbContext.InstancjaZajecKlients.AddAsync(zapis, cancellationToken);
+        await _dbContext.InstancjaZajecKlients.AddAsync(signUp, cancellationToken);
         await _dbContext.SaveChangesAsync(cancellationToken);
     }
-    public async Task CancelInstanceOfActivityAsync(int instancjaZajecId, CancellationToken cancellationToken)
+    public async Task CancelInstanceOfActivityAsync(int instantionOfActivityId, CancellationToken cancellationToken)
     {
         var instanceOfActivity = await _dbContext.InstancjaZajecs
-            .FirstOrDefaultAsync(i => i.InstancjaZajecId == instancjaZajecId);
+            .FirstOrDefaultAsync(i => i.InstancjaZajecId == instantionOfActivityId);
 
             instanceOfActivity.CzyOdwolane = true;
             await _dbContext.SaveChangesAsync(cancellationToken);

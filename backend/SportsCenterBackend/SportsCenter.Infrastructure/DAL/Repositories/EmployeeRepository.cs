@@ -224,12 +224,12 @@ namespace SportsCenter.Infrastructure.DAL.Repositories
 
             if (hasReservations) return TrainerAvailabilityStatus.HasReservations;
 
-            string dzienTygodnia = requestedStart.ToString("dddd", new System.Globalization.CultureInfo("pl-PL"));
-            var grafikZajec = await _dbContext.GrafikZajecs
-                .Where(gz => gz.PracownikId == trainerId && gz.DzienTygodnia == dzienTygodnia)
+            string dayOfWeek = requestedStart.ToString("dddd", new System.Globalization.CultureInfo("pl-PL"));
+            var activitiesSchedule = await _dbContext.GrafikZajecs
+                .Where(gz => gz.PracownikId == trainerId && gz.DzienTygodnia == dayOfWeek)
                 .ToListAsync(cancellationToken);
 
-            foreach (var grafik in grafikZajec)
+            foreach (var grafik in activitiesSchedule)
             {              
                 int godzinaOdInMinutes = (int)grafik.GodzinaOd.TotalMinutes;
                 int godzinaDoInMinutes = godzinaOdInMinutes + grafik.CzasTrwania;
@@ -241,11 +241,11 @@ namespace SportsCenter.Infrastructure.DAL.Repositories
                 }
             }
 
-            var brakDostepnosci = await _dbContext.BrakDostepnoscis
+            var unavailability = await _dbContext.BrakDostepnoscis
                 .Where(bd => bd.PracownikId == trainerId)
                 .ToListAsync(cancellationToken);
 
-            foreach (var bd in brakDostepnosci)
+            foreach (var bd in unavailability)
             {              
                 DateTime startDateTime = bd.Data.ToDateTime(bd.GodzinaOd);
                 DateTime endDateTime = bd.Data.ToDateTime(bd.GodzinaDo);
@@ -258,6 +258,13 @@ namespace SportsCenter.Infrastructure.DAL.Repositories
                 }
             }   
             return TrainerAvailabilityStatus.Available;
+        }
+        public async Task<bool> IsEmployeeDismissedAsync(int employeeId, CancellationToken cancellationToken)
+        {
+            return await _dbContext.Pracowniks
+                .Where(p => p.PracownikId == employeeId)
+                .Select(p => p.DataZwolnienia != null)
+                .FirstOrDefaultAsync(cancellationToken);
         }
     }
 }

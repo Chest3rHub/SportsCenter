@@ -20,25 +20,25 @@ namespace SportsCenter.Infrastructure.DAL.Repositories
 
         public async Task<bool> IsCourtAvailableAsync(int courtId, DateTime startTime, DateTime endTime, CancellationToken cancellationToken)
         {
-            string dzienTygodnia = startTime.ToString("dddd", new System.Globalization.CultureInfo("pl-PL"));
-            double godzinaOdMinutes = startTime.TimeOfDay.TotalMinutes;
-            double godzinaDoMinutes = endTime.TimeOfDay.TotalMinutes;
+            string dayOfWeek = startTime.ToString("dddd", new System.Globalization.CultureInfo("pl-PL"));
+            double startHourInMinutes = startTime.TimeOfDay.TotalMinutes;
+            double endHourInMinutes = endTime.TimeOfDay.TotalMinutes;
 
             bool isReserved = await _dbContext.Rezerwacjas
                 .AnyAsync(r => r.KortId == courtId &&
                                r.DataOd < endTime &&
                                r.DataDo > startTime, cancellationToken);
 
-            var zajecia = await _dbContext.GrafikZajecs
-                .Where(gz => gz.KortId == courtId && gz.DzienTygodnia == dzienTygodnia)
+            var activity = await _dbContext.GrafikZajecs
+                .Where(gz => gz.KortId == courtId && gz.DzienTygodnia == dayOfWeek)
                 .ToListAsync(cancellationToken);
 
-            bool hasOverlappingClasses = zajecia.Any(gz =>
+            bool hasOverlappingClasses = activity.Any(gz =>
             {
                 double zajeciaEndMinutes = gz.GodzinaOd.TotalMinutes + (gz.CzasTrwania * 60);
 
-                return (gz.GodzinaOd.TotalMinutes < godzinaDoMinutes) &&
-                       (zajeciaEndMinutes > godzinaOdMinutes);
+                return (gz.GodzinaOd.TotalMinutes < endHourInMinutes) &&
+                       (zajeciaEndMinutes > startHourInMinutes);
             });
 
             return !isReserved && !hasOverlappingClasses;
@@ -46,9 +46,9 @@ namespace SportsCenter.Infrastructure.DAL.Repositories
 
         public async Task<IEnumerable<Kort>> GetAvailableCourtsAsync(DateTime startTime, DateTime endTime, CancellationToken cancellationToken)
         {
-            string dzienTygodnia = startTime.ToString("dddd", new System.Globalization.CultureInfo("pl-PL"));
-            TimeSpan godzinaOd = startTime.TimeOfDay;
-            TimeSpan godzinaDo = endTime.TimeOfDay;
+            string dayOfWeek = startTime.ToString("dddd", new System.Globalization.CultureInfo("pl-PL"));
+            TimeSpan startHour = startTime.TimeOfDay;
+            TimeSpan endHour = endTime.TimeOfDay;
 
             var availableCourts = await _dbContext.Korts
                 .Where(c => !_dbContext.Rezerwacjas
@@ -59,13 +59,13 @@ namespace SportsCenter.Infrastructure.DAL.Repositories
 
             availableCourts = availableCourts
                 .Where(c => !_dbContext.GrafikZajecs
-                    .Where(gz => gz.KortId == c.KortId && gz.DzienTygodnia == dzienTygodnia)
+                    .Where(gz => gz.KortId == c.KortId && gz.DzienTygodnia == dayOfWeek)
                     .AsEnumerable()
                     .Any(gz =>
                     {
                         TimeSpan godzinaZakonczeniaZajec = gz.GodzinaOd.Add(TimeSpan.FromMinutes(gz.CzasTrwania));
 
-                        return (gz.GodzinaOd < godzinaDo) && (godzinaZakonczeniaZajec > godzinaOd);
+                        return (gz.GodzinaOd < endHour) && (godzinaZakonczeniaZajec > startHour);
                     }))
                 .ToList();
 

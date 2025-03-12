@@ -31,10 +31,10 @@ namespace SportsCenter.Core.Repositories
         Task AddAbsenceRequestAsync(BrakDostepnosci absenceRequest, CancellationToken cancellationToken);
         Task<BrakDostepnosci?> GetAbsenceRequestAsync(int employeeId, DateOnly date);
         Task UpdateAbsenceRequestAsync(BrakDostepnosci absenceRequest, CancellationToken cancellationToken);
-        //Task<bool> IsTrainerAvailableAsync(int trainerId, DateTime startTime, DateTime endTime, CancellationToken cancellationToken);
         Task UpdateAbsenceRequestAsync(int requestId, CancellationToken cancellationToken);
         Task<bool> ExistsAbsenceRequestAsync(int requestId, CancellationToken cancellationToken);
         Task<bool> IsAbsenceRequestPendingAsync(int requestId, CancellationToken cancellationToken);
         Task<TrainerAvailabilityStatus> IsTrainerAvailableAsync(int trainerId, DateTime requestedStart, int startHourInMinutes, int endHourInMinutes, CancellationToken cancellationToken);
+        Task<bool> IsEmployeeDismissedAsync(int employeeId, CancellationToken cancellationToken);
     }
 }

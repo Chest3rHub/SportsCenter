@@ -6,11 +6,11 @@ public class RegisterClientValidator : AbstractValidator<RegisterClient>
 {
     public RegisterClientValidator()
     {
-        RuleFor(x => x.Imie)
+        RuleFor(x => x.Name)
             .NotEmpty().WithMessage("Imie is required.")
             .Length(2, 50).WithMessage("Imie must be between 2 and 50 characters.");
 
-        RuleFor(x => x.Nazwisko)
+        RuleFor(x => x.Surname)
             .NotEmpty().WithMessage("Nazwisko is required.")
             .Length(2, 50).WithMessage("Nazwisko must be between 2 and 50 characters.");
 
@@ -18,19 +18,19 @@ public class RegisterClientValidator : AbstractValidator<RegisterClient>
             .NotEmpty().WithMessage("Email is required.")
             .EmailAddress().WithMessage("Invalid email format.");
 
-        RuleFor(x => x.Haslo)
+        RuleFor(x => x.Password)
             .NotEmpty().WithMessage("Haslo is required.")
             .MinimumLength(6).WithMessage("Haslo must be at least 6 characters long.");
 
-        RuleFor(x => x.DataUr)
+        RuleFor(x => x.BirthDate)
             .NotEmpty().WithMessage("DataUr is required.")
             .Must(BeAValidAge).WithMessage("Client must be at least 18 years old.");
 
-        RuleFor(x => x.NrTel)
+        RuleFor(x => x.PhoneNumber)
             .NotEmpty().WithMessage("NrTel is required.")
             .Matches(@"^\+?[1-9]\d{1,14}$").WithMessage("Invalid phone number format.");
 
-        RuleFor(x => x.Adres)
+        RuleFor(x => x.Address)
             .NotEmpty().WithMessage("Adres is required.")
             .Length(5, 100).WithMessage("Adres must be between 5 and 100 characters.");
     }

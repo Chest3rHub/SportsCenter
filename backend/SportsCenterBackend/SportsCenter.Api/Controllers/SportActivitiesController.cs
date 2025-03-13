@@ -207,19 +207,19 @@ namespace SportsCenter.Api.Controllers;
     }
 
     [Authorize(Roles = "Klient")]
-    [HttpPost("pay-for-activity-with-balance-account")]
-    public async Task<IActionResult> PayForActivity([FromBody] PayForActivity request, CancellationToken cancellationToken)
+    [HttpPut("pay-for-activity-with-balance-account")]
+    public async Task<IActionResult> PayForActivity([FromBody] PayForActivity request)
     {
         try
         {        
-            await Mediator.Send(request, cancellationToken);
+            await Mediator.Send(request);
             return Ok(new { message = "Successfully paid for activity." });
         }
         catch (UnauthorizedAccessException ex)
         {
             return Unauthorized(new { message = ex.Message });
         }
-        catch (SportActivityNotFoundException ex)
+        catch (InstanceOfActivityNotFoundException ex)
         {
             return NotFound(new { message = ex.Message });
         }
@@ -246,7 +246,7 @@ namespace SportsCenter.Api.Controllers;
     }
 
     [Authorize(Roles = "Wlasciciel,Pracownik administracyjny")]
-    [HttpPost("pay-for-client-activity")]
+    [HttpPut("pay-for-client-activity")]
     public async Task<IActionResult> PayForClientActivity([FromBody] PayForClientActivity request, CancellationToken cancellationToken)
     {
         try
@@ -258,7 +258,7 @@ namespace SportsCenter.Api.Controllers;
         {
             return Unauthorized(new { message = ex.Message });
         }
-        catch (SportActivityNotFoundException ex)
+        catch (InstanceOfActivityNotFoundException ex)
         {
             return NotFound(new { message = ex.Message });
         }

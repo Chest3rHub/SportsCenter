@@ -188,4 +188,16 @@ public class SportActivityRepository : ISportActivityRepository
             instanceOfActivity.CzyOdwolane = true;
             await _dbContext.SaveChangesAsync(cancellationToken);
     }
+    public async Task<InstancjaZajec> GetInstanceOfActivityAsync(int instanceOfActivity, CancellationToken cancellationToken)
+    {
+        var instance = await _dbContext.InstancjaZajecs
+            .Include(i => i.InstancjaZajecKlients)
+            .ThenInclude(ik => ik.Klient)
+            .Include(i => i.GrafikZajec)
+            .Where(i => i.InstancjaZajecId == instanceOfActivity)
+            .AsTracking()
+            .FirstOrDefaultAsync(cancellationToken);
+
+        return instance;
+    }
 }

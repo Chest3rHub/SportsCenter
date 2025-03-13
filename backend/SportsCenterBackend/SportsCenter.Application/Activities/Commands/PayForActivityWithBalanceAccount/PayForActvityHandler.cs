@@ -35,13 +35,13 @@ namespace SportsCenter.Application.Activities.Commands.PayForActivity
                 throw new UnauthorizedAccessException("You cannot access your absence requests without being logged in on your account.");
             }
 
-            var acitivtyToPay = await _sportActivityRepository.GetSportActivityByIdAsync(request.ActivityId, cancellationToken);
+            var acitivtyToPay = await _sportActivityRepository.GetInstanceOfActivityAsync(request.InstanceOfActivityId, cancellationToken);
             if(acitivtyToPay == null)
             {
-                throw new SportActivityNotFoundException(request.ActivityId);
+                throw new InstanceOfActivityNotFoundException(request.InstanceOfActivityId);
             }
 
-            var paymentResult = await _employeeRepository.PayForActivityAsync(request.ActivityId, userId, cancellationToken);
+            var paymentResult = await _employeeRepository.PayForActivityAsync(request.InstanceOfActivityId, userId, cancellationToken);
 
             switch (paymentResult)
             {
@@ -53,18 +53,19 @@ namespace SportsCenter.Application.Activities.Commands.PayForActivity
 
                     throw new PaymentFailedException();
 
-                case PaymentResultEnum.ActivityNotFound:
+                case PaymentResultEnum.ActivityInstanceNotFound:
 
-                    throw new SportActivityNotFoundException(request.ActivityId);
+                    throw new InstanceOfActivityNotFoundException(request.InstanceOfActivityId);
 
                 case PaymentResultEnum.ClientNotFound:
 
                     throw new ClientWithGivenIdNotFoundException(userId);
+
                 case PaymentResultEnum.AlreadyPaid:
-                    throw new ActivityAlreadyPaidException(request.ActivityId); 
+                    throw new ActivityAlreadyPaidException(request.InstanceOfActivityId); 
 
                 case PaymentResultEnum.ActivityCanceled:
-                    throw new ActivityCanceledException(request.ActivityId);
+                    throw new ActivityCanceledException(request.InstanceOfActivityId);
             }
 
             return Unit.Value;

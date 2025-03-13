@@ -10,12 +10,12 @@ namespace SportsCenter.Application.Activities.Commands.PayForClientActivity
 {
     public sealed record PayForClientActivity : ICommand<Unit>
     {
-        public int ActivityId { get; set; }
+        public int InstanceOfActivityId { get; set; }
         public string ClientEmail { get; set; }
 
-        public PayForClientActivity(int activityId, string clientEmail)
+        public PayForClientActivity(int instanceOfActivityId, string clientEmail)
         {
-            ActivityId = activityId;
+            InstanceOfActivityId = instanceOfActivityId;
             ClientEmail = clientEmail;
         }
     }

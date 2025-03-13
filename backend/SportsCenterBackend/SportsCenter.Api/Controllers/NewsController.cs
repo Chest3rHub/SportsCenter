@@ -39,7 +39,7 @@ namespace SportsCenter.Api.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, new { message = "An error occurred while sending the request.", details = ex.Message });
+                return StatusCode(500, new { message = "An error occurred while sending the request", details = ex.Message });
             }
         }
 
@@ -66,6 +66,10 @@ namespace SportsCenter.Api.Controllers
             {
                 return BadRequest(new { Message = ex.Message });
             }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "An error occurred while sending the request", details = ex.Message });
+            }
         }
 
         [Authorize(Roles = "Pracownik administracyjny,Wlasciciel")]
@@ -83,7 +87,7 @@ namespace SportsCenter.Api.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, new { Message = "An unexpected error occurred.", Details = ex.Message });
+                return StatusCode(500, new { message = "An error occurred while sending the request", details = ex.Message });
             }
         }
     }

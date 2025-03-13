@@ -14,7 +14,6 @@ using SportsCenter.Application.Exceptions.EmployeesException;
 using SportsCenter.Application.Exceptions.EmployeesExceptions;
 using SportsCenter.Application.Exceptions.SportActivitiesException;
 using SportsCenter.Application.Exceptions.SportActivitiesExceptions;
-using SportsCenter.Application.Reservations.Queries.GetReservationSummary;
 
 namespace SportsCenter.Api.Controllers;
 
@@ -74,7 +73,7 @@ namespace SportsCenter.Api.Controllers;
         }
         catch (Exception ex)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, new { Message = "An unexpected error occurred.", Details = ex.Message });
+            return StatusCode(500, new { message = "An error occurred while sending the request", details = ex.Message });
         }
     }
 
@@ -112,7 +111,7 @@ namespace SportsCenter.Api.Controllers;
         }
         catch (Exception ex)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, new { Message = "An unexpected error occurred.", Details = ex.Message });
+            return StatusCode(500, new { message = "An error occurred while sending the request", details = ex.Message });
         }
     }
 
@@ -148,7 +147,7 @@ namespace SportsCenter.Api.Controllers;
         }
         catch (Exception ex)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, new { Message = "An unexpected error occurred.", Details = ex.Message });
+            return StatusCode(500, new { message = "An error occurred while sending the request", details = ex.Message });
         }
     }
 
@@ -177,7 +176,7 @@ namespace SportsCenter.Api.Controllers;
         }
         catch (Exception ex)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, new { Message = "An unexpected error occurred.", Details = ex.Message });
+            return StatusCode(500, new { message = "An error occurred while sending the request", details = ex.Message });
         }
     }
 

@@ -55,7 +55,7 @@ namespace SportsCenter.Api.Controllers
             {
                 await Mediator.Send(workingHours);
                 return NoContent();
-            }        
+            }
             catch (Exception ex)
             {
                 return StatusCode(500, new { message = "An error occurred while sending the request", details = ex.Message });

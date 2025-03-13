@@ -100,7 +100,7 @@ namespace SportsCenter.Api.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, new { message = "An error occurred while sending the request.", details = ex.Message });
+                return StatusCode(500, new { message = "An error occurred while sending the request", details = ex.Message });
             }
         }
 
@@ -121,7 +121,6 @@ namespace SportsCenter.Api.Controllers
             catch (Exception ex)
             {
                 return StatusCode(500, new { message = "An error occurred while sending the request", details = ex.Message });
-
             }
         }
 
@@ -146,7 +145,6 @@ namespace SportsCenter.Api.Controllers
             catch (Exception ex)
             {
                 return StatusCode(500, new { message = "An error occurred while sending the request", details = ex.Message });
-
             }
         }
 
@@ -165,7 +163,7 @@ namespace SportsCenter.Api.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, new { message = "An error occurred while removing the task", error = ex.Message });
+                return StatusCode(500, new { message = "An error occurred while sending the request", details = ex.Message });
             }
         }
 
@@ -185,13 +183,20 @@ namespace SportsCenter.Api.Controllers
                 return Forbid("You can only view your own tasks");
             }
 
-            var tasks = await Mediator.Send(new GetTasks(pracownikId), cancellationToken);
-
-            if (tasks == null || !tasks.Any())
+            try
             {
-                return NotFound("No tasks found for the given employee");
+                var tasks = await Mediator.Send(new GetTasks(pracownikId), cancellationToken);
+
+                if (tasks == null || !tasks.Any())
+                {
+                    return NotFound("No tasks found for the given employee");
+                }
+                return Ok(tasks);
             }
-            return Ok(tasks);
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "An error occurred while sending the request", details = ex.Message });
+            }
         }
 
         [Authorize(Roles = "Pracownik administracyjny,Wlasciciel")]
@@ -209,7 +214,7 @@ namespace SportsCenter.Api.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, new { message = "An error occurred while updating the task", error = ex.Message });
+                return StatusCode(500, new { message = "An error occurred while sending the request", details = ex.Message });
             }
         }
 
@@ -233,7 +238,6 @@ namespace SportsCenter.Api.Controllers
             catch (Exception ex)
             {
                 return StatusCode(500, new { message = "An error occurred while sending the request", details = ex.Message });
-
             }
         }
 
@@ -288,7 +292,6 @@ namespace SportsCenter.Api.Controllers
             catch (Exception ex)
             {
                 return StatusCode(500, new { message = "An error occurred while sending the request", details = ex.Message });
-
             }
         }
 
@@ -311,7 +314,6 @@ namespace SportsCenter.Api.Controllers
             catch (Exception ex)
             {
                 return StatusCode(500, new { message = "An error occurred while sending the request", details = ex.Message });
-
             }
         }
 
@@ -337,7 +339,6 @@ namespace SportsCenter.Api.Controllers
             catch (Exception ex)
             {
                 return StatusCode(500, new { message = "An error occurred while sending the request", details = ex.Message });
-
             }
         }
 
@@ -367,7 +368,6 @@ namespace SportsCenter.Api.Controllers
             catch (Exception ex)
             {
                 return StatusCode(500, new { message = "An error occurred while sending the request", details = ex.Message });
-
             }
         }
 

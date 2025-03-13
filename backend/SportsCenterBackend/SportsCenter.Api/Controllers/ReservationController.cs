@@ -53,7 +53,7 @@ public class ReservationController : BaseController
         }
         catch (Exception ex)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, new { Message = "An unexpected error occurred.", Details = ex.Message });
+            return StatusCode(500, new { message = "An error occurred while sending the request", details = ex.Message });
         }
     }
 
@@ -103,7 +103,7 @@ public class ReservationController : BaseController
         }
         catch (Exception ex)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, new { Message = "An unexpected error occurred.", Details = ex.Message });
+            return StatusCode(500, new { message = "An error occurred while sending the request", details = ex.Message });
         }
     }
 
@@ -144,7 +144,7 @@ public class ReservationController : BaseController
         }
         catch (Exception ex)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, new { Message = "An unexpected error occurred.", Details = ex.Message });
+            return StatusCode(500, new { message = "An error occurred while sending the request", details = ex.Message });
         }
     }
 
@@ -203,6 +203,10 @@ public class ReservationController : BaseController
         {
             return BadRequest(new { Message = ex.Message });
         }
+        catch (Exception ex)
+        {
+            return StatusCode(500, new { message = "An error occurred while sending the request", details = ex.Message });
+        }
     }
 
     [Authorize(Roles = "Klient, Wlasciciel")]
@@ -226,6 +230,10 @@ public class ReservationController : BaseController
         catch (NotThatClientReservationException ex)
         {
             return NotFound(ex.Message);
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, new { message = "An error occurred while sending the request", details = ex.Message });
         }
     }
 
@@ -261,6 +269,10 @@ public class ReservationController : BaseController
         catch (InvalidOperationException ex)
         {
             return BadRequest(new { Message = ex.Message });
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, new { message = "An error occurred while sending the request", details = ex.Message });
         }
     }
 

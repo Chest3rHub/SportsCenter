@@ -22,7 +22,8 @@ internal class GetClientsHandler : IRequestHandler<GetClients, IEnumerable<Clien
         return await _dbContext.Klients.Include(x => x.KlientNavigation)
             .Select(k => new ClientDto
             {
-                FullName = k.KlientNavigation.Nazwisko,
+                Name = k.KlientNavigation.Imie,
+                Surname = k.KlientNavigation.Nazwisko,
                 Email = k.KlientNavigation.Email
             }).AsNoTracking().ToListAsync(cancellationToken);
     }

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static SportsCenter.Core.Enums.PaymentResult;
 using static SportsCenter.Core.Enums.TrainerAvailiabilityStatus;
 
 namespace SportsCenter.Core.Repositories
@@ -36,5 +37,8 @@ namespace SportsCenter.Core.Repositories
         Task<bool> IsAbsenceRequestPendingAsync(int requestId, CancellationToken cancellationToken);
         Task<TrainerAvailabilityStatus> IsTrainerAvailableAsync(int trainerId, DateTime requestedStart, int startHourInMinutes, int endHourInMinutes, CancellationToken cancellationToken);
         Task<bool> IsEmployeeDismissedAsync(int employeeId, CancellationToken cancellationToken);
+        Task<PaymentResultEnum> PayForActivityAsync(int activityId, int clientId, CancellationToken cancellationToken);
+        Task<PaymentResultEnum> PayForActivityAsync(int activityId, string clientEmail, CancellationToken cancellationToken);
+
     }
 }

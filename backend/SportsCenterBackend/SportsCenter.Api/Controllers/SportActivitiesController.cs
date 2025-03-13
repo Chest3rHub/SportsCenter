@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SportsCenter.Application.Activities.Commands.AddSportActivity;
 using SportsCenter.Application.Activities.Commands.CancelSportActivity;
+using SportsCenter.Application.Activities.Commands.PayForActivity;
+using SportsCenter.Application.Activities.Commands.PayForClientActivity;
 using SportsCenter.Application.Activities.Commands.RemoveSportActivity;
 using SportsCenter.Application.Activities.Commands.SignUpForActivity;
 using SportsCenter.Application.Activities.Queries;
@@ -10,6 +12,7 @@ using SportsCenter.Application.Activities.Queries.GetActivitySummary;
 using SportsCenter.Application.Activities.Queries.GetAllSportActivities;
 using SportsCenter.Application.Activities.Queries.GetSportActivity;
 using SportsCenter.Application.Activities.Queries.GetYourSportActivities;
+using SportsCenter.Application.Exceptions.ClientsExceptions;
 using SportsCenter.Application.Exceptions.CourtsExceptions;
 using SportsCenter.Application.Exceptions.EmployeesException;
 using SportsCenter.Application.Exceptions.EmployeesExceptions;
@@ -201,6 +204,84 @@ namespace SportsCenter.Api.Controllers;
     public async Task<IActionResult> GetYourSportActivities()
     {
         return Ok(await Mediator.Send(new GetYourSportActivities()));
+    }
+
+    [Authorize(Roles = "Klient")]
+    [HttpPost("pay-for-activity-with-balance-account")]
+    public async Task<IActionResult> PayForActivity([FromBody] PayForActivity request, CancellationToken cancellationToken)
+    {
+        try
+        {        
+            await Mediator.Send(request, cancellationToken);
+            return Ok(new { message = "Successfully paid for activity." });
+        }
+        catch (UnauthorizedAccessException ex)
+        {
+            return Unauthorized(new { message = ex.Message });
+        }
+        catch (SportActivityNotFoundException ex)
+        {
+            return NotFound(new { message = ex.Message });
+        }
+        catch (ClientWithGivenIdNotFoundException ex)
+        {
+            return NotFound(new { message = ex.Message });
+        }
+        catch (ActivityAlreadyPaidException ex)
+        {
+            return BadRequest(new { message = ex.Message });
+        }
+        catch (ActivityCanceledException ex)
+        {
+            return BadRequest(new { message = ex.Message });
+        }
+        catch (PaymentFailedException ex)
+        {
+            return BadRequest(new { message = ex.Message });
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, new { message = "An error occurred while sending the request", details = ex.Message });
+        }
+    }
+
+    [Authorize(Roles = "Wlasciciel,Pracownik administracyjny")]
+    [HttpPost("pay-for-client-activity")]
+    public async Task<IActionResult> PayForClientActivity([FromBody] PayForClientActivity request, CancellationToken cancellationToken)
+    {
+        try
+        {
+            await Mediator.Send(request, cancellationToken);
+            return Ok(new { message = "Successfully paid for client activity." });
+        }
+        catch (UnauthorizedAccessException ex)
+        {
+            return Unauthorized(new { message = ex.Message });
+        }
+        catch (SportActivityNotFoundException ex)
+        {
+            return NotFound(new { message = ex.Message });
+        }
+        catch (ClientWithGivenIdNotFoundException ex)
+        {
+            return NotFound(new { message = ex.Message });
+        }
+        catch (ActivityAlreadyPaidException ex)
+        {
+            return BadRequest(new { message = ex.Message });
+        }
+        catch (ActivityCanceledException ex)
+        {
+            return BadRequest(new { message = ex.Message });
+        }
+        catch (PaymentFailedException ex)
+        {
+            return BadRequest(new { message = ex.Message });
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, new { message = "An error occurred while sending the request", details = ex.Message });
+        }
     }
 }
 

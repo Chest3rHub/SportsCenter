@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 using SportsCenter.Core.Entities;
+using SportsCenter.Core.Enums;
 using SportsCenter.Core.Repositories;
 using System;
 using System.Collections.Generic;
@@ -8,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using static SportsCenter.Core.Enums.PaymentResult;
 using static SportsCenter.Core.Enums.TrainerAvailiabilityStatus;
 
 namespace SportsCenter.Infrastructure.DAL.Repositories
@@ -15,17 +17,19 @@ namespace SportsCenter.Infrastructure.DAL.Repositories
     public class EmployeeRepository : IEmployeeRepository
     {
         private SportsCenterDbContext _dbContext;
-  
+
         public EmployeeRepository(SportsCenterDbContext dbContext)
         {
             _dbContext = dbContext;
         }
 
-        public Task<TypPracownika?> GetTypeOfEmployeeIdAsync(string positionName, CancellationToken cancellationToken) {
+        public Task<TypPracownika?> GetTypeOfEmployeeIdAsync(string positionName, CancellationToken cancellationToken)
+        {
             return _dbContext.TypPracownikas.Where(o => o.Nazwa == positionName).FirstOrDefaultAsync(cancellationToken: cancellationToken);
         }
 
-        public async Task AddEmployeeAsync(Pracownik employee, CancellationToken cancellationToken) {
+        public async Task AddEmployeeAsync(Pracownik employee, CancellationToken cancellationToken)
+        {
             await _dbContext.Pracowniks.AddAsync(employee, cancellationToken);
             await _dbContext.SaveChangesAsync(cancellationToken);
         }
@@ -48,7 +52,7 @@ namespace SportsCenter.Infrastructure.DAL.Repositories
             var pracownik = await _dbContext.Pracowniks
                 .Where(p => p.PracownikId == id)
                 .FirstOrDefaultAsync(cancellationToken);
-            
+
             pracownik.DataZwolnienia = DateOnly.FromDateTime(dismissalDate);
             await _dbContext.SaveChangesAsync(cancellationToken);
         }
@@ -101,8 +105,8 @@ namespace SportsCenter.Infrastructure.DAL.Repositories
             }
 
             var position = await _dbContext.TypPracownikas
-                .Where(tp => tp.IdTypPracownika== employee.IdTypPracownika)
-                .Select(tp => tp.Nazwa) 
+                .Where(tp => tp.IdTypPracownika == employee.IdTypPracownika)
+                .Select(tp => tp.Nazwa)
                 .FirstOrDefaultAsync(cancellationToken);
 
             return position;
@@ -138,7 +142,7 @@ namespace SportsCenter.Infrastructure.DAL.Repositories
                 .FirstOrDefaultAsync(tc => tc.PracownikId == trainerId && tc.CertyfikatId == certificateId, cancellationToken);
         }
         public async Task UpdateTrainerCertificateAsync(TrenerCertyfikat trainerCertificate, CancellationToken cancellationToken)
-        {        
+        {
             _dbContext.TrenerCertyfikats.Update(trainerCertificate);
 
             var certificate = await _dbContext.Certyfikats
@@ -188,9 +192,9 @@ namespace SportsCenter.Infrastructure.DAL.Repositories
         {
             var absence = await _dbContext.BrakDostepnoscis
            .FirstOrDefaultAsync(b => b.BrakDostepnosciId == requestId, cancellationToken);
-           
+
             absence.CzyZatwierdzone = true;
-            await _dbContext.SaveChangesAsync(cancellationToken);            
+            await _dbContext.SaveChangesAsync(cancellationToken);
         }
         public async Task<bool> ExistsAbsenceRequestAsync(int requestId, CancellationToken cancellationToken)
         {
@@ -230,7 +234,7 @@ namespace SportsCenter.Infrastructure.DAL.Repositories
                 .ToListAsync(cancellationToken);
 
             foreach (var grafik in activitiesSchedule)
-            {              
+            {
                 int godzinaOdInMinutes = (int)grafik.GodzinaOd.TotalMinutes;
                 int godzinaDoInMinutes = godzinaOdInMinutes + grafik.CzasTrwania;
 
@@ -246,7 +250,7 @@ namespace SportsCenter.Infrastructure.DAL.Repositories
                 .ToListAsync(cancellationToken);
 
             foreach (var bd in unavailability)
-            {              
+            {
                 DateTime startDateTime = bd.Data.ToDateTime(bd.GodzinaOd);
                 DateTime endDateTime = bd.Data.ToDateTime(bd.GodzinaDo);
 
@@ -256,7 +260,7 @@ namespace SportsCenter.Infrastructure.DAL.Repositories
                 {
                     return TrainerAvailabilityStatus.IsUnavailable;
                 }
-            }   
+            }
             return TrainerAvailabilityStatus.Available;
         }
         public async Task<bool> IsEmployeeDismissedAsync(int employeeId, CancellationToken cancellationToken)
@@ -266,5 +270,121 @@ namespace SportsCenter.Infrastructure.DAL.Repositories
                 .Select(p => p.DataZwolnienia != null)
                 .FirstOrDefaultAsync(cancellationToken);
         }
+
+        public async Task<PaymentResultEnum> PayForActivityAsync(int activityId, int clientId, CancellationToken cancellationToken)
+        {
+            var activityInstanceClient = await _dbContext.InstancjaZajecKlients
+                .Where(aic => aic.KlientId == clientId && aic.InstancjaZajecId == activityId)
+                .FirstOrDefaultAsync(cancellationToken);
+
+            if (activityInstanceClient == null)
+            {
+                return PaymentResultEnum.ActivityInstanceNotFound;
+            }
+
+            if ((bool)activityInstanceClient.CzyOplacone)
+            {
+                return PaymentResultEnum.AlreadyPaid;
+            }
+      
+            var activityInstance = await _dbContext.InstancjaZajecs
+                .Where(ai => ai.InstancjaZajecId == activityId)
+                .FirstOrDefaultAsync(cancellationToken);
+
+
+            if (activityInstance.CzyOdwolane.HasValue && activityInstance.CzyOdwolane.Value)
+            {
+                return PaymentResultEnum.ActivityCanceled;
+            }
+
+            var activitySchedule = await _dbContext.GrafikZajecs
+                .Where(asch => asch.GrafikZajecId == activityInstance.GrafikZajecId)
+                .FirstOrDefaultAsync(cancellationToken);
+
+            decimal cost = activityInstanceClient.CzyUwzglednicSprzet ? activitySchedule.KosztZeSprzetem : activitySchedule.KosztBezSprzetu;
+
+            var client = await _dbContext.Klients
+                .Where(c => c.KlientId == clientId)
+                .FirstOrDefaultAsync(cancellationToken);
+
+            if (client == null)
+            {
+                return PaymentResultEnum.ClientNotFound;
+            }
+
+            if (client.Saldo< cost)
+            {
+                return PaymentResultEnum.InsufficientFunds;
+            }
+
+            client.Saldo -= cost;
+
+            activityInstanceClient.CzyOplacone = true;
+
+            _dbContext.Klients.Update(client);
+            _dbContext.InstancjaZajecKlients.Update(activityInstanceClient);
+            await _dbContext.SaveChangesAsync(cancellationToken);
+
+            return PaymentResultEnum.Success;
+        }
+
+
+        public async Task<PaymentResultEnum> PayForActivityAsync(int activityId, string clientEmail, CancellationToken cancellationToken)
+        {
+            var activityInstanceClient = await _dbContext.InstancjaZajecKlients
+                .Where(ik => ik.Klient.KlientNavigation.Email == clientEmail && ik.InstancjaZajecId == activityId)
+                .FirstOrDefaultAsync(cancellationToken);
+
+            if (activityInstanceClient == null)
+            {
+                return PaymentResultEnum.ActivityInstanceNotFound;
+            }
+
+            if ((bool)activityInstanceClient.CzyOplacone)
+            {
+                return PaymentResultEnum.AlreadyPaid;
+            }
+
+            var activityInstance = await _dbContext.InstancjaZajecs
+                .Where(ai => ai.InstancjaZajecId == activityId)
+                .FirstOrDefaultAsync(cancellationToken);
+
+
+            if (activityInstance.CzyOdwolane.HasValue && activityInstance.CzyOdwolane.Value)
+            {
+                return PaymentResultEnum.ActivityCanceled;
+            }
+
+            var activitySchedule = await _dbContext.GrafikZajecs
+                .Where(asch => asch.GrafikZajecId == activityInstance.GrafikZajecId)
+                .FirstOrDefaultAsync(cancellationToken);
+
+            decimal cost = activityInstanceClient.CzyUwzglednicSprzet ? activitySchedule.KosztZeSprzetem : activitySchedule.KosztBezSprzetu;
+
+            var client = await _dbContext.Klients
+                .Where(c => c.KlientNavigation.Email == clientEmail)
+                .FirstOrDefaultAsync(cancellationToken);
+
+            if (client == null)
+            {
+                return PaymentResultEnum.ClientNotFound;
+            }
+
+            if (client.Saldo < cost)
+            {
+                return PaymentResultEnum.InsufficientFunds;
+            }
+
+            client.Saldo -= cost;
+
+            activityInstanceClient.CzyOplacone = true;
+
+            _dbContext.Klients.Update(client);
+            _dbContext.InstancjaZajecKlients.Update(activityInstanceClient);
+            await _dbContext.SaveChangesAsync(cancellationToken);
+
+            return PaymentResultEnum.Success;
+        }
+
     }
 }

@@ -13,6 +13,7 @@ using SportsCenter.Application.Exceptions.EmployeesExceptions;
 using SportsCenter.Application.Exceptions.EmployeesException;
 using SportsCenter.Application.Exceptions.ClientsExceptions;
 using SportsCenter.Application.Exceptions.CourtsExceptions;
+using SportsCenter.Application.Reservations.Queries.GetYourReservations;
 
 namespace SportsCenter.Api.Controllers;
 
@@ -289,5 +290,12 @@ public class ReservationController : BaseController
         var result = await Mediator.Send(query);
 
         return Ok(result);
+    }
+
+    [Authorize(Roles = "Klient")]
+    [HttpGet("get-your-reservations")]
+    public async Task<IActionResult> GetYourReservations()
+    {
+        return Ok(await Mediator.Send(new GetYourReservations()));
     }
 }

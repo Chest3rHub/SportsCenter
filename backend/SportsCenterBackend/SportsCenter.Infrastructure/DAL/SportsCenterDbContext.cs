@@ -231,6 +231,11 @@ public partial class SportsCenterDbContext : DbContext
                 .HasColumnName("CzyUwzglednicSprzet")
                 .HasDefaultValue(false);
 
+            entity.Property(e => e.CzyOplacone)
+                .HasColumnName("CzyOplacone")
+                .HasColumnType("bit")
+                .IsRequired(false);
+
             entity.HasOne(d => d.InstancjaZajec)
                 .WithMany(p => p.InstancjaZajecKlients)
                 .HasForeignKey(d => d.InstancjaZajecId)
@@ -377,6 +382,11 @@ public partial class SportsCenterDbContext : DbContext
             entity.Property(e => e.KortId).HasColumnName("KortID");
             entity.Property(e => e.Koszt).HasColumnType("decimal(5, 2)");
             entity.Property(e => e.TrenerId).HasColumnName("TrenerID");
+
+            entity.Property(e => e.CzyOplacona)
+                .HasColumnName("CzyOplacona")
+                .HasColumnType("bit")
+                .IsRequired(false);
 
             entity.HasOne(d => d.Klient).WithMany(p => p.Rezerwacjas)
                 .HasForeignKey(d => d.KlientId)

@@ -22,6 +22,7 @@ public partial class Rezerwacja
     public bool CzyUwzglednicSprzet { get; set; }
 
     public decimal Koszt { get; set; }
+    public bool? CzyOplacona { get; set; }
 
     public virtual Klient Klient { get; set; } = null!;
 

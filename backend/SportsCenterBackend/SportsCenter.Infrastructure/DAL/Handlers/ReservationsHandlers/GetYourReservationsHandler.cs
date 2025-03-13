@@ -26,7 +26,7 @@ namespace SportsCenter.Infrastructure.DAL.Handlers.ReservationsHandlers
 
             if (string.IsNullOrEmpty(userIdClaim) || !int.TryParse(userIdClaim, out int userId))
             {
-                throw new UnauthorizedAccessException("You cannot access your absence requests without being logged in on your trainer account.");
+                throw new UnauthorizedAccessException("You cannot access your absence requests without being logged in on your account.");
             }
 
             var reservations = await _dbContext.Rezerwacjas

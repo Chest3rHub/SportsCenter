@@ -9,6 +9,7 @@ using SportsCenter.Application.Activities.Queries;
 using SportsCenter.Application.Activities.Queries.GetActivitySummary;
 using SportsCenter.Application.Activities.Queries.GetAllSportActivities;
 using SportsCenter.Application.Activities.Queries.GetSportActivity;
+using SportsCenter.Application.Activities.Queries.GetYourSportActivities;
 using SportsCenter.Application.Exceptions.CourtsExceptions;
 using SportsCenter.Application.Exceptions.EmployeesException;
 using SportsCenter.Application.Exceptions.EmployeesExceptions;
@@ -194,6 +195,13 @@ namespace SportsCenter.Api.Controllers;
 
             return Ok(result);
         }
+
+    [Authorize(Roles = "Klient")]
+    [HttpGet("get-your-activities")]
+    public async Task<IActionResult> GetYourSportActivities()
+    {
+        return Ok(await Mediator.Send(new GetYourSportActivities()));
+    }
 }
 
 

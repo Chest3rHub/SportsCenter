@@ -1,5 +1,5 @@
 -- Created by Vertabelo (http://vertabelo.com)
--- Last modification date: 2025-03-11 20:52:32.82
+-- Last modification date: 2025-03-13 11:03:01.838
 
 -- tables
 -- Table: Aktualnosci
@@ -72,6 +72,7 @@ CREATE TABLE InstancjaZajec_Klient (
     DataWypisu date  NULL,
     CzyUwzglednicSprzet bit  NOT NULL,
     InstancjaZajecID int  NOT NULL,
+    CzyOplacone bit  NOT NULL,
     CONSTRAINT InstancjaZajec_Klient_pk PRIMARY KEY  (InstancjaZajecKlientID)
 );
 
@@ -160,6 +161,7 @@ CREATE TABLE Rezerwacja (
     TrenerID int  NULL,
     CzyUwzglednicSprzet bit  NOT NULL,
     Koszt decimal(5, 2)  NOT NULL,
+    CzyOplacona bit  NOT NULL,
     CONSTRAINT Rezerwacja_pk PRIMARY KEY  (RezerwacjaID)
 );
 

@@ -301,7 +301,7 @@ public partial class SportsCenterDbContext : DbContext
             entity.ToTable("Ocena");
 
             entity.Property(e => e.OcenaId).HasColumnName("OcenaID");
-            entity.Property(e => e.GrafikZajecKlientId).HasColumnName("InstancjaZajecKlientID");
+            entity.Property(e => e.GrafikZajecKlientId).HasColumnName("InstancjaZajecKlientID").IsRequired(false); ;
             entity.Property(e => e.Opis).HasMaxLength(255);
 
             entity.HasOne(d => d.InstancjaZajecKlient).WithMany(p => p.Ocenas)
@@ -562,6 +562,25 @@ public partial class SportsCenterDbContext : DbContext
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("Zastepstwo_PracownikZatwierdzajacy");
         });
+
+        //seedowanie danych
+        modelBuilder.Entity<TypPracownika>().HasData(
+            new TypPracownika { IdTypPracownika = 1, Nazwa = "Wlasciciel" },
+            new TypPracownika { IdTypPracownika = 2, Nazwa = "Pracownik administracyjny" },
+            new TypPracownika { IdTypPracownika = 3, Nazwa = "Trener" },
+            new TypPracownika { IdTypPracownika = 4, Nazwa = "Pomoc sprzatajaca" }
+        );
+
+        modelBuilder.Entity<GodzinyPracyKlubu>().HasData(
+            new GodzinyPracyKlubu { GodzinyPracyKlubuId = 1, GodzinaOtwarcia = TimeOnly.Parse("10:00"), GodzinaZamkniecia = TimeOnly.Parse("22:00"), DzienTygodnia = "poniedzialek" },
+            new GodzinyPracyKlubu { GodzinyPracyKlubuId = 2, GodzinaOtwarcia = TimeOnly.Parse("10:00"), GodzinaZamkniecia = TimeOnly.Parse("22:00"), DzienTygodnia = "wtorek" },
+            new GodzinyPracyKlubu { GodzinyPracyKlubuId = 3, GodzinaOtwarcia = TimeOnly.Parse("10:00"), GodzinaZamkniecia = TimeOnly.Parse("22:00"), DzienTygodnia = "sroda" },
+            new GodzinyPracyKlubu { GodzinyPracyKlubuId = 4, GodzinaOtwarcia = TimeOnly.Parse("10:00"), GodzinaZamkniecia = TimeOnly.Parse("22:00"), DzienTygodnia = "czwartek" },
+            new GodzinyPracyKlubu { GodzinyPracyKlubuId = 5, GodzinaOtwarcia = TimeOnly.Parse("10:00"), GodzinaZamkniecia = TimeOnly.Parse("22:00"), DzienTygodnia = "piatek" },
+            new GodzinyPracyKlubu { GodzinyPracyKlubuId = 6, GodzinaOtwarcia = TimeOnly.Parse("10:00"), GodzinaZamkniecia = TimeOnly.Parse("22:00"), DzienTygodnia = "sobota" },
+            new GodzinyPracyKlubu { GodzinyPracyKlubuId = 7, GodzinaOtwarcia = TimeOnly.Parse("10:00"), GodzinaZamkniecia = TimeOnly.Parse("22:00"), DzienTygodnia = "niedziela" }
+        );
+
 
         OnModelCreatingPartial(modelBuilder);
     }

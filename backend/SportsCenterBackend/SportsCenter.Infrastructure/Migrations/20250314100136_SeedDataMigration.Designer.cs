@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SportsCenter.Infrastructure.DAL;
 
@@ -11,9 +12,11 @@ using SportsCenter.Infrastructure.DAL;
 namespace SportsCenter.Infrastructure.Migrations
 {
     [DbContext(typeof(SportsCenterDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250314100136_SeedDataMigration")]
+    partial class SeedDataMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -396,7 +399,7 @@ namespace SportsCenter.Infrastructure.Migrations
                     b.Property<DateOnly>("DataWystawienia")
                         .HasColumnType("date");
 
-                    b.Property<int?>("GrafikZajecKlientId")
+                    b.Property<int>("GrafikZajecKlientId")
                         .HasColumnType("int")
                         .HasColumnName("InstancjaZajecKlientID");
 
@@ -983,6 +986,7 @@ namespace SportsCenter.Infrastructure.Migrations
                     b.HasOne("SportsCenter.Core.Entities.InstancjaZajecKlient", "InstancjaZajecKlient")
                         .WithMany("Ocenas")
                         .HasForeignKey("GrafikZajecKlientId")
+                        .IsRequired()
                         .HasConstraintName("Ocena_InstancjaZajec_Klient");
 
                     b.Navigation("InstancjaZajecKlient");

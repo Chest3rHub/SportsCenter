@@ -41,7 +41,7 @@ namespace SportsCenter.Api.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, new { Message = "An unexpected error occurred.", Details = ex.Message });
+                return StatusCode(500, new { message = "An error occurred while sending the request", details = ex.Message });
             }
         }
 

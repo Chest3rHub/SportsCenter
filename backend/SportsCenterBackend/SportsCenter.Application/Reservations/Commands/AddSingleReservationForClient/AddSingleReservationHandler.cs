@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Http;
 using SportsCenter.Application.Exceptions.ClientsExceptions;
+using SportsCenter.Application.Exceptions.CourtsExceptions;
 using SportsCenter.Application.Exceptions.EmployeesException;
 using SportsCenter.Application.Exceptions.EmployeesExceptions;
 using SportsCenter.Application.Exceptions.ReservationExceptions;
@@ -44,7 +45,7 @@ namespace SportsCenter.Application.Reservations.Commands.AddReservation
                 throw new ClientWithGivenIdNotFoundException(request.ClientId);
             }
 
-            var dniTygodnia = new Dictionary<DayOfWeek, string>
+            var daysOfWeek = new Dictionary<DayOfWeek, string>
             {
                 { DayOfWeek.Monday, "poniedzialek" },
                 { DayOfWeek.Tuesday, "wtorek" },
@@ -74,7 +75,7 @@ namespace SportsCenter.Application.Reservations.Commands.AddReservation
             }
             else
             {
-                string dayOfWeek = dniTygodnia[request.StartTime.DayOfWeek];
+                string dayOfWeek = daysOfWeek[request.StartTime.DayOfWeek];
                 var standardWorkingHours = await _sportsCenterRepository.GetWorkingHoursByDayAsync(dayOfWeek, cancellationToken);
 
                 if (standardWorkingHours == null)
@@ -173,7 +174,8 @@ namespace SportsCenter.Application.Reservations.Commands.AddReservation
                 DataStworzenia = DateOnly.FromDateTime(DateTime.UtcNow),
                 TrenerId = request.TrainerId,
                 CzyUwzglednicSprzet = request.IsEquipmentReserved,
-                Koszt = cost
+                Koszt = cost,
+                CzyOplacona = false
             };
 
             await _reservationRepository.AddReservationAsync(newReservation, cancellationToken);

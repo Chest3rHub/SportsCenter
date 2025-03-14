@@ -182,7 +182,8 @@ namespace SportsCenter.Application.Reservations.Commands.AddRecurringReservation
                             DataStworzenia = DateOnly.FromDateTime(DateTime.UtcNow),
                             TrenerId = request.TrainerId,
                             CzyUwzglednicSprzet = request.IsEquipmentReserved,
-                            Koszt = cost
+                            Koszt = cost,
+                            CzyOplacona = false
                         };
                         await _reservationRepository.AddReservationAsync(newReservation, cancellationToken);
                     }

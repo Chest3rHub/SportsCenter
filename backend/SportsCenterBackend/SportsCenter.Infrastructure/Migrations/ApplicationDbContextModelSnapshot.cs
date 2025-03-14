@@ -17,7 +17,7 @@ namespace SportsCenter.Infrastructure.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.10")
+                .HasAnnotation("ProductVersion", "9.0.2")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -40,6 +40,74 @@ namespace SportsCenter.Infrastructure.Migrations
                     b.ToTable("Klient_Tag", (string)null);
                 });
 
+            modelBuilder.Entity("SportsCenter.Core.Entities.Aktualnosci", b =>
+                {
+                    b.Property<int>("AktualnosciId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("AktualnosciID");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("AktualnosciId"));
+
+                    b.Property<string>("Nazwa")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(20)");
+
+                    b.Property<string>("Opis")
+                        .IsRequired()
+                        .HasMaxLength(4000)
+                        .HasColumnType("nvarchar(4000)");
+
+                    b.Property<DateTime?>("WazneDo")
+                        .HasColumnType("datetime");
+
+                    b.Property<DateTime>("WazneOd")
+                        .HasColumnType("datetime");
+
+                    b.HasKey("AktualnosciId")
+                        .HasName("Aktualnosci_pk");
+
+                    b.ToTable("Aktualnosci", (string)null);
+                });
+
+            modelBuilder.Entity("SportsCenter.Core.Entities.BrakDostepnosci", b =>
+                {
+                    b.Property<int>("BrakDostepnosciId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("BrakDostepnosciID");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("BrakDostepnosciId"));
+
+                    b.Property<bool>("CzyZatwierdzone")
+                        .HasColumnType("bit")
+                        .HasColumnName("CzyZatwierdzone");
+
+                    b.Property<DateOnly>("Data")
+                        .HasColumnType("date");
+
+                    b.Property<TimeOnly>("GodzinaDo")
+                        .HasPrecision(0)
+                        .HasColumnType("time(0)");
+
+                    b.Property<TimeOnly>("GodzinaOd")
+                        .HasPrecision(0)
+                        .HasColumnType("time(0)");
+
+                    b.Property<int>("PracownikId")
+                        .HasColumnType("int")
+                        .HasColumnName("PracownikID");
+
+                    b.HasKey("BrakDostepnosciId")
+                        .HasName("BrakDostepnosci_pk");
+
+                    b.HasIndex("PracownikId");
+
+                    b.ToTable("BrakDostepnosci", (string)null);
+                });
+
             modelBuilder.Entity("SportsCenter.Core.Entities.Certyfikat", b =>
                 {
                     b.Property<int>("CertyfikatId")
@@ -60,64 +128,219 @@ namespace SportsCenter.Infrastructure.Migrations
                     b.ToTable("Certyfikat", (string)null);
                 });
 
-            modelBuilder.Entity("SportsCenter.Core.Entities.DataZajec", b =>
+            modelBuilder.Entity("SportsCenter.Core.Entities.GodzinyPracyKlubu", b =>
                 {
-                    b.Property<int>("DataZajecId")
+                    b.Property<int>("GodzinyPracyKlubuId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasColumnName("DataZajecID");
+                        .HasColumnName("GodzinyPracyKlubuID");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("DataZajecId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("GodzinyPracyKlubuId"));
 
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("datetime");
+                    b.Property<string>("DzienTygodnia")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.Property<TimeOnly>("GodzinaOtwarcia")
+                        .HasPrecision(0)
+                        .HasColumnType("time(0)");
+
+                    b.Property<TimeOnly>("GodzinaZamkniecia")
+                        .HasPrecision(0)
+                        .HasColumnType("time(0)");
+
+                    b.HasKey("GodzinyPracyKlubuId")
+                        .HasName("GodzinyPracyKlubuId");
+
+                    b.ToTable("GodzinyPracyKlubu", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            GodzinyPracyKlubuId = 1,
+                            DzienTygodnia = "poniedzialek",
+                            GodzinaOtwarcia = new TimeOnly(10, 0, 0),
+                            GodzinaZamkniecia = new TimeOnly(22, 0, 0)
+                        },
+                        new
+                        {
+                            GodzinyPracyKlubuId = 2,
+                            DzienTygodnia = "wtorek",
+                            GodzinaOtwarcia = new TimeOnly(10, 0, 0),
+                            GodzinaZamkniecia = new TimeOnly(22, 0, 0)
+                        },
+                        new
+                        {
+                            GodzinyPracyKlubuId = 3,
+                            DzienTygodnia = "sroda",
+                            GodzinaOtwarcia = new TimeOnly(10, 0, 0),
+                            GodzinaZamkniecia = new TimeOnly(22, 0, 0)
+                        },
+                        new
+                        {
+                            GodzinyPracyKlubuId = 4,
+                            DzienTygodnia = "czwartek",
+                            GodzinaOtwarcia = new TimeOnly(10, 0, 0),
+                            GodzinaZamkniecia = new TimeOnly(22, 0, 0)
+                        },
+                        new
+                        {
+                            GodzinyPracyKlubuId = 5,
+                            DzienTygodnia = "piatek",
+                            GodzinaOtwarcia = new TimeOnly(10, 0, 0),
+                            GodzinaZamkniecia = new TimeOnly(22, 0, 0)
+                        },
+                        new
+                        {
+                            GodzinyPracyKlubuId = 6,
+                            DzienTygodnia = "sobota",
+                            GodzinaOtwarcia = new TimeOnly(10, 0, 0),
+                            GodzinaZamkniecia = new TimeOnly(22, 0, 0)
+                        },
+                        new
+                        {
+                            GodzinyPracyKlubuId = 7,
+                            DzienTygodnia = "niedziela",
+                            GodzinaOtwarcia = new TimeOnly(10, 0, 0),
+                            GodzinaZamkniecia = new TimeOnly(22, 0, 0)
+                        });
+                });
+
+            modelBuilder.Entity("SportsCenter.Core.Entities.GrafikZajec", b =>
+                {
+                    b.Property<int>("GrafikZajecId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("GrafikZajecID");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("GrafikZajecId"));
+
+                    b.Property<int>("CzasTrwania")
+                        .HasColumnType("int")
+                        .HasColumnName("CzasTrwania");
+
+                    b.Property<DateOnly>("DataStartuZajec")
+                        .HasColumnType("date")
+                        .HasColumnName("DataStartuZajec");
+
+                    b.Property<string>("DzienTygodnia")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)")
+                        .HasColumnName("DzienTygodnia");
+
+                    b.Property<TimeSpan>("GodzinaOd")
+                        .HasColumnType("time")
+                        .HasColumnName("GodzinaOd");
+
+                    b.Property<int>("KortId")
+                        .HasColumnType("int")
+                        .HasColumnName("KortID");
+
+                    b.Property<decimal>("KosztBezSprzetu")
+                        .HasColumnType("decimal(5, 2)");
+
+                    b.Property<decimal>("KosztZeSprzetem")
+                        .HasColumnType("decimal(5, 2)");
+
+                    b.Property<int>("LimitOsob")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PracownikId")
+                        .HasColumnType("int")
+                        .HasColumnName("PracownikID");
+
+                    b.Property<int>("ZajeciaId")
+                        .HasColumnType("int")
+                        .HasColumnName("ZajeciaID");
+
+                    b.HasKey("GrafikZajecId")
+                        .HasName("GrafikZajec_pk");
+
+                    b.HasIndex("KortId");
+
+                    b.HasIndex("PracownikId");
+
+                    b.HasIndex("ZajeciaId");
+
+                    b.ToTable("GrafikZajec", (string)null);
+                });
+
+            modelBuilder.Entity("SportsCenter.Core.Entities.InstancjaZajec", b =>
+                {
+                    b.Property<int>("InstancjaZajecId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("InstancjaZajecID");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("InstancjaZajecId"));
+
+                    b.Property<bool?>("CzyOdwolane")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false)
+                        .HasColumnName("CzyOdwolane");
+
+                    b.Property<DateOnly>("Data")
+                        .HasColumnType("date")
+                        .HasColumnName("Data");
 
                     b.Property<int>("GrafikZajecId")
                         .HasColumnType("int")
                         .HasColumnName("GrafikZajecID");
 
-                    b.HasKey("DataZajecId")
-                        .HasName("DataZajec_pk");
+                    b.HasKey("InstancjaZajecId")
+                        .HasName("InstancjaZajec_pk");
 
                     b.HasIndex("GrafikZajecId");
 
-                    b.ToTable("DataZajec", (string)null);
+                    b.ToTable("InstancjaZajec", (string)null);
                 });
 
-            modelBuilder.Entity("SportsCenter.Core.Entities.GrafikZajecKlient", b =>
+            modelBuilder.Entity("SportsCenter.Core.Entities.InstancjaZajecKlient", b =>
                 {
-                    b.Property<int>("GrafikZajecKlientId")
+                    b.Property<int>("InstancjaZajecKlientId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasColumnName("GrafikZajecKlientID");
+                        .HasColumnName("InstancjaZajecKlientID");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("GrafikZajecKlientId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("InstancjaZajecKlientId"));
+
+                    b.Property<bool?>("CzyOplacone")
+                        .HasColumnType("bit")
+                        .HasColumnName("CzyOplacone");
 
                     b.Property<bool>("CzyUwzglednicSprzet")
-                        .HasColumnType("bit");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false)
+                        .HasColumnName("CzyUwzglednicSprzet");
 
                     b.Property<DateOnly?>("DataWypisu")
-                        .HasColumnType("date");
+                        .HasColumnType("date")
+                        .HasColumnName("DataWypisu");
 
                     b.Property<DateOnly>("DataZapisu")
-                        .HasColumnType("date");
+                        .HasColumnType("date")
+                        .HasColumnName("DataZapisu");
 
-                    b.Property<int>("GrafikZajecId")
+                    b.Property<int>("InstancjaZajecId")
                         .HasColumnType("int")
-                        .HasColumnName("GrafikZajecID");
+                        .HasColumnName("InstancjaZajecID");
 
                     b.Property<int>("KlientId")
                         .HasColumnType("int")
                         .HasColumnName("KlientID");
 
-                    b.HasKey("GrafikZajecKlientId")
-                        .HasName("GrafikZajec_Klient_pk");
+                    b.HasKey("InstancjaZajecKlientId")
+                        .HasName("InstancjaZajec_Klient_pk");
 
-                    b.HasIndex("GrafikZajecId");
+                    b.HasIndex("InstancjaZajecId");
 
                     b.HasIndex("KlientId");
 
-                    b.ToTable("GrafikZajec_Klient", (string)null);
+                    b.ToTable("InstancjaZajec_Klient", (string)null);
                 });
 
             modelBuilder.Entity("SportsCenter.Core.Entities.Klient", b =>
@@ -170,12 +393,12 @@ namespace SportsCenter.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("OcenaId"));
 
-                    b.Property<DateTime>("DataWystawienia")
-                        .HasColumnType("datetime2");
+                    b.Property<DateOnly>("DataWystawienia")
+                        .HasColumnType("date");
 
-                    b.Property<int>("GrafikZajecKlientId")
+                    b.Property<int?>("GrafikZajecKlientId")
                         .HasColumnType("int")
-                        .HasColumnName("GrafikZajecKlientID");
+                        .HasColumnName("InstancjaZajecKlientID");
 
                     b.Property<int>("Gwiazdki")
                         .HasColumnType("int");
@@ -217,8 +440,8 @@ namespace SportsCenter.Infrastructure.Migrations
 
                     b.Property<string>("Haslo")
                         .IsRequired()
-                        .HasMaxLength(250)
-                        .HasColumnType("nvarchar(250)");
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
 
                     b.Property<string>("Imie")
                         .IsRequired()
@@ -271,6 +494,9 @@ namespace SportsCenter.Infrastructure.Migrations
                         .HasColumnName("PracownikID");
 
                     b.Property<DateOnly>("DataZatrudnienia")
+                        .HasColumnType("date");
+
+                    b.Property<DateOnly?>("DataZwolnienia")
                         .HasColumnType("date");
 
                     b.Property<int>("IdTypPracownika")
@@ -329,6 +555,10 @@ namespace SportsCenter.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("RezerwacjaId"));
 
+                    b.Property<bool?>("CzyOplacona")
+                        .HasColumnType("bit")
+                        .HasColumnName("CzyOplacona");
+
                     b.Property<bool>("CzyUwzglednicSprzet")
                         .HasColumnType("bit");
 
@@ -368,76 +598,6 @@ namespace SportsCenter.Infrastructure.Migrations
                     b.ToTable("Rezerwacja", (string)null);
                 });
 
-            modelBuilder.Entity("SportsCenter.Core.Entities.SportActivity", b =>
-                {
-                    b.Property<int>("ZajeciaId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasColumnName("ZajeciaID");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ZajeciaId"));
-
-                    b.Property<int>("IdPoziomZajec")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Nazwa")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.HasKey("ZajeciaId")
-                        .HasName("Zajecia_pk");
-
-                    b.HasIndex("IdPoziomZajec");
-
-                    b.ToTable("Zajecia");
-                });
-
-            modelBuilder.Entity("SportsCenter.Core.Entities.SportActivitySchedule", b =>
-                {
-                    b.Property<int>("GrafikZajecId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasColumnName("GrafikZajecID");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("GrafikZajecId"));
-
-                    b.Property<int>("CzasTrwania")
-                        .HasColumnType("int");
-
-                    b.Property<int>("KortId")
-                        .HasColumnType("int")
-                        .HasColumnName("KortID");
-
-                    b.Property<decimal>("KoszBezSprzetu")
-                        .HasColumnType("decimal(5, 2)");
-
-                    b.Property<decimal>("KoszZeSprzetem")
-                        .HasColumnType("decimal(5, 2)");
-
-                    b.Property<int>("LimitOsob")
-                        .HasColumnType("int");
-
-                    b.Property<int>("PracownikId")
-                        .HasColumnType("int")
-                        .HasColumnName("PracownikID");
-
-                    b.Property<int>("ZajeciaId")
-                        .HasColumnType("int")
-                        .HasColumnName("ZajeciaID");
-
-                    b.HasKey("GrafikZajecId")
-                        .HasName("GrafikZajec_pk");
-
-                    b.HasIndex("KortId");
-
-                    b.HasIndex("PracownikId");
-
-                    b.HasIndex("ZajeciaId");
-
-                    b.ToTable("GrafikZajec", (string)null);
-                });
-
             modelBuilder.Entity("SportsCenter.Core.Entities.Tag", b =>
                 {
                     b.Property<int>("TagId")
@@ -458,7 +618,7 @@ namespace SportsCenter.Infrastructure.Migrations
                     b.ToTable("Tag", (string)null);
                 });
 
-            modelBuilder.Entity("SportsCenter.Core.Entities.TrenerCertifikat", b =>
+            modelBuilder.Entity("SportsCenter.Core.Entities.TrenerCertyfikat", b =>
                 {
                     b.Property<int>("PracownikId")
                         .HasColumnType("int")
@@ -472,11 +632,11 @@ namespace SportsCenter.Infrastructure.Migrations
                         .HasColumnType("date");
 
                     b.HasKey("PracownikId", "CertyfikatId")
-                        .HasName("Trener_Certifikat_pk");
+                        .HasName("Trener_Certyfikat_pk");
 
                     b.HasIndex("CertyfikatId");
 
-                    b.ToTable("Trener_Certifikat", (string)null);
+                    b.ToTable("Trener_Certyfikat", (string)null);
                 });
 
             modelBuilder.Entity("SportsCenter.Core.Entities.TypPracownika", b =>
@@ -496,6 +656,54 @@ namespace SportsCenter.Infrastructure.Migrations
                         .HasName("TypPracownika_pk");
 
                     b.ToTable("TypPracownika", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            IdTypPracownika = 1,
+                            Nazwa = "Wlasciciel"
+                        },
+                        new
+                        {
+                            IdTypPracownika = 2,
+                            Nazwa = "Pracownik administracyjny"
+                        },
+                        new
+                        {
+                            IdTypPracownika = 3,
+                            Nazwa = "Trener"
+                        },
+                        new
+                        {
+                            IdTypPracownika = 4,
+                            Nazwa = "Pomoc sprzatajaca"
+                        });
+                });
+
+            modelBuilder.Entity("SportsCenter.Core.Entities.WyjatkoweGodzinyPracy", b =>
+                {
+                    b.Property<int>("WyjatkoweGodzinyPracyId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("WyjatkoweGodzinyPracyID");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("WyjatkoweGodzinyPracyId"));
+
+                    b.Property<DateOnly>("Data")
+                        .HasColumnType("date");
+
+                    b.Property<TimeOnly>("GodzinaOtwarcia")
+                        .HasPrecision(0)
+                        .HasColumnType("time(0)");
+
+                    b.Property<TimeOnly>("GodzinaZamkniecia")
+                        .HasPrecision(0)
+                        .HasColumnType("time(0)");
+
+                    b.HasKey("WyjatkoweGodzinyPracyId")
+                        .HasName("WyjatkoweGodzinyPracy_pk");
+
+                    b.ToTable("WyjatkoweGodzinyPracy", (string)null);
                 });
 
             modelBuilder.Entity("SportsCenter.Core.Entities.Zadanie", b =>
@@ -533,6 +741,31 @@ namespace SportsCenter.Infrastructure.Migrations
                     b.ToTable("Zadanie", (string)null);
                 });
 
+            modelBuilder.Entity("SportsCenter.Core.Entities.Zajecium", b =>
+                {
+                    b.Property<int>("ZajeciaId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("ZajeciaID");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ZajeciaId"));
+
+                    b.Property<int>("IdPoziomZajec")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Nazwa")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.HasKey("ZajeciaId")
+                        .HasName("Zajecia_pk");
+
+                    b.HasIndex("IdPoziomZajec");
+
+                    b.ToTable("Zajecia");
+                });
+
             modelBuilder.Entity("SportsCenter.Core.Entities.Zamowienie", b =>
                 {
                     b.Property<int>("ZamowienieId")
@@ -562,8 +795,7 @@ namespace SportsCenter.Infrastructure.Migrations
                     b.Property<string>("Status")
                         .IsRequired()
                         .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)")
-                        .HasColumnName("Status");
+                        .HasColumnType("nvarchar(50)");
 
                     b.HasKey("ZamowienieId")
                         .HasName("Zamowienie_pk");
@@ -599,6 +831,58 @@ namespace SportsCenter.Infrastructure.Migrations
                     b.ToTable("Zamowienie_Produkt", (string)null);
                 });
 
+            modelBuilder.Entity("SportsCenter.Core.Entities.Zastepstwo", b =>
+                {
+                    b.Property<int>("ZastepstwoId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("ZastepstwoID");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ZastepstwoId"));
+
+                    b.Property<DateOnly>("Data")
+                        .HasColumnType("date");
+
+                    b.Property<TimeOnly>("GodzinaDo")
+                        .HasPrecision(0)
+                        .HasColumnType("time(0)");
+
+                    b.Property<TimeOnly>("GodzinaOd")
+                        .HasPrecision(0)
+                        .HasColumnType("time(0)");
+
+                    b.Property<int>("PracownikNieobecnyId")
+                        .HasColumnType("int")
+                        .HasColumnName("PracownikNieobecnyID");
+
+                    b.Property<int?>("PracownikZastepujacyId")
+                        .HasColumnType("int")
+                        .HasColumnName("PracownikZastepujacyID");
+
+                    b.Property<int?>("PracownikZatwierdzajacyId")
+                        .HasColumnType("int")
+                        .HasColumnName("PracownikZatwierdzajacyID");
+
+                    b.Property<int?>("RezerwacjaId")
+                        .HasColumnType("int")
+                        .HasColumnName("RezerwacjaID");
+
+                    b.Property<int?>("ZajeciaId")
+                        .HasColumnType("int")
+                        .HasColumnName("ZajeciaID");
+
+                    b.HasKey("ZastepstwoId")
+                        .HasName("Zastepstwo_pk");
+
+                    b.HasIndex("PracownikNieobecnyId");
+
+                    b.HasIndex("PracownikZastepujacyId");
+
+                    b.HasIndex("PracownikZatwierdzajacyId");
+
+                    b.ToTable("Zastepstwo", (string)null);
+                });
+
             modelBuilder.Entity("KlientTag", b =>
                 {
                     b.HasOne("SportsCenter.Core.Entities.Klient", null)
@@ -611,40 +895,76 @@ namespace SportsCenter.Infrastructure.Migrations
                     b.HasOne("SportsCenter.Core.Entities.Tag", null)
                         .WithMany()
                         .HasForeignKey("TagId")
-                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("Posiadanie_Tag");
                 });
 
-            modelBuilder.Entity("SportsCenter.Core.Entities.DataZajec", b =>
+            modelBuilder.Entity("SportsCenter.Core.Entities.BrakDostepnosci", b =>
                 {
-                    b.HasOne("SportsCenter.Core.Entities.SportActivitySchedule", "SportActivitySchedule")
-                        .WithMany("DataZajecs")
-                        .HasForeignKey("GrafikZajecId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                    b.HasOne("SportsCenter.Core.Entities.Pracownik", "Pracownik")
+                        .WithMany("BrakDostepnoscis")
+                        .HasForeignKey("PracownikId")
                         .IsRequired()
-                        .HasConstraintName("DataZajec_GrafikZajec");
+                        .HasConstraintName("BrakDostepnosci_Pracownik");
 
-                    b.Navigation("SportActivitySchedule");
+                    b.Navigation("Pracownik");
                 });
 
-            modelBuilder.Entity("SportsCenter.Core.Entities.GrafikZajecKlient", b =>
+            modelBuilder.Entity("SportsCenter.Core.Entities.GrafikZajec", b =>
                 {
-                    b.HasOne("SportsCenter.Core.Entities.SportActivitySchedule", "SportActivitySchedule")
-                        .WithMany("GrafikZajecKlients")
+                    b.HasOne("SportsCenter.Core.Entities.Kort", "Kort")
+                        .WithMany("GrafikZajecs")
+                        .HasForeignKey("KortId")
+                        .IsRequired()
+                        .HasConstraintName("GrafikZajec_Kort");
+
+                    b.HasOne("SportsCenter.Core.Entities.Pracownik", "Pracownik")
+                        .WithMany("GrafikZajecs")
+                        .HasForeignKey("PracownikId")
+                        .IsRequired()
+                        .HasConstraintName("GrafikZajec_Pracownik");
+
+                    b.HasOne("SportsCenter.Core.Entities.Zajecium", "Zajecia")
+                        .WithMany("GrafikZajecs")
+                        .HasForeignKey("ZajeciaId")
+                        .IsRequired()
+                        .HasConstraintName("GrafikZajec_Zajecia");
+
+                    b.Navigation("Kort");
+
+                    b.Navigation("Pracownik");
+
+                    b.Navigation("Zajecia");
+                });
+
+            modelBuilder.Entity("SportsCenter.Core.Entities.InstancjaZajec", b =>
+                {
+                    b.HasOne("SportsCenter.Core.Entities.GrafikZajec", "GrafikZajec")
+                        .WithMany("InstancjaZajec")
                         .HasForeignKey("GrafikZajecId")
                         .IsRequired()
-                        .HasConstraintName("Table_34_GrafikZajec");
+                        .HasConstraintName("InstancjaZajec_GrafikZajec");
+
+                    b.Navigation("GrafikZajec");
+                });
+
+            modelBuilder.Entity("SportsCenter.Core.Entities.InstancjaZajecKlient", b =>
+                {
+                    b.HasOne("SportsCenter.Core.Entities.InstancjaZajec", "InstancjaZajec")
+                        .WithMany("InstancjaZajecKlients")
+                        .HasForeignKey("InstancjaZajecId")
+                        .IsRequired()
+                        .HasConstraintName("InstancjaZajec_Klient_InstancjaZajec");
 
                     b.HasOne("SportsCenter.Core.Entities.Klient", "Klient")
-                        .WithMany("GrafikZajecKlients")
+                        .WithMany("InstancjaZajecKlients")
                         .HasForeignKey("KlientId")
                         .IsRequired()
-                        .HasConstraintName("Table_34_Klient");
+                        .HasConstraintName("InstancjaZajec_Klient");
+
+                    b.Navigation("InstancjaZajec");
 
                     b.Navigation("Klient");
-
-                    b.Navigation("SportActivitySchedule");
                 });
 
             modelBuilder.Entity("SportsCenter.Core.Entities.Klient", b =>
@@ -660,13 +980,12 @@ namespace SportsCenter.Infrastructure.Migrations
 
             modelBuilder.Entity("SportsCenter.Core.Entities.Ocena", b =>
                 {
-                    b.HasOne("SportsCenter.Core.Entities.GrafikZajecKlient", "GrafikZajecKlient")
+                    b.HasOne("SportsCenter.Core.Entities.InstancjaZajecKlient", "InstancjaZajecKlient")
                         .WithMany("Ocenas")
                         .HasForeignKey("GrafikZajecKlientId")
-                        .IsRequired()
-                        .HasConstraintName("Ocena_GrafikZajec_Klient");
+                        .HasConstraintName("Ocena_InstancjaZajec_Klient");
 
-                    b.Navigation("GrafikZajecKlient");
+                    b.Navigation("InstancjaZajecKlient");
                 });
 
             modelBuilder.Entity("SportsCenter.Core.Entities.Pracownik", b =>
@@ -714,61 +1033,20 @@ namespace SportsCenter.Infrastructure.Migrations
                     b.Navigation("Trener");
                 });
 
-            modelBuilder.Entity("SportsCenter.Core.Entities.SportActivity", b =>
-                {
-                    b.HasOne("SportsCenter.Core.Entities.PoziomZajec", "IdPoziomZajecNavigation")
-                        .WithMany("Zajecia")
-                        .HasForeignKey("IdPoziomZajec")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("Zajecia_PoziomZajec");
-
-                    b.Navigation("IdPoziomZajecNavigation");
-                });
-
-            modelBuilder.Entity("SportsCenter.Core.Entities.SportActivitySchedule", b =>
-                {
-                    b.HasOne("SportsCenter.Core.Entities.Kort", "Kort")
-                        .WithMany("GrafikZajecs")
-                        .HasForeignKey("KortId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("GrafikZajec_Kort");
-
-                    b.HasOne("SportsCenter.Core.Entities.Pracownik", "Pracownik")
-                        .WithMany("GrafikZajecs")
-                        .HasForeignKey("PracownikId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("GrafikZajec_Pracownik");
-
-                    b.HasOne("SportsCenter.Core.Entities.SportActivity", "Zajecia")
-                        .WithMany("GrafikZajecs")
-                        .HasForeignKey("ZajeciaId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("GrafikZajec_Zajecia");
-
-                    b.Navigation("Kort");
-
-                    b.Navigation("Pracownik");
-
-                    b.Navigation("Zajecia");
-                });
-
-            modelBuilder.Entity("SportsCenter.Core.Entities.TrenerCertifikat", b =>
+            modelBuilder.Entity("SportsCenter.Core.Entities.TrenerCertyfikat", b =>
                 {
                     b.HasOne("SportsCenter.Core.Entities.Certyfikat", "Certyfikat")
-                        .WithMany("TrenerCertifikats")
+                        .WithMany("TrenerCertyfikats")
                         .HasForeignKey("CertyfikatId")
                         .IsRequired()
                         .HasConstraintName("Posiadanie_Certyfikat");
 
                     b.HasOne("SportsCenter.Core.Entities.Pracownik", "Pracownik")
-                        .WithMany("TrenerCertifikats")
+                        .WithMany("TrenerCertyfikats")
                         .HasForeignKey("PracownikId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
-                        .HasConstraintName("Trener_Certifikat_Pracownik");
+                        .HasConstraintName("Trener_Certyfikat_Pracownik");
 
                     b.Navigation("Certyfikat");
 
@@ -792,6 +1070,17 @@ namespace SportsCenter.Infrastructure.Migrations
                     b.Navigation("Pracownik");
 
                     b.Navigation("PracownikZlecajacy");
+                });
+
+            modelBuilder.Entity("SportsCenter.Core.Entities.Zajecium", b =>
+                {
+                    b.HasOne("SportsCenter.Core.Entities.PoziomZajec", "IdPoziomZajecNavigation")
+                        .WithMany("Zajecia")
+                        .HasForeignKey("IdPoziomZajec")
+                        .IsRequired()
+                        .HasConstraintName("Zajecia_PoziomZajec");
+
+                    b.Navigation("IdPoziomZajecNavigation");
                 });
 
             modelBuilder.Entity("SportsCenter.Core.Entities.Zamowienie", b =>
@@ -824,6 +1113,7 @@ namespace SportsCenter.Infrastructure.Migrations
                     b.HasOne("SportsCenter.Core.Entities.Zamowienie", "Zamowienie")
                         .WithMany("ZamowienieProdukts")
                         .HasForeignKey("ZamowienieId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("Zamowienie_Produkt_Zamowienie");
 
@@ -832,19 +1122,54 @@ namespace SportsCenter.Infrastructure.Migrations
                     b.Navigation("Zamowienie");
                 });
 
-            modelBuilder.Entity("SportsCenter.Core.Entities.Certyfikat", b =>
+            modelBuilder.Entity("SportsCenter.Core.Entities.Zastepstwo", b =>
                 {
-                    b.Navigation("TrenerCertifikats");
+                    b.HasOne("SportsCenter.Core.Entities.Pracownik", "PracownikNieobecny")
+                        .WithMany("ZastepstwoPracownikNieobecnies")
+                        .HasForeignKey("PracownikNieobecnyId")
+                        .IsRequired()
+                        .HasConstraintName("Zastepstwo_PracownikNieobecny");
+
+                    b.HasOne("SportsCenter.Core.Entities.Pracownik", "PracownikZastepujacy")
+                        .WithMany("ZastepstwoPracownikZastepujacies")
+                        .HasForeignKey("PracownikZastepujacyId")
+                        .HasConstraintName("Zastepstwo_PracownikZastepujacy");
+
+                    b.HasOne("SportsCenter.Core.Entities.Pracownik", "PracownikZatwierdzajacy")
+                        .WithMany("ZastepstwoPracownikZatwierdzajacies")
+                        .HasForeignKey("PracownikZatwierdzajacyId")
+                        .HasConstraintName("Zastepstwo_PracownikZatwierdzajacy");
+
+                    b.Navigation("PracownikNieobecny");
+
+                    b.Navigation("PracownikZastepujacy");
+
+                    b.Navigation("PracownikZatwierdzajacy");
                 });
 
-            modelBuilder.Entity("SportsCenter.Core.Entities.GrafikZajecKlient", b =>
+            modelBuilder.Entity("SportsCenter.Core.Entities.Certyfikat", b =>
+                {
+                    b.Navigation("TrenerCertyfikats");
+                });
+
+            modelBuilder.Entity("SportsCenter.Core.Entities.GrafikZajec", b =>
+                {
+                    b.Navigation("InstancjaZajec");
+                });
+
+            modelBuilder.Entity("SportsCenter.Core.Entities.InstancjaZajec", b =>
+                {
+                    b.Navigation("InstancjaZajecKlients");
+                });
+
+            modelBuilder.Entity("SportsCenter.Core.Entities.InstancjaZajecKlient", b =>
                 {
                     b.Navigation("Ocenas");
                 });
 
             modelBuilder.Entity("SportsCenter.Core.Entities.Klient", b =>
                 {
-                    b.Navigation("GrafikZajecKlients");
+                    b.Navigation("InstancjaZajecKlients");
 
                     b.Navigation("Rezerwacjas");
 
@@ -872,17 +1197,25 @@ namespace SportsCenter.Infrastructure.Migrations
 
             modelBuilder.Entity("SportsCenter.Core.Entities.Pracownik", b =>
                 {
+                    b.Navigation("BrakDostepnoscis");
+
                     b.Navigation("GrafikZajecs");
 
                     b.Navigation("Rezerwacjas");
 
-                    b.Navigation("TrenerCertifikats");
+                    b.Navigation("TrenerCertyfikats");
 
                     b.Navigation("ZadaniePracownikZlecajacies");
 
                     b.Navigation("ZadaniePracowniks");
 
                     b.Navigation("Zamowienies");
+
+                    b.Navigation("ZastepstwoPracownikNieobecnies");
+
+                    b.Navigation("ZastepstwoPracownikZastepujacies");
+
+                    b.Navigation("ZastepstwoPracownikZatwierdzajacies");
                 });
 
             modelBuilder.Entity("SportsCenter.Core.Entities.Produkt", b =>
@@ -890,21 +1223,14 @@ namespace SportsCenter.Infrastructure.Migrations
                     b.Navigation("ZamowienieProdukts");
                 });
 
-            modelBuilder.Entity("SportsCenter.Core.Entities.SportActivity", b =>
-                {
-                    b.Navigation("GrafikZajecs");
-                });
-
-            modelBuilder.Entity("SportsCenter.Core.Entities.SportActivitySchedule", b =>
-                {
-                    b.Navigation("DataZajecs");
-
-                    b.Navigation("GrafikZajecKlients");
-                });
-
             modelBuilder.Entity("SportsCenter.Core.Entities.TypPracownika", b =>
                 {
                     b.Navigation("Pracowniks");
+                });
+
+            modelBuilder.Entity("SportsCenter.Core.Entities.Zajecium", b =>
+                {
+                    b.Navigation("GrafikZajecs");
                 });
 
             modelBuilder.Entity("SportsCenter.Core.Entities.Zamowienie", b =>

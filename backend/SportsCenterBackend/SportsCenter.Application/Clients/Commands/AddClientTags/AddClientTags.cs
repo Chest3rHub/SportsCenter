@@ -13,6 +13,4 @@ public sealed record AddClientTags : ICommand<Unit>
         ClientId = clientId;
         TagIds = tagIds;
     }
-
-
 }

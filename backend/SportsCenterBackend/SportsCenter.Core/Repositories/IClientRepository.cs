@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static SportsCenter.Core.Enums.PaymentResult;
 
 namespace SportsCenter.Core.Repositories
 {
@@ -13,10 +14,11 @@ namespace SportsCenter.Core.Repositories
         Task<Klient?> GetClientByEmailAsync(string email, CancellationToken cancellationToken);
         Task<Klient?> GetClientByIdAsync(int id, CancellationToken cancellationToken);
         Task UpdateClientAsync(Klient client, CancellationToken cancellationToken);
-
         Task<Tag?> GetTagById(int id, CancellationToken cancellationToken);
         Task<bool> RemoveClientTagsAsync(int clientId, List<int> tagIds, CancellationToken cancellationToken);
         Task<int?> GetActivityDiscountForClientAsync(int clientId, CancellationToken cancellationToken);
         Task<int> GetProductDiscountForClientAsync(int clientId, CancellationToken cancellationToken);
+        Task<PaymentResultEnum> PayForActivityAsync(int activityId, int clientId, CancellationToken cancellationToken);
+        Task<PaymentResultEnum> PayForReservationAsync(int activityInstanceId, int clientId, CancellationToken cancellationToken);
     }
 }

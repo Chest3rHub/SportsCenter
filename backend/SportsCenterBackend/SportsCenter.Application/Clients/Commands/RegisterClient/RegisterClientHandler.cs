@@ -25,17 +25,17 @@ internal sealed class RegisterClientHandler : IRequestHandler<RegisterClient, Un
         var existingUser = await _userRepository.GetUserByEmailAsync(request.Email, cancellationToken);
         if (existingUser != null) throw new UserAlreadyExistsException(request.Email);
 
-        var securedPassword = _passwordManager.Secure(request.Haslo);
+        var securedPassword = _passwordManager.Secure(request.Password);
 
         var newOsoba = new Osoba
         {
-            Imie = request.Imie,
-            Nazwisko = request.Nazwisko,
-            Adres = request.Adres,
-            DataUr = DateOnly.FromDateTime(request.DataUr),
+            Imie = request.Name,
+            Nazwisko = request.Surname,
+            Adres = request.Address,
+            DataUr = DateOnly.FromDateTime(request.BirthDate),
             Email = request.Email,
             Haslo = securedPassword,
-            NrTel = request.NrTel
+            NrTel = request.PhoneNumber
         };
 
         var newClient = new Klient

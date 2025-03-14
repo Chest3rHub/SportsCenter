@@ -43,8 +43,8 @@ namespace SportsCenter.Application.Employees.Commands.AddTask
 
             var newTask = new Zadanie
             {
-                Opis = request.Opis,
-                DataDo = DateOnly.FromDateTime(request.DataDo),
+                Opis = request.Description,
+                DataDo = DateOnly.FromDateTime(request.DateTo),
                 PracownikId = userId,         
                 PracownikZlecajacyId = userId 
             };

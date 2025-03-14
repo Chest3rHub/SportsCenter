@@ -31,7 +31,7 @@ public class ClientsController : BaseController
     }
 
     [AllowAnonymous]
-    [HttpPost]
+    [HttpPost("register-client")]
     public async Task<IActionResult> RegisterClientAsync([FromBody] RegisterClient registerClient)
     {
         var validationResults = new RegisterClientValidator().Validate(registerClient);
@@ -51,7 +51,7 @@ public class ClientsController : BaseController
         }
         catch (Exception ex)
         {
-            return StatusCode(500, new { message = "Wystąpił błąd podczas wysyłania żądania", details = ex.Message });
+            return StatusCode(500, new { message = "An error occurred while sending the request", details = ex.Message });
         }
     }
 
@@ -76,7 +76,7 @@ public class ClientsController : BaseController
         }
         catch (Exception ex)
         {
-            return StatusCode(500, new { message = "Wystąpił błąd podczas wysyłania żądania", details = ex.Message });
+            return StatusCode(500, new { message = "An error occurred while sending the request", details = ex.Message });
         }
     }
 
@@ -108,45 +108,6 @@ public class ClientsController : BaseController
     }
 
     [Authorize(Roles = "Pracownik administracyjny,Wlasciciel")]
-    [HttpPost("add-deposit-to-client")]
-    public async Task<IActionResult> AddAccountDepositToClientAsync([FromBody] AddDepositToClient deposit)
-    {
-        try
-        {
-            await Mediator.Send(deposit);
-            return NoContent();
-        }
-        catch (ClientNotFoundException ex)
-        {
-            return NotFound(new { message = ex.Message });
-        }
-        catch (Exception ex)
-        {
-            return StatusCode(500, new { message = "Wystąpił błąd podczas doładowania salda", details = ex.Message });
-        }
-    }
-
-    //rozwiazanie bezfrontendowe tymczasowe wpisac w swaggerze w StripeToken "tok_visa"
-    [Authorize(Roles = "Klient")]
-    [HttpPost("add-deposit")]
-    public async Task<IActionResult> AddAccountDepositYourselfAsync([FromBody] AddDepositYourself deposit)
-    {
-        try
-        {
-            await Mediator.Send(deposit);
-            return NoContent();
-        }
-        catch (ClientNotFoundException ex)
-        {
-            return NotFound(new { message = ex.Message });
-        }
-        catch (Exception ex)
-        {
-            return StatusCode(500, new { message = "Wystąpił błąd podczas doładowania salda", details = ex.Message });
-        }
-    }
-
-    [Authorize(Roles = "Pracownik administracyjny,Wlasciciel")]
     [HttpPost("addTags")]
     public async Task<IActionResult> AddClientTagsAsync([FromBody] AddClientTags addClientTags)
     {
@@ -163,9 +124,13 @@ public class ClientsController : BaseController
         {
             return Conflict(new { message = ex.Message });
         }
+        catch (TagNotFoundException ex)
+        {
+            return NotFound(new { message = ex.Message });
+        }
         catch (Exception ex)
         {
-            return StatusCode(500, new { message = "Wystąpił błąd podczas dodawania tagów", details = ex.Message });
+            return StatusCode(500, new { message = "An error occurred while sending the request", details = ex.Message });
         }
     }
 
@@ -189,7 +154,46 @@ public class ClientsController : BaseController
         }
         catch (Exception ex)
         {
-            return StatusCode(500, new { message = "Wystąpił błąd podczas usuwania tagów", details = ex.Message });
+            return StatusCode(500, new { message = "An error occurred while sending the request", details = ex.Message });
+        }
+    }
+
+    [Authorize(Roles = "Pracownik administracyjny,Wlasciciel")]
+    [HttpPost("add-deposit-to-client")]
+    public async Task<IActionResult> AddAccountDepositToClientAsync([FromBody] AddDepositToClient deposit)
+    {
+        try
+        {
+            await Mediator.Send(deposit);
+            return NoContent();
+        }
+        catch (ClientNotFoundException ex)
+        {
+            return NotFound(new { message = ex.Message });
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, new { message = "An error occurred while sending the request", details = ex.Message });
+        }
+    }
+
+    //rozwiazanie bezfrontendowe tymczasowe wpisac w swaggerze w StripeToken "tok_visa"
+    [Authorize(Roles = "Klient")]
+    [HttpPost("add-deposit")]
+    public async Task<IActionResult> AddAccountDepositYourselfAsync([FromBody] AddDepositYourself deposit)
+    {
+        try
+        {
+            await Mediator.Send(deposit);
+            return NoContent();
+        }
+        catch (ClientNotFoundException ex)
+        {
+            return NotFound(new { message = ex.Message });
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, new { message = "An error occurred while sending the request", details = ex.Message });
         }
     }
 
@@ -208,7 +212,7 @@ public class ClientsController : BaseController
         }
         catch (Exception ex)
         {
-            return StatusCode(500, new { message = "Wystąpił błąd podczas dodawania zniżki", details = ex.Message });
+            return StatusCode(500, new { message = "An error occurred while sending the request", details = ex.Message });
         }
     }
 }

@@ -14,14 +14,13 @@ public class SportActivityRepository : ISportActivityRepository
         _dbContext = dbContext;
     }
 
-    public async Task<int> AddSportActivityAsync(Zajecium sportActivity, CancellationToken cancellationToken = default)
+    public async Task AddSportActivityAsync(Zajecium sportActivity, CancellationToken cancellationToken)
     {
         _dbContext.Zajecia.Add(sportActivity);
         await _dbContext.SaveChangesAsync();
-        return sportActivity.ZajeciaId;
     }
 
-    public async Task AddScheduleAsync(GrafikZajec schedule, CancellationToken cancellationToken = default)
+    public async Task AddScheduleAsync(GrafikZajec schedule, CancellationToken cancellationToken)
     {
         _dbContext.GrafikZajecs.Add(schedule);
         await _dbContext.SaveChangesAsync();
@@ -32,7 +31,7 @@ public class SportActivityRepository : ISportActivityRepository
         return await _dbContext.Zajecia
             .Include(sa => sa.IdPoziomZajecNavigation)
             .Include(sa => sa.GrafikZajecs)
-            .FirstOrDefaultAsync(sa => sa.IdPoziomZajec == sportActivityId, cancellationToken);
+            .FirstOrDefaultAsync(sa => sa.ZajeciaId == sportActivityId, cancellationToken);
     }
     public async Task<IEnumerable<Zajecium>> GetAllSportActivitiesAsync(CancellationToken cancellationToken)
     {
@@ -44,9 +43,19 @@ public class SportActivityRepository : ISportActivityRepository
     }
     public async Task RemoveSportActivityAsync(Zajecium sportActivity, CancellationToken cancellationToken)
     {
+        var grafikZajec = await _dbContext.GrafikZajecs
+            .Where(g => g.ZajeciaId == sportActivity.ZajeciaId)
+            .ToListAsync(cancellationToken);
+
+        if (grafikZajec.Any())
+        {
+            _dbContext.GrafikZajecs.RemoveRange(grafikZajec);
+        }
+
         _dbContext.Zajecia.Remove(sportActivity);
         await _dbContext.SaveChangesAsync(cancellationToken);
     }
+
 
     public async Task<IEnumerable<GrafikZajec>> GetSchedulesByTrainerIdAsync(int trainerId, CancellationToken cancellationToken)
     {
@@ -62,10 +71,8 @@ public class SportActivityRepository : ISportActivityRepository
             .Select(gz => new
             {
                 gz.CzasTrwania,
-                Date = _dbContext.DataZajecs
-                    .Where(dz => dz.GrafikZajecId == gz.GrafikZajecId)
-                    .Select(dz => dz.Date)
-                    .FirstOrDefault()
+                gz.DzienTygodnia,
+                gz.GodzinaOd
             })
             .FirstOrDefaultAsync();
 
@@ -74,7 +81,23 @@ public class SportActivityRepository : ISportActivityRepository
             return (null, null);
         }
 
-        return (activityDetails.Date, activityDetails.CzasTrwania);
+        string dzienTygodnia = activityDetails.DzienTygodnia;
+        TimeSpan godzinaOd = activityDetails.GodzinaOd;
+
+        var currentDate = DateTime.Now;
+
+        var dayOfWeek = Enum.GetValues(typeof(DayOfWeek)).Cast<DayOfWeek>()
+            .FirstOrDefault(d => d.ToString() == dzienTygodnia);
+
+        DateTime activityDate = currentDate.AddDays((int)dayOfWeek - (int)currentDate.DayOfWeek);
+        if ((int)dayOfWeek <= (int)currentDate.DayOfWeek)
+        {
+            activityDate = activityDate.AddDays(7);
+        }
+
+        DateTime finalDate = activityDate.Add(godzinaOd);
+
+        return (finalDate, activityDetails.CzasTrwania);
     }
     public async Task<bool> IsTrainerAssignedToActivityAsync(int activityId, int trainerId)
     {
@@ -84,18 +107,97 @@ public class SportActivityRepository : ISportActivityRepository
     }
     public async Task<(DateTime date, TimeSpan startTime, TimeSpan endTime)?> GetActivityDetailsAsync(int activityId, CancellationToken cancellationToken)
     {
-        var activity = await _dbContext.DataZajecs
-            .Where(d => d.GrafikZajecId == activityId)
-            .Select(d => new { d.Date, d.GrafikZajec.CzasTrwania })
+
+        var activity = await _dbContext.GrafikZajecs
+            .Where(g => g.ZajeciaId == activityId)
+            .Select(g => new { g.DzienTygodnia, g.GodzinaOd, g.CzasTrwania })
             .FirstOrDefaultAsync(cancellationToken);
 
         if (activity == null)
             return null;
 
-        var startDateTime = activity.Date;
-        var startTime = startDateTime.TimeOfDay;
-        var endTime = startTime + TimeSpan.FromMinutes(activity.CzasTrwania);
+        var currentDate = DateTime.Now;
 
-        return (startDateTime.Date, startTime, endTime);
+        var dayOfWeek = Enum.GetValues(typeof(DayOfWeek))
+            .Cast<DayOfWeek>()
+            .FirstOrDefault(d => d.ToString() == activity.DzienTygodnia);
+
+        DateTime activityDate = currentDate.AddDays((int)dayOfWeek - (int)currentDate.DayOfWeek);
+
+        if ((int)dayOfWeek <= (int)currentDate.DayOfWeek)
+        {
+            activityDate = activityDate.AddDays(7);
+        }
+
+        TimeSpan startTime = activityDate.Date.Add(activity.GodzinaOd).TimeOfDay;
+        TimeSpan endTime = startTime + TimeSpan.FromMinutes(activity.CzasTrwania);
+
+        return (activityDate.Date, startTime, endTime);
+    }
+    public async Task<int> EnsureLevelNameExistsAsync(string levelName, CancellationToken cancellationToken = default)
+    {
+        var poziomZajec = await _dbContext.PoziomZajecs
+                                       .FirstOrDefaultAsync(pz => pz.Nazwa == levelName, cancellationToken);
+
+        if (poziomZajec != null)
+        {         
+            return poziomZajec.IdPoziomZajec;
+        }
+
+        var nowyPoziom = new PoziomZajec { Nazwa = levelName };
+        _dbContext.PoziomZajecs.Add(nowyPoziom);
+
+        await _dbContext.SaveChangesAsync(cancellationToken);
+
+        return nowyPoziom.IdPoziomZajec;
+    }
+    public async Task<InstancjaZajec> GetInstanceByScheduleAndDateAsync(GrafikZajec activitySchedule, DateOnly selectedDate, CancellationToken cancellationToken)
+    {
+       var selectedDateTime = selectedDate.ToDateTime(TimeOnly.MinValue);
+        return await _dbContext.InstancjaZajecs
+            .Where(i => i.GrafikZajecId == activitySchedule.GrafikZajecId && i.Data == DateOnly.FromDateTime(selectedDateTime.Date))
+            .FirstOrDefaultAsync(cancellationToken);
+    }
+
+    public async Task AddInstanceAsync(InstancjaZajec instancjaZajec, CancellationToken cancellationToken)
+    {
+        await _dbContext.InstancjaZajecs.AddAsync(instancjaZajec, cancellationToken);
+        await _dbContext.SaveChangesAsync(cancellationToken);
+    }
+    public async Task<GrafikZajec?> GetScheduleByActivityIdAsync(int activityId, CancellationToken cancellationToken)
+    {
+        return await _dbContext.GrafikZajecs
+            .Where(g => g.ZajeciaId == activityId)
+            .FirstOrDefaultAsync(cancellationToken);
+    }
+    public async Task<bool> IsClientSignedUpAsync(int clientId, int instantionOfActivity, CancellationToken cancellationToken)
+    {
+        return await _dbContext.InstancjaZajecKlients
+            .AnyAsync(i => i.KlientId == clientId && i.InstancjaZajecId == instantionOfActivity);
+    }
+    public async Task AddClientToInstanceAsync(InstancjaZajecKlient signUp, CancellationToken cancellationToken)
+    {
+        await _dbContext.InstancjaZajecKlients.AddAsync(signUp, cancellationToken);
+        await _dbContext.SaveChangesAsync(cancellationToken);
+    }
+    public async Task CancelInstanceOfActivityAsync(int instantionOfActivityId, CancellationToken cancellationToken)
+    {
+        var instanceOfActivity = await _dbContext.InstancjaZajecs
+            .FirstOrDefaultAsync(i => i.InstancjaZajecId == instantionOfActivityId);
+
+            instanceOfActivity.CzyOdwolane = true;
+            await _dbContext.SaveChangesAsync(cancellationToken);
+    }
+    public async Task<InstancjaZajec> GetInstanceOfActivityAsync(int instanceOfActivity, CancellationToken cancellationToken)
+    {
+        var instance = await _dbContext.InstancjaZajecs
+            .Include(i => i.InstancjaZajecKlients)
+            .ThenInclude(ik => ik.Klient)
+            .Include(i => i.GrafikZajec)
+            .Where(i => i.InstancjaZajecId == instanceOfActivity)
+            .AsTracking()
+            .FirstOrDefaultAsync(cancellationToken);
+
+        return instance;
     }
 }

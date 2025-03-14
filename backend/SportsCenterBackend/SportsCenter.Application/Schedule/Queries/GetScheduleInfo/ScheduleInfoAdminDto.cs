@@ -10,7 +10,7 @@ namespace SportsCenter.Application.Schedule.Queries.GetScheduleInfo
     {
         public ScheduleInfoAdminDto() => Type = "Admin";
         public List<string> Participants { get; set; } = new List<string>();
-        public decimal? ReservationCost { get; set; } 
+        public decimal? Cost { get; set; } 
         public decimal? Discount { get; set; }
         public bool? IsRecurring { get; set; }  
     }

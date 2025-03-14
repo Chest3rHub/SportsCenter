@@ -10,16 +10,15 @@ namespace SportsCenter.Application.Employees.Commands.AddAdmTask
 {
     public sealed record AddAdmTask : ICommand<Unit>
     {
-        public string Opis { get; set; } = null!;
-
-        public DateTime DataDo { get; set; }
-        public int PracownikId { get; set; }
+        public string Description { get; set; } = null!;
+        public DateTime DateTo { get; set; }
+        public int EmployeeId { get; set; }
         
-        public AddAdmTask(string opis, DateTime dataDo, int pracownikId)
+        public AddAdmTask(string description, DateTime dateTo, int employeeId)
         {
-            Opis = opis;
-            DataDo = dataDo;
-            PracownikId = pracownikId;
+            Description = description;
+            DateTo = dateTo;
+            EmployeeId = employeeId;
         }
     }
 }

@@ -22,13 +22,13 @@ public partial class SportsCenterDbContext : DbContext
 
     public virtual DbSet<Certyfikat> Certyfikats { get; set; }
 
-    public virtual DbSet<DataZajec> DataZajecs { get; set; }
-
     public virtual DbSet<GodzinyPracyKlubu> GodzinyPracyKlubus { get; set; }
 
     public virtual DbSet<GrafikZajec> GrafikZajecs { get; set; }
 
-    public virtual DbSet<GrafikZajecKlient> GrafikZajecKlients { get; set; }
+    public virtual DbSet<InstancjaZajecKlient> InstancjaZajecKlients { get; set; }
+
+    public virtual DbSet<InstancjaZajec> InstancjaZajecs { get; set; }
 
     public virtual DbSet<Klient> Klients { get; set; }
 
@@ -116,22 +116,6 @@ public partial class SportsCenterDbContext : DbContext
             entity.Property(e => e.Nazwa).HasMaxLength(255);
         });
 
-        modelBuilder.Entity<DataZajec>(entity =>
-        {
-            entity.HasKey(e => e.DataZajecId).HasName("DataZajec_pk");
-
-            entity.ToTable("DataZajec");
-
-            entity.Property(e => e.DataZajecId).HasColumnName("DataZajecID");
-            entity.Property(e => e.Date).HasColumnType("datetime");
-            entity.Property(e => e.GrafikZajecId).HasColumnName("GrafikZajecID");
-
-            entity.HasOne(d => d.GrafikZajec).WithMany(p => p.DataZajecs)
-                .HasForeignKey(d => d.GrafikZajecId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("DataZajec_GrafikZajec");
-        });
-
         modelBuilder.Entity<GodzinyPracyKlubu>(entity =>
         {
             entity.HasKey(e => e.GodzinyPracyKlubuId).HasName("GodzinyPracyKlubuId");
@@ -151,9 +135,19 @@ public partial class SportsCenterDbContext : DbContext
             entity.ToTable("GrafikZajec");
 
             entity.Property(e => e.GrafikZajecId).HasColumnName("GrafikZajecID");
+            entity.Property(e => e.DzienTygodnia)
+                .IsRequired()
+                .HasMaxLength(20)
+                .HasColumnName("DzienTygodnia");
+            entity.Property(e => e.GodzinaOd)
+                .HasColumnName("GodzinaOd");
+            entity.Property(e => e.DataStartuZajec)
+                .HasColumnName("DataStartuZajec");
+            entity.Property(e => e.CzasTrwania)
+                .HasColumnName("CzasTrwania");
             entity.Property(e => e.KortId).HasColumnName("KortID");
-            entity.Property(e => e.KoszBezSprzetu).HasColumnType("decimal(5, 2)");
-            entity.Property(e => e.KoszZeSprzetem).HasColumnType("decimal(5, 2)");
+            entity.Property(e => e.KosztBezSprzetu).HasColumnType("decimal(5, 2)");
+            entity.Property(e => e.KosztZeSprzetem).HasColumnType("decimal(5, 2)");
             entity.Property(e => e.PracownikId).HasColumnName("PracownikID");
             entity.Property(e => e.ZajeciaId).HasColumnName("ZajeciaID");
 
@@ -171,29 +165,88 @@ public partial class SportsCenterDbContext : DbContext
                 .HasForeignKey(d => d.ZajeciaId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("GrafikZajec_Zajecia");
-        });
 
-        modelBuilder.Entity<GrafikZajecKlient>(entity =>
-        {
-            entity.HasKey(e => e.GrafikZajecKlientId).HasName("GrafikZajec_Klient_pk");
-
-            entity.ToTable("GrafikZajec_Klient");
-
-            entity.Property(e => e.GrafikZajecKlientId)
-                .ValueGeneratedNever()
-                .HasColumnName("GrafikZajecKlientID");
-            entity.Property(e => e.GrafikZajecId).HasColumnName("GrafikZajecID");
-            entity.Property(e => e.KlientId).HasColumnName("KlientID");
-
-            entity.HasOne(d => d.GrafikZajec).WithMany(p => p.GrafikZajecKlients)
+            entity.HasMany(d => d.InstancjaZajec)
+                .WithOne(p => p.GrafikZajec)
                 .HasForeignKey(d => d.GrafikZajecId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("Table_34_GrafikZajec");
+                .HasConstraintName("InstancjaZajec_GrafikZajec");
+        });
 
-            entity.HasOne(d => d.Klient).WithMany(p => p.GrafikZajecKlients)
+        modelBuilder.Entity<InstancjaZajec>(entity =>
+        {
+            entity.HasKey(e => e.InstancjaZajecId).HasName("InstancjaZajec_pk");
+
+            entity.ToTable("InstancjaZajec");
+
+            entity.Property(e => e.InstancjaZajecId)
+                .HasColumnName("InstancjaZajecID");
+
+            entity.Property(e => e.GrafikZajecId).HasColumnName("GrafikZajecID");
+
+            entity.Property(e => e.Data)
+                .HasColumnName("Data")
+                .HasColumnType("date");
+
+            entity.Property(e => e.CzyOdwolane)
+                .HasColumnName("CzyOdwolane")
+                .HasDefaultValue(false)
+                .IsRequired(false);
+
+            entity.HasOne(d => d.GrafikZajec)
+                .WithMany(p => p.InstancjaZajec)
+                .HasForeignKey(d => d.GrafikZajecId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("InstancjaZajec_GrafikZajec");
+
+            entity.HasMany(d => d.InstancjaZajecKlients)
+                .WithOne(p => p.InstancjaZajec)
+                .HasForeignKey(d => d.InstancjaZajecId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("InstancjaZajec_Klient_InstancjaZajec");
+        });
+
+        modelBuilder.Entity<InstancjaZajecKlient>(entity =>
+        {
+            entity.HasKey(e => e.InstancjaZajecKlientId).HasName("InstancjaZajec_Klient_pk");
+
+            entity.ToTable("InstancjaZajec_Klient");
+
+            entity.Property(e => e.InstancjaZajecKlientId)
+                .HasColumnName("InstancjaZajecKlientID");
+
+            entity.Property(e => e.InstancjaZajecId).HasColumnName("InstancjaZajecID");
+            entity.Property(e => e.KlientId).HasColumnName("KlientID");
+
+            entity.Property(e => e.DataZapisu)
+                .HasColumnName("DataZapisu")
+                .HasColumnType("date");
+
+            entity.Property(e => e.DataWypisu)
+            .HasColumnName("DataWypisu")
+            .HasColumnType("date")
+            .IsRequired(false); 
+
+            entity.Property(e => e.CzyUwzglednicSprzet)
+                .HasColumnName("CzyUwzglednicSprzet")
+                .HasDefaultValue(false);
+
+            entity.Property(e => e.CzyOplacone)
+                .HasColumnName("CzyOplacone")
+                .HasColumnType("bit")
+                .IsRequired(false);
+
+            entity.HasOne(d => d.InstancjaZajec)
+                .WithMany(p => p.InstancjaZajecKlients)
+                .HasForeignKey(d => d.InstancjaZajecId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("InstancjaZajec_Klient_InstancjaZajec");
+
+            entity.HasOne(d => d.Klient)
+                .WithMany(p => p.InstancjaZajecKlients)
                 .HasForeignKey(d => d.KlientId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("Table_34_Klient");
+                .HasConstraintName("InstancjaZajec_Klient");
         });
 
         modelBuilder.Entity<Klient>(entity =>
@@ -248,13 +301,13 @@ public partial class SportsCenterDbContext : DbContext
             entity.ToTable("Ocena");
 
             entity.Property(e => e.OcenaId).HasColumnName("OcenaID");
-            entity.Property(e => e.GrafikZajecKlientId).HasColumnName("GrafikZajecKlientID");
+            entity.Property(e => e.GrafikZajecKlientId).HasColumnName("InstancjaZajecKlientID").IsRequired(false); ;
             entity.Property(e => e.Opis).HasMaxLength(255);
 
-            entity.HasOne(d => d.GrafikZajecKlient).WithMany(p => p.Ocenas)
+            entity.HasOne(d => d.InstancjaZajecKlient).WithMany(p => p.Ocenas)
                 .HasForeignKey(d => d.GrafikZajecKlientId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("Ocena_GrafikZajec_Klient");
+                .HasConstraintName("Ocena_InstancjaZajec_Klient");
         });
 
         modelBuilder.Entity<Osoba>(entity =>
@@ -329,6 +382,11 @@ public partial class SportsCenterDbContext : DbContext
             entity.Property(e => e.KortId).HasColumnName("KortID");
             entity.Property(e => e.Koszt).HasColumnType("decimal(5, 2)");
             entity.Property(e => e.TrenerId).HasColumnName("TrenerID");
+
+            entity.Property(e => e.CzyOplacona)
+                .HasColumnName("CzyOplacona")
+                .HasColumnType("bit")
+                .IsRequired(false);
 
             entity.HasOne(d => d.Klient).WithMany(p => p.Rezerwacjas)
                 .HasForeignKey(d => d.KlientId)
@@ -504,6 +562,25 @@ public partial class SportsCenterDbContext : DbContext
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("Zastepstwo_PracownikZatwierdzajacy");
         });
+
+        //seedowanie danych
+        modelBuilder.Entity<TypPracownika>().HasData(
+            new TypPracownika { IdTypPracownika = 1, Nazwa = "Wlasciciel" },
+            new TypPracownika { IdTypPracownika = 2, Nazwa = "Pracownik administracyjny" },
+            new TypPracownika { IdTypPracownika = 3, Nazwa = "Trener" },
+            new TypPracownika { IdTypPracownika = 4, Nazwa = "Pomoc sprzatajaca" }
+        );
+
+        modelBuilder.Entity<GodzinyPracyKlubu>().HasData(
+            new GodzinyPracyKlubu { GodzinyPracyKlubuId = 1, GodzinaOtwarcia = TimeOnly.Parse("10:00"), GodzinaZamkniecia = TimeOnly.Parse("22:00"), DzienTygodnia = "poniedzialek" },
+            new GodzinyPracyKlubu { GodzinyPracyKlubuId = 2, GodzinaOtwarcia = TimeOnly.Parse("10:00"), GodzinaZamkniecia = TimeOnly.Parse("22:00"), DzienTygodnia = "wtorek" },
+            new GodzinyPracyKlubu { GodzinyPracyKlubuId = 3, GodzinaOtwarcia = TimeOnly.Parse("10:00"), GodzinaZamkniecia = TimeOnly.Parse("22:00"), DzienTygodnia = "sroda" },
+            new GodzinyPracyKlubu { GodzinyPracyKlubuId = 4, GodzinaOtwarcia = TimeOnly.Parse("10:00"), GodzinaZamkniecia = TimeOnly.Parse("22:00"), DzienTygodnia = "czwartek" },
+            new GodzinyPracyKlubu { GodzinyPracyKlubuId = 5, GodzinaOtwarcia = TimeOnly.Parse("10:00"), GodzinaZamkniecia = TimeOnly.Parse("22:00"), DzienTygodnia = "piatek" },
+            new GodzinyPracyKlubu { GodzinyPracyKlubuId = 6, GodzinaOtwarcia = TimeOnly.Parse("10:00"), GodzinaZamkniecia = TimeOnly.Parse("22:00"), DzienTygodnia = "sobota" },
+            new GodzinyPracyKlubu { GodzinyPracyKlubuId = 7, GodzinaOtwarcia = TimeOnly.Parse("10:00"), GodzinaZamkniecia = TimeOnly.Parse("22:00"), DzienTygodnia = "niedziela" }
+        );
+
 
         OnModelCreatingPartial(modelBuilder);
     }

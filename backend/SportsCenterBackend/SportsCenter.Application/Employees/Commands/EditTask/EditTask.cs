@@ -11,15 +11,15 @@ namespace SportsCenter.Application.Employees.Commands.EditTask
 {
     public sealed record EditTask : ICommand<Unit>
     {
-        public int ZadanieId { get; set; }
-        public string Opis { get; set; } = null!;
-        public DateTime DataDo { get; set; }
+        public int TaskId { get; set; }
+        public string Description { get; set; } = null!;
+        public DateTime DateTo { get; set; }
 
-        public EditTask(int zadanieId, string opis, DateTime dataDo)
+        public EditTask(int taskId, string description, DateTime dateTo)
         {
-            ZadanieId = zadanieId;
-            Opis = opis;
-            DataDo = dataDo;         
+            TaskId = taskId;
+            Description = description;
+            DateTo = dateTo;         
         }
     }
 }

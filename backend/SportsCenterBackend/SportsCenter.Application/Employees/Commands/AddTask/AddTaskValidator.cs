@@ -12,7 +12,7 @@ namespace SportsCenter.Application.Employees.Commands.AddTask
     {
         public AddTaskValidator()
         {
-            RuleFor(x => x.DataDo)
+            RuleFor(x => x.DateTo)
                 .NotEmpty().WithMessage("Data is required.")
                 .Must(BeFutureDate).WithMessage("Date must be from the future.");
 

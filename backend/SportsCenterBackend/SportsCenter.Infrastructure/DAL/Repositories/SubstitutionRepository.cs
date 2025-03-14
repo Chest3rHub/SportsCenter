@@ -27,15 +27,15 @@ namespace SportsCenter.Infrastructure.DAL.Repositories
             return await _dbContext.Zastepstwos
                 .AnyAsync(z => z.RezerwacjaId == reservationId && z.PracownikNieobecnyId == pracownikId);
         }
-        public async Task AddSubstitutionForActivitiesAsync(Zastepstwo zastepstwo)
+        public async Task AddSubstitutionForActivitiesAsync(Zastepstwo substitution)
         {
-            await _dbContext.Zastepstwos.AddAsync(zastepstwo);
+            await _dbContext.Zastepstwos.AddAsync(substitution);
             await _dbContext.SaveChangesAsync();
         }
-        public async Task<bool> HasEmployeeAlreadyRequestedSubstitutionAsync(int zajeciaId, int pracownikId)
+        public async Task<bool> HasEmployeeAlreadyRequestedSubstitutionAsync(int activityId, int employeeId)
         {
             return await _dbContext.Zastepstwos
-                .AnyAsync(z => z.ZajeciaId == zajeciaId && z.PracownikNieobecnyId == pracownikId);
+                .AnyAsync(z => z.ZajeciaId == activityId && z.PracownikNieobecnyId == employeeId);
         }
         public async Task<Zastepstwo> GetSubstitutionByIdAsync(int substitutionId, CancellationToken cancellationToken)
         {

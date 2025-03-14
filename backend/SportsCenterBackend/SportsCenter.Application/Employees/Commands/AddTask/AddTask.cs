@@ -11,14 +11,14 @@ namespace SportsCenter.Application.Employees.Commands.AddTask
 {
     public sealed record AddTask : ICommand<Unit>
     {
-        public string Opis { get; set; } = null!;
+        public string Description { get; set; } = null!;
 
-        public DateTime DataDo { get; set; }
+        public DateTime DateTo { get; set; }
 
         public AddTask(string opis, DateTime dataDo)
         {
-            Opis = opis;
-            DataDo = dataDo;
+            Description = opis;
+            DateTo = dataDo;
         }
     }
 }

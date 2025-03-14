@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Http;
 using SportsCenter.Application.Exceptions.EmployeesException;
+using SportsCenter.Application.Exceptions.EmployeesExceptions;
 using SportsCenter.Core.Entities;
 using SportsCenter.Core.Repositories;
 using System;
@@ -40,25 +41,31 @@ namespace SportsCenter.Application.Employees.Commands.AddAdmTask
                 throw new UnauthorizedAccessException("Only the owner can add tasks to administrative employees.");
             }
 
-            var employee = await _employeeRepository.GetEmployeeByIdAsync(request.PracownikId, cancellationToken);
+            var employee = await _employeeRepository.GetEmployeeByIdAsync(request.EmployeeId, cancellationToken);
 
             if (employee == null)
             {
-                throw new EmployeeNotFoundException(request.PracownikId);
+                throw new EmployeeNotFoundException(request.EmployeeId);
             }
 
             int admEmployeeId = (int)await _employeeRepository.GetEmployeeTypeByNameAsync("Pracownik administracyjny", cancellationToken);
 
             if (employee.IdTypPracownika != admEmployeeId)
             {
-                throw new NotAdmEmployeeException(request.PracownikId);
+                throw new NotAdmEmployeeException(request.EmployeeId);
+            }
+
+            bool isDismissed =  await _employeeRepository.IsEmployeeDismissedAsync(request.EmployeeId, cancellationToken);
+            if (isDismissed)
+            {
+                throw new EmployeeDismissedException(request.EmployeeId);
             }
 
             var newTask = new Zadanie
             {
-                Opis = request.Opis,
-                DataDo = DateOnly.FromDateTime(request.DataDo),
-                PracownikId = request.PracownikId,
+                Opis = request.Description,
+                DataDo = DateOnly.FromDateTime(request.DateTo),
+                PracownikId = request.EmployeeId,
                 PracownikZlecajacyId = userId,
             };
 
@@ -77,5 +84,4 @@ namespace SportsCenter.Application.Employees.Commands.AddAdmTask
             return userRole == "Wlasciciel";
         }
     }
-
 }

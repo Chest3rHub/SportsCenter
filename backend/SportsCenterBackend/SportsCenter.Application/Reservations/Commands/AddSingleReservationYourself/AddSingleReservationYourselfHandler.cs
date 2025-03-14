@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Http;
+using SportsCenter.Application.Exceptions.CourtsExceptions;
 using SportsCenter.Application.Exceptions.EmployeesException;
 using SportsCenter.Application.Exceptions.EmployeesExceptions;
 using SportsCenter.Application.Exceptions.ReservationExceptions;
@@ -181,7 +182,8 @@ namespace SportsCenter.Application.Reservations.Commands.AddSingleReservationYou
                 DataStworzenia = DateOnly.FromDateTime(DateTime.UtcNow),
                 TrenerId = request.TrainerId,
                 CzyUwzglednicSprzet = request.IsEquipmentReserved,
-                Koszt = cost
+                Koszt = cost,
+                CzyOplacona = false
             };
 
             await _reservationRepository.AddReservationAsync(newReservation, cancellationToken);

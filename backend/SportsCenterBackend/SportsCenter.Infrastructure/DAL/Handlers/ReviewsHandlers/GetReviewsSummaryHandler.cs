@@ -19,35 +19,37 @@ namespace SportsCenter.Infrastructure.DAL.Handlers.ReviewsHandler
             _dbContext = dbContext;
         }
 
-        public async Task<IEnumerable<ReviewsSummaryDto>> Handle(GetReviewsSummary request, CancellationToken cancellationToken)
+          public async Task<IEnumerable<ReviewsSummaryDto>> Handle(GetReviewsSummary request, CancellationToken cancellationToken)
         {
             var reviews = await _dbContext.Ocenas
-    .Where(o =>
-        o.DataWystawienia >= DateOnly.FromDateTime(request.StartDate) && o.DataWystawienia <= DateOnly.FromDateTime(request.EndDate))
-    .Include(o => o.GrafikZajecKlient)  
-        .ThenInclude(gzk => gzk.Klient)
-        .ThenInclude(k => k.KlientNavigation) 
-    .Include(o => o.GrafikZajecKlient)
-        .ThenInclude(gzk => gzk.GrafikZajec)
-        .ThenInclude(gz => gz.Pracownik)
-        .ThenInclude(p => p.PracownikNavigation)
-    .Include(o => o.GrafikZajecKlient)
-        .ThenInclude(gzk => gzk.GrafikZajec)
-        .ThenInclude(gz => gz.Zajecia)
-        .ThenInclude(z => z.IdPoziomZajecNavigation)
-    .Select(o => new ReviewsSummaryDto
-    {
-        Description = o.Opis,
-        Stars = o.Gwiazdki,
-        Date = o.DataWystawienia.ToDateTime(TimeOnly.MinValue), //sprawdzic czy ta konwersja jest dobra
-        ClientName = o.GrafikZajecKlient.Klient.KlientNavigation.Imie, 
-        TrainerName = o.GrafikZajecKlient.GrafikZajec.Pracownik.PracownikNavigation.Imie,
-        ClientSurname = o.GrafikZajecKlient.Klient.KlientNavigation.Nazwisko,
-        TrainerSurname = o.GrafikZajecKlient.GrafikZajec.Pracownik.PracownikNavigation.Nazwisko,
-        ActivityName = o.GrafikZajecKlient.GrafikZajec.Zajecia.Nazwa,
-        ActivityLevel = o.GrafikZajecKlient.GrafikZajec.Zajecia.IdPoziomZajecNavigation.Nazwa
-    })
-    .ToListAsync(cancellationToken);
+                .Where(o =>
+                    o.DataWystawienia >= DateOnly.FromDateTime(request.StartDate) && o.DataWystawienia <= DateOnly.FromDateTime(request.EndDate))
+                .Include(o => o.InstancjaZajecKlient)
+                    .ThenInclude(gzk => gzk.Klient)
+                    .ThenInclude(k => k.KlientNavigation)
+                .Include(o => o.InstancjaZajecKlient)
+                    .ThenInclude(gzk => gzk.InstancjaZajec)
+                    .ThenInclude(gz => gz.GrafikZajec)
+                    .ThenInclude(gz => gz.Pracownik)
+                    .ThenInclude(p => p.PracownikNavigation)
+                .Include(o => o.InstancjaZajecKlient)
+                    .ThenInclude(gzk => gzk.InstancjaZajec)
+                    .ThenInclude(gz => gz.GrafikZajec)
+                    .ThenInclude(gz => gz.Zajecia)
+                    .ThenInclude(z => z.IdPoziomZajecNavigation)
+                .Select(o => new ReviewsSummaryDto
+                {
+                    Description = o.Opis,
+                    Stars = o.Gwiazdki,
+                    Date = o.DataWystawienia.ToDateTime(TimeOnly.MinValue),
+                    ClientName = o.InstancjaZajecKlient.Klient.KlientNavigation.Imie,
+                    TrainerName = o.InstancjaZajecKlient.InstancjaZajec.GrafikZajec.Pracownik.PracownikNavigation.Imie,
+                    ClientSurname = o.InstancjaZajecKlient.Klient.KlientNavigation.Nazwisko,
+                    TrainerSurname = o.InstancjaZajecKlient.InstancjaZajec.GrafikZajec.Pracownik.PracownikNavigation.Nazwisko,
+                    ActivityName = o.InstancjaZajecKlient.InstancjaZajec.GrafikZajec.Zajecia.Nazwa,
+                    ActivityLevel = o.InstancjaZajecKlient.InstancjaZajec.GrafikZajec.Zajecia.IdPoziomZajecNavigation.Nazwa
+                })
+                .ToListAsync(cancellationToken);
 
             return reviews;
         }

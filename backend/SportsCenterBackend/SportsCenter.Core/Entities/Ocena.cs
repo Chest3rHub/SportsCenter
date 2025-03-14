@@ -11,9 +11,9 @@ public partial class Ocena
 
     public int Gwiazdki { get; set; }
 
-    public int GrafikZajecKlientId { get; set; }
+    public int? GrafikZajecKlientId { get; set; }
 
     public DateOnly DataWystawienia { get; set; }
 
-    public virtual GrafikZajecKlient GrafikZajecKlient { get; set; } = null!;
+    public virtual InstancjaZajecKlient InstancjaZajecKlient { get; set; } = null!;
 }

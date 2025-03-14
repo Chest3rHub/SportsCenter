@@ -40,7 +40,9 @@ namespace SportsCenter.Infrastructure.Security
             {
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                 new Claim("userId", osoba.OsobaId.ToString()),
+                // nie usuwam tego clam Types.role dlatego dwie role zwraca
                 new Claim(ClaimTypes.Role, role),
+                new Claim("role", role),
                 new Claim("loginDate", DateTime.UtcNow.ToString("yyyy-MM-ddTHH:mm:ssZ")),
                 new Claim("maxRefreshTime", DateTime.UtcNow.Add(maxRefreshTimeSpan).ToString("yyyy-MM-ddTHH:mm:ssZ"))
             };
@@ -93,7 +95,9 @@ namespace SportsCenter.Infrastructure.Security
             {
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                 new Claim("userId", jwtToken.Claims.FirstOrDefault(c => c.Type == "userId")?.Value),
+                // nie usuwam tego claimTypes.Role dlatego sa dwie role
                 new Claim(ClaimTypes.Role, role),
+                new Claim("role", role),
                 new Claim("loginDate", loginDateClaim),
                 new Claim("maxRefreshTime", maxRefreshTimeClaim)
             };

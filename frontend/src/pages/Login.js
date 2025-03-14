@@ -19,7 +19,7 @@ function Login() {
   const [passwordError, setPasswordError] = useState(false);
   const [serverError, setServerError] = useState(false);
 
-  const { dictionary, toggleLanguage } = useContext(SportsContext);
+  const { dictionary, toggleLanguage, role, setRole} = useContext(SportsContext);
 
   const navigate = useNavigate();
 
@@ -68,9 +68,12 @@ function Login() {
         const payload = decodeJWT(data.token);
         console.log(payload);
         console.log(payload.role);
-        setServerError(false);
 
-        alert("Logowanie zakończone sukcesem!");
+        setRole(payload.role);
+        setServerError(false);
+        navigate('/');
+
+        // alert("Logowanie zakończone sukcesem!");
       } else {
         const errorData = await response.json();
 

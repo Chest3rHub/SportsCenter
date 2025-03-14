@@ -7,6 +7,8 @@ export const SportsContext = createContext();
 export const SportsProvider = ({ children }) => {
   const [dictionary, toggleLanguage] = useDictionary();
   const [token, setToken] = useState(null);
+  const [role, setRole] = useState(null);
+  const [router, setRouter] = useState(null);
 
   useEffect(() => {
     const savedToken = Cookies.get('token'); 
@@ -16,7 +18,7 @@ export const SportsProvider = ({ children }) => {
   }, []);
 
   return (
-    <SportsContext.Provider value={{ dictionary, toggleLanguage, token, setToken }}>
+    <SportsContext.Provider value={{ dictionary, toggleLanguage, token, setToken, router, setRouter, role, setRole }}>
       {children}
     </SportsContext.Provider>
   );

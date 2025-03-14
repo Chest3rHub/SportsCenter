@@ -10,6 +10,7 @@ import { SportsContext } from "../context/SportsContext";
 import loginRequest from "../api/loginRequest";
 import CustomInput from "../components/CustomInput";
 import { Box } from "@mui/material";
+import decodeJWT from "../utils/decodeJWT";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -62,6 +63,11 @@ function Login() {
         console.log("Zalogowano pomyślnie:", data);
 
         localStorage.setItem("token", data.token);
+
+        // przekazywac ta role potem do routera...
+        const payload = decodeJWT(data.token);
+        console.log(payload);
+        console.log(payload.role);
         setServerError(false);
 
         alert("Logowanie zakończone sukcesem!");

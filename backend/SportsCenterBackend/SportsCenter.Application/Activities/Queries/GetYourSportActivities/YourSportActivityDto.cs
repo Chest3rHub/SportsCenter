@@ -8,6 +8,7 @@ namespace SportsCenter.Application.Activities.Queries.GetYourSportActivities
 {
     public class YourSportActivityDto
     {
+        public int InstanceOfActivityId { get; set; }
         public string SportActivityName { get; set; }
         public DateOnly DateOfActivity { get; set; }
         public string DayOfWeek { get; set; }

@@ -37,8 +37,8 @@ namespace SportsCenter.Core.Repositories
         Task<bool> IsAbsenceRequestPendingAsync(int requestId, CancellationToken cancellationToken);
         Task<TrainerAvailabilityStatus> IsTrainerAvailableAsync(int trainerId, DateTime requestedStart, int startHourInMinutes, int endHourInMinutes, CancellationToken cancellationToken);
         Task<bool> IsEmployeeDismissedAsync(int employeeId, CancellationToken cancellationToken);
-        Task<PaymentResultEnum> PayForActivityAsync(int activityId, int clientId, CancellationToken cancellationToken);
-        Task<PaymentResultEnum> PayForActivityAsync(int activityId, string clientEmail, CancellationToken cancellationToken);
+        Task<PaymentResultEnum> PayForActivityAsync(int activityInstanceId, string clientEmail, CancellationToken cancellationToken);
+        Task<PaymentResultEnum> PayForClientReservationAsync(int activityInstanceId, string clientEmail, CancellationToken cancellationToken);
 
     }
 }

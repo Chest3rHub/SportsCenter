@@ -43,6 +43,7 @@ namespace SportsCenter.Infrastructure.DAL.Handlers.SportActivitiesHandlers
                 g => g.GrafikZajecId,
                 (combined, g) => new YourSportActivityDto
                 {
+                    InstanceOfActivityId = combined.iz.InstancjaZajecId,
                     SportActivityName = g.Zajecia.Nazwa,
                     DateOfActivity = combined.iz.Data,
                     DayOfWeek = combined.iz.Data.DayOfWeek.ToString(),

@@ -14,6 +14,10 @@ using SportsCenter.Application.Exceptions.EmployeesException;
 using SportsCenter.Application.Exceptions.ClientsExceptions;
 using SportsCenter.Application.Exceptions.CourtsExceptions;
 using SportsCenter.Application.Reservations.Queries.GetYourReservations;
+using SportsCenter.Application.Activities.Commands.PayForActivity;
+using SportsCenter.Application.Exceptions.SportActivitiesExceptions;
+using SportsCenter.Application.Reservations.Commands.PayForReservation;
+using SportsCenter.Application.Reservations.Commands.PayForClientReservation;
 
 namespace SportsCenter.Api.Controllers;
 
@@ -297,5 +301,74 @@ public class ReservationController : BaseController
     public async Task<IActionResult> GetYourReservations()
     {
         return Ok(await Mediator.Send(new GetYourReservations()));
+    }
+
+    [Authorize(Roles = "Klient")]
+    [HttpPut("pay-for-reservation-with-balance-account")]
+    public async Task<IActionResult> PayForReservation([FromBody] PayForReservation request)
+    {
+        try
+        {
+            await Mediator.Send(request);
+            return Ok(new { message = "Successfully paid for reservation." });
+        }
+        catch (UnauthorizedAccessException ex)
+        {
+            return Unauthorized(new { message = ex.Message });
+        }
+        catch (ReservationNotFoundException ex)
+        {
+            return NotFound(new { message = ex.Message });
+        }
+        catch (ClientWithGivenIdNotFoundException ex)
+        {
+            return NotFound(new { message = ex.Message });
+        }
+        catch (ReservationAlreadyPaidException ex)
+        {
+            return BadRequest(new { message = ex.Message });
+        }
+        catch (PaymentFailedException ex)
+        {
+            return BadRequest(new { message = ex.Message });
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, new { message = "An error occurred while sending the request", details = ex.Message });
+        }
+    }
+    [Authorize(Roles = "Wlasciciel,Pracownik administracyjny")]
+    [HttpPut("pay-for-client-reservation")]
+    public async Task<IActionResult> PayForClientReservation([FromBody] PayForClientReservation request)
+    {
+        try
+        {
+            await Mediator.Send(request);
+            return Ok(new { message = "Successfully paid for client reservation." });
+        }
+        catch (UnauthorizedAccessException ex)
+        {
+            return Unauthorized(new { message = ex.Message });
+        }
+        catch (ReservationNotFoundException ex)
+        {
+            return NotFound(new { message = ex.Message });
+        }
+        catch (ClientNotFoundException ex)
+        {
+            return NotFound(new { message = ex.Message });
+        }
+        catch (ReservationAlreadyPaidException ex)
+        {
+            return BadRequest(new { message = ex.Message });
+        }
+        catch (PaymentFailedException ex)
+        {
+            return BadRequest(new { message = ex.Message });
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, new { message = "An error occurred while sending the request", details = ex.Message });
+        }
     }
 }

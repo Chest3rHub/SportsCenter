@@ -270,81 +270,6 @@ namespace SportsCenter.Infrastructure.DAL.Repositories
                 .Select(p => p.DataZwolnienia != null)
                 .FirstOrDefaultAsync(cancellationToken);
         }
-
-        public async Task<PaymentResultEnum> PayForActivityAsync(int activityInstanceId, int clientId, CancellationToken cancellationToken)
-        {
-            var activityInstance = await _dbContext.InstancjaZajecs
-                .Include(i => i.InstancjaZajecKlients)
-                .ThenInclude(ik => ik.Klient)
-                .Include(i => i.GrafikZajec)
-                .Where(i => i.InstancjaZajecId == activityInstanceId && i.InstancjaZajecKlients.Any(ik => ik.Klient.KlientId == clientId))
-                .AsTracking()
-                .FirstOrDefaultAsync(cancellationToken);
-
-            if (activityInstance == null)
-            {
-                return PaymentResultEnum.ActivityInstanceNotFound;
-            }
-
-            if (activityInstance.CzyOdwolane.HasValue && activityInstance.CzyOdwolane == true)
-            {
-                return PaymentResultEnum.ActivityCanceled;
-            }
-
-            var activityInstanceClient = await _dbContext.InstancjaZajecKlients
-                .Where(ai => ai.InstancjaZajecId == activityInstance.InstancjaZajecId)
-                .FirstOrDefaultAsync(cancellationToken);
-
-            if (activityInstanceClient.CzyOplacone == true)
-            {
-                return PaymentResultEnum.AlreadyPaid;
-            }
-
-            var activitySchedule = await _dbContext.GrafikZajecs
-                .Where(asch => asch.GrafikZajecId == activityInstance.GrafikZajecId)
-                .FirstOrDefaultAsync(cancellationToken);
-
-            decimal cost = activityInstanceClient.CzyUwzglednicSprzet ? activitySchedule.KosztZeSprzetem : activitySchedule.KosztBezSprzetu;
-
-            var client = await _dbContext.Klients
-                .Where(c => c.KlientId == clientId)
-                .FirstOrDefaultAsync(cancellationToken);
-
-            if (client == null)
-            {
-                return PaymentResultEnum.ClientNotFound;
-            }
-
-            decimal discount = client.ZnizkaNaZajecia ?? 0m;
-            if (discount > 0)
-            {
-                cost *= (1 - discount / 100m);
-            }
-
-            if (client.Saldo < cost)
-            {
-                return PaymentResultEnum.InsufficientFunds;
-            }
-
-            client.Saldo -= cost;
-            _dbContext.Entry(client).State = EntityState.Modified;
-
-            activityInstanceClient.CzyOplacone = true;
-            _dbContext.Entry(activityInstanceClient).State = EntityState.Modified;
-
-            try
-            {
-                await _dbContext.SaveChangesAsync(cancellationToken);
-            }
-            catch (Exception ex)
-            {
-                return PaymentResultEnum.InsufficientFunds;
-            }
-
-            return PaymentResultEnum.Success;
-        }
-
-
         public async Task<PaymentResultEnum> PayForActivityAsync(int activityInstanceId, string clientEmail, CancellationToken cancellationToken)
         {
             var activityInstance = await _dbContext.InstancjaZajecs
@@ -368,6 +293,11 @@ namespace SportsCenter.Infrastructure.DAL.Repositories
             var activityInstanceClient = await _dbContext.InstancjaZajecKlients
               .Where(ai => ai.InstancjaZajecId == activityInstance.InstancjaZajecId)
               .FirstOrDefaultAsync(cancellationToken);
+
+            if (activityInstanceClient.DataWypisu.HasValue)
+            {
+                return PaymentResultEnum.ClientWithdrawn;
+            }
 
             if (activityInstanceClient.CzyOplacone == true)
             {
@@ -414,6 +344,46 @@ namespace SportsCenter.Infrastructure.DAL.Repositories
             {
                 return PaymentResultEnum.InsufficientFunds;
             }
+
+            return PaymentResultEnum.Success;
+        }
+        public async Task<PaymentResultEnum> PayForClientReservationAsync(int reservationId, string clientEmail, CancellationToken cancellationToken)
+        {
+            var reservation = await _dbContext.Rezerwacjas
+         .Include(r => r.Klient)
+             .ThenInclude(k => k.KlientNavigation)
+         .FirstOrDefaultAsync(r => r.RezerwacjaId == reservationId, cancellationToken);
+
+            if (reservation == null)
+                return PaymentResultEnum.ActivityNotFound;
+
+            if (reservation.Klient.KlientNavigation.Email != clientEmail)
+                return PaymentResultEnum.ClientNotFound;
+
+            if (reservation.CzyOplacona.HasValue && reservation.CzyOplacona.Value)
+                return PaymentResultEnum.AlreadyPaid;
+
+            var client = await _dbContext.Klients
+                .FirstOrDefaultAsync(k => k.KlientNavigation.Email == clientEmail, cancellationToken);
+
+            if (client == null)
+                return PaymentResultEnum.ClientNotFound;
+
+            decimal cost = reservation.Koszt;
+
+            decimal discount = client.ZnizkaNaZajecia ?? 0m;
+            if (discount > 0)
+            {
+                cost *= (1 - discount / 100m);
+            }
+
+            if (client.Saldo < cost)
+                return PaymentResultEnum.InsufficientFunds;
+
+            client.Saldo -= cost;
+            reservation.CzyOplacona = true;
+
+            await _dbContext.SaveChangesAsync(cancellationToken);
 
             return PaymentResultEnum.Success;
         }

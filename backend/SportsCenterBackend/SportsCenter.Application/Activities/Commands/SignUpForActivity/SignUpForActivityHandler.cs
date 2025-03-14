@@ -104,7 +104,8 @@ namespace SportsCenter.Application.Activities.Commands.SignUpForActivity
                 DataZapisu = DateOnly.FromDateTime(DateTime.UtcNow),
                 DataWypisu = null,
                 CzyUwzglednicSprzet = request.IsEquipmentIncluded,
-                InstancjaZajecId = instanceOfActivity.InstancjaZajecId   
+                InstancjaZajecId = instanceOfActivity.InstancjaZajecId,
+                CzyOplacone = false
             };
 
             await _sportActivityRepository.AddClientToInstanceAsync(zapis, cancellationToken);

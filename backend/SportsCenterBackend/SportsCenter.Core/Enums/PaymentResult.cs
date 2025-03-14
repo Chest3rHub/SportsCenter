@@ -17,8 +17,8 @@ namespace SportsCenter.Core.Enums
             AlreadyPaid,
             ActivityCanceled,
             ClientNotFound,
-            ScheduleNotFound
+            ScheduleNotFound,
+            ClientWithdrawn
         }
-
     }
 }

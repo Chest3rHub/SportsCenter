@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using SportsCenter.Application.Exceptions.ClientsExceptions;
 using SportsCenter.Application.Exceptions.EmployeesExceptions;
-using SportsCenter.Application.Exceptions.SportActivitiesException;
+using SportsCenter.Application.Exceptions.ReservationExceptions;
 using SportsCenter.Application.Exceptions.SportActivitiesExceptions;
 using SportsCenter.Core.Repositories;
 using System;
@@ -12,21 +12,22 @@ using System.Text;
 using System.Threading.Tasks;
 using static SportsCenter.Core.Enums.PaymentResult;
 
-namespace SportsCenter.Application.Activities.Commands.PayForActivity
+namespace SportsCenter.Application.Reservations.Commands.PayForReservation
 {
-    internal class PayForActvityHandler : IRequestHandler<PayForActivity, Unit>
+    internal class PayForReservationHandler : IRequestHandler<PayForReservation, Unit>
     {
-        private readonly ISportActivityRepository _sportActivityRepository;
+        private readonly IReservationRepository _reservationRepository;
         private readonly IClientRepository _clientRepository;
         private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public PayForActvityHandler(ISportActivityRepository SportActivityRepository, IClientRepository clientRepository, IHttpContextAccessor httpContextAccessor)
+        public PayForReservationHandler(IReservationRepository reservationRepository, IClientRepository clientRepository, IHttpContextAccessor httpContextAccessor)
         {
-            _sportActivityRepository = SportActivityRepository;
+            _reservationRepository = reservationRepository;
             _clientRepository = clientRepository;
             _httpContextAccessor = httpContextAccessor;
         }
-        public async Task<Unit> Handle(PayForActivity request, CancellationToken cancellationToken)
+
+        public async Task<Unit> Handle(PayForReservation request, CancellationToken cancellationToken)
         {
             var userIdClaim = _httpContextAccessor.HttpContext?.User?.FindFirst("userId")?.Value;
 
@@ -35,13 +36,13 @@ namespace SportsCenter.Application.Activities.Commands.PayForActivity
                 throw new UnauthorizedAccessException("You cannot access your absence requests without being logged in on your account.");
             }
 
-            var acitivtyToPay = await _sportActivityRepository.GetInstanceOfActivityAsync(request.InstanceOfActivityId, cancellationToken);
-            if(acitivtyToPay == null)
+            var reservationToPay = await _reservationRepository.GetReservationByIdAsync(request.ReservationId, cancellationToken);
+            if (reservationToPay == null)
             {
-                throw new InstanceOfActivityNotFoundException(request.InstanceOfActivityId);
+                throw new ReservationNotFoundException(request.ReservationId);
             }
 
-            var paymentResult = await _clientRepository.PayForActivityAsync(request.InstanceOfActivityId, userId, cancellationToken);
+            var paymentResult = await _clientRepository.PayForReservationAsync(request.ReservationId, userId, cancellationToken);
 
             switch (paymentResult)
             {
@@ -55,20 +56,15 @@ namespace SportsCenter.Application.Activities.Commands.PayForActivity
 
                 case PaymentResultEnum.ActivityInstanceNotFound:
 
-                    throw new InstanceOfActivityNotFoundException(request.InstanceOfActivityId);
+                    throw new ReservationNotFoundException(request.ReservationId);
 
                 case PaymentResultEnum.ClientNotFound:
 
                     throw new ClientWithGivenIdNotFoundException(userId);
 
-                case PaymentResultEnum.ClientWithdrawn:
-                    throw new ClientWithdrawnException();
-
                 case PaymentResultEnum.AlreadyPaid:
-                    throw new ActivityAlreadyPaidException(request.InstanceOfActivityId); 
 
-                case PaymentResultEnum.ActivityCanceled:
-                    throw new ActivityCanceledException(request.InstanceOfActivityId);
+                    throw new ReservationAlreadyPaidException(request.ReservationId);
             }
 
             return Unit.Value;

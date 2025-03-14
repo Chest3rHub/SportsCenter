@@ -54,6 +54,9 @@ namespace SportsCenter.Application.Activities.Commands.PayForClientActivity
                 case PaymentResultEnum.ClientNotFound:
                     throw new ClientNotFoundException(request.ClientEmail);
 
+                case PaymentResultEnum.ClientWithdrawn:
+                    throw new ClientWithdrawnException();
+
                 case PaymentResultEnum.AlreadyPaid:
                     throw new ActivityAlreadyPaidException(request.InstanceOfActivityId);
 

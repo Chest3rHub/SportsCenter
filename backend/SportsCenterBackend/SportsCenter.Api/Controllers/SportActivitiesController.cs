@@ -227,6 +227,10 @@ namespace SportsCenter.Api.Controllers;
         {
             return NotFound(new { message = ex.Message });
         }
+        catch (ClientWithdrawnException ex)
+        {
+            return BadRequest(new { message = ex.Message });
+        }
         catch (ActivityAlreadyPaidException ex)
         {
             return BadRequest(new { message = ex.Message });
@@ -262,9 +266,13 @@ namespace SportsCenter.Api.Controllers;
         {
             return NotFound(new { message = ex.Message });
         }
-        catch (ClientWithGivenIdNotFoundException ex)
+        catch (ClientNotFoundException ex)
         {
             return NotFound(new { message = ex.Message });
+        }
+        catch (ClientWithdrawnException ex)
+        {
+            return BadRequest(new { message = ex.Message });
         }
         catch (ActivityAlreadyPaidException ex)
         {

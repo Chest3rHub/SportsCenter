@@ -1,6 +1,4 @@
 import React from 'react';
-import Navbar from '../components/Navbar';
-import Sidebar from '../components/OwnerSidebar';
 
 export default function Dashboard() {
   return (

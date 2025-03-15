@@ -2,17 +2,7 @@ import React from 'react';
 import { Box } from '@mui/material';
 import SidebarButton from './SidebarButton';
 
-export default function EmployeeSidebar() {
-    // dostosowac przyciski do tego co ma pracownik administracyjny
-  const menuItems = [ 
-    { label: 'Klienci', navigate: '/clients' },
-    { label: 'Grafik', navigate: '/timetable' },
-    { label: 'TODO', navigate: '/todo' },
-    { label: 'Zmiana hasła', navigate: '/change-password' },
-    { label: 'Zajęcia', navigate: '/trainings' },
-    { label: 'Rezerwacje', navigate: '/reservations' },
-    
-  ];
+export default function Sidebar({ menuItems }) {
 
   return (
     <Box
@@ -31,6 +21,7 @@ export default function EmployeeSidebar() {
         borderRadius: '10px',
         zIndex: 1,
         paddingBottom: '1rem',
+        minHeight: "80vh"
       }}
     >
       {menuItems.map((item, index) => (

@@ -1,6 +1,5 @@
 import { Outlet } from 'react-router-dom';
 import Navbar from '../components/Navbar';
-import EmployeeSidebar from '../components/EmployeeSidebar';
 import { Box } from '@mui/material';
 import { useEffect } from 'react';
 import { SportsContext } from '../context/SportsContext';

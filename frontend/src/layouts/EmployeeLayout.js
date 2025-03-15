@@ -1,13 +1,23 @@
 import { Outlet } from 'react-router-dom';
 import Navbar from '../components/Navbar';
-import EmployeeSidebar from '../components/EmployeeSidebar';
 import { Box } from '@mui/material';
 import { useEffect } from 'react';
 import { SportsContext } from '../context/SportsContext';
 import { useContext } from "react";
 import refreshTokenRequest from '../api/refreshTokenRequest';
+import Sidebar from '../components/Sidebar';
 
 export default function EmployeeLayout() {
+
+  const menuItems = [ 
+    { label: 'Klienci', navigate: '/clients' },
+    { label: 'Grafik', navigate: '/timetable' },
+    { label: 'TODO', navigate: '/todo' },
+    { label: 'Zmiana hasła', navigate: '/change-password' },
+    { label: 'Zajęcia', navigate: '/trainings' },
+    { label: 'Rezerwacje', navigate: '/reservations' },
+    
+  ];
 
   const {token, setToken} = useContext(SportsContext);
 
@@ -33,7 +43,7 @@ export default function EmployeeLayout() {
   return (
     <Box>
         <Navbar />
-        <EmployeeSidebar/>
+        <Sidebar menuItems={menuItems} />
       <main>
         <Outlet />
       </main>

@@ -5,9 +5,22 @@ import { useEffect } from 'react';
 import { SportsContext } from '../context/SportsContext';
 import { useContext } from "react";
 import refreshTokenRequest from '../api/refreshTokenRequest';
-import CoachSidebar from '../components/CoachSidebar';
+import Sidebar from '../components/Sidebar';
 
 export default function CoachLayout() {
+
+    const menuItems = [ 
+        { label: 'Jestem zalogowany', navigate: '/employees' },
+        { label: 'jako trener', navigate: '/clients' },
+        { label: '(text do testów)', navigate: '/timetable' },
+        { label: '(usunąć potem)', navigate: '/todo' },
+        { label: 'Zmiana hasła', navigate: '/change-password' },
+        { label: 'Zajęcia', navigate: '/trainings' },
+        { label: 'Rezerwacje', navigate: '/reservations' },
+        { label: 'Opinie', navigate: '/opinions' },
+        { label: 'Produkty', navigate: '/products' },
+        { label: 'Sprzęt', navigate: '/gear' },
+      ];
 
   const {token, setToken} = useContext(SportsContext);
 
@@ -33,7 +46,7 @@ export default function CoachLayout() {
   return (
     <Box>
         <Navbar />
-        <CoachSidebar />
+        <Sidebar menuItems={menuItems} />
       <main>
         <Outlet />
       </main>

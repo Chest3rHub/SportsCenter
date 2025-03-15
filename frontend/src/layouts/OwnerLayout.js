@@ -1,13 +1,27 @@
 import { Outlet } from 'react-router-dom';
 import Navbar from '../components/Navbar';
-import OwnerSidebar from '../components/OwnerSidebar';
 import { Box } from '@mui/material';
 import { useEffect } from 'react';
 import { SportsContext } from '../context/SportsContext';
 import { useContext } from "react";
 import refreshTokenRequest from '../api/refreshTokenRequest';
+import Sidebar from '../components/Sidebar';
 
 export default function OwnerLayout() {
+
+  const menuItems = [ 
+    { label: 'Pracownicy', navigate: '/employees' },
+    { label: 'Klienci', navigate: '/clients' },
+    { label: 'Grafik', navigate: '/timetable' },
+    { label: 'TODO', navigate: '/todo' },
+    { label: 'Zmiana hasła', navigate: '/change-password' },
+    { label: 'Zajęcia', navigate: '/trainings' },
+    { label: 'Rezerwacje', navigate: '/reservations' },
+    { label: 'Opinie', navigate: '/opinions' },
+    { label: 'Produkty', navigate: '/products' },
+    { label: 'Sprzęt', navigate: '/gear' },
+    { label: 'Aktualności', navigate: '/news' }
+  ];
 
   const {token, setToken} = useContext(SportsContext);
 
@@ -33,7 +47,7 @@ export default function OwnerLayout() {
   return (
     <Box>
         <Navbar />
-        <OwnerSidebar/>
+        <Sidebar menuItems={menuItems} />
       <main>
         <Outlet />
       </main>

@@ -46,5 +46,11 @@ export default {
       employeeSidebar: {
         // itd dla wlasciciela jeszcze i trenera
       },
+      ownerSidebar: {
+
+      },
+      coachSidebar: {
+        
+      }
     }
   };

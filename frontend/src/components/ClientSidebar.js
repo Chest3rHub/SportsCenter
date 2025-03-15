@@ -2,19 +2,14 @@ import React from 'react';
 import { Box } from '@mui/material';
 import SidebarButton from './SidebarButton';
 
-export default function OwnerSidebar() {
+export default function ClientSidebar() {
   const menuItems = [ 
-    { label: 'Pracownicy', navigate: '/employees' },
-    { label: 'Klienci', navigate: '/clients' },
-    { label: 'Grafik', navigate: '/timetable' },
-    { label: 'TODO', navigate: '/todo' },
-    { label: 'Zmiana hasła', navigate: '/change-password' },
-    { label: 'Zajęcia', navigate: '/trainings' },
-    { label: 'Rezerwacje', navigate: '/reservations' },
-    { label: 'Opinie', navigate: '/opinions' },
-    { label: 'Produkty', navigate: '/products' },
-    { label: 'Sprzęt', navigate: '/gear' },
-    { label: 'Aktualności', navigate: '/news' }
+    { label: 'Aktualności', navigate: '/news' },
+    { label: 'Mój grafik', navigate: '/my-timetable' },
+    { label: 'Moje rezerwacje', navigate: '/my-reservations' },
+    { label: 'Saldo', navigate: '/wallet' },
+    { label: 'Sklep', navigate: '/shop' },
+    { label: 'Konto', navigate: '/account' },
   ];
 
   return (

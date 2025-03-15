@@ -8,12 +8,41 @@ import Error from "../pages/Error";
 import BaseLayout from "../layouts/BaseLayout";
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import OwnerLayout from "../layouts/OwnerLayout";
+import EmployeeLayout from "../layouts/EmployeeLayout";
 import { SportsContext } from "../context/SportsContext";
 import { useContext, useEffect } from "react";
+import CleanerLayout from "../layouts/CleanerLayout";
+import CoachLayout from "../layouts/CoachLayout";
+import ClientLayout from "../layouts/ClientLayout";
 
-const clientRouter = [];
-    // tutaj podobne routery bedzie mozna zrobic dla pracownika,
-    // wlasciciela, klienta itd
+// pozmieniac dla klienta na komponenty trasy itd
+
+const clientRouter = [
+    {
+        path: "/",
+        element: <ClientLayout />,
+        children: [
+            {
+                path: "/",
+                element: <Home />,
+            },
+            {
+                path: "/dashboard",  
+                element: <Dashboard />,
+            },
+            {
+                path: "/error",  
+                element: <Error />,
+            },
+            {
+                path: "*",
+                element: <NotFound />,
+            }
+        ]
+    }
+];
+    
+// pozmieniac dla wlasciciela na komponenty trasy itd
     const ownerRouter = [
         {
             path: "/",
@@ -39,11 +68,11 @@ const clientRouter = [];
         }
     ];
 
-    // pozmieniac dla trenera na wszystko
+    // pozmieniac dla trenera na komponenty trasy itd
     const coachRouter = [
         {
             path: "/",
-            element: <OwnerLayout />,
+            element: <CoachLayout />,
             children: [
                 {
                     path: "/",
@@ -64,10 +93,12 @@ const clientRouter = [];
             ]
         }
     ];
+
+    // pozmieniac dla sprzataczki na komponenty trasy itd
     const cleanerRouter = [
         {
             path: "/",
-            element: <OwnerLayout />,
+            element: <CleanerLayout />,
             children: [
                 {
                     path: "/",
@@ -88,10 +119,12 @@ const clientRouter = [];
             ]
         }
     ];
+
+    // pozmieniac dla pracownika adm. na komponenty trasy itd
     const employeeRouter = [
         {
             path: "/",
-            element: <OwnerLayout />,
+            element: <EmployeeLayout />,
             children: [
                 {
                     path: "/",
@@ -114,6 +147,7 @@ const clientRouter = [];
     ];
     
 
+    // pozmieniac dla niezalogowanego usera na komponenty trasy itd
     const baseRouter = [
         {
             path: "/",

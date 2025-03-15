@@ -2,19 +2,18 @@ import React from 'react';
 import { Box } from '@mui/material';
 import SidebarButton from './SidebarButton';
 
-export default function OwnerSidebar() {
+export default function CoachSidebar() {
   const menuItems = [ 
-    { label: 'Pracownicy', navigate: '/employees' },
-    { label: 'Klienci', navigate: '/clients' },
-    { label: 'Grafik', navigate: '/timetable' },
-    { label: 'TODO', navigate: '/todo' },
+    { label: 'Jestem zalogowany', navigate: '/employees' },
+    { label: 'jako trener', navigate: '/clients' },
+    { label: '(text do testów)', navigate: '/timetable' },
+    { label: '(usunąć potem)', navigate: '/todo' },
     { label: 'Zmiana hasła', navigate: '/change-password' },
     { label: 'Zajęcia', navigate: '/trainings' },
     { label: 'Rezerwacje', navigate: '/reservations' },
     { label: 'Opinie', navigate: '/opinions' },
     { label: 'Produkty', navigate: '/products' },
     { label: 'Sprzęt', navigate: '/gear' },
-    { label: 'Aktualności', navigate: '/news' }
   ];
 
   return (

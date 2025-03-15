@@ -4,7 +4,6 @@ import Header from "../components/Header";
 import GreenButton from "../components/GreenButton";
 import GreenBackground from "../components/GreenBackground";
 import OrangeBackground from "../components/OrangeBackground";
-import Navbar from "../components/Navbar";
 import "../styles/auth.css";
 import { SportsContext } from "../context/SportsContext";
 import loginRequest from "../api/loginRequest";

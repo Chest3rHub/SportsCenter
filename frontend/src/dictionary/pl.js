@@ -21,7 +21,7 @@ export default {
       confirmPasswordError: 'Hasła muszą być identyczne.',
       birthDateError: 'Musisz mieć co najmniej 18 lat.',
       phoneNumberError: 'Numer telefonu musi być w poprawnym formacie (np. 123456789).',
-      emailTakenError: "Podany adres e-mail jest już zajęty.",
+      emailTakenError: 'Podany adres e-mail jest już zajęty.',
     },
     loginPage: {
       title: 'Logowanie',
@@ -34,4 +34,17 @@ export default {
     errorPage: {
         returnLabel: 'Wróć',
     },
+    sidebar: {
+      clientSidebar: {
+        newsLabel: 'Aktualności',
+        myTimetableLabel: 'Mój grafik',
+        myReservationsLabel: 'Moje rezerwacje',
+        balanceLabel: 'Saldo',
+        shopLabel: 'Sklep',
+        accountLabel: 'Konto',
+      },
+      employeeSidebar: {
+        // itd dla wlasciciela jeszcze i trenera
+      },
+    }
   };

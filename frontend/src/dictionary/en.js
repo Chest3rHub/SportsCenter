@@ -34,4 +34,17 @@ export default {
     errorPage: {
         returnLabel: 'Return',
     },
+    sidebar: {
+      clientSidebar: {
+        newsLabel: 'News',
+        myTimetableLabel: 'My timetable',
+        myReservationsLabel: 'My reservations',
+        balanceLabel: 'Balance',
+        shopLabel: 'Shop',
+        accountLabel: 'Account',
+      },
+      employeeSidebar: {
+        // itd dla wlasciciela jeszcze i trenera
+      },
+    }
   };

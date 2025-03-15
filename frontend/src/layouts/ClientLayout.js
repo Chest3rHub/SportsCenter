@@ -9,16 +9,17 @@ import Sidebar from '../components/Sidebar';
 
 export default function ClientLayout() {
 
+    const {token, setToken, dictionary, toggleLanguage} = useContext(SportsContext);
+
     const menuItems = [ 
-        { label: 'Aktualności', navigate: '/news' },
-        { label: 'Mój grafik', navigate: '/my-timetable' },
-        { label: 'Moje rezerwacje', navigate: '/my-reservations' },
-        { label: 'Saldo', navigate: '/wallet' },
-        { label: 'Sklep', navigate: '/shop' },
-        { label: 'Konto', navigate: '/account' },
+        { label: dictionary.sidebar.clientSidebar.newsLabel, navigate: '/news' },
+        { label: dictionary.sidebar.clientSidebar.myTimetableLabel, navigate: '/my-timetable' },
+        { label: dictionary.sidebar.clientSidebar.myReservationsLabel, navigate: '/my-reservations' },
+        { label: dictionary.sidebar.clientSidebar.balanceLabel, navigate: '/wallet' },
+        { label: dictionary.sidebar.clientSidebar.shopLabel, navigate: '/shop' },
+        { label: dictionary.sidebar.clientSidebar.accountLabel, navigate: '/account' },
       ];
 
-  const {token, setToken} = useContext(SportsContext);
 
     useEffect(() => {
       const intervalId = setInterval(async () => {

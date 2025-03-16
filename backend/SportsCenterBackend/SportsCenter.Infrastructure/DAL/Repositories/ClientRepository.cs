@@ -203,10 +203,10 @@ namespace SportsCenter.Infrastructure.DAL.Repositories
 
             return PaymentResultEnum.Success;
         }
-        public async Task<List<Klient>> GetClientsWhoPaidForCancelledActivitiesAsync(int activityId, CancellationToken cancellationToken)
+        public async Task<List<Klient>> GetClientsWhoPaidForCancelledActivitiesAsync(int instanceOfActivityId, CancellationToken cancellationToken)
         {
             var clients = await _dbContext.InstancjaZajecKlients
-                .Where(ik => ik.InstancjaZajecId == activityId && ik.CzyOplacone == true)
+                .Where(ik => ik.InstancjaZajecId == instanceOfActivityId && ik.CzyOplacone == true)
                 .Select(ik => ik.Klient)
                 .ToListAsync(cancellationToken);
 
@@ -215,9 +215,12 @@ namespace SportsCenter.Infrastructure.DAL.Repositories
         public async Task<decimal> CalculateRefundAmountAsync(Klient client, int instanceOfActivityId, CancellationToken cancellationToken)
         {
             var clientActivity = await _dbContext.InstancjaZajecKlients
-                .FirstOrDefaultAsync(ik => ik.KlientId == client.KlientId && ik.InstancjaZajecId == instanceOfActivityId, cancellationToken);
+                .FirstOrDefaultAsync(ik => ik.KlientId == client.KlientId
+                && ik.InstancjaZajecId == instanceOfActivityId
+                && ik.CzyZwroconoPieniadze == false,
+                cancellationToken);
 
-            if (clientActivity == null || clientActivity.CzyUwzglednicSprzet == false)
+            if (clientActivity == null)
             {
                 return 0;
             }
@@ -249,14 +252,30 @@ namespace SportsCenter.Infrastructure.DAL.Repositories
 
             return activityCost;
         }
-        public async Task RefundClientAsync(int clientId, decimal amount, CancellationToken cancellationToken)
+
+        public async Task<int> RefundClientAsync(int clientId, decimal amount, int instanceOfActivityId, CancellationToken cancellationToken)
         {
+            var clientActivity = await _dbContext.InstancjaZajecKlients
+                .FirstOrDefaultAsync(ik => ik.KlientId == clientId
+                && ik.InstancjaZajecId == instanceOfActivityId
+                && ik.CzyZwroconoPieniadze == false, cancellationToken);
+
+            if (clientActivity == null)
+            {
+                return 0;
+            }
+
             var client = await _dbContext.Klients
-                .FirstOrDefaultAsync(c => c.KlientId== clientId, cancellationToken);
+                .FirstOrDefaultAsync(c => c.KlientId == clientId, cancellationToken);
 
             client.Saldo += amount;
+            clientActivity.CzyZwroconoPieniadze = true;
+
             _dbContext.Klients.Update(client);
+            _dbContext.InstancjaZajecKlients.Update(clientActivity);
+
             await _dbContext.SaveChangesAsync(cancellationToken);
+            return 1;
         }
     }
 }

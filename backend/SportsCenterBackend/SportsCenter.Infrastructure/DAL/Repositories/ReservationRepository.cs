@@ -171,5 +171,26 @@ namespace SportsCenter.Infrastructure.DAL.Repositories
             return await _dbContext.Rezerwacjas
                 .AnyAsync(r => r.RezerwacjaId == reservationId && r.KlientId == clientId, cancellationToken);
         }
+        public async Task CancelReservationAsync(int reservationId, CancellationToken cancellationToken)
+        {
+            var reservation = await _dbContext.Rezerwacjas
+                .FirstOrDefaultAsync(r => r.RezerwacjaId == reservationId, cancellationToken);        
+
+            if (reservation.CzyOplacona == true)
+            {
+                var client = await _dbContext.Klients
+                    .FirstOrDefaultAsync(c => c.KlientId == reservation.KlientId, cancellationToken);
+
+                client.Saldo += reservation.Koszt;
+                reservation.CzyZwroconoPieniadze = true;
+            }
+            reservation.CzyOdwolana = true;
+            await _dbContext.SaveChangesAsync(cancellationToken);
+        }
+        public async Task<Rezerwacja> GetReservationByClientIdAsync(int reservationId, int clientId, CancellationToken cancellationToken)
+        {
+            return await _dbContext.Rezerwacjas
+                .FirstOrDefaultAsync(r => r.RezerwacjaId == reservationId && r.KlientId == clientId, cancellationToken);
+        }
     }
 }

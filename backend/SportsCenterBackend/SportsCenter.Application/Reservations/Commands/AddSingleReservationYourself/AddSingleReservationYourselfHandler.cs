@@ -183,7 +183,9 @@ namespace SportsCenter.Application.Reservations.Commands.AddSingleReservationYou
                 TrenerId = request.TrainerId,
                 CzyUwzglednicSprzet = request.IsEquipmentReserved,
                 Koszt = cost,
-                CzyOplacona = false
+                CzyOplacona = false,
+                CzyOdwolana = false,
+                CzyZwroconoPieniadze = false
             };
 
             await _reservationRepository.AddReservationAsync(newReservation, cancellationToken);

@@ -17,6 +17,7 @@ public partial class InstancjaZajecKlient
 
     public bool CzyUwzglednicSprzet { get; set; }
     public bool? CzyOplacone {  get; set; }
+    public bool? CzyZwroconoPieniadze { get; set; }
 
     public virtual InstancjaZajec InstancjaZajec { get; set; } = null!;
 

@@ -20,7 +20,7 @@ public interface ISportActivityRepository
     Task<GrafikZajec?> GetScheduleByActivityIdAsync(int activityId, CancellationToken cancellationToken);
     Task<bool> IsClientSignedUpAsync(int clientId, int instatnionOfActivity, CancellationToken cancellationToken);
     Task AddClientToInstanceAsync(InstancjaZajecKlient signUp, CancellationToken cancellationToken);
-    Task CancelInstanceOfActivityAsync(int instatnceOfActivity, CancellationToken cancellationToken);
+    Task<int> CancelInstanceOfActivityAsync(int instatnceOfActivity, CancellationToken cancellationToken);
     Task<InstancjaZajec> GetInstanceOfActivityAsync(int instatnceOfActivity, CancellationToken cancellationToken);
 
 }

@@ -20,8 +20,8 @@ namespace SportsCenter.Core.Repositories
         Task<int> GetProductDiscountForClientAsync(int clientId, CancellationToken cancellationToken);
         Task<PaymentResultEnum> PayForActivityAsync(int activityId, int clientId, CancellationToken cancellationToken);
         Task<PaymentResultEnum> PayForReservationAsync(int activityInstanceId, int clientId, CancellationToken cancellationToken);
-        Task<List<Klient>> GetClientsWhoPaidForCancelledActivitiesAsync(int activityId, CancellationToken cancellationToken);
+        Task<List<Klient>> GetClientsWhoPaidForCancelledActivitiesAsync(int instanceOfActivityId, CancellationToken cancellationToken);
         Task<decimal> CalculateRefundAmountAsync(Klient client, int instanceOfActivityId, CancellationToken cancellationToken);
-        Task RefundClientAsync(int clientId, decimal amount, CancellationToken cancellationToken);
+        Task<int> RefundClientAsync(int clientId, decimal amount, int activityId, CancellationToken cancellationToken);
     }
 }

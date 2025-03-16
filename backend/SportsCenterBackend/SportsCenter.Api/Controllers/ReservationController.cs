@@ -14,10 +14,10 @@ using SportsCenter.Application.Exceptions.EmployeesException;
 using SportsCenter.Application.Exceptions.ClientsExceptions;
 using SportsCenter.Application.Exceptions.CourtsExceptions;
 using SportsCenter.Application.Reservations.Queries.GetYourReservations;
-using SportsCenter.Application.Activities.Commands.PayForActivity;
-using SportsCenter.Application.Exceptions.SportActivitiesExceptions;
 using SportsCenter.Application.Reservations.Commands.PayForReservation;
 using SportsCenter.Application.Reservations.Commands.PayForClientReservation;
+using SportsCenter.Application.Reservations.Commands.CancelReservation;
+using SportsCenter.Application.Reservations.Commands.CancelClientReservation;
 
 namespace SportsCenter.Api.Controllers;
 
@@ -365,6 +365,58 @@ public class ReservationController : BaseController
         catch (PaymentFailedException ex)
         {
             return BadRequest(new { message = ex.Message });
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, new { message = "An error occurred while sending the request", details = ex.Message });
+        }
+    }
+    [Authorize(Roles = "Klient")]
+    [HttpPut("cancel-reservation")]
+    public async Task<IActionResult> CancelReservationAsync([FromBody] CancelReservation cancelReservaion)
+    {     
+        try
+        {
+            await Mediator.Send(cancelReservaion);
+            return Ok(new { Message = "Successfully canceled reservation." });
+        }
+        catch (ReservationNotFoundException ex)
+        {
+            return NotFound(new { message = ex.Message });
+        }
+        catch (TooLateToCancelreservationException ex)
+        {
+            return Conflict(new { message = ex.Message });
+        }
+        catch (ReservationAlreadyCanceledException ex)
+        {
+            return Conflict(new { message = ex.Message });
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, new { message = "An error occurred while sending the request", details = ex.Message });
+        }
+    }
+    [Authorize(Roles = "Wlasciciel,Pracownik administracyjny")]
+    [HttpPut("cancel-client-reservation")]
+    public async Task<IActionResult> CancelClientReservationAsync([FromBody] CancelClientReservation cancelReservaion)
+    {
+        try
+        {
+            await Mediator.Send(cancelReservaion);
+            return Ok(new { Message = "Successfully canceled client reservation." });
+        }
+        catch (ClientNotFoundException ex)
+        {
+            return NotFound(new { message = ex.Message });
+        }
+        catch (ReservationNotFoundException ex)
+        {
+            return NotFound(new { message = ex.Message });
+        }
+        catch (ReservationAlreadyCanceledException ex)
+        {
+            return Conflict(new { message = ex.Message });
         }
         catch (Exception ex)
         {

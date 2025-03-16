@@ -58,18 +58,24 @@ namespace SportsCenter.Application.Activities.Commands.CancelSportActivity
                 throw new SportActivityNotFoundException(request.SportActivityId);
             }
 
-            await _sportActivityRepository.CancelInstanceOfActivityAsync(InstanceOfActivity.InstancjaZajecId, cancellationToken);
-
-            //Zwroty dla klientow co zaplacili za odwolane zajecia
-            var clients = await _clientRepository.GetClientsWhoPaidForCancelledActivitiesAsync(request.SportActivityId, cancellationToken);
+            int isAlreadyCanceled = await _sportActivityRepository.CancelInstanceOfActivityAsync(InstanceOfActivity.InstancjaZajecId, cancellationToken);
+            if(isAlreadyCanceled == 0)
+            {
+                throw new ActivityAlreadyCanceledException();
+            }
+            var clients = await _clientRepository.GetClientsWhoPaidForCancelledActivitiesAsync(InstanceOfActivity.InstancjaZajecId, cancellationToken);
 
             foreach (var client in clients)
             {
-                var refundAmount = await _clientRepository.CalculateRefundAmountAsync(client, request.SportActivityId, cancellationToken);
+                var refundAmount = await _clientRepository.CalculateRefundAmountAsync(client, InstanceOfActivity.InstancjaZajecId, cancellationToken);
 
                 if (refundAmount > 0)
                 {
-                    await _clientRepository.RefundClientAsync(client.KlientId, refundAmount, cancellationToken);
+                   int success = await _clientRepository.RefundClientAsync(client.KlientId, refundAmount, InstanceOfActivity.InstancjaZajecId, cancellationToken);
+                   if(success == 0)
+                    {
+                        throw new RefundAlreadyGivenException(InstanceOfActivity.InstancjaZajecId, client.KlientId);
+                    }
                 }
             }
             return Unit.Value;

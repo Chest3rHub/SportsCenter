@@ -1,6 +1,6 @@
 import { Box } from '@mui/material';
 
-export default function Header({ children }) {
+export default function Header({ children, marginTop }) {
   return (
     <Box
       sx={{
@@ -15,6 +15,7 @@ export default function Header({ children }) {
         margin: 'auto',
         fontWeight: 'bold',
         marginBottom: '30px',
+        marginTop: marginTop,
       }}
     >
       {children}

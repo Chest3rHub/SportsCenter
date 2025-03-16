@@ -1,6 +1,6 @@
 import { Box } from '@mui/material';
 
-export default function OrangeBackground({ children, width }) {
+export default function OrangeBackground({ children, width, maxHeight, minHeight,height ,overflow, position }) {
   return (
     <Box
       sx={{
@@ -13,6 +13,11 @@ export default function OrangeBackground({ children, width }) {
         gap: '10px',
         alignItems: 'center',
         width: width,
+        height: height,
+        maxHeight: maxHeight,
+        minHeight: minHeight,
+        overflow: overflow,
+        position:position,
       }}
     >
       {children}

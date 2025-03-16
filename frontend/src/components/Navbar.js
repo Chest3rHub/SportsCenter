@@ -17,7 +17,7 @@ export default function Navbar() {
         marginBottom: '30px',
       }}
     >
-      <NavbarButton>OFERTA KLUBU</NavbarButton>
+      <NavbarButton navigate="/news">AKTUALNOŚCI</NavbarButton>
       <NavbarButton>GRAFIK ZAJĘĆ</NavbarButton>
       <NavbarButton navigate="/login">LOGOWANIE</NavbarButton>
       <NavbarButton navigate="/register">REJESTRACJA</NavbarButton>

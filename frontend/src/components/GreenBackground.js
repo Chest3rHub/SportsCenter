@@ -1,6 +1,6 @@
 import { Box } from '@mui/material';
 
-export default function GreenBackground({ children, height, marginTop }) {
+export default function GreenBackground({ children, height, marginTop,gap, }) {
   return (
     <Box
       sx={{
@@ -22,6 +22,8 @@ export default function GreenBackground({ children, height, marginTop }) {
           flexDirection: 'column',
           justifyContent: 'center',
           flexGrow: 1,
+          rowGap: gap,
+          columnGap: gap,
         }}
       >
         {children}

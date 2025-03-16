@@ -16,7 +16,7 @@ namespace SportsCenter.Api.Controllers
         {
         }
 
-        [Authorize(Roles = "Pracownik administracyjny,Wlasciciel,Trener,Klient,Pomoc sprzatajaca")]
+        
         [HttpGet("Get-news")]
         public async Task<IActionResult> GetNewsAsync()
         {

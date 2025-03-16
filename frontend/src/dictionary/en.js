@@ -52,5 +52,11 @@ export default {
       coachSidebar: {
         
       }
+    },
+    newsPage: {
+      newsLabel: 'News',
+      showLabel:'Show',
+      editLabel: 'Edit',
+      removeLabel: 'Delete',
     }
   };

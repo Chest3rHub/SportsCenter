@@ -58,5 +58,7 @@ export default {
       showLabel:'Show',
       editLabel: 'Edit',
       removeLabel: 'Delete',
+      nothingHappenedLabel: 'Oops, nothing has happened recently.',
+      checkAgainSoonLabel: 'Check back again in a while!',
     }
   };

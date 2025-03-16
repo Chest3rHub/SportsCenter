@@ -14,6 +14,7 @@ import { useContext, useEffect } from "react";
 import CleanerLayout from "../layouts/CleanerLayout";
 import CoachLayout from "../layouts/CoachLayout";
 import ClientLayout from "../layouts/ClientLayout";
+import News from "../pages/News";
 
 // pozmieniac dla klienta na komponenty trasy itd
 
@@ -29,6 +30,10 @@ const clientRouter = [
             {
                 path: "/dashboard",  
                 element: <Dashboard />,
+            },
+            {
+                path: "/news",
+                element: <News />,
             },
             {
                 path: "/error",  
@@ -57,6 +62,10 @@ const clientRouter = [
                     element: <Dashboard />,
                 },
                 {
+                    path: "/news",
+                    element: <News />,
+                },
+                {
                     path: "/error",  
                     element: <Error />,
                 },
@@ -81,6 +90,10 @@ const clientRouter = [
                 {
                     path: "/dashboard",  
                     element: <Dashboard />,
+                },
+                {
+                    path: "/news",
+                    element: <News />,
                 },
                 {
                     path: "/error",  
@@ -109,6 +122,10 @@ const clientRouter = [
                     element: <Dashboard />,
                 },
                 {
+                    path: "/news",
+                    element: <News />,
+                },
+                {
                     path: "/error",  
                     element: <Error />,
                 },
@@ -133,6 +150,10 @@ const clientRouter = [
                 {
                     path: "/dashboard",  
                     element: <Dashboard />,
+                },
+                {
+                    path: "/news",
+                    element: <News />,
                 },
                 {
                     path: "/error",  
@@ -164,6 +185,10 @@ const clientRouter = [
                 {
                     path: "/register",
                     element: <Register />,
+                },
+                {
+                    path: "/news",
+                    element: <News />,
                 },
                 {
                     path: "/error",  
@@ -208,7 +233,7 @@ export default function SportsCenterRouter(props){
             const newRouter = getRouter('anonymous');
             setRouter(newRouter);
         }
-    }, [role, setRouter]); 
+    }, [role]); 
 
     if (!router) {
         return null; 

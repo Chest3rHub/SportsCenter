@@ -58,5 +58,7 @@ export default {
       showLabel:'Wyświetl',
       editLabel: 'Edytuj',
       removeLabel: 'Usuń',
+      nothingHappenedLabel: 'Ups, nic się ostatnio nie wydarzyło.',
+      checkAgainSoonLabel: 'Sprawdź ponownie za jakiś czas!',
     }
   };

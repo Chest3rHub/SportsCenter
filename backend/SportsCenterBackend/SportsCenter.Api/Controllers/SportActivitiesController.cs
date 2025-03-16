@@ -163,7 +163,7 @@ namespace SportsCenter.Api.Controllers;
     //niz sie teraz wydaje ze ma)
     [Authorize(Roles = "Wlasciciel")]
     [HttpPut("cancel-activity-instance")]
-    public async Task<IActionResult> CancelSignUpForActivityAsync([FromBody] CancelSportActivity cancelSportActivity)
+    public async Task<IActionResult> CancelActivityAsync([FromBody] CancelSportActivity cancelSportActivity)
     {
         var validationResults = new CancelSportActivityValidator().Validate(cancelSportActivity);
         if (!validationResults.IsValid)
@@ -184,12 +184,19 @@ namespace SportsCenter.Api.Controllers;
         {
             return Conflict(new { message = ex.Message });
         }
+        catch (ActivityAlreadyCanceledException ex)
+        {
+            return Conflict(new { message = ex.Message });
+        }
+        catch (RefundAlreadyGivenException ex)
+        {
+            return Conflict(new { message = ex.Message });
+        }
         catch (Exception ex)
         {
             return StatusCode(500, new { message = "An error occurred while sending the request", details = ex.Message });
         }
     }
-
     [Authorize(Roles = "Wlasciciel")]
     [HttpGet("get-activity-summary")]
         public async Task<IActionResult> GetActivitySummaryAsync([FromQuery] DateTime startDate, [FromQuery] DateTime endDate)

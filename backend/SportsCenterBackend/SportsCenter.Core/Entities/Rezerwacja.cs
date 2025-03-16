@@ -23,6 +23,8 @@ public partial class Rezerwacja
 
     public decimal Koszt { get; set; }
     public bool? CzyOplacona { get; set; }
+    public bool? CzyOdwolana { get; set; }
+    public bool? CzyZwroconoPieniadze { get; set; }
 
     public virtual Klient Klient { get; set; } = null!;
 

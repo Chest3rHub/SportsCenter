@@ -18,6 +18,8 @@ using SportsCenter.Application.Exceptions.EmployeesException;
 using SportsCenter.Application.Exceptions.EmployeesExceptions;
 using SportsCenter.Application.Exceptions.SportActivitiesException;
 using SportsCenter.Application.Exceptions.SportActivitiesExceptions;
+using static System.Runtime.InteropServices.JavaScript.JSType;
+using System.Security.Cryptography;
 
 namespace SportsCenter.Api.Controllers;
 
@@ -155,6 +157,10 @@ namespace SportsCenter.Api.Controllers;
         }
     }
 
+    // dziala dopiro jak zrobimy get schedule activities bo 
+    //po wywolaniu tego uzupelniaja sie rekordy w tabeli InstancjaZajec i mozna
+    //dla danej daty wybrac zajecia(na frontendzie to bedzie mialo wiekszy sens
+    //niz sie teraz wydaje ze ma)
     [Authorize(Roles = "Wlasciciel")]
     [HttpPut("cancel-activity-instance")]
     public async Task<IActionResult> CancelSignUpForActivityAsync([FromBody] CancelSportActivity cancelSportActivity)

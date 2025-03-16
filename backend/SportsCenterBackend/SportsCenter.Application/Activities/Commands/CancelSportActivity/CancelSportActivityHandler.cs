@@ -15,11 +15,13 @@ namespace SportsCenter.Application.Activities.Commands.CancelSportActivity
     internal class CancelSportActivityHandler : IRequestHandler<CancelSportActivity, Unit>
     {
         private readonly ISportActivityRepository _sportActivityRepository;
+        private readonly IClientRepository _clientRepository;
         private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public CancelSportActivityHandler(ISportActivityRepository SportActivityRepository, IHttpContextAccessor httpContextAccessor)
+        public CancelSportActivityHandler(ISportActivityRepository SportActivityRepository, IClientRepository clientRepository, IHttpContextAccessor httpContextAccessor)
         {
             _sportActivityRepository = SportActivityRepository;
+            _clientRepository = clientRepository;
             _httpContextAccessor = httpContextAccessor;
         }
         public async Task<Unit> Handle(CancelSportActivity request, CancellationToken cancellationToken)
@@ -58,6 +60,18 @@ namespace SportsCenter.Application.Activities.Commands.CancelSportActivity
 
             await _sportActivityRepository.CancelInstanceOfActivityAsync(InstanceOfActivity.InstancjaZajecId, cancellationToken);
 
+            //Zwroty dla klientow co zaplacili za odwolane zajecia
+            var clients = await _clientRepository.GetClientsWhoPaidForCancelledActivitiesAsync(request.SportActivityId, cancellationToken);
+
+            foreach (var client in clients)
+            {
+                var refundAmount = await _clientRepository.CalculateRefundAmountAsync(client, request.SportActivityId, cancellationToken);
+
+                if (refundAmount > 0)
+                {
+                    await _clientRepository.RefundClientAsync(client.KlientId, refundAmount, cancellationToken);
+                }
+            }
             return Unit.Value;
         }
     }

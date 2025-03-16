@@ -203,6 +203,60 @@ namespace SportsCenter.Infrastructure.DAL.Repositories
 
             return PaymentResultEnum.Success;
         }
+        public async Task<List<Klient>> GetClientsWhoPaidForCancelledActivitiesAsync(int activityId, CancellationToken cancellationToken)
+        {
+            var clients = await _dbContext.InstancjaZajecKlients
+                .Where(ik => ik.InstancjaZajecId == activityId && ik.CzyOplacone == true)
+                .Select(ik => ik.Klient)
+                .ToListAsync(cancellationToken);
 
+            return clients;
+        }
+        public async Task<decimal> CalculateRefundAmountAsync(Klient client, int instanceOfActivityId, CancellationToken cancellationToken)
+        {
+            var clientActivity = await _dbContext.InstancjaZajecKlients
+                .FirstOrDefaultAsync(ik => ik.KlientId == client.KlientId && ik.InstancjaZajecId == instanceOfActivityId, cancellationToken);
+
+            if (clientActivity == null || clientActivity.CzyUwzglednicSprzet == false)
+            {
+                return 0;
+            }
+
+            var activitySchedule = await _dbContext.InstancjaZajecs
+                .FirstOrDefaultAsync(ia => ia.InstancjaZajecId == instanceOfActivityId, cancellationToken);
+
+            decimal activityCost;
+            if (clientActivity.CzyUwzglednicSprzet == true)
+            {
+                activityCost = await _dbContext.GrafikZajecs
+                    .Where(gz => gz.GrafikZajecId == activitySchedule.GrafikZajecId)
+                    .Select(gz => gz.KosztZeSprzetem)
+                    .FirstOrDefaultAsync(cancellationToken);
+            }
+            else
+            {
+                activityCost = await _dbContext.GrafikZajecs
+                    .Where(gz => gz.GrafikZajecId == activitySchedule.GrafikZajecId)
+                    .Select(gz => gz.KosztBezSprzetu)
+                    .FirstOrDefaultAsync(cancellationToken);
+            }
+
+            decimal discount = client.ZnizkaNaZajecia ?? 0m;
+            if (discount > 0)
+            {
+                activityCost *= (1 - discount / 100m);
+            }
+
+            return activityCost;
+        }
+        public async Task RefundClientAsync(int clientId, decimal amount, CancellationToken cancellationToken)
+        {
+            var client = await _dbContext.Klients
+                .FirstOrDefaultAsync(c => c.KlientId== clientId, cancellationToken);
+
+            client.Saldo += amount;
+            _dbContext.Klients.Update(client);
+            await _dbContext.SaveChangesAsync(cancellationToken);
+        }
     }
 }

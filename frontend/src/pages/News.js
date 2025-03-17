@@ -1,15 +1,18 @@
 import { useEffect, useState, useContext } from 'react';
 import getNews from '../api/getNews';
-import { Typography, Box, Avatar , CircularProgress} from '@mui/material';
+import { Typography, Box, Avatar, CircularProgress } from '@mui/material';
 import SingleNews from '../components/SingleNews';
 import GreenBackground from '../components/GreenBackground';
 import Header from '../components/Header';
 import { SportsContext } from '../context/SportsContext';
 import SentimentDissatisfiedIcon from '@mui/icons-material/SentimentDissatisfied';
-
+import NewsButton from '../components/NewsButton';
+import { useNavigate } from 'react-router-dom';
 
 export default function News() {
-    const { dictionary, toggleLanguage } = useContext(SportsContext);
+    const { dictionary, toggleLanguage, role } = useContext(SportsContext);
+
+    const navigate = useNavigate();
 
     const [news, setNews] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -29,6 +32,10 @@ export default function News() {
             });
     }, []);
 
+    function handleCreateNews() {
+        navigate('/add-news');
+    }
+
     console.log(news);
 
     // max 3 newsy na stronie poki co
@@ -36,10 +43,19 @@ export default function News() {
     return (
         <GreenBackground gap={"4vh"}>
             <Header>{dictionary.newsPage.newsLabel}</Header>
+            {(role === "Wlasciciel" || role === "Pracownik administracyjny") &&
+                <Box sx={{
+                    position: "fixed",
+                    top: "12vh",
+                    right: "3vw",
+                    minWidth: "7vw"
+                }}>
+                    <NewsButton backgroundColor={"#8edfb4"} minWidth={"14vw"} onClick={handleCreateNews}>{dictionary.newsPage.createNewsLabel}</NewsButton>
+                </Box>}
 
             {loading ? (
                 <Box sx={{ textAlign: 'center', display: "flex", justifyContent: "center" }}>
-                    <CircularProgress sx={{ fontSize: '5rem', color: "#4caf50" }} /> 
+                    <CircularProgress sx={{ fontSize: '5rem', color: "#4caf50" }} />
                 </Box>
             ) : (
                 <>

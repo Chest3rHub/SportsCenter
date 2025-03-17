@@ -9,6 +9,8 @@ import Sidebar from '../components/Sidebar';
 
 export default function EmployeeLayout() {
 
+  const {token, setToken, dictionary} = useContext(SportsContext);
+
   const menuItems = [ 
     { label: dictionary.sidebar.employeeSidebar.clientsLabel, navigate: '/clients' },
     { label: dictionary.sidebar.employeeSidebar.timetableLabel, navigate: '/timetable' },
@@ -19,7 +21,7 @@ export default function EmployeeLayout() {
     
   ];
 
-  const {token, setToken} = useContext(SportsContext);
+  
 
     useEffect(() => {
       const intervalId = setInterval(async () => {

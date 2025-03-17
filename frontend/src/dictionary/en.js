@@ -78,6 +78,7 @@ export default {
       nothingHappenedLabel: 'Oops, nothing has happened recently.',
       checkAgainSoonLabel: 'Check back again in a while!',
       addNewsLabel: 'Add',
+      createNewsLabel: 'Create news',
     },
     addNewsPage: {
       newsLabel: 'News',

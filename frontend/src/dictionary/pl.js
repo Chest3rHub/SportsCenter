@@ -78,6 +78,7 @@ export default {
       nothingHappenedLabel: 'Ups, nic się ostatnio nie wydarzyło.',
       checkAgainSoonLabel: 'Sprawdź ponownie za jakiś czas!',
       addNewsLabel: 'Utwórz',
+      createNewsLabel: 'Utwórz aktualność',
     },
     addNewsPage: {
       newsLabel: 'Aktualności',

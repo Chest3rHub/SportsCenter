@@ -9,13 +9,14 @@ import Sidebar from '../components/Sidebar';
 
 export default function CoachLayout() {
 
+  const {token, setToken, dictionary, toggleLanguage} = useContext(SportsContext);
+
     const menuItems = [ 
       { label: dictionary.sidebar.coachSidebar.newsLabel, navigate: '/news' },
       { label: dictionary.sidebar.coachSidebar.timetableLabel, navigate: '/timetable' },
       { label: dictionary.sidebar.coachSidebar.changePasswordLabel, navigate: '/change-password' },
       ];
 
-  const {token, setToken} = useContext(SportsContext);
 
     useEffect(() => {
       const intervalId = setInterval(async () => {

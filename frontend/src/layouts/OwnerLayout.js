@@ -9,6 +9,8 @@ import Sidebar from '../components/Sidebar';
 
 export default function OwnerLayout() {
 
+  const {token, setToken, dictionary, toggleLanguage} = useContext(SportsContext);
+
   const menuItems = [ 
     { label: dictionary.sidebar.ownerSidebar.employeesLabel, navigate: '/employees' },
     { label: dictionary.sidebar.ownerSidebar.clientsLabel, navigate: '/clients' },
@@ -23,7 +25,7 @@ export default function OwnerLayout() {
     { label: dictionary.sidebar.ownerSidebar.newsLabel, navigate: '/news' },
   ];
 
-  const {token, setToken} = useContext(SportsContext);
+  
 
     useEffect(() => {
       const intervalId = setInterval(async () => {

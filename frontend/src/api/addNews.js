@@ -1,10 +1,11 @@
 import API_URL from "../appConfig";
 
-export default async function addNews(formData){
+export default async function addNews(formData, token){
     return fetch(`${API_URL}/news/add-news`, { 
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
         },
         body: JSON.stringify({
           Title: formData.title,

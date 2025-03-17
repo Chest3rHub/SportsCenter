@@ -3,7 +3,7 @@ import { Button} from '@mui/material';
 import { darken } from '@mui/system';
 
 
-const NewsButton = ({ backgroundColor, onClick, children }) => {
+const NewsButton = ({ backgroundColor, onClick, children, minWidth }) => {
     const darkenedColor = darken(backgroundColor, 0.2);
     return (
         <Button
@@ -17,7 +17,7 @@ const NewsButton = ({ backgroundColor, onClick, children }) => {
                 fontSize: '0.8rem',
                 cursor: 'pointer',
                 fontWeight: 'bold',
-                minWidth: "6vw",
+                minWidth: minWidth ? minWidth :"6vw",
                 paddingTop:'7px',
                 color:'black',
                 '&:hover': {

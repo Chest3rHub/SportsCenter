@@ -15,6 +15,7 @@ import CleanerLayout from "../layouts/CleanerLayout";
 import CoachLayout from "../layouts/CoachLayout";
 import ClientLayout from "../layouts/ClientLayout";
 import News from "../pages/News";
+import AddNews from "../pages/AddNews";
 
 // pozmieniac dla klienta na komponenty trasy itd
 
@@ -34,6 +35,10 @@ const clientRouter = [
             {
                 path: "/news",
                 element: <News />,
+            },
+            {
+                path: "/add-news",
+                element: <AddNews />,
             },
             {
                 path: "/error",  
@@ -66,6 +71,10 @@ const clientRouter = [
                     element: <News />,
                 },
                 {
+                    path: "/add-news",
+                    element: <AddNews />,
+                },
+                {
                     path: "/error",  
                     element: <Error />,
                 },
@@ -94,6 +103,10 @@ const clientRouter = [
                 {
                     path: "/news",
                     element: <News />,
+                },
+                {
+                    path: "/add-news",
+                    element: <AddNews />,
                 },
                 {
                     path: "/error",  
@@ -126,6 +139,10 @@ const clientRouter = [
                     element: <News />,
                 },
                 {
+                    path: "/add-news",
+                    element: <AddNews />,
+                },
+                {
                     path: "/error",  
                     element: <Error />,
                 },
@@ -154,6 +171,10 @@ const clientRouter = [
                 {
                     path: "/news",
                     element: <News />,
+                },
+                {
+                    path: "/add-news",
+                    element: <AddNews />,
                 },
                 {
                     path: "/error",  
@@ -189,6 +210,10 @@ const clientRouter = [
                 {
                     path: "/news",
                     element: <News />,
+                },
+                {
+                    path: "/add-news",
+                    element: <AddNews />,
                 },
                 {
                     path: "/error",  

@@ -77,5 +77,18 @@ export default {
       removeLabel: 'Usuń',
       nothingHappenedLabel: 'Ups, nic się ostatnio nie wydarzyło.',
       checkAgainSoonLabel: 'Sprawdź ponownie za jakiś czas!',
+      addNewsLabel: 'Utwórz',
+    },
+    addNewsPage: {
+      newsLabel: 'Aktualności',
+      titleLabel: 'Nazwa',
+      contentLabel: 'Opis',
+      validFromLabel: 'Ważne od',
+      validUntilLabel: 'Ważne do',
+      saveLabel: 'Zapisz',
+      titleError: 'Tytuł może mieć maksymalnie 20 znaków',
+      contentError: 'Opis nie może przekraczać 4000 znaków',
+      validFromError: '',
+      validUntilError: '',
     }
   };

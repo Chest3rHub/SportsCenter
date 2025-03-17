@@ -77,5 +77,18 @@ export default {
       removeLabel: 'Delete',
       nothingHappenedLabel: 'Oops, nothing has happened recently.',
       checkAgainSoonLabel: 'Check back again in a while!',
+      addNewsLabel: 'Add',
+    },
+    addNewsPage: {
+      newsLabel: 'News',
+      titleLabel: 'Title',
+      contentLabel: 'Content',
+      validFromLabel: 'Valid from',
+      validUntilLabel: 'Valid until',
+      saveLabel: 'Save',
+      titleError: 'The title can have a maximum of 20 characters',
+      contentError: 'The description cannot exceed 4000 characters',
+      validFromError: '',
+      validUntilError: '',
     }
   };

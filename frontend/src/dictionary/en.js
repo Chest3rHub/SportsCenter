@@ -44,13 +44,30 @@ export default {
         accountLabel: 'Account',
       },
       employeeSidebar: {
-        // itd dla wlasciciela jeszcze i trenera
+        clientsLabel: 'Clients',
+        timetableLabel: 'Timetable',
+        todoLabel: 'Todo',
+        changePasswordLabel: 'Change password',
+        trainingsLabel: 'Trainings',
+        reservationsLabel: 'Reservations',
       },
       ownerSidebar: {
-
+        employeesLabel: 'Employees',
+        clientsLabel: 'Clients',
+        timetableLabel: 'Timetable',
+        todoLabel: 'Todo',
+        changePasswordLabel: 'Change password',
+        trainingsLabel: 'Trainings',
+        reservationsLabel: 'Reservations',
+        opinionsLabel: 'Opinions',
+        productsLabel: 'Products',
+        gearLabel: 'Gear',
+        newsLabel: 'News',
       },
       coachSidebar: {
-        
+        newsLabel: 'News',
+        timetableLabel: 'Timetable',
+        changePasswordLabel: 'Change password',
       }
     },
     newsPage: {

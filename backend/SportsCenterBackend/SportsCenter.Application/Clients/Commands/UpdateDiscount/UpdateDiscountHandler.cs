@@ -6,20 +6,19 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
-namespace SportsCenter.Application.Clients.Commands.AddDiscount
+namespace SportsCenter.Application.Clients.Commands.UpdateDiscount
 {
-    internal sealed class AddDiscountHandler : IRequestHandler<AddDiscount, Unit>
+    internal sealed class UpdateDiscountHandler : IRequestHandler<UpdateDiscount, Unit>
     {
         private readonly IClientRepository _clientRepository;
-        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public AddDiscountHandler(IClientRepository clientRepository, IHttpContextAccessor httpContextAccessor)
+        public UpdateDiscountHandler(IClientRepository clientRepository)
         {
             _clientRepository = clientRepository;
-            _httpContextAccessor = httpContextAccessor;
         }
-        public async Task<Unit> Handle(AddDiscount request, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(UpdateDiscount request, CancellationToken cancellationToken)
         {
             var client = await _clientRepository.GetClientByEmailAsync(request.ClientEmail, cancellationToken);
             if (client == null)

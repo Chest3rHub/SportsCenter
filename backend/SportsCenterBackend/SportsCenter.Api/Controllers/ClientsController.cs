@@ -13,6 +13,8 @@ using SportsCenter.Application.Clients.Queries.GetClientsByAge;
 using SportsCenter.Application.Clients.Queries.GetClientsByTags;
 using SportsCenter.Application.Clients.Commands.AddDiscount;
 using SportsCenter.Application.Clients.Commands.AddDepositYourself;
+using SportsCenter.Application.Clients.Commands.UpdateClientDeposit;
+using SportsCenter.Application.Clients.Commands.UpdateDiscount;
 
 namespace SportsCenter.Api.Controllers;
 
@@ -197,8 +199,27 @@ public class ClientsController : BaseController
         }
     }
 
+    [Authorize(Roles = "Pracownik administracyjny,Wlasciciel")]
+    [HttpPost("update-client-deposit")]
+    public async Task<IActionResult> UpdateClientDepositAsync([FromBody] UpdateClientDeposit deposit)
+    {
+        try
+        {
+            await Mediator.Send(deposit);
+            return NoContent();
+        }
+        catch (ClientNotFoundException ex)
+        {
+            return NotFound(new { message = ex.Message });
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, new { message = "An error occurred while sending the request", details = ex.Message });
+        }
+    }
+
     [Authorize(Roles = "Wlasciciel,Pracownik administracyjny")]
-    [HttpPost("addDiscount")]
+    [HttpPost("add-client-discount")]
     public async Task<IActionResult> AddDiscountAsync([FromBody] AddDiscount addDiscount)
     {
         try
@@ -206,7 +227,26 @@ public class ClientsController : BaseController
             await Mediator.Send(addDiscount);
             return NoContent();
         }
-        catch (ClientWithGivenIdNotFoundException ex)
+        catch (ClientNotFoundException ex)
+        {
+            return NotFound(new { message = ex.Message });
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, new { message = "An error occurred while sending the request", details = ex.Message });
+        }
+    }
+
+    [Authorize(Roles = "Wlasciciel,Pracownik administracyjny")]
+    [HttpPost("update-client-discount")]
+    public async Task<IActionResult> UpdateDiscountAsync([FromBody] UpdateDiscount updateDiscount)
+    {
+        try
+        {
+            await Mediator.Send(updateDiscount);
+            return NoContent();
+        }
+        catch (ClientNotFoundException ex)
         {
             return NotFound(new { message = ex.Message });
         }

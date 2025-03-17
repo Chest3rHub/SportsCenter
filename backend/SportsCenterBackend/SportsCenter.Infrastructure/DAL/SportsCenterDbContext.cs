@@ -263,7 +263,7 @@ public partial class SportsCenterDbContext : DbContext
             entity.Property(e => e.KlientId)
                 .ValueGeneratedNever()
                 .HasColumnName("KlientID");
-            entity.Property(e => e.Saldo).HasColumnType("decimal(5, 2)");
+            entity.Property(e => e.Saldo).HasColumnType("decimal(7, 2)");
 
             entity.HasOne(d => d.KlientNavigation).WithOne(p => p.Klient)
                 .HasForeignKey<Klient>(d => d.KlientId)

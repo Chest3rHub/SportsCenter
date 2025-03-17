@@ -167,27 +167,6 @@ namespace SportsCenter.Infrastructure.DAL.Repositories
             _dbContext.BrakDostepnoscis.Update(absenceRequest);
             await _dbContext.SaveChangesAsync(cancellationToken);
         }
-        //public async Task<bool> IsTrainerAvailableAsync(int trainerId, DateTime startTime, DateTime endTime, CancellationToken cancellationToken)
-        //{
-        //    bool isReserved = await _dbContext.Rezerwacjas
-        //        .AnyAsync(r => r.TrenerId == trainerId &&
-        //                       r.DataOd < endTime &&
-        //                       r.DataDo > startTime, cancellationToken);
-
-        //    var overlappingReservations = await _dbContext.GrafikZajecs
-        //        .Where(gz => gz.PracownikId == trainerId)
-        //        .Join(_dbContext.DataZajecs,
-        //            gz => gz.GrafikZajecId,
-        //            dz => dz.GrafikZajecId,
-        //            (gz, dz) => new { gz, dz })
-        //        .Where(x =>
-        //            (x.dz.Date >= startTime && x.dz.Date < endTime) ||
-        //            (x.dz.Date.AddMinutes(x.gz.CzasTrwania) > startTime && x.dz.Date < endTime))
-        //        .AnyAsync(cancellationToken);
-
-        //    return !isReserved && !overlappingReservations;
-        //}
-
         public async Task UpdateAbsenceRequestAsync(int requestId, CancellationToken cancellationToken)
         {
             var absence = await _dbContext.BrakDostepnoscis
@@ -221,6 +200,7 @@ namespace SportsCenter.Infrastructure.DAL.Repositories
             var hasReservations = await _dbContext.Rezerwacjas
                 .AnyAsync(r =>
                     r.TrenerId == trainerId &&
+                    r.CzyOdwolana == false &&
                     ((requestedStartTime >= r.DataOd && requestedStartTime < r.DataDo) ||
                      (requestedEndTime > r.DataOd && requestedEndTime <= r.DataDo) ||
                      (requestedStartTime <= r.DataOd && requestedEndTime >= r.DataDo)),

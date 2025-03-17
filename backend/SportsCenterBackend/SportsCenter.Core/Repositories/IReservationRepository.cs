@@ -10,7 +10,6 @@ namespace SportsCenter.Core.Repositories
     public interface IReservationRepository
     {
         Task AddReservationAsync(Rezerwacja reservation, CancellationToken cancellationToken);
-
         Task<bool> IsCourtAvailableAsync(int courtId, DateTime startTime, DateTime endTime, CancellationToken cancellationToken);
         Task<Rezerwacja> GetReservationByIdAsync(int reservationId, CancellationToken cancellationToken);
         Task UpdateReservationAsync(Rezerwacja reservation, CancellationToken cancellationToken);

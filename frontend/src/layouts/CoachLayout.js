@@ -10,16 +10,9 @@ import Sidebar from '../components/Sidebar';
 export default function CoachLayout() {
 
     const menuItems = [ 
-        { label: 'Jestem zalogowany', navigate: '/employees' },
-        { label: 'jako trener', navigate: '/clients' },
-        { label: '(text do testów)', navigate: '/timetable' },
-        { label: '(usunąć potem)', navigate: '/todo' },
-        { label: 'Zmiana hasła', navigate: '/change-password' },
-        { label: 'Zajęcia', navigate: '/trainings' },
-        { label: 'Rezerwacje', navigate: '/reservations' },
-        { label: 'Opinie', navigate: '/opinions' },
-        { label: 'Produkty', navigate: '/products' },
-        { label: 'Sprzęt', navigate: '/gear' },
+      { label: dictionary.sidebar.coachSidebar.newsLabel, navigate: '/news' },
+      { label: dictionary.sidebar.coachSidebar.timetableLabel, navigate: '/timetable' },
+      { label: dictionary.sidebar.coachSidebar.changePasswordLabel, navigate: '/change-password' },
       ];
 
   const {token, setToken} = useContext(SportsContext);

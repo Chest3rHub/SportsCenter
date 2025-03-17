@@ -10,17 +10,17 @@ import Sidebar from '../components/Sidebar';
 export default function OwnerLayout() {
 
   const menuItems = [ 
-    { label: 'Pracownicy', navigate: '/employees' },
-    { label: 'Klienci', navigate: '/clients' },
-    { label: 'Grafik', navigate: '/timetable' },
-    { label: 'TODO', navigate: '/todo' },
-    { label: 'Zmiana hasła', navigate: '/change-password' },
-    { label: 'Zajęcia', navigate: '/trainings' },
-    { label: 'Rezerwacje', navigate: '/reservations' },
-    { label: 'Opinie', navigate: '/opinions' },
-    { label: 'Produkty', navigate: '/products' },
-    { label: 'Sprzęt', navigate: '/gear' },
-    { label: 'Aktualności', navigate: '/news' }
+    { label: dictionary.sidebar.ownerSidebar.employeesLabel, navigate: '/employees' },
+    { label: dictionary.sidebar.ownerSidebar.clientsLabel, navigate: '/clients' },
+    { label: dictionary.sidebar.ownerSidebar.timetableLabel, navigate: '/timetable' },
+    { label: dictionary.sidebar.ownerSidebar.todoLabel, navigate: '/todo' },
+    { label: dictionary.sidebar.ownerSidebar.changePasswordLabel, navigate: '/change-password' },
+    { label: dictionary.sidebar.ownerSidebar.trainingsLabel, navigate: '/trainings' },
+    { label: dictionary.sidebar.ownerSidebar.reservationsLabel, navigate: '/reservations' },
+    { label: dictionary.sidebar.ownerSidebar.opinionsLabel, navigate: '/opinions' },
+    { label: dictionary.sidebar.ownerSidebar.productsLabel, navigate: '/products' },
+    { label: dictionary.sidebar.ownerSidebar.gearLabel, navigate: '/gear' },
+    { label: dictionary.sidebar.ownerSidebar.newsLabel, navigate: '/news' },
   ];
 
   const {token, setToken} = useContext(SportsContext);

@@ -133,6 +133,11 @@ namespace SportsCenter.Infrastructure.DAL.Repositories
         public async Task DeleteTrainerCertificateAsync(TrenerCertyfikat certificate, CancellationToken cancellationToken)
         {
             _dbContext.TrenerCertyfikats.Remove(certificate);
+
+            var certificat = await _dbContext.Certyfikats
+                .FirstAsync(c => c.CertyfikatId == certificate.CertyfikatId, cancellationToken);
+           
+            _dbContext.Certyfikats.Remove(certificat);
             await _dbContext.SaveChangesAsync(cancellationToken);
         }
         public async Task<TrenerCertyfikat?> GetTrainerCertificateWithDetailsByIdAsync(int trainerId, int certificateId, CancellationToken cancellationToken)
@@ -156,10 +161,16 @@ namespace SportsCenter.Infrastructure.DAL.Repositories
             await _dbContext.BrakDostepnoscis.AddAsync(absenceRequest);
             await _dbContext.SaveChangesAsync();
         }
-        public async Task<BrakDostepnosci?> GetAbsenceRequestAsync(int employeeId, DateOnly date)
+        public async Task<BrakDostepnosci?> GetAbsenceRequestAsync(int employeeId, DateOnly date, CancellationToken cancellationToken)
         {
             return await _dbContext.BrakDostepnoscis
                 .Where(a => a.PracownikId == employeeId && a.Data == date)
+                .FirstOrDefaultAsync();
+        }
+        public async Task<BrakDostepnosci?> GetAbsenceRequestAsync(int requestId, CancellationToken cancellationToken)
+        {
+            return await _dbContext.BrakDostepnoscis
+                .Where(a => a.BrakDostepnosciId == requestId)
                 .FirstOrDefaultAsync();
         }
         public async Task UpdateAbsenceRequestAsync(BrakDostepnosci absenceRequest, CancellationToken cancellationToken)
@@ -167,27 +178,6 @@ namespace SportsCenter.Infrastructure.DAL.Repositories
             _dbContext.BrakDostepnoscis.Update(absenceRequest);
             await _dbContext.SaveChangesAsync(cancellationToken);
         }
-        //public async Task<bool> IsTrainerAvailableAsync(int trainerId, DateTime startTime, DateTime endTime, CancellationToken cancellationToken)
-        //{
-        //    bool isReserved = await _dbContext.Rezerwacjas
-        //        .AnyAsync(r => r.TrenerId == trainerId &&
-        //                       r.DataOd < endTime &&
-        //                       r.DataDo > startTime, cancellationToken);
-
-        //    var overlappingReservations = await _dbContext.GrafikZajecs
-        //        .Where(gz => gz.PracownikId == trainerId)
-        //        .Join(_dbContext.DataZajecs,
-        //            gz => gz.GrafikZajecId,
-        //            dz => dz.GrafikZajecId,
-        //            (gz, dz) => new { gz, dz })
-        //        .Where(x =>
-        //            (x.dz.Date >= startTime && x.dz.Date < endTime) ||
-        //            (x.dz.Date.AddMinutes(x.gz.CzasTrwania) > startTime && x.dz.Date < endTime))
-        //        .AnyAsync(cancellationToken);
-
-        //    return !isReserved && !overlappingReservations;
-        //}
-
         public async Task UpdateAbsenceRequestAsync(int requestId, CancellationToken cancellationToken)
         {
             var absence = await _dbContext.BrakDostepnoscis
@@ -201,6 +191,7 @@ namespace SportsCenter.Infrastructure.DAL.Repositories
             return await _dbContext.BrakDostepnoscis
                 .AnyAsync(b => b.BrakDostepnosciId == requestId, cancellationToken);
         }
+
         public async Task<bool> IsAbsenceRequestPendingAsync(int requestId, CancellationToken cancellationToken)
         {
             return await _dbContext.BrakDostepnoscis
@@ -221,6 +212,7 @@ namespace SportsCenter.Infrastructure.DAL.Repositories
             var hasReservations = await _dbContext.Rezerwacjas
                 .AnyAsync(r =>
                     r.TrenerId == trainerId &&
+                    r.CzyOdwolana == false &&
                     ((requestedStartTime >= r.DataOd && requestedStartTime < r.DataDo) ||
                      (requestedEndTime > r.DataOd && requestedEndTime <= r.DataDo) ||
                      (requestedStartTime <= r.DataOd && requestedEndTime >= r.DataDo)),
@@ -228,7 +220,21 @@ namespace SportsCenter.Infrastructure.DAL.Repositories
 
             if (hasReservations) return TrainerAvailabilityStatus.HasReservations;
 
-            string dayOfWeek = requestedStart.ToString("dddd", new System.Globalization.CultureInfo("pl-PL"));
+            var dniTygodnia = new Dictionary<DayOfWeek, string>
+            {
+                { DayOfWeek.Monday, "poniedzialek" },
+                { DayOfWeek.Tuesday, "wtorek" },
+                { DayOfWeek.Wednesday, "sroda" },
+                { DayOfWeek.Thursday, "czwartek" },
+                { DayOfWeek.Friday, "piatek" },
+                { DayOfWeek.Saturday, "sobota" },
+                { DayOfWeek.Sunday, "niedziela" }
+            };
+
+            string dayOfWeek = dniTygodnia[requestedStart.DayOfWeek];
+            Console.WriteLine($"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAARequested day: {dayOfWeek}");
+
+
             var activitiesSchedule = await _dbContext.GrafikZajecs
                 .Where(gz => gz.PracownikId == trainerId && gz.DzienTygodnia == dayOfWeek)
                 .ToListAsync(cancellationToken);
@@ -237,13 +243,16 @@ namespace SportsCenter.Infrastructure.DAL.Repositories
             {
                 int godzinaOdInMinutes = (int)grafik.GodzinaOd.TotalMinutes;
                 int godzinaDoInMinutes = godzinaOdInMinutes + grafik.CzasTrwania;
+                Console.WriteLine($"CCCCCCCCCCCCCCCCCCCCCCGrafik: {dayOfWeek}, {godzinaOdInMinutes} - {godzinaDoInMinutes}");
+                Console.WriteLine($"DDDDDDDDDDDDDDDDSprawdzany czas: {startHourInMinutes} - {endHourInMinutes}");
 
-                if ((startHourInMinutes < godzinaDoInMinutes && startHourInMinutes >= godzinaOdInMinutes) ||
-                    (endHourInMinutes > godzinaOdInMinutes && endHourInMinutes <= godzinaDoInMinutes))
+                if ((startHourInMinutes < godzinaDoInMinutes && endHourInMinutes > godzinaOdInMinutes))
                 {
+                    Console.WriteLine(" KOLIZJA Z GRAFIKIEM!");
                     return TrainerAvailabilityStatus.HasActivities;
                 }
             }
+            Console.WriteLine($"EEEEEEEEEEEEEEEEZnaleziono grafik: {activitiesSchedule.Count} rekordów dla dnia {dayOfWeek}");
 
             var unavailability = await _dbContext.BrakDostepnoscis
                 .Where(bd => bd.PracownikId == trainerId)

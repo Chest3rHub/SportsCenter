@@ -34,7 +34,8 @@ namespace SportsCenter.Infrastructure.DAL.Repositories
             bool isReserved = await _dbContext.Rezerwacjas
                 .AnyAsync(r => r.KortId == courtId &&
                                r.DataOd < endTime &&
-                               r.DataDo > startTime, cancellationToken);
+                               r.DataDo > startTime &&
+                                r.CzyOdwolana == false, cancellationToken);
 
             var zajecia = await _dbContext.GrafikZajecs
                 .Where(gz => gz.KortId == courtId && gz.DzienTygodnia == dzienTygodnia)
@@ -66,6 +67,36 @@ namespace SportsCenter.Infrastructure.DAL.Repositories
             _dbContext.Rezerwacjas.Remove(reservation);
             await _dbContext.SaveChangesAsync(cancellationToken);
         }
+        
+        //public async Task<IEnumerable<Kort>> GetAvailableCourtsAsync(DateTime startTime, DateTime endTime, CancellationToken cancellationToken)
+        //{
+        //    string dzienTygodnia = startTime.ToString("dddd", new System.Globalization.CultureInfo("pl-PL"));
+        //    TimeSpan godzinaOd = startTime.TimeOfDay;
+        //    TimeSpan godzinaDo = endTime.TimeOfDay;
+
+        //    var availableCourts = await _dbContext.Korts
+        //        .Where(c => !_dbContext.Rezerwacjas
+        //            .Any(r => r.KortId == c.KortId &&
+        //                      r.DataOd < endTime &&
+        //                      r.DataDo > startTime &&
+        //                      r.CzyOdwolana == false))
+        //        .ToListAsync(cancellationToken);
+
+        //    availableCourts = availableCourts
+        //        .Where(c => !_dbContext.GrafikZajecs
+        //            .Where(gz => gz.KortId == c.KortId && gz.DzienTygodnia == dzienTygodnia)
+        //            .AsEnumerable()
+        //            .Any(gz =>
+        //            {
+        //                TimeSpan godzinaZakonczeniaZajec = gz.GodzinaOd.Add(TimeSpan.FromMinutes(gz.CzasTrwania));
+
+        //                return (gz.GodzinaOd < godzinaDo) && (godzinaZakonczeniaZajec > godzinaOd);
+        //            }))
+        //        .ToList();
+
+        //    return availableCourts;
+        //}
+
         public async Task<IEnumerable<Kort>> GetAvailableCourtsAsync(DateTime startTime, DateTime endTime, CancellationToken cancellationToken)
         {
             string dzienTygodnia = startTime.ToString("dddd", new System.Globalization.CultureInfo("pl-PL"));
@@ -76,23 +107,17 @@ namespace SportsCenter.Infrastructure.DAL.Repositories
                 .Where(c => !_dbContext.Rezerwacjas
                     .Any(r => r.KortId == c.KortId &&
                               r.DataOd < endTime &&
-                              r.DataDo > startTime))
-                .ToListAsync(cancellationToken);
-
-            availableCourts = availableCourts
+                              r.DataDo > startTime &&
+                              r.CzyOdwolana == false)) 
                 .Where(c => !_dbContext.GrafikZajecs
-                    .Where(gz => gz.KortId == c.KortId && gz.DzienTygodnia == dzienTygodnia)
-                    .AsEnumerable()
-                    .Any(gz =>
-                    {
-                        TimeSpan godzinaZakonczeniaZajec = gz.GodzinaOd.Add(TimeSpan.FromMinutes(gz.CzasTrwania));
-
-                        return (gz.GodzinaOd < godzinaDo) && (godzinaZakonczeniaZajec > godzinaOd);
-                    }))
-                .ToList();
+                    .Any(gz => gz.KortId == c.KortId &&
+                               gz.DzienTygodnia == dzienTygodnia &&
+                               (gz.GodzinaOd < godzinaDo && (gz.GodzinaOd.Add(TimeSpan.FromMinutes(gz.CzasTrwania)) > godzinaOd))))
+                .ToListAsync(cancellationToken);
 
             return availableCourts;
         }
+
         public async Task<IEnumerable<Pracownik>> GetAvailableTrainersAsync(DateTime startTime, DateTime endTime, CancellationToken cancellationToken)
         {
             string dzienTygodnia = startTime.ToString("dddd", new System.Globalization.CultureInfo("pl-PL"));
@@ -103,7 +128,8 @@ namespace SportsCenter.Infrastructure.DAL.Repositories
                 .Where(t => !_dbContext.Rezerwacjas
                     .Any(r => r.TrenerId == t.PracownikId &&
                         r.DataOd < endTime &&
-                        r.DataDo > startTime))
+                        r.DataDo > startTime &&
+                      r.CzyOdwolana == false))
                 .Join(
                     _dbContext.TypPracownikas,
                     t => t.IdTypPracownika,
@@ -137,7 +163,8 @@ namespace SportsCenter.Infrastructure.DAL.Repositories
         public async Task<bool> IsTrainerAssignedToReservationAsync(int reservationId, int trainerId)
         {
             return await _dbContext.Rezerwacjas
-                .Where(r => r.RezerwacjaId == reservationId && r.TrenerId == trainerId)
+                .Where(r => r.RezerwacjaId == reservationId && r.TrenerId == trainerId &&
+                    r.CzyOdwolana == false)
                 .AnyAsync();
         }
 
@@ -169,7 +196,7 @@ namespace SportsCenter.Infrastructure.DAL.Repositories
         public async Task<bool> HasClientReservation(int reservationId, int clientId, CancellationToken cancellationToken)
         {
             return await _dbContext.Rezerwacjas
-                .AnyAsync(r => r.RezerwacjaId == reservationId && r.KlientId == clientId, cancellationToken);
+                .AnyAsync(r => r.RezerwacjaId == reservationId && r.KlientId == clientId  && r.CzyOdwolana == false ,cancellationToken);
         }
         public async Task CancelReservationAsync(int reservationId, CancellationToken cancellationToken)
         {

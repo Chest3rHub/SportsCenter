@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static SportsCenter.Core.Enums.TrainerAvailiabilityStatus;
 
 namespace SportsCenter.Application.Employees.Commands.AcceptAbsenceRequest
 {
@@ -35,7 +36,6 @@ namespace SportsCenter.Application.Employees.Commands.AcceptAbsenceRequest
             {
                 throw new AbsenceRequestAlreadyAcceptedException(request.RequestId);
             }
-
             await _employeeRepository.UpdateAbsenceRequestAsync(request.RequestId, cancellationToken);
 
             return Unit.Value;

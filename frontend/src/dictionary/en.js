@@ -44,13 +44,30 @@ export default {
         accountLabel: 'Account',
       },
       employeeSidebar: {
-        // itd dla wlasciciela jeszcze i trenera
+        clientsLabel: 'Clients',
+        timetableLabel: 'Timetable',
+        todoLabel: 'Todo',
+        changePasswordLabel: 'Change password',
+        trainingsLabel: 'Trainings',
+        reservationsLabel: 'Reservations',
       },
       ownerSidebar: {
-
+        employeesLabel: 'Employees',
+        clientsLabel: 'Clients',
+        timetableLabel: 'Timetable',
+        todoLabel: 'Todo',
+        changePasswordLabel: 'Change password',
+        trainingsLabel: 'Trainings',
+        reservationsLabel: 'Reservations',
+        opinionsLabel: 'Opinions',
+        productsLabel: 'Products',
+        gearLabel: 'Gear',
+        newsLabel: 'News',
       },
       coachSidebar: {
-        
+        newsLabel: 'News',
+        timetableLabel: 'Timetable',
+        changePasswordLabel: 'Change password',
       }
     },
     newsPage: {
@@ -60,5 +77,18 @@ export default {
       removeLabel: 'Delete',
       nothingHappenedLabel: 'Oops, nothing has happened recently.',
       checkAgainSoonLabel: 'Check back again in a while!',
+      addNewsLabel: 'Add',
+    },
+    addNewsPage: {
+      newsLabel: 'News',
+      titleLabel: 'Title',
+      contentLabel: 'Content',
+      validFromLabel: 'Valid from',
+      validUntilLabel: 'Valid until',
+      saveLabel: 'Save',
+      titleError: 'The title can have a maximum of 20 characters',
+      contentError: 'The description cannot exceed 4000 characters',
+      validFromError: '',
+      validUntilError: '',
     }
   };

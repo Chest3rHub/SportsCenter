@@ -24,18 +24,20 @@ namespace SportsCenter.Infrastructure.DAL.Repositories
             double startHourInMinutes = startTime.TimeOfDay.TotalMinutes;
             double endHourInMinutes = endTime.TimeOfDay.TotalMinutes;
 
+            //czy sa jakiekolwiek rezerwacje nieodwolane
             bool isReserved = await _dbContext.Rezerwacjas
                 .AnyAsync(r => r.KortId == courtId &&
                                r.DataOd < endTime &&
-                               r.DataDo > startTime, cancellationToken);
-
+                               r.DataDo > startTime &&
+                               r.CzyOdwolana == false, cancellationToken);
+            
             var activity = await _dbContext.GrafikZajecs
                 .Where(gz => gz.KortId == courtId && gz.DzienTygodnia == dayOfWeek)
                 .ToListAsync(cancellationToken);
 
             bool hasOverlappingClasses = activity.Any(gz =>
             {
-                double zajeciaEndMinutes = gz.GodzinaOd.TotalMinutes + (gz.CzasTrwania * 60);
+                double zajeciaEndMinutes = gz.GodzinaOd.TotalMinutes + gz.CzasTrwania; //wymaga by w bazie byl juz czas w minutach podawany (czasTrwania)
 
                 return (gz.GodzinaOd.TotalMinutes < endHourInMinutes) &&
                        (zajeciaEndMinutes > startHourInMinutes);
@@ -54,7 +56,8 @@ namespace SportsCenter.Infrastructure.DAL.Repositories
                 .Where(c => !_dbContext.Rezerwacjas
                     .Any(r => r.KortId == c.KortId &&
                               r.DataOd < endTime &&
-                              r.DataDo > startTime))
+                              r.DataDo > startTime &&
+                              r.CzyOdwolana == false))
                 .ToListAsync(cancellationToken);
 
             availableCourts = availableCourts

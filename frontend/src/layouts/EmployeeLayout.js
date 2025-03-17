@@ -10,12 +10,12 @@ import Sidebar from '../components/Sidebar';
 export default function EmployeeLayout() {
 
   const menuItems = [ 
-    { label: 'Klienci', navigate: '/clients' },
-    { label: 'Grafik', navigate: '/timetable' },
-    { label: 'TODO', navigate: '/todo' },
-    { label: 'Zmiana hasła', navigate: '/change-password' },
-    { label: 'Zajęcia', navigate: '/trainings' },
-    { label: 'Rezerwacje', navigate: '/reservations' },
+    { label: dictionary.sidebar.employeeSidebar.clientsLabel, navigate: '/clients' },
+    { label: dictionary.sidebar.employeeSidebar.timetableLabel, navigate: '/timetable' },
+    { label: dictionary.sidebar.employeeSidebar.todoLabel, navigate: '/todo' },
+    { label: dictionary.sidebar.employeeSidebar.changePasswordLabel, navigate: '/change-password' },
+    { label: dictionary.sidebar.employeeSidebar.trainingsLabel, navigate: '/trainings' },
+    { label: dictionary.sidebar.employeeSidebar.reservationsLabel, navigate: '/reservations' },
     
   ];
 

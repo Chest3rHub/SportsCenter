@@ -32,8 +32,11 @@ namespace SportsCenter.Infrastructure.DAL.Handlers.EmployeesHandlers
             }
 
             var zajeciaSchedule = await _dbContext.GrafikZajecs
+                .Include(dz => dz.Zajecia)
+                .ThenInclude(z => z.IdPoziomZajecNavigation)
                 .Where(dz => dz.PracownikId == trainerId)
                 .ToListAsync(cancellationToken);
+
 
             var rezerwacjaSchedule = await _dbContext.Rezerwacjas
                 .Where(r => r.TrenerId == trainerId)

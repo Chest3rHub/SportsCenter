@@ -200,7 +200,7 @@ public class ClientsController : BaseController
     }
 
     [Authorize(Roles = "Pracownik administracyjny,Wlasciciel")]
-    [HttpPost("update-client-deposit")]
+    [HttpPut("update-client-deposit")]
     public async Task<IActionResult> UpdateClientDepositAsync([FromBody] UpdateClientDeposit deposit)
     {
         try
@@ -238,7 +238,7 @@ public class ClientsController : BaseController
     }
 
     [Authorize(Roles = "Wlasciciel,Pracownik administracyjny")]
-    [HttpPost("update-client-discount")]
+    [HttpPut("update-client-discount")]
     public async Task<IActionResult> UpdateDiscountAsync([FromBody] UpdateDiscount updateDiscount)
     {
         try

@@ -52,7 +52,7 @@ namespace SportsCenter.Application.Employees.Commands.AddAbsenceRequest
                 throw new CantAddAbsenceRequestForNoAvailabilityDayException();
             }
 
-            var existingAbsenceRequest = await _employeeRepository.GetAbsenceRequestAsync(userId, request.Date);
+            var existingAbsenceRequest = await _employeeRepository.GetAbsenceRequestAsync(userId, request.Date, cancellationToken);
 
             if (existingAbsenceRequest != null)
             {

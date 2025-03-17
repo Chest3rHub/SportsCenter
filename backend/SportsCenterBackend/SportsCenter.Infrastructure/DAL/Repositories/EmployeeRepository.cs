@@ -133,6 +133,11 @@ namespace SportsCenter.Infrastructure.DAL.Repositories
         public async Task DeleteTrainerCertificateAsync(TrenerCertyfikat certificate, CancellationToken cancellationToken)
         {
             _dbContext.TrenerCertyfikats.Remove(certificate);
+
+            var certificat = await _dbContext.Certyfikats
+                .FirstAsync(c => c.CertyfikatId == certificate.CertyfikatId, cancellationToken);
+           
+            _dbContext.Certyfikats.Remove(certificat);
             await _dbContext.SaveChangesAsync(cancellationToken);
         }
         public async Task<TrenerCertyfikat?> GetTrainerCertificateWithDetailsByIdAsync(int trainerId, int certificateId, CancellationToken cancellationToken)
@@ -156,10 +161,16 @@ namespace SportsCenter.Infrastructure.DAL.Repositories
             await _dbContext.BrakDostepnoscis.AddAsync(absenceRequest);
             await _dbContext.SaveChangesAsync();
         }
-        public async Task<BrakDostepnosci?> GetAbsenceRequestAsync(int employeeId, DateOnly date)
+        public async Task<BrakDostepnosci?> GetAbsenceRequestAsync(int employeeId, DateOnly date, CancellationToken cancellationToken)
         {
             return await _dbContext.BrakDostepnoscis
                 .Where(a => a.PracownikId == employeeId && a.Data == date)
+                .FirstOrDefaultAsync();
+        }
+        public async Task<BrakDostepnosci?> GetAbsenceRequestAsync(int requestId, CancellationToken cancellationToken)
+        {
+            return await _dbContext.BrakDostepnoscis
+                .Where(a => a.BrakDostepnosciId == requestId)
                 .FirstOrDefaultAsync();
         }
         public async Task UpdateAbsenceRequestAsync(BrakDostepnosci absenceRequest, CancellationToken cancellationToken)
@@ -180,6 +191,7 @@ namespace SportsCenter.Infrastructure.DAL.Repositories
             return await _dbContext.BrakDostepnoscis
                 .AnyAsync(b => b.BrakDostepnosciId == requestId, cancellationToken);
         }
+
         public async Task<bool> IsAbsenceRequestPendingAsync(int requestId, CancellationToken cancellationToken)
         {
             return await _dbContext.BrakDostepnoscis
@@ -208,7 +220,21 @@ namespace SportsCenter.Infrastructure.DAL.Repositories
 
             if (hasReservations) return TrainerAvailabilityStatus.HasReservations;
 
-            string dayOfWeek = requestedStart.ToString("dddd", new System.Globalization.CultureInfo("pl-PL"));
+            var dniTygodnia = new Dictionary<DayOfWeek, string>
+            {
+                { DayOfWeek.Monday, "poniedzialek" },
+                { DayOfWeek.Tuesday, "wtorek" },
+                { DayOfWeek.Wednesday, "sroda" },
+                { DayOfWeek.Thursday, "czwartek" },
+                { DayOfWeek.Friday, "piatek" },
+                { DayOfWeek.Saturday, "sobota" },
+                { DayOfWeek.Sunday, "niedziela" }
+            };
+
+            string dayOfWeek = dniTygodnia[requestedStart.DayOfWeek];
+            Console.WriteLine($"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAARequested day: {dayOfWeek}");
+
+
             var activitiesSchedule = await _dbContext.GrafikZajecs
                 .Where(gz => gz.PracownikId == trainerId && gz.DzienTygodnia == dayOfWeek)
                 .ToListAsync(cancellationToken);
@@ -217,13 +243,16 @@ namespace SportsCenter.Infrastructure.DAL.Repositories
             {
                 int godzinaOdInMinutes = (int)grafik.GodzinaOd.TotalMinutes;
                 int godzinaDoInMinutes = godzinaOdInMinutes + grafik.CzasTrwania;
+                Console.WriteLine($"CCCCCCCCCCCCCCCCCCCCCCGrafik: {dayOfWeek}, {godzinaOdInMinutes} - {godzinaDoInMinutes}");
+                Console.WriteLine($"DDDDDDDDDDDDDDDDSprawdzany czas: {startHourInMinutes} - {endHourInMinutes}");
 
-                if ((startHourInMinutes < godzinaDoInMinutes && startHourInMinutes >= godzinaOdInMinutes) ||
-                    (endHourInMinutes > godzinaOdInMinutes && endHourInMinutes <= godzinaDoInMinutes))
+                if ((startHourInMinutes < godzinaDoInMinutes && endHourInMinutes > godzinaOdInMinutes))
                 {
+                    Console.WriteLine(" KOLIZJA Z GRAFIKIEM!");
                     return TrainerAvailabilityStatus.HasActivities;
                 }
             }
+            Console.WriteLine($"EEEEEEEEEEEEEEEEZnaleziono grafik: {activitiesSchedule.Count} rekordów dla dnia {dayOfWeek}");
 
             var unavailability = await _dbContext.BrakDostepnoscis
                 .Where(bd => bd.PracownikId == trainerId)

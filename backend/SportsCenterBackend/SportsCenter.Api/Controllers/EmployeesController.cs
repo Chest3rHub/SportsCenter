@@ -168,24 +168,12 @@ namespace SportsCenter.Api.Controllers
         }
 
         [Authorize(Roles = "Pracownik administracyjny,Wlasciciel")]
-        [HttpGet("{pracownikId}/tasks")]
-        public async Task<IActionResult> GetTasksForEmployee(int pracownikId, CancellationToken cancellationToken)
+        [HttpGet("get-your-tasks")]
+        public async Task<IActionResult> GetTasksForEmployee(CancellationToken cancellationToken)
         {
-            var userId = User.FindFirst("userId")?.Value;
-
-            if (string.IsNullOrEmpty(userId))
-            {
-                return Unauthorized("User not authenticated");
-            }
-
-            if (int.Parse(userId) != pracownikId)
-            {
-                return Forbid("You can only view your own tasks");
-            }
-
             try
             {
-                var tasks = await Mediator.Send(new GetTasks(pracownikId), cancellationToken);
+                var tasks = await Mediator.Send(new GetTasks(), cancellationToken);
 
                 if (tasks == null || !tasks.Any())
                 {
@@ -333,6 +321,9 @@ namespace SportsCenter.Api.Controllers
                 return Ok(await Mediator.Send(request));
             }
             catch(CantAddAbsenceRequestException ex)
+            {
+                return Conflict(new { message = ex.Message });
+            }catch (CantAddAbsenceRequestForNoAvailabilityDayException ex)
             {
                 return Conflict(new { message = ex.Message });
             }

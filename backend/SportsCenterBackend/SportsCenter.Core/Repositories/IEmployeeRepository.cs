@@ -30,7 +30,8 @@ namespace SportsCenter.Core.Repositories
         Task<TrenerCertyfikat?> GetTrainerCertificateWithDetailsByIdAsync(int trainerId, int certificateId, CancellationToken cancellationToken);
         Task UpdateTrainerCertificateAsync(TrenerCertyfikat trainerCertificate, CancellationToken cancellationToken);
         Task AddAbsenceRequestAsync(BrakDostepnosci absenceRequest, CancellationToken cancellationToken);
-        Task<BrakDostepnosci?> GetAbsenceRequestAsync(int employeeId, DateOnly date);
+        Task<BrakDostepnosci?> GetAbsenceRequestAsync(int employeeId, DateOnly date, CancellationToken cancellationToken);
+        Task<BrakDostepnosci?> GetAbsenceRequestAsync(int requestId, CancellationToken cancellationToken);
         Task UpdateAbsenceRequestAsync(BrakDostepnosci absenceRequest, CancellationToken cancellationToken);
         Task UpdateAbsenceRequestAsync(int requestId, CancellationToken cancellationToken);
         Task<bool> ExistsAbsenceRequestAsync(int requestId, CancellationToken cancellationToken);

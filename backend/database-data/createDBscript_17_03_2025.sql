@@ -1,5 +1,5 @@
 -- Created by Vertabelo (http://vertabelo.com)
--- Last modification date: 2025-03-16 11:38:28.919
+-- Last modification date: 2025-03-17 11:06:24.051
 
 -- tables
 -- Table: Aktualnosci
@@ -80,7 +80,7 @@ CREATE TABLE InstancjaZajec_Klient (
 -- Table: Klient
 CREATE TABLE Klient (
     KlientID int  NOT NULL,
-    Saldo decimal(5,2)  NOT NULL,
+    Saldo decimal(7,2)  NOT NULL,
     ZnizkaNaZajecia int  NULL,
     ZnizkaNaProdukty int  NULL,
     CONSTRAINT Klient_pk PRIMARY KEY  (KlientID)

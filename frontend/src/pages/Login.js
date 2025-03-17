@@ -18,7 +18,7 @@ function Login() {
   const [passwordError, setPasswordError] = useState(false);
   const [serverError, setServerError] = useState(false);
 
-  const { dictionary, toggleLanguage, role, setRole} = useContext(SportsContext);
+  const { dictionary, toggleLanguage, role, setRole, token, setToken} = useContext(SportsContext);
 
   const navigate = useNavigate();
 
@@ -69,6 +69,7 @@ function Login() {
         console.log(payload.role);
 
         setRole(payload.role);
+        setToken(data.token);
         setServerError(false);
         navigate('/');
 

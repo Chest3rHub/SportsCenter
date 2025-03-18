@@ -194,6 +194,30 @@ namespace SportsCenter.Infrastructure.DAL.Repositories
             return await _dbContext.BrakDostepnoscis
                 .AnyAsync(b => b.BrakDostepnosciId == requestId && !b.CzyZatwierdzone, cancellationToken);
         }
+        public async Task<IEnumerable<Pracownik>> GetAvailableTrainersAsync(DateTime startTime, DateTime endTime, CancellationToken cancellationToken)
+        {
+            int startHourInMinutes = (int)startTime.TimeOfDay.TotalMinutes;
+            int endHourInMinutes = (int)endTime.TimeOfDay.TotalMinutes;
+
+            var trainers = await _dbContext.Pracowniks
+                   .Where(p => p.IdTypPracownikaNavigation.Nazwa == "Trener")
+                   .ToListAsync(cancellationToken);
+
+            var availableTrainers = new List<Pracownik>();
+
+            foreach (var trainer in trainers)
+            {
+
+                var availabilityStatus = await IsTrainerAvailableAsync(trainer.PracownikId, startTime, startHourInMinutes, endHourInMinutes, cancellationToken);
+
+                if (availabilityStatus == TrainerAvailabilityStatus.Available)
+                {
+                    availableTrainers.Add(trainer);
+                }
+            }
+            return availableTrainers;
+        }
+
         public async Task<TrainerAvailabilityStatus> IsTrainerAvailableAsync(int trainerId, DateTime requestedStart, int startHourInMinutes, int endHourInMinutes, CancellationToken cancellationToken)
         {
             DateTime requestedStartTime = requestedStart.Date.AddMinutes(startHourInMinutes);
@@ -229,8 +253,6 @@ namespace SportsCenter.Infrastructure.DAL.Repositories
             };
 
             string dayOfWeek = dniTygodnia[requestedStart.DayOfWeek];
-            Console.WriteLine($"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAARequested day: {dayOfWeek}");
-
 
             var activitiesSchedule = await _dbContext.GrafikZajecs
                 .Where(gz => gz.PracownikId == trainerId && gz.DzienTygodnia == dayOfWeek)
@@ -240,16 +262,12 @@ namespace SportsCenter.Infrastructure.DAL.Repositories
             {
                 int godzinaOdInMinutes = (int)grafik.GodzinaOd.TotalMinutes;
                 int godzinaDoInMinutes = godzinaOdInMinutes + grafik.CzasTrwania;
-                Console.WriteLine($"CCCCCCCCCCCCCCCCCCCCCCGrafik: {dayOfWeek}, {godzinaOdInMinutes} - {godzinaDoInMinutes}");
-                Console.WriteLine($"DDDDDDDDDDDDDDDDSprawdzany czas: {startHourInMinutes} - {endHourInMinutes}");
-
+              
                 if ((startHourInMinutes < godzinaDoInMinutes && endHourInMinutes > godzinaOdInMinutes))
                 {
-                    Console.WriteLine(" KOLIZJA Z GRAFIKIEM!");
                     return TrainerAvailabilityStatus.HasActivities;
                 }
             }
-            Console.WriteLine($"EEEEEEEEEEEEEEEEZnaleziono grafik: {activitiesSchedule.Count} rekordów dla dnia {dayOfWeek}");
 
             var unavailability = await _dbContext.BrakDostepnoscis
                 .Where(bd => bd.PracownikId == trainerId)

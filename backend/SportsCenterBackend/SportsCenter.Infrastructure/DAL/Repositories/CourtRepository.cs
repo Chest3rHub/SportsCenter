@@ -17,27 +17,37 @@ namespace SportsCenter.Infrastructure.DAL.Repositories
         {
             _dbContext = dbContext;
         }
-
         public async Task<bool> IsCourtAvailableAsync(int courtId, DateTime startTime, DateTime endTime, CancellationToken cancellationToken)
         {
-            string dayOfWeek = startTime.ToString("dddd", new System.Globalization.CultureInfo("pl-PL"));
+            var dniTygodnia = new Dictionary<DayOfWeek, string>
+            {
+                { DayOfWeek.Monday, "poniedzialek" },
+                { DayOfWeek.Tuesday, "wtorek" },
+                { DayOfWeek.Wednesday, "sroda" },
+                { DayOfWeek.Thursday, "czwartek" },
+                { DayOfWeek.Friday, "piatek" },
+                { DayOfWeek.Saturday, "sobota" },
+                { DayOfWeek.Sunday, "niedziela" }
+            };
+         
+            string dayOfWeek = dniTygodnia[startTime.DayOfWeek];
+
             double startHourInMinutes = startTime.TimeOfDay.TotalMinutes;
             double endHourInMinutes = endTime.TimeOfDay.TotalMinutes;
 
-            //czy sa jakiekolwiek rezerwacje nieodwolane
             bool isReserved = await _dbContext.Rezerwacjas
                 .AnyAsync(r => r.KortId == courtId &&
                                r.DataOd < endTime &&
                                r.DataDo > startTime &&
                                r.CzyOdwolana == false, cancellationToken);
-            
+
             var activity = await _dbContext.GrafikZajecs
                 .Where(gz => gz.KortId == courtId && gz.DzienTygodnia == dayOfWeek)
                 .ToListAsync(cancellationToken);
-
+     
             bool hasOverlappingClasses = activity.Any(gz =>
             {
-                double zajeciaEndMinutes = gz.GodzinaOd.TotalMinutes + gz.CzasTrwania; //wymaga by w bazie byl juz czas w minutach podawany (czasTrwania)
+                double zajeciaEndMinutes = gz.GodzinaOd.TotalMinutes + gz.CzasTrwania; // czas zakończenia zajęć
 
                 return (gz.GodzinaOd.TotalMinutes < endHourInMinutes) &&
                        (zajeciaEndMinutes > startHourInMinutes);
@@ -48,21 +58,33 @@ namespace SportsCenter.Infrastructure.DAL.Repositories
 
         public async Task<IEnumerable<Kort>> GetAvailableCourtsAsync(DateTime startTime, DateTime endTime, CancellationToken cancellationToken)
         {
-            string dayOfWeek = startTime.ToString("dddd", new System.Globalization.CultureInfo("pl-PL"));
+            var dniTygodnia = new Dictionary<DayOfWeek, string>
+            {
+                { DayOfWeek.Monday, "poniedzialek" },
+                { DayOfWeek.Tuesday, "wtorek" },
+                { DayOfWeek.Wednesday, "sroda" },
+                { DayOfWeek.Thursday, "czwartek" },
+                { DayOfWeek.Friday, "piatek" },
+                { DayOfWeek.Saturday, "sobota" },
+                { DayOfWeek.Sunday, "niedziela" }
+            };
+
+            string dayOfWeek = dniTygodnia[startTime.DayOfWeek];
             TimeSpan startHour = startTime.TimeOfDay;
             TimeSpan endHour = endTime.TimeOfDay;
 
             var availableCourts = await _dbContext.Korts
-                .Where(c => !_dbContext.Rezerwacjas
-                    .Any(r => r.KortId == c.KortId &&
-                              r.DataOd < endTime &&
-                              r.DataDo > startTime &&
-                              r.CzyOdwolana == false))
-                .ToListAsync(cancellationToken);
+        .Where(c => !_dbContext.Rezerwacjas
+            .Any(r => r.KortId == c.KortId &&
+                      r.DataOd < endTime &&
+                      r.DataDo > startTime &&
+                      r.CzyOdwolana == false))
+        .ToListAsync(cancellationToken);
 
             availableCourts = availableCourts
                 .Where(c => !_dbContext.GrafikZajecs
-                    .Where(gz => gz.KortId == c.KortId && gz.DzienTygodnia == dayOfWeek)
+                    .Where(gz => gz.KortId == c.KortId &&
+                                 gz.DzienTygodnia == dayOfWeek)
                     .AsEnumerable()
                     .Any(gz =>
                     {

@@ -23,7 +23,6 @@ export default function News() {
             })
             .then(data => {
                 console.log('Odpowiedź z API:', data);
-                // linijka set news ustawia na te pobrane z api, jak wykomentujecie ją to pojawi się ta smutna buzka xd
                 setNews(data);
                 setLoading(false);
             })
@@ -35,13 +34,16 @@ export default function News() {
     function handleCreateNews() {
         navigate('/add-news');
     }
+    const handleDeleteNews = (id) => {
+        setNews((prevNews) => prevNews.filter(newsItem => newsItem.id !== id));
+    };
 
     console.log(news);
 
     // max 3 newsy na stronie poki co
     const limitedNews = news.slice(0, 3);
     return (
-        <GreenBackground gap={"4vh"}>
+        <GreenBackground gap={"4vh"} height={"76.5vh"}>
             <Header>{dictionary.newsPage.newsLabel}</Header>
             {(role === "Wlasciciel" || role === "Pracownik administracyjny") &&
                 <Box sx={{
@@ -85,7 +87,7 @@ export default function News() {
                     )}
 
                     {limitedNews.map((oneNews) => (
-                        <SingleNews key={oneNews.id} oneNewsDetails={oneNews} />
+                        <SingleNews key={oneNews.id} oneNewsDetails={oneNews} onNewsDeleted={handleDeleteNews} />
                     ))}
                 </>
             )}

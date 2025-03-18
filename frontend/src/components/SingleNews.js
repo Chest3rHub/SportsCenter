@@ -1,12 +1,39 @@
 import { Typography, Box } from "@mui/material";
 import OrangeBackground from "./OrangeBackground";
 import { SportsContext } from "../context/SportsContext";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import NewsButton from "./NewsButton";
+import removeNews from "../api/removeNews";
 
-export default function SingleNews({ oneNewsDetails }) {
-    const {role, dictionary} = useContext(SportsContext);
-    console.log(oneNewsDetails)
+export default function SingleNews({ oneNewsDetails, onNewsDeleted }) {
+    const {role, dictionary, token} = useContext(SportsContext);
+
+    // te stany sa do walidacji, moze pozniej dodac jesli nie uda sie request?
+
+    //const [loading, setLoading] = useState(false);
+    //const [error, setError] = useState(null);
+    //const [success, setSuccess] = useState(false);
+
+    const handleDelete = async (id) => {
+        try {
+          //  setLoading(true);  
+          //  setError(null);  
+            const response = await removeNews(id, token);
+
+            if (response.ok) {
+              //  setSuccess(true); 
+                // tutaj aktualizuje liste newsow w nadrzednym komponencie
+                onNewsDeleted(id);
+            } else {
+              //  throw new Error('Failed to remove news');
+            }
+        } catch (err) {
+          //  setError(err.message);  
+        } finally {
+          //  setLoading(false); 
+        }
+    };
+
     return (
         <OrangeBackground 
             width={"80%"} 
@@ -48,7 +75,7 @@ export default function SingleNews({ oneNewsDetails }) {
                 { (role ==="Wlasciciel" || role ==="Pracownik administracyjny") &&
                  <NewsButton backgroundColor={"#f0aa4f"} onClick={() => console.log("click")}>{dictionary.newsPage.editLabel}</NewsButton>}
                 { (role ==="Wlasciciel" || role ==="Pracownik administracyjny") &&
-                 <NewsButton backgroundColor={"#F46C63"} onClick={() => console.log("click")}>{dictionary.newsPage.removeLabel}</NewsButton>}
+                 <NewsButton backgroundColor={"#F46C63"} onClick={() => handleDelete(oneNewsDetails.id)}>{dictionary.newsPage.removeLabel}</NewsButton>}
 
             </Box>
         </OrangeBackground>

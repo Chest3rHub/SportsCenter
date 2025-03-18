@@ -16,6 +16,7 @@ import CoachLayout from "../layouts/CoachLayout";
 import ClientLayout from "../layouts/ClientLayout";
 import News from "../pages/News";
 import AddNews from "../pages/AddNews";
+import Logout from "../pages/Logout";
 
 // pozmieniac dla klienta na komponenty trasy itd
 
@@ -43,6 +44,10 @@ const clientRouter = [
             {
                 path: "/error",  
                 element: <Error />,
+            },
+            {
+                path: "/logout",  
+                element: <Logout />,
             },
             {
                 path: "*",
@@ -79,6 +84,10 @@ const clientRouter = [
                     element: <Error />,
                 },
                 {
+                    path: "/logout",  
+                    element: <Logout />,
+                },
+                {
                     path: "*",
                     element: <NotFound />,
                 }
@@ -111,6 +120,10 @@ const clientRouter = [
                 {
                     path: "/error",  
                     element: <Error />,
+                },
+                {
+                    path: "/logout",  
+                    element: <Logout />,
                 },
                 {
                     path: "*",
@@ -147,6 +160,10 @@ const clientRouter = [
                     element: <Error />,
                 },
                 {
+                    path: "/logout",  
+                    element: <Logout />,
+                },
+                {
                     path: "*",
                     element: <NotFound />,
                 }
@@ -179,6 +196,10 @@ const clientRouter = [
                 {
                     path: "/error",  
                     element: <Error />,
+                },
+                {
+                    path: "/logout",  
+                    element: <Logout />,
                 },
                 {
                     path: "*",
@@ -218,6 +239,10 @@ const clientRouter = [
                 {
                     path: "/error",  
                     element: <Error />,
+                },
+                {
+                    path: "/logout",  
+                    element: <Logout />,
                 },
                 {
                     path: "*",

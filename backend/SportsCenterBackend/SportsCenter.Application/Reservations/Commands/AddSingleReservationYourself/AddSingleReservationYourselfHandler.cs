@@ -20,14 +20,16 @@ namespace SportsCenter.Application.Reservations.Commands.AddSingleReservationYou
     internal sealed class AddSingleReservationYourselfHandler : IRequestHandler<AddSingleReservationYourself, Unit>
     {
         private readonly IReservationRepository _reservationRepository;
+        private readonly ICourtRepository _courtRepository;
         private readonly IEmployeeRepository _employeeRepository;
         private readonly ISportsCenterRepository _sportsCenterRepository;
         private readonly IClientRepository _clientRepository;
         private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public AddSingleReservationYourselfHandler(IReservationRepository reservationRepository, IClientRepository clientRepository, ISportsCenterRepository sportsCenterRepository, IEmployeeRepository employeeRepository, IHttpContextAccessor httpContextAccessor)
+        public AddSingleReservationYourselfHandler(IReservationRepository reservationRepository, ICourtRepository courtRepository, IClientRepository clientRepository, ISportsCenterRepository sportsCenterRepository, IEmployeeRepository employeeRepository, IHttpContextAccessor httpContextAccessor)
         {
             _reservationRepository = reservationRepository;
+            _courtRepository = courtRepository;
             _clientRepository = clientRepository;
             _employeeRepository = employeeRepository;
             _sportsCenterRepository = sportsCenterRepository;
@@ -112,7 +114,7 @@ namespace SportsCenter.Application.Reservations.Commands.AddSingleReservationYou
             if (request.ParticipantsCount > 8)
                 throw new TooManyParticipantsException();
 
-            bool isCourtAvailable = await _reservationRepository.IsCourtAvailableAsync(request.CourtId, request.StartTime, request.EndTime, cancellationToken);
+            bool isCourtAvailable = await _courtRepository.IsCourtAvailableAsync(request.CourtId, request.StartTime, request.EndTime, cancellationToken);
             if (!isCourtAvailable)
                 throw new CourtNotAvaliableException(request.CourtId);
 

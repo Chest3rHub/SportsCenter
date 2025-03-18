@@ -9,16 +9,14 @@ internal sealed class DismissEmployeeHandler : IRequestHandler<DismissEmployee, 
 {
     private readonly IEmployeeRepository _employeeRepository;
     private readonly IReservationRepository _reservationRepository;
-    private readonly ISportActivityRepository _sportActivityRepository;
     private readonly IOrderRepository _orderRepository;
     private readonly IHttpContextAccessor _httpContextAccessor;
 
     public DismissEmployeeHandler(IEmployeeRepository employeeRepository, IReservationRepository reservationRepository,
-         ISportActivityRepository sportActivityRepository, IOrderRepository orderRepository, IHttpContextAccessor httpContextAccessor)
+            IOrderRepository orderRepository, IHttpContextAccessor httpContextAccessor)
     {
         _employeeRepository = employeeRepository;
         _reservationRepository = reservationRepository;
-        _sportActivityRepository = sportActivityRepository;
         _orderRepository = orderRepository;
         _httpContextAccessor = httpContextAccessor;
     }
@@ -57,7 +55,7 @@ internal sealed class DismissEmployeeHandler : IRequestHandler<DismissEmployee, 
                 //na razie system sam znajduje dostepnego trenra i mu przydziela calosc zastepstw
                 //po integracji z frontendem zostanie dodane okienko obslugujace interakcje
                 //wyboru dostepnych trenerow na poszczegolne zajecia/rezerwacje
-                var substituteTrainers = await _reservationRepository.GetAvailableTrainersAsync(startTime, endTime, cancellationToken);
+                var substituteTrainers = await _employeeRepository.GetAvailableTrainersAsync(startTime, endTime, cancellationToken);
                 if (substituteTrainers == null || !substituteTrainers.Any())
                 {
                     failedReservations.Add(reservation.RezerwacjaId);

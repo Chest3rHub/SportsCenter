@@ -19,14 +19,16 @@ namespace SportsCenter.Application.Reservations.Commands.AddRecurringReservation
     internal sealed class AddRecurringReservationHandler : IRequestHandler<AddRecurringReservation, Unit>
     {
         private readonly IReservationRepository _reservationRepository;
+        private readonly ICourtRepository _courtRepository;
         private readonly IClientRepository _clientRepository;
         private readonly IEmployeeRepository _employeeRepository;
         private readonly ISportsCenterRepository _sportsCenterRepository;
         private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public AddRecurringReservationHandler(IReservationRepository reservationRepository, IClientRepository clientRepository, IEmployeeRepository employeeRepository, ISportsCenterRepository sportsCenterRepository, IHttpContextAccessor httpContextAccessor)
+        public AddRecurringReservationHandler(IReservationRepository reservationRepository, ICourtRepository courtRepository, IClientRepository clientRepository, IEmployeeRepository employeeRepository, ISportsCenterRepository sportsCenterRepository, IHttpContextAccessor httpContextAccessor)
         {
             _reservationRepository = reservationRepository;
+            _courtRepository = courtRepository;
             _clientRepository = clientRepository;
             _employeeRepository = employeeRepository;
             _sportsCenterRepository = sportsCenterRepository;
@@ -139,7 +141,7 @@ namespace SportsCenter.Application.Reservations.Commands.AddRecurringReservation
 
                 if (isValidHours)
                 {
-                    bool isCourtAvailable = await _reservationRepository.IsCourtAvailableAsync(request.CourtId, currentDate, endDate, cancellationToken);
+                    bool isCourtAvailable = await _courtRepository.IsCourtAvailableAsync(request.CourtId, currentDate, endDate, cancellationToken);
                     bool isTrainerAvailable = true;
 
                     if (request.TrainerId.HasValue)
@@ -159,8 +161,8 @@ namespace SportsCenter.Application.Reservations.Commands.AddRecurringReservation
 
                     if (!isCourtAvailable || !isTrainerAvailable)
                     {
-                        var availableCourts = isCourtAvailable ? null : await _reservationRepository.GetAvailableCourtsAsync(currentDate, endDate, cancellationToken);
-                        var availableTrainers = isTrainerAvailable ? null : await _reservationRepository.GetAvailableTrainersAsync(currentDate, endDate, cancellationToken);
+                        var availableCourts = isCourtAvailable ? null : await _courtRepository.GetAvailableCourtsAsync(currentDate, endDate, cancellationToken);
+                        var availableTrainers = isTrainerAvailable ? null : await _employeeRepository.GetAvailableTrainersAsync(currentDate, endDate, cancellationToken);
 
                         reservationProposals.Add(new ReservationProposal
                         {

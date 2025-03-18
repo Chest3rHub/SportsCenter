@@ -19,13 +19,15 @@ namespace SportsCenter.Application.Reservations.Commands.MoveReservation
     internal class MoveReservationHandler : IRequestHandler<MoveReservation, Unit>
     {
         private readonly IReservationRepository _reservationRepository;
+        private readonly ICourtRepository _courtRepository;
         private readonly ISportsCenterRepository _sportsCenterRepository;
         private readonly IEmployeeRepository _employeeRepository;
         private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public MoveReservationHandler(IReservationRepository reservationRepository, ISportsCenterRepository sportsCenterRepository, IEmployeeRepository employeeRepository, IHttpContextAccessor httpContextAccessor)
+        public MoveReservationHandler(IReservationRepository reservationRepository, ICourtRepository courtRepository, ISportsCenterRepository sportsCenterRepository, IEmployeeRepository employeeRepository, IHttpContextAccessor httpContextAccessor)
         {
             _reservationRepository = reservationRepository;
+            _courtRepository = courtRepository;
             _sportsCenterRepository = sportsCenterRepository;
             _employeeRepository = employeeRepository;
             _httpContextAccessor = httpContextAccessor;
@@ -113,7 +115,7 @@ namespace SportsCenter.Application.Reservations.Commands.MoveReservation
               throw new PostponeReservationNotAllowedException();
             }
 
-            bool isCourtAvailable = await _reservationRepository.IsCourtAvailableAsync(reservation.KortId, request.NewStartTime, request.NewEndTime, cancellationToken);
+            bool isCourtAvailable = await _courtRepository.IsCourtAvailableAsync(reservation.KortId, request.NewStartTime, request.NewEndTime, cancellationToken);
             if (!isCourtAvailable)
                 throw new CourtNotAvaliableException(reservation.KortId);
 

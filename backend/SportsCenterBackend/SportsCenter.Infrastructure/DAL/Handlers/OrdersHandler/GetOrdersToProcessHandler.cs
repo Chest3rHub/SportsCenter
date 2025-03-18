@@ -28,22 +28,22 @@ namespace SportsCenter.Infrastructure.DAL.Handlers.OrdersHandler
             if (string.IsNullOrEmpty(userIdClaim) || !int.TryParse(userIdClaim, out int employeeId))
             {
                 throw new UnauthorizedAccessException("You cannot access the orders without logging in.");
-            }      
+            }
 
             var orders = await _dbContext.Zamowienies
-                .Where(z => z.PracownikId == employeeId && z.Status != "Zrealizowane")
+                .Where(z => z.PracownikId == employeeId && z.Status != "Zrealizowane" && z.Status != "Koszyk")
                 .Join(_dbContext.ZamowienieProdukts, z => z.ZamowienieId, zp => zp.ZamowienieId, (z, zp) => new { z, zp })
                 .Join(_dbContext.Produkts, joined => joined.zp.ProduktId, p => p.ProduktId, (joined, p) => new { joined, p })
                 .Join(_dbContext.Klients, joined => joined.joined.z.KlientId, k => k.KlientId, (joined, k) => new OrdersToProcessDto
                 {
+                    OrderId = joined.joined.z.ZamowienieId,
                     ProductName = joined.p.Nazwa,
                     Quantity = joined.joined.zp.Liczba,
                     Cost = joined.joined.zp.Koszt,
                     OrderDate = joined.joined.z.Data,
                     ClientFirstName = k.KlientNavigation.Imie,
                     ClientLastName = k.KlientNavigation.Nazwisko
-                })
-                .ToListAsync(cancellationToken);
+                }).ToListAsync(cancellationToken);
             return orders;
         }
     }

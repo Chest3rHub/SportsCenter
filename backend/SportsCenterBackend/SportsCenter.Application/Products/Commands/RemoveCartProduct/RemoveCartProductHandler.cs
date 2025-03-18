@@ -41,8 +41,11 @@ namespace SportsCenter.Application.Products.Commands.RemoveCartProduct
                 throw new NoOrderedProductsException();
             }
 
-            await _orderRepository.RemoveOrderProductAsync(orderProduct, cancellationToken);
-
+            var success = await _orderRepository.RemoveOrderProductAsync(orderProduct, request.Quantity, cancellationToken);
+            if(success == 0)
+            {
+                throw new NotEnoughProductInStockException(request.ProductId);
+            }
             var remainingProducts = await _orderRepository.GetOrderProductsAsync(order.ZamowienieId, cancellationToken);
             if (remainingProducts == null || remainingProducts.Count == 0)
             {

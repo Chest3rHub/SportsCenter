@@ -24,11 +24,11 @@ namespace SportsCenter.Application.Products.Commands.RemoveProduct
         }
         public async Task<Unit> Handle(RemoveProduct request, CancellationToken cancellationToken)
         {
-            var product = await _productRepository.GetProductByIdAsync(request.Id, cancellationToken);
+            var product = await _productRepository.GetProductByIdAsync(request.ProductId, cancellationToken);
 
             if (product == null)
             {
-                throw new ProductNotFoundException(request.Id);
+                throw new ProductNotFoundException(request.ProductId);
             }
 
             await _productRepository.DeleteProductAsync(product, cancellationToken);

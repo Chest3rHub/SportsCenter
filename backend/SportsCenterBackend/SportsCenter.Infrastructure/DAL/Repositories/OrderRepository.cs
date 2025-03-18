@@ -55,7 +55,31 @@ namespace SportsCenter.Infrastructure.DAL.Repositories
             _dbContext.ZamowienieProdukts.Remove(orderProduct);
             await _dbContext.SaveChangesAsync(cancellationToken);
         }
-        public async Task<decimal> GetTotalOrderCostAsync(int orderId, decimal discount, CancellationToken cancellationToken)
+        public async Task<int> RemoveOrderProductAsync(ZamowienieProdukt orderProduct, int quantity, CancellationToken cancellationToken)
+        {
+            var existingOrderProduct = await _dbContext.ZamowienieProdukts
+                .FirstOrDefaultAsync(zp => zp.ProduktId == orderProduct.ProduktId && zp.ZamowienieId == orderProduct.ZamowienieId, cancellationToken);
+
+            if (existingOrderProduct.Liczba < quantity)
+            {
+                return 0;
+            }
+
+            if (existingOrderProduct.Liczba == quantity)
+            {
+                _dbContext.ZamowienieProdukts.Remove(existingOrderProduct);
+            }
+            else
+            {
+                existingOrderProduct.Liczba -= quantity;
+                _dbContext.ZamowienieProdukts.Update(existingOrderProduct);
+            }
+
+            await _dbContext.SaveChangesAsync(cancellationToken);
+            return 1;
+        }
+
+        public async Task<decimal> GetTotalOrderCostAsync(int orderId, CancellationToken cancellationToken)
         {
             var order = await _dbContext.Zamowienies
                 .Where(z => z.ZamowienieId == orderId)
@@ -69,7 +93,7 @@ namespace SportsCenter.Infrastructure.DAL.Repositories
 
             decimal totalCost = order.ZamowienieProdukts.Sum(op => op.Koszt);
 
-            return totalCost * (1 - discount / 100m);
+            return totalCost;
         }
         public async Task RemoveOrderAsync(Zamowienie order, CancellationToken cancellationToken)
         {

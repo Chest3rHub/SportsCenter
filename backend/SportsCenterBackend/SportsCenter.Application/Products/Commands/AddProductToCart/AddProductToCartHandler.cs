@@ -1,9 +1,11 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Hosting;
 using SportsCenter.Application.Exceptions.EmployeesExceptions;
 using SportsCenter.Application.Exceptions.ProductsExceptions;
 using SportsCenter.Core.Entities;
 using SportsCenter.Core.Repositories;
+using Stripe;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,13 +19,15 @@ namespace SportsCenter.Application.Products.Commands.AddProductToCart
     {
         private readonly IProductRepository _productRepository;
         private readonly IOrderRepository _orderRepository;
+        private readonly IClientRepository _clientRepository;
         private readonly IEmployeeRepository _employeeRepository;
         private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public AddProductToCartHandler(IProductRepository productRepository, IOrderRepository orderRepository, IEmployeeRepository employeeRepository, IHttpContextAccessor httpContextAccessor)
+        public AddProductToCartHandler(IProductRepository productRepository, IOrderRepository orderRepository, IEmployeeRepository employeeRepository, IClientRepository clientRepository, IHttpContextAccessor httpContextAccessor)
         {
             _productRepository = productRepository;
             _orderRepository = orderRepository;
+            _clientRepository = clientRepository;
             _employeeRepository = employeeRepository;
             _httpContextAccessor = httpContextAccessor;
         }
@@ -54,6 +58,7 @@ namespace SportsCenter.Application.Products.Commands.AddProductToCart
                 order = new Zamowienie
                 {
                     KlientId = (int)userId,
+                    Data = DateOnly.FromDateTime(DateTime.UtcNow),
                     Status = "Koszyk",
                     PracownikId = pracownik.PracownikId,
                     ZamowienieProdukts = new List<ZamowienieProdukt>()
@@ -71,20 +76,35 @@ namespace SportsCenter.Application.Products.Commands.AddProductToCart
             }
 
             if (existingOrderProduct != null)
-            {           
+            {
                 existingOrderProduct.Liczba += request.Quantity;
-                existingOrderProduct.Koszt = existingOrderProduct.Liczba * product.Koszt;
+                var cost = existingOrderProduct.Liczba * product.Koszt;
 
+                var client = await _clientRepository.GetClientByIdAsync((int)userId, cancellationToken);
+                if (client.ZnizkaNaProdukty.HasValue && client.ZnizkaNaProdukty.Value > 0)
+                {
+                    cost *= (1 - client.ZnizkaNaProdukty.Value / 100m);
+                }
+
+                existingOrderProduct.Koszt = cost;
                 await _orderRepository.UpdateOrderProductAsync(existingOrderProduct, cancellationToken);
             }
             else
-            {              
+            {
+                var cost = request.Quantity * product.Koszt;
+
+                var client = await _clientRepository.GetClientByIdAsync((int)userId, cancellationToken);
+                if (client.ZnizkaNaProdukty.HasValue && client.ZnizkaNaProdukty.Value > 0)
+                {
+                    cost *= (1 - client.ZnizkaNaProdukty.Value / 100m);
+                }
+
                 var newOrderProduct = new ZamowienieProdukt
                 {
                     ZamowienieId = order.ZamowienieId,
                     ProduktId = product.ProduktId,
                     Liczba = request.Quantity,
-                    Koszt = request.Quantity * product.Koszt
+                    Koszt = cost
                 };
                 await _orderRepository.AddOrderProductAsync(newOrderProduct, cancellationToken);
             }

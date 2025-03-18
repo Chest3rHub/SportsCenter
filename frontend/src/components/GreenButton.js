@@ -1,6 +1,6 @@
 import { Button } from '@mui/material';
 
-export default function GreenButton({ type, children, onClick, style }) {
+export default function GreenButton({ type, children, onClick, style, hoverBackgroundColor }) {
     return (
         <Button 
             type={type} 
@@ -20,7 +20,7 @@ export default function GreenButton({ type, children, onClick, style }) {
                 paddingTop:'0.5rem',
                 paddingBottom:'0.3rem',
                 '&:hover': {
-                    backgroundColor: '#7ec7a0',
+                    backgroundColor: hoverBackgroundColor ? hoverBackgroundColor : '#7ec7a0',
                 },
                 ...style 
             }}

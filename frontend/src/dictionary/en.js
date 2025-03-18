@@ -139,5 +139,9 @@ export default {
       contentError: 'The description cannot exceed 4000 characters',
       validFromError: '',
       validUntilError: '',
+      returnLabel:'Back',
+      successLabel:'Success!',
+      savedSuccessLabel: 'Changes saved successfully!',
+      clickAnywhereLabel:'Click anywhere on the screen.',
     }
   };

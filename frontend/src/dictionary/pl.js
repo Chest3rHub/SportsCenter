@@ -139,5 +139,9 @@ export default {
       contentError: 'Opis nie może przekraczać 4000 znaków',
       validFromError: '',
       validUntilError: '',
+      returnLabel:'Wróć',
+      successLabel:'Sukces!',
+      savedSuccessLabel: 'Udało się zapisać zmiany!',
+      clickAnywhereLabel:'Kliknij w dowolne miejsce ekranu.',
     }
   };

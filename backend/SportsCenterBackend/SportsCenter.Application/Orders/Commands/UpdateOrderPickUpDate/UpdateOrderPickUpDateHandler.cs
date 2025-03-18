@@ -47,7 +47,7 @@ namespace SportsCenter.Application.Orders.Commands.UpdateOrderPickUpDate
                 throw new WrongOrderStatusException("Zrealizowane");
             }
 
-            order.DataOdbioru = DateOnly.FromDateTime(DateTime.Now);
+            order.DataOdbioru = request.PickUpDate;
             await _orderRepository.UpdateOrderAsync(order, cancellationToken);
 
             return Unit.Value;

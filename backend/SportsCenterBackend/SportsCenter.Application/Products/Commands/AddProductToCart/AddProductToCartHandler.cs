@@ -50,7 +50,7 @@ namespace SportsCenter.Application.Products.Commands.AddProductToCart
             var order = await _orderRepository.GetActiveOrderByUserIdAsync((int)userId, cancellationToken);
             if (order == null)
             {
-                var pracownik = await _employeeRepository.GetEmployeeWithLeastOrdersAsync(cancellationToken);
+                var pracownik = await _employeeRepository.GetEmployeeWithFewestOrdersAsync(cancellationToken);
                 if (pracownik == null)
                 {
                     throw new NoAvaliableEmployeeException();

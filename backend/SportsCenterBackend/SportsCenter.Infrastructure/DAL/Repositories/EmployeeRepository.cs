@@ -80,12 +80,16 @@ namespace SportsCenter.Infrastructure.DAL.Repositories
             _dbContext.Zadanies.Update(task);
             await _dbContext.SaveChangesAsync(cancellationToken);
         }
-        public async Task<Pracownik> GetEmployeeWithLeastOrdersAsync(CancellationToken cancellationToken)
+        public async Task<Pracownik> GetEmployeeWithFewestOrdersAsync(CancellationToken cancellationToken)
         {
             return await _dbContext.Pracowniks
-                .OrderBy(p => _dbContext.Zamowienies.Count(z => z.PracownikId == p.PracownikId && z.Status != "Zamknięte"))
+                .Include(p => p.IdTypPracownikaNavigation)
+                .Where(p => p.IdTypPracownikaNavigation.Nazwa == "Pracownik administracyjny")
+                .OrderBy(p => _dbContext.Zamowienies.Count(z => z.PracownikId == p.PracownikId && z.Status != "Zrealizowane"))
                 .FirstOrDefaultAsync(cancellationToken);
         }
+
+
         public async Task<int?> GetEmployeeTypeByNameAsync(string name, CancellationToken cancellationToken)
         {
             return await _dbContext.TypPracownikas
@@ -110,13 +114,6 @@ namespace SportsCenter.Infrastructure.DAL.Repositories
                 .FirstOrDefaultAsync(cancellationToken);
 
             return position;
-        }
-
-        public async Task<Pracownik> GetEmployeeWithFewestOrdersAsync(CancellationToken cancellationToken)
-        {
-            return await _dbContext.Pracowniks
-                .OrderBy(p => _dbContext.Zamowienies.Count(o => o.PracownikId == p.PracownikId))
-                .FirstOrDefaultAsync(cancellationToken);
         }
 
         public async Task AddTrainerCertificateAsync(TrenerCertyfikat trainerCertificate, CancellationToken cancellationToken)

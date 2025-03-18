@@ -47,6 +47,9 @@ namespace SportsCenter.Api.Controllers
             }
         }
 
+        //obecnie cala ta logika nie jest wykorzystywana
+        //po integracji z frontendem jesli sie okaze ze obecny sposob
+        //obslugi zamowien zostaje to cale start processing zostanie usuniete
         [Authorize(Roles = "Pracownik administracyjny")]
         [HttpPut(("Start-order-processing"))]
         public async Task<IActionResult>StartOrderProcessingAsync([FromBody] StartOrderProcessing processOrder)

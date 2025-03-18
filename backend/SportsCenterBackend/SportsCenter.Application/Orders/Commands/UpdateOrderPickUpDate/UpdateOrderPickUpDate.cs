@@ -10,10 +10,12 @@ namespace SportsCenter.Application.Orders.Commands.UpdateOrderPickUpDate
 {
     public sealed record UpdateOrderPickUpDate : ICommand<Unit>
     {
-        public int OrderId { get; set; }     
-        public UpdateOrderPickUpDate(int orderId)
+        public int OrderId { get; set; }  
+        public DateOnly PickUpDate { get; set; }
+        public UpdateOrderPickUpDate(int orderId, DateOnly pickUpDate)
         {
             OrderId = orderId;
+            PickUpDate = pickUpDate;
         }
     }
 }

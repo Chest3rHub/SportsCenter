@@ -7,7 +7,8 @@ using System.Threading.Tasks;
 namespace SportsCenter.Application.Orders.Queries.GetOrdersToProcess
 {
     public class OrdersToProcessDto
-    {     
+    {  
+        public int OrderId { get; set; }
         public string ProductName { get; set; }
         public int Quantity { get; set; }
         public decimal Cost { get; set; }

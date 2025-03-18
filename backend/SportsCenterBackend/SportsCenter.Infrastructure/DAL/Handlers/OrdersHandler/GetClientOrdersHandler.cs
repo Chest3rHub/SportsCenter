@@ -35,6 +35,7 @@ namespace SportsCenter.Infrastructure.DAL.Handlers.OrdersHandler
                 .Join(_dbContext.ZamowienieProdukts, z => z.ZamowienieId, zp => zp.ZamowienieId, (z, zp) => new { z, zp })
                 .Join(_dbContext.Produkts, joined => joined.zp.ProduktId, p => p.ProduktId, (joined, p) => new ClientOrdersDto
                 {
+                    OrderId = joined.z.ZamowienieId,
                     ProductName = p.Nazwa,
                     Quantity = joined.zp.Liczba,
                     Cost = joined.zp.Koszt,

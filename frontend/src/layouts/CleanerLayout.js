@@ -8,7 +8,14 @@ import refreshTokenRequest from '../api/refreshTokenRequest';
 
 export default function CleanerLayout() {
 
-  const {token, setToken} = useContext(SportsContext);
+  const {token, setToken, dictionary} = useContext(SportsContext);
+
+  const navbarItems = [
+    { label: dictionary.navbar.cleaner.newsLabel, navigate: '/news' },
+    { label: dictionary.navbar.cleaner.timetableLabel, navigate: '/timetable' },
+    { label: dictionary.navbar.cleaner.accountLabel, navigate: '/account' },
+    { label: dictionary.navbar.cleaner.logoutLabel, navigate: '/logout' },
+  ];
 
     useEffect(() => {
       const intervalId = setInterval(async () => {
@@ -28,11 +35,10 @@ export default function CleanerLayout() {
       return () => clearInterval(intervalId);
     }, []);
 
-    // dostosowac navbar dla pomocy sprzatajacej moze kazdy ma jeden taki sam z przyciskiem wyloguj np?
     // wedlug projektu pomoc sprzatajaca nie ma sidebara!! 
   return (
     <Box>
-        <Navbar />
+        <Navbar navbarItems={navbarItems}/>
       <main>
         <Outlet />
       </main>

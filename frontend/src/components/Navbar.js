@@ -4,7 +4,7 @@ import useDictionary from '../hooks/useDictionary';
 import { SportsContext } from '../context/SportsContext';
 import React, { useContext } from 'react';
 
-export default function Navbar() {
+export default function Navbar({navbarItems}) {
   const { dictionary, toggleLanguage } = useContext(SportsContext);
 
   return (
@@ -17,10 +17,11 @@ export default function Navbar() {
         marginBottom: '30px',
       }}
     >
-      <NavbarButton navigate="/news">AKTUALNOŚCI</NavbarButton>
-      <NavbarButton>GRAFIK ZAJĘĆ</NavbarButton>
-      <NavbarButton navigate="/login">LOGOWANIE</NavbarButton>
-      <NavbarButton navigate="/register">REJESTRACJA</NavbarButton>
+      {navbarItems.map((item) => (
+        <NavbarButton key={item.location} navigate={item.navigate}>
+          {item.label}
+        </NavbarButton>
+      ))}
 
       <button
         onClick={toggleLanguage}

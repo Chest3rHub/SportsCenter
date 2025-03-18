@@ -20,6 +20,13 @@ export default function ClientLayout() {
         { label: dictionary.sidebar.clientSidebar.accountLabel, navigate: '/account' },
       ];
 
+      const navbarItems = [
+        { label: dictionary.navbar.client.newsLabel, navigate: '/news' },
+        { label: dictionary.navbar.client.timetableLabel, navigate: '/timetable' },
+        { label: dictionary.navbar.client.accountLabel, navigate: '/account' },
+        { label: dictionary.navbar.client.logoutLabel, navigate: '/logout' },
+      ];
+
 
     useEffect(() => {
       const intervalId = setInterval(async () => {
@@ -43,7 +50,7 @@ export default function ClientLayout() {
     // wedlug projektu pomoc sprzatajaca nie ma sidebara!! 
   return (
     <Box>
-        <Navbar />
+        <Navbar navbarItems={navbarItems}/>
         <Sidebar menuItems={menuItems} />
       <main>
         <Outlet />

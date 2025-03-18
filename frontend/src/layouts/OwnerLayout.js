@@ -25,6 +25,12 @@ export default function OwnerLayout() {
     { label: dictionary.sidebar.ownerSidebar.newsLabel, navigate: '/news' },
   ];
 
+  const navbarItems = [
+    { label: dictionary.navbar.owner.newsLabel, navigate: '/news' },
+    { label: dictionary.navbar.owner.timetableLabel, navigate: '/timetable' },
+    { label: dictionary.navbar.owner.accountLabel, navigate: '/account' },
+    { label: dictionary.navbar.owner.logoutLabel, navigate: '/logout' },
+  ];
   
 
     useEffect(() => {
@@ -48,7 +54,7 @@ export default function OwnerLayout() {
     // dostosowac navbar dla ownera 
   return (
     <Box>
-        <Navbar />
+        <Navbar navbarItems={navbarItems} />
         <Sidebar menuItems={menuItems} />
       <main>
         <Outlet />

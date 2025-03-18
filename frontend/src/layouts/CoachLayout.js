@@ -17,6 +17,12 @@ export default function CoachLayout() {
       { label: dictionary.sidebar.coachSidebar.changePasswordLabel, navigate: '/change-password' },
       ];
 
+      const navbarItems = [
+        { label: dictionary.navbar.coach.newsLabel, navigate: '/news' },
+        { label: dictionary.navbar.coach.timetableLabel, navigate: '/timetable' },
+        { label: dictionary.navbar.coach.accountLabel, navigate: '/account' },
+        { label: dictionary.navbar.coach.logoutLabel, navigate: '/logout' },
+      ];
 
     useEffect(() => {
       const intervalId = setInterval(async () => {
@@ -39,7 +45,7 @@ export default function CoachLayout() {
     // dostosowac navbar dla trenera moze kazdy ma jeden taki sam z przyciskiem wyloguj np
   return (
     <Box>
-        <Navbar />
+        <Navbar navbarItems={navbarItems}/>
         <Sidebar menuItems={menuItems} />
       <main>
         <Outlet />

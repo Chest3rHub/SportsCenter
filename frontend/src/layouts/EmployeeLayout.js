@@ -21,6 +21,12 @@ export default function EmployeeLayout() {
     
   ];
 
+  const navbarItems = [
+    { label: dictionary.navbar.employee.newsLabel, navigate: '/news' },
+    { label: dictionary.navbar.employee.timetableLabel, navigate: '/timetable' },
+    { label: dictionary.navbar.employee.accountLabel, navigate: '/account' },
+    { label: dictionary.navbar.employee.logoutLabel, navigate: '/logout' },
+  ];
   
 
     useEffect(() => {
@@ -44,7 +50,7 @@ export default function EmployeeLayout() {
     // dostosowac navbar dla pracownika adm. moze kazdy ma jeden taki sam z przyciskiem wyloguj np? 
   return (
     <Box>
-        <Navbar />
+        <Navbar navbarItems={navbarItems}/>
         <Sidebar menuItems={menuItems} />
       <main>
         <Outlet />

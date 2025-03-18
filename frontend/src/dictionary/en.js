@@ -1,6 +1,42 @@
 export default {
     navbar: {
       changeLanguageLabel: 'PL',
+      anonymousUser: {
+        newsLabel: 'News',
+        timetableLabel: 'Timetable',
+        registerLabel: 'Register',
+        loginLabel: 'Login',
+      },
+      client: {
+        newsLabel: 'News',
+        timetableLabel: 'Timetable',
+        accountLabel: 'Account',
+        logoutLabel: 'Log out',
+      },
+      owner: {
+        newsLabel: 'News',
+        timetableLabel: 'Timetable',
+        accountLabel: 'Account',
+        logoutLabel: 'Log out',
+      },
+      employee: {
+        newsLabel: 'News',
+        timetableLabel: 'Timetable',
+        accountLabel: 'Account',
+        logoutLabel: 'Log out',
+      },
+      coach: {
+        newsLabel: 'News',
+        timetableLabel: 'Timetable',
+        accountLabel: 'Account',
+        logoutLabel: 'Log out',
+      },
+      cleaner: {
+        newsLabel: 'News',
+        timetableLabel: 'Timetable',
+        accountLabel: 'Account',
+        logoutLabel: 'Log out',
+      }
     },
     registerPage: {
       title: 'Register',

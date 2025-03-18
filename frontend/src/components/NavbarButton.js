@@ -21,6 +21,7 @@ export default function NavbarButton(props) {
                 cursor: 'pointer',
                 paddingTop:'8px',
                 paddingBottom:'4px',
+                minWidth:'11vw',
                 '&:hover': {
                     background: 'linear-gradient(to right, #FFE3B3, #0AB68B)',
                 },

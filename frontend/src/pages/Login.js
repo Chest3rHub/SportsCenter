@@ -4,11 +4,10 @@ import Header from "../components/Header";
 import GreenButton from "../components/GreenButton";
 import GreenBackground from "../components/GreenBackground";
 import OrangeBackground from "../components/OrangeBackground";
-import "../styles/auth.css";
 import { SportsContext } from "../context/SportsContext";
 import loginRequest from "../api/loginRequest";
 import CustomInput from "../components/CustomInput";
-import { Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import decodeJWT from "../utils/decodeJWT";
 
 function Login() {
@@ -124,8 +123,22 @@ function Login() {
               <GreenButton type="submit">
                 {dictionary.loginPage.signInLabel}
               </GreenButton>
-              <Link to="/reset-password" className="forgot-password">
-                {dictionary.loginPage.forgotPasswordLabel}
+              <Link to="/reset-password" style={{
+                textDecoration: 'none',
+              }}>
+              <Typography sx={{
+                display: 'block',
+                marginTop: '10px',
+                fontSize: '0.9rem',
+                color: 'black',
+                textDecorationColor: 'black !important', 
+                textAlign: 'center',
+                '&:hover':{
+                textDecoration: 'underline',
+                }
+              }}>
+                  {dictionary.loginPage.forgotPasswordLabel}
+              </Typography>
               </Link>
               </Box>
             </Box>

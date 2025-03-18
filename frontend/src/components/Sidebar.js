@@ -17,11 +17,12 @@ export default function Sidebar({ menuItems }) {
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-        gap: '0.5rem',
+        gap: '0.8rem',
         borderRadius: '10px',
         zIndex: 1,
-        paddingBottom: '1rem',
-        minHeight: "80vh"
+        paddingBottom: '0.3rem',
+        minHeight: "80vh",
+        marginTop:'1rem',
       }}
     >
       {menuItems.map((item, index) => (
@@ -31,7 +32,7 @@ export default function Sidebar({ menuItems }) {
             color: '#47C8A4',
             fontSize: '1.2rem',
             cursor: 'pointer',
-            padding: '5px',
+            
             textAlign: 'center',
             width: '100%',
             position: 'relative',

@@ -4,7 +4,6 @@ import Header from '../components/Header';
 import GreenButton from '../components/GreenButton';
 import GreenBackground from '../components/GreenBackground';
 import OrangeBackground from '../components/OrangeBackground';
-import '../styles/auth.css';
 import { SportsContext } from '../context/SportsContext';
 import registerRequest from '../api/registerRequest';
 import CustomInput from '../components/CustomInput';

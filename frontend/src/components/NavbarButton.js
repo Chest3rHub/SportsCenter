@@ -1,13 +1,32 @@
-import '../styles/navbar.css';
-import React from 'react';
+import { Button } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
-export default function NavbarButton(props){
+export default function NavbarButton(props) {
     const navigate = useNavigate();
 
-  const handleClick = () => {
-    navigate(props.navigate);
-  };
+    const handleClick = () => {
+        navigate(props.navigate);
+    };
+
     return (
-    <button className="nav-button" onClick={handleClick}>{props.children}</button>);
+        <Button
+            onClick={handleClick}
+            sx={{
+                background: 'linear-gradient(to right, #0AB68B, #FFE3B3)',
+                border: '1px solid #2D7E5C',
+                borderRadius: '30px',
+                padding: '0 20px',
+                fontSize: '1rem',
+                color:'black',
+                cursor: 'pointer',
+                paddingTop:'8px',
+                paddingBottom:'4px',
+                '&:hover': {
+                    background: 'linear-gradient(to right, #FFE3B3, #0AB68B)',
+                },
+            }}
+        >
+            {props.children}
+        </Button>
+    );
 }

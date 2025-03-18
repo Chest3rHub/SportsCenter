@@ -28,6 +28,7 @@ namespace SportsCenter.Infrastructure.DAL.Handlers.NewsHandlers
                 .Where(news =>  DateOnly.FromDateTime(news.WazneDo.Value) >= today)
                 .Select(news => new NewsDto
                 {
+                    Id = news.AktualnosciId,
                     Title = news.Nazwa,
                     Content = news.Opis,
                     ValidFrom = news.WazneOd,

@@ -120,11 +120,11 @@ namespace SportsCenter.Api.Controllers
             }
             catch (NotEnoughProductInStockException ex)
             {
-                return NotFound(new { Message = ex.Message });
+                return BadRequest(new { Message = ex.Message });
             }
             catch (NoAvaliableEmployeeException ex)
             {
-                return NotFound(new { Message = ex.Message });
+                return BadRequest(new { Message = ex.Message });
             }
             catch (Exception ex)
             {
@@ -142,11 +142,11 @@ namespace SportsCenter.Api.Controllers
 
         [Authorize(Roles = "Klient")]
         [HttpDelete("remove-cart-product")]
-        public async Task<IActionResult> RemoveCartProduct([FromQuery] int productId)
+        public async Task<IActionResult> RemoveCartProduct([FromBody] RemoveCartProduct query)
         {
             try
             {
-                await Mediator.Send(new RemoveCartProduct(productId));
+                await Mediator.Send(new RemoveCartProduct(query.ProductId, query.Quantity));
                 return Ok("Product removed from cart successfully");
             }
             catch (NoActiveOrdersForCLientException ex)
@@ -155,7 +155,11 @@ namespace SportsCenter.Api.Controllers
             }
             catch (NoOrderedProductsException ex)
             {
-                return NotFound(new { Message = ex.Message });
+                return BadRequest(new { Message = ex.Message });
+            }
+            catch (NotEnoughProductInStockException ex)
+            {
+                return BadRequest(new { Message = ex.Message });
             }
             catch (Exception ex)
             {

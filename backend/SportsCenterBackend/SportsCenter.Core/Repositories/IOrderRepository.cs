@@ -16,7 +16,8 @@ namespace SportsCenter.Core.Repositories
         Task UpdateOrderProductAsync(ZamowienieProdukt orderProduct, CancellationToken cancellationToken);
         Task AddOrderProductAsync(ZamowienieProdukt orderProduct, CancellationToken cancellationToken);
         Task RemoveOrderProductAsync(ZamowienieProdukt orderProduct, CancellationToken cancellationToken);
-        Task<decimal> GetTotalOrderCostAsync(int orderId, decimal discount, CancellationToken cancellationToken);
+        Task<int> RemoveOrderProductAsync(ZamowienieProdukt orderProduct, int quantity, CancellationToken cancellationToken);
+        Task<decimal> GetTotalOrderCostAsync(int orderId, CancellationToken cancellationToken);
         Task RemoveOrderAsync(Zamowienie order, CancellationToken cancellationToken);
         Task<List<ZamowienieProdukt>> GetOrderProductsAsync(int orderId, CancellationToken cancellationToken);
         Task<IEnumerable<Zamowienie>> GetOrdersByEmployeeIdAsync(int employeeId, CancellationToken cancellationToken);

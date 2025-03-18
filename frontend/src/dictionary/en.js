@@ -127,5 +127,17 @@ export default {
       contentError: 'The description cannot exceed 4000 characters',
       validFromError: '',
       validUntilError: '',
+    },
+    editNewsPage: {
+      newsLabel: 'Edit news',
+      titleLabel: 'Title',
+      contentLabel: 'Content',
+      validFromLabel: 'Valid from',
+      validUntilLabel: 'Valid until',
+      saveLabel: 'Save',
+      titleError: 'The title can have a maximum of 20 characters',
+      contentError: 'The description cannot exceed 4000 characters',
+      validFromError: '',
+      validUntilError: '',
     }
   };

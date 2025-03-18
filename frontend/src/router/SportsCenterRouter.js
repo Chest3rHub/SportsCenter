@@ -17,6 +17,7 @@ import ClientLayout from "../layouts/ClientLayout";
 import News from "../pages/News";
 import AddNews from "../pages/AddNews";
 import Logout from "../pages/Logout";
+import EditNews from "../pages/EditNews";
 
 // pozmieniac dla klienta na komponenty trasy itd
 
@@ -36,10 +37,6 @@ const clientRouter = [
             {
                 path: "/news",
                 element: <News />,
-            },
-            {
-                path: "/add-news",
-                element: <AddNews />,
             },
             {
                 path: "/error",  
@@ -80,6 +77,10 @@ const clientRouter = [
                     element: <AddNews />,
                 },
                 {
+                    path: "/edit-news",
+                    element: <EditNews />,
+                },
+                {
                     path: "/error",  
                     element: <Error />,
                 },
@@ -114,10 +115,6 @@ const clientRouter = [
                     element: <News />,
                 },
                 {
-                    path: "/add-news",
-                    element: <AddNews />,
-                },
-                {
                     path: "/error",  
                     element: <Error />,
                 },
@@ -150,10 +147,6 @@ const clientRouter = [
                 {
                     path: "/news",
                     element: <News />,
-                },
-                {
-                    path: "/add-news",
-                    element: <AddNews />,
                 },
                 {
                     path: "/error",  
@@ -194,6 +187,10 @@ const clientRouter = [
                     element: <AddNews />,
                 },
                 {
+                    path: "/edit-news",
+                    element: <EditNews />,
+                },
+                {
                     path: "/error",  
                     element: <Error />,
                 },
@@ -231,10 +228,6 @@ const clientRouter = [
                 {
                     path: "/news",
                     element: <News />,
-                },
-                {
-                    path: "/add-news",
-                    element: <AddNews />,
                 },
                 {
                     path: "/error",  

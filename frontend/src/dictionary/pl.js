@@ -127,5 +127,17 @@ export default {
       contentError: 'Opis nie może przekraczać 4000 znaków',
       validFromError: '',
       validUntilError: '',
+    },
+    editNewsPage: {
+      newsLabel: 'Edytuj aktualność',
+      titleLabel: 'Nazwa',
+      contentLabel: 'Opis',
+      validFromLabel: 'Ważne od',
+      validUntilLabel: 'Ważne do',
+      saveLabel: 'Zapisz',
+      titleError: 'Tytuł może mieć maksymalnie 20 znaków',
+      contentError: 'Opis nie może przekraczać 4000 znaków',
+      validFromError: '',
+      validUntilError: '',
     }
   };

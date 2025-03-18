@@ -4,9 +4,11 @@ import { SportsContext } from "../context/SportsContext";
 import { useContext, useState } from "react";
 import NewsButton from "./NewsButton";
 import removeNews from "../api/removeNews";
+import { useNavigate } from "react-router-dom";
 
 export default function SingleNews({ oneNewsDetails, onNewsDeleted }) {
     const {role, dictionary, token} = useContext(SportsContext);
+    const navigate = useNavigate();
 
     // te stany sa do walidacji, moze pozniej dodac jesli nie uda sie request?
 
@@ -33,6 +35,12 @@ export default function SingleNews({ oneNewsDetails, onNewsDeleted }) {
           //  setLoading(false); 
         }
     };
+
+    const handleEdit = (oneNewsDetails) => {
+        navigate('/edit-news', {
+          state: { oneNewsDetails }  
+        });
+      };
 
     return (
         <OrangeBackground 
@@ -73,7 +81,7 @@ export default function SingleNews({ oneNewsDetails, onNewsDeleted }) {
             }}>
                 <NewsButton backgroundColor={"#8edfb4"} onClick={() => console.log("click")}>{dictionary.newsPage.showLabel}</NewsButton>
                 { (role ==="Wlasciciel" || role ==="Pracownik administracyjny") &&
-                 <NewsButton backgroundColor={"#f0aa4f"} onClick={() => console.log("click")}>{dictionary.newsPage.editLabel}</NewsButton>}
+                 <NewsButton backgroundColor={"#f0aa4f"} onClick={() => handleEdit(oneNewsDetails)}>{dictionary.newsPage.editLabel}</NewsButton>}
                 { (role ==="Wlasciciel" || role ==="Pracownik administracyjny") &&
                  <NewsButton backgroundColor={"#F46C63"} onClick={() => handleDelete(oneNewsDetails.id)}>{dictionary.newsPage.removeLabel}</NewsButton>}
 

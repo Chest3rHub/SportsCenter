@@ -73,6 +73,17 @@ export default function EditNews() {
         } else {
             setContentError(false);
         }
+        const validFromDate = new Date(formData.validFrom);
+        const validUntilDate = new Date(formData.validUntil);
+
+        if (validFromDate >= validUntilDate) {
+            isValid = false;
+            setValidFromError(true);
+            setValidUntilError(true);
+        } else {
+            setValidFromError(false);
+            setValidUntilError(false);
+        }
 
         return isValid;
     };

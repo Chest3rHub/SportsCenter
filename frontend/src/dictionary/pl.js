@@ -84,8 +84,10 @@ export default {
         timetableLabel: 'Grafik',
         todoLabel: 'Do zrobienia',
         changePasswordLabel: 'Zmiana hasła',
-        trainingsLabel: 'Zajęcia',
         reservationsLabel: 'Rezerwacje',
+        trainingsLabel: 'Zajęcia',
+        productsLabel: 'Produkty',
+        newsLabel: 'Aktualności',
       },
       ownerSidebar: {
         employeesLabel: 'Pracownicy',

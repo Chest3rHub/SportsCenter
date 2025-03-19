@@ -16,8 +16,10 @@ export default function EmployeeLayout() {
     { label: dictionary.sidebar.employeeSidebar.timetableLabel, navigate: '/timetable' },
     { label: dictionary.sidebar.employeeSidebar.todoLabel, navigate: '/todo' },
     { label: dictionary.sidebar.employeeSidebar.changePasswordLabel, navigate: '/change-password' },
-    { label: dictionary.sidebar.employeeSidebar.trainingsLabel, navigate: '/trainings' },
     { label: dictionary.sidebar.employeeSidebar.reservationsLabel, navigate: '/reservations' },
+    { label: dictionary.sidebar.employeeSidebar.trainingsLabel, navigate: '/trainings' },
+    { label: dictionary.sidebar.employeeSidebar.productsLabel, navigate: '/products'},
+    { label: dictionary.sidebar.employeeSidebar.newsLabel, navigate: '/news' },
     
   ];
 

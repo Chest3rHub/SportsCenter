@@ -153,5 +153,8 @@ export default {
       failureLabel: 'Błąd!',
       savedFailureLabel: 'Nie udało się zapisać zmian!',
       clickAnywhereFailureLabel: 'Kliknij w dowolne miejsce ekranu.',
+    },
+    newsDetailsPage: {
+      returnLabel: 'Wróć',
     }
   };

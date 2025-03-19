@@ -41,6 +41,11 @@ export default function SingleNews({ oneNewsDetails, onNewsDeleted }) {
           state: { oneNewsDetails }  
         });
       };
+      const handleShow = (id) => {
+        navigate(`/news/${id}`, {
+          state: { oneNewsDetails }  
+        });
+    };
 
     return (
         <OrangeBackground 
@@ -79,7 +84,7 @@ export default function SingleNews({ oneNewsDetails, onNewsDeleted }) {
                 display: "flex",       
                 gap: "1vw", 
             }}>
-                <NewsButton backgroundColor={"#8edfb4"} onClick={() => console.log("click")}>{dictionary.newsPage.showLabel}</NewsButton>
+                <NewsButton backgroundColor={"#8edfb4"} onClick={() => handleShow(oneNewsDetails.id)}>{dictionary.newsPage.showLabel}</NewsButton>
                 { (role ==="Wlasciciel" || role ==="Pracownik administracyjny") &&
                  <NewsButton backgroundColor={"#f0aa4f"} onClick={() => handleEdit(oneNewsDetails)}>{dictionary.newsPage.editLabel}</NewsButton>}
                 { (role ==="Wlasciciel" || role ==="Pracownik administracyjny") &&

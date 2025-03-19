@@ -153,5 +153,8 @@ export default {
       failureLabel: 'Error!',
       savedFailureLabel: 'Failed to save changes!',
       clickAnywhereFailureLabel: 'Click anywhere on the screen.',
+    },
+    newsDetailsPage: {
+      returnLabel: 'Back',
     }
   };

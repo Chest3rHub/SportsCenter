@@ -78,6 +78,22 @@ function AddNews() {
       setValidUntilError(false);
     }
 
+    if (validFromDate >= validUntilDate) {
+      isValid = false;
+      setValidFromError(true);
+      setValidUntilError(true);
+  } else {
+      setValidFromError(false);
+      setValidUntilError(false);
+  }
+
+  if(!formData.validFrom){
+      isValid = false;
+      setValidFromError(true);
+  } else {
+      setValidFromError(false);
+  }
+
     return isValid;
   };
 

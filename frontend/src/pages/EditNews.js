@@ -76,6 +76,7 @@ export default function EditNews() {
         const validFromDate = new Date(formData.validFrom);
         const validUntilDate = new Date(formData.validUntil);
 
+    
         if (validFromDate >= validUntilDate) {
             isValid = false;
             setValidFromError(true);
@@ -85,13 +86,21 @@ export default function EditNews() {
             setValidUntilError(false);
         }
 
+        if(!formData.validFrom){
+            isValid = false;
+            setValidFromError(true);
+        } else {
+            setValidFromError(false);
+        }
+
         return isValid;
     };
 
     function handleError(textToDisplay) {
-        navigate('/error', {
-            state: { message: textToDisplay }
-        });
+        // navigate('/error', {
+        //     state: { message: textToDisplay }
+        // });
+        handleOpenFailure();
     }
 
     const navigate = useNavigate();
@@ -118,7 +127,7 @@ export default function EditNews() {
             if (!response.ok) {
                 const errorData = await response.json();
                 console.log(errorData);
-                handleError('Blad edytowania aktualności... sprawdz konsole');
+                //handleError('Blad edytowania aktualności... sprawdz konsole');
                 
                 handleOpenFailure();
             } else {

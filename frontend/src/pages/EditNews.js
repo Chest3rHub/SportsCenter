@@ -86,7 +86,7 @@ export default function EditNews() {
             setValidUntilError(false);
         }
 
-        if(!formData.validFrom){
+        if(!formData.validFrom || validFromDate >= validUntilDate){
             isValid = false;
             setValidFromError(true);
         } else {

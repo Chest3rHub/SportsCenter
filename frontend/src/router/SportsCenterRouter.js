@@ -19,6 +19,7 @@ import AddNews from "../pages/AddNews";
 import Logout from "../pages/Logout";
 import EditNews from "../pages/EditNews";
 import NewsDetails from "../pages/NewsDetails";
+import ChangePassword from "../pages/ChangePassword";
 
 // pozmieniac dla klienta na komponenty trasy itd
 
@@ -50,6 +51,10 @@ const clientRouter = [
             {
                 path: "/logout",  
                 element: <Logout />,
+            },
+            {
+                path: "/change-password",
+                element: <ChangePassword />,
             },
             {
                 path: "*",
@@ -98,6 +103,10 @@ const clientRouter = [
                     element: <Logout />,
                 },
                 {
+                    path: "/change-password",
+                    element: <ChangePassword />,
+                },
+                {
                     path: "*",
                     element: <NotFound />,
                 }
@@ -136,6 +145,10 @@ const clientRouter = [
                     element: <Logout />,
                 },
                 {
+                    path: "/change-password",
+                    element: <ChangePassword />,
+                },
+                {
                     path: "*",
                     element: <NotFound />,
                 }
@@ -172,6 +185,10 @@ const clientRouter = [
                 {
                     path: "/logout",  
                     element: <Logout />,
+                },
+                {
+                    path: "/change-password",
+                    element: <ChangePassword />,
                 },
                 {
                     path: "*",
@@ -218,6 +235,10 @@ const clientRouter = [
                 {
                     path: "/logout",  
                     element: <Logout />,
+                },
+                {
+                    path: "/change-password",
+                    element: <ChangePassword />,
                 },
                 {
                     path: "*",

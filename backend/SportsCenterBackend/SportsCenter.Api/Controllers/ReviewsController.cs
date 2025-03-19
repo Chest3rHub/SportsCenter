@@ -31,13 +31,13 @@ namespace SportsCenter.Api.Controllers
                 await Mediator.Send(addReview);
                 return Ok(new { Message = "Review added successfully" });
             }
-            catch (ReviewTimeExceededException)
+            catch (ReviewTimeExceededException ex)
             {
-                return BadRequest("the time for submitting a rating has passed.");
+                return BadRequest(new { message = ex.Message });
             }
-            catch (ReviewAlreadyExistException)
+            catch (ReviewAlreadyExistException ex)
             {               
-                return BadRequest("The clien has already has already rated this activity.");
+                return BadRequest(new { message = ex.Message });
             }
             catch (Exception ex)
             {

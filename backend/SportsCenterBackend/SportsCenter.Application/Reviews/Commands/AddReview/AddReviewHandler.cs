@@ -16,11 +16,13 @@ namespace SportsCenter.Application.Reviews.Commands.AddReview
     internal sealed class AddReviewHandler : IRequestHandler<AddReview, Unit>
     {
         private readonly IReviewRepository _reviewRepository;
+        private readonly ISportActivityRepository _sportActivityRepository;
         private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public AddReviewHandler(IReviewRepository reviewRepository, IHttpContextAccessor httpContextAccessor)
+        public AddReviewHandler(IReviewRepository reviewRepository, ISportActivityRepository sportActivityRepository, IHttpContextAccessor httpContextAccessor)
         {
             _reviewRepository = reviewRepository;
+            _sportActivityRepository = sportActivityRepository;
             _httpContextAccessor = httpContextAccessor;
         }
 
@@ -43,7 +45,12 @@ namespace SportsCenter.Application.Reviews.Commands.AddReview
                 throw new UnauthorizedAccessException("Only customers can make reservations.");
             }
 
-            var reviewStatus = await _reviewRepository.CanUserReviewAsync(request.ActivityId, clientId, cancellationToken);
+
+            var hasReviewed = await _reviewRepository.HasUserAlreadyReviewedAsync(request.InstanceOfActivityId, clientId, cancellationToken);
+            if (hasReviewed)
+                throw new ReviewAlreadyExistException(clientId, request.InstanceOfActivityId);
+
+            var reviewStatus = await _reviewRepository.CanUserReviewAsync(request.InstanceOfActivityId, clientId, cancellationToken);
 
             if (reviewStatus.Equals(ReviewStatus.ReviewPeriodExpired))
             {
@@ -52,16 +59,14 @@ namespace SportsCenter.Application.Reviews.Commands.AddReview
 
             if (reviewStatus.Equals(ReviewStatus.NotSignedUp))
             {
-                throw new ClientNotSignedUpForActivityException(clientId, request.ActivityId);
+                throw new ClientNotSignedUpForActivityException(clientId, request.InstanceOfActivityId);
             }
 
-            var hasReviewed = await _reviewRepository.HasUserAlreadyReviewedAsync(request.ActivityId, clientId, cancellationToken);
-            if (hasReviewed)
-                throw new ReviewAlreadyExistException(clientId, request.ActivityId);
+            var instanceOfSportActivityClient = await _sportActivityRepository.GetInstanceOfActivityClientAsync(request.InstanceOfActivityId, cancellationToken);
 
             var ocena = new Ocena
             {
-                GrafikZajecKlientId = request.ActivityId,
+                InstancjaZajecKlientId = instanceOfSportActivityClient.InstancjaZajecKlientId,
                 Opis = request.Description,
                 Gwiazdki = request.Stars,
                 DataWystawienia = DateOnly.FromDateTime(DateTime.UtcNow)

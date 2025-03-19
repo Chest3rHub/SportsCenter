@@ -41,7 +41,13 @@ namespace SportsCenter.Infrastructure.DAL.Handlers.ReservationsHandlers
                       Cost = r.Koszt,
                       IsReservationPaid = r.CzyOplacona.HasValue
                         ? (r.CzyOplacona.Value ? "Tak" : "Nie")
-                        : "Nie"
+                        : "Nie",
+                      IsReservationCanceled = r.CzyOdwolana.HasValue 
+                        ? (r.CzyOdwolana.Value ? "Tak" : "Nie")
+                        : "Nie",
+                      IsMoneyRefunded = r.CzyZwroconoPieniadze.HasValue
+                        ? (r.CzyZwroconoPieniadze.Value ? "Tak" : "Nie")
+                        : "Nie",
                   })
                   .ToListAsync(cancellationToken);
 

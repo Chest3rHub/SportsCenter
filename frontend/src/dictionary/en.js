@@ -143,5 +143,8 @@ export default {
       successLabel:'Success!',
       savedSuccessLabel: 'Changes saved successfully!',
       clickAnywhereLabel:'Click anywhere on the screen.',
+      failureLabel: 'Error!',
+      savedFailureLabel: 'Failed to save changes!',
+      clickAnywhereFailureLabel: 'Click anywhere on the screen.',
     }
   };

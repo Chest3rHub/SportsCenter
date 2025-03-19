@@ -12,6 +12,7 @@ import parseStringToDate from '../utils/parseStringToDate';
 import NewsButton from '../components/NewsButton';
 import Backdrop from '@mui/material/Backdrop';
 import SentimentSatisfiedIcon from '@mui/icons-material/SentimentSatisfied';
+import SentimentDissatisfiedIcon from '@mui/icons-material/SentimentDissatisfied';
 
 export default function EditNews() {
 
@@ -37,13 +38,21 @@ export default function EditNews() {
 
     const [validUntilError, setValidUntilError] = useState(false);
 
-    const [open, setOpen] = React.useState(false);
+    const [openSuccessBackdrop, setOpenSuccessBackdrop] = React.useState(false);
+    const [openFailureBackdrop, setOpenFailureBackdrop] = React.useState(false);
 
-    const handleClose = () => {
-        setOpen(false);
+
+    const handleCloseSuccess = () => {
+        setOpenSuccessBackdrop(false);
     };
-    const handleOpen = () => {
-        setOpen(true);
+    const handleCloseFailure = () => {
+        setOpenFailureBackdrop(false);
+    };
+    const handleOpenSuccess = () => {
+        setOpenSuccessBackdrop(true);
+    };
+    const handleOpenFailure = () => {
+        setOpenFailureBackdrop(true);
     };
 
     const validateForm = () => {
@@ -99,13 +108,17 @@ export default function EditNews() {
                 const errorData = await response.json();
                 console.log(errorData);
                 handleError('Blad edytowania aktualności... sprawdz konsole');
+                
+                handleOpenFailure();
             } else {
                 // navigate('/add-news');
-                handleOpen();
+                handleOpenSuccess();
             }
 
         } catch (error) {
             console.error('Błąd edytowania aktualności:', error);
+            handleOpenFailure();
+
         }
     };
     function handleCancel() {
@@ -190,8 +203,8 @@ export default function EditNews() {
 
                         <Backdrop
                             sx={(theme) => ({ color: '#fff', zIndex: theme.zIndex.drawer + 1 })}
-                            open={open}
-                            onClick={handleClose}
+                            open={openSuccessBackdrop}
+                            onClick={handleCloseSuccess}
                         >
                             <Box sx={{
                                 backgroundColor: "white",
@@ -232,6 +245,54 @@ export default function EditNews() {
                                 <Box sx={{ textAlign: 'center', display: "flex", justifyContent: "center" }}>
                                 <Avatar sx={{ width: "7rem", height: "7rem" }}>
                                     <SentimentSatisfiedIcon sx={{ fontSize: "7rem", color: 'green', stroke: "white", strokeWidth: 1.1, backgroundColor: "white" }} />
+                                </Avatar>
+                            </Box>
+                            </Box>
+                        </Backdrop>
+                        <Backdrop
+                            sx={(theme) => ({ color: '#fff', zIndex: theme.zIndex.drawer + 1 })}
+                            open={openFailureBackdrop}
+                            onClick={handleCloseFailure}
+                        >
+                            <Box sx={{
+                                backgroundColor: "white",
+                                margin: 'auto',
+                                minWidth: '30vw',
+                                minHeight:'30vh',
+                                borderRadius: '20px',
+                                boxShadow: '0 10px 20px rgba(0, 0, 0, 0.2)',
+                                
+                            }}>
+                                <Box>
+                                <Typography sx={{
+                                    color: 'red',
+                                    fontWeight:'Bold',
+                                    fontSize: '3rem',
+                                    marginTop:'2vh',
+
+                                }}>
+                                    {dictionary.editNewsPage.failureLabel}
+                                </Typography>
+                                </Box>
+                                <Box>
+                                <Typography sx={{
+                                    color: 'black',
+                                    fontSize:'1.5rem',
+                                }}>
+                                    {dictionary.editNewsPage.savedFailureLabel}
+                                </Typography>
+                                </Box>
+                                <Box>
+                                <Typography sx={{
+                                    color: 'black',
+                                    fontSize:'1.5rem',
+                                }}>
+                                  {dictionary.editNewsPage.clickAnywhereFailureLabel}
+                                </Typography>
+                                </Box>
+                                <Box sx={{ textAlign: 'center', display: "flex", justifyContent: "center" }}>
+                                <Avatar sx={{ width: "7rem", height: "7rem" }}>
+                                    <SentimentDissatisfiedIcon sx={{ fontSize: "7rem", color: 'red', stroke: "white", strokeWidth: 1.1, backgroundColor: "white" }} />
                                 </Avatar>
                             </Box>
                             </Box>

@@ -10,8 +10,8 @@ namespace SportsCenter.Core.Repositories
 {
     public interface IReviewRepository
     {
-        Task AddReviewAsync(Ocena ocena, CancellationToken cancellationToken);
-        Task<ReviewStatus> CanUserReviewAsync(int zajeciaId, int klientId, CancellationToken cancellationToken);
+        Task AddReviewAsync(Ocena review, CancellationToken cancellationToken);
+        Task<ReviewStatus> CanUserReviewAsync(int instanceOfActivityId, int clientId, CancellationToken cancellationToken);
         Task<bool> HasUserAlreadyReviewedAsync(int scheduleActivitiesClientId, int clientId, CancellationToken cancellationToken);
     }
 }

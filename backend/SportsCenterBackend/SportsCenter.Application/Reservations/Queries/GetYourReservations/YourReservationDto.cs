@@ -15,5 +15,7 @@ namespace SportsCenter.Application.Reservations.Queries.GetYourReservations
         public bool IsEquipmentReserved { get; set; }
         public decimal Cost { get; set; }
         public string IsReservationPaid { get; set; }
+        public string IsReservationCanceled { get; set; }
+        public string IsMoneyRefunded { get; set; }
     }
 }

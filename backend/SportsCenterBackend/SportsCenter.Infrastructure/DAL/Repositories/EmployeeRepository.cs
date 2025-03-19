@@ -395,12 +395,6 @@ namespace SportsCenter.Infrastructure.DAL.Repositories
 
             decimal cost = reservation.Koszt;
 
-            decimal discount = client.ZnizkaNaZajecia ?? 0m;
-            if (discount > 0)
-            {
-                cost *= (1 - discount / 100m);
-            }
-
             if (client.Saldo < cost)
                 return PaymentResultEnum.InsufficientFunds;
 

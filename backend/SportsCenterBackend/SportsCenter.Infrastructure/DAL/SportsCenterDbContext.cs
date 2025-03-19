@@ -306,11 +306,11 @@ public partial class SportsCenterDbContext : DbContext
             entity.ToTable("Ocena");
 
             entity.Property(e => e.OcenaId).HasColumnName("OcenaID");
-            entity.Property(e => e.GrafikZajecKlientId).HasColumnName("InstancjaZajecKlientID").IsRequired(false); ;
+            entity.Property(e => e.InstancjaZajecKlientId).HasColumnName("InstancjaZajecKlientID").IsRequired(false); ;
             entity.Property(e => e.Opis).HasMaxLength(255);
 
             entity.HasOne(d => d.InstancjaZajecKlient).WithMany(p => p.Ocenas)
-                .HasForeignKey(d => d.GrafikZajecKlientId)
+                .HasForeignKey(d => d.InstancjaZajecKlientId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("Ocena_InstancjaZajec_Klient");
         });

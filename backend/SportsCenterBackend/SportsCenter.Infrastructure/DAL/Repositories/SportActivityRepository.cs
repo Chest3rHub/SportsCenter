@@ -207,4 +207,10 @@ public class SportActivityRepository : ISportActivityRepository
 
         return instance;
     }
+    public async Task<InstancjaZajecKlient> GetInstanceOfActivityClientAsync(int instanceOfActivityId, CancellationToken cancellationToken)
+    {
+        return await _dbContext.InstancjaZajecKlients
+            .Where(gzk => gzk.InstancjaZajecId == instanceOfActivityId)
+            .FirstOrDefaultAsync(cancellationToken);
+    }
 }

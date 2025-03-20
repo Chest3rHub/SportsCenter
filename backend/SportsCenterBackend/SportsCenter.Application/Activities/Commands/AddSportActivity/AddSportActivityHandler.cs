@@ -36,7 +36,7 @@ internal class AddSportActivityHandler : IRequestHandler<AddSportActivity, Unit>
         //TO DO rozwiazac problem z godzina by nie trzeba bylo podawac tez sekund
         //a jedynie samo HH:MM
         var startHour = request.StartHour;
-        var fullStartHour = startHour.ToString() + ":00";
+        var fullStartHour = startHour.ToString("HH:mm") + ":00";
         var startTimeSpan = TimeSpan.Parse(fullStartHour);
 
         var endHour = startHour.Add(TimeSpan.FromMinutes(request.DurationInMinutes));

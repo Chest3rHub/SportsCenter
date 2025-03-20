@@ -60,21 +60,9 @@ namespace SportsCenter.Infrastructure.DAL.Handlers.SportActivitiesHandler
                         CostWithoutEquipment = 0,
                         CostWithEquipment = 0,
                         isCanleced = isCanceled
-                    });
-
-                    if (existingInstance == null)
-                    {
-                        _dbContext.InstancjaZajecs.Add(new InstancjaZajec
-                        {
-                            GrafikZajecId = activity.GrafikZajecId,
-                            Data = activityDate,
-                            CzyOdwolane = false
-                        });
-                    }
+                    });              
                 }
             }
-
-            await _dbContext.SaveChangesAsync(cancellationToken);
             return result;
         }
         private int DzienTygodniaNaNumer(string dzien)

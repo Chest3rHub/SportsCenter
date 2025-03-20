@@ -16,7 +16,7 @@ namespace SportsCenter.Api.Controllers
         {
         }
 
-        
+        [AllowAnonymous]
         [HttpGet("Get-news")]
         public async Task<IActionResult> GetNewsAsync()
         {

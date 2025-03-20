@@ -13,6 +13,7 @@ namespace SportsCenter.Application.News.Commands.AddNews
         {
             RuleFor(x => x.ValidFrom)
                .LessThan(x => x.ValidUntil)
+               .When(x => x.ValidUntil.HasValue)
                .WithMessage("The 'Valid From' date must be earlier than the 'Valid Until' date.");
         }
     }

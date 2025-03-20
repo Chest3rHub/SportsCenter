@@ -26,6 +26,7 @@ internal class GetScheduleInfoHandler : IRequestHandler<GetScheduleInfo, List<Sc
 
         bool isAdminRole = userRole == "Wlasciciel" || userRole == "Pracownik administracyjny";
         bool isTrainerRole = userRole == "Trener";
+        bool isBasicRole = userRole == "Klient" || userRole == "Pomoc sprzatajaca" || string.IsNullOrEmpty(userRole);
 
         DateOnly today = DateOnly.FromDateTime(DateTime.UtcNow);
         DateOnly startOfWeek = today.AddDays(-(int)today.DayOfWeek + 1).AddDays(request.WeekOffset * 7);
@@ -56,15 +57,15 @@ internal class GetScheduleInfoHandler : IRequestHandler<GetScheduleInfo, List<Sc
         var scheduleInfoDtos = new List<ScheduleInfoBaseDto>();
 
         var dayOfWeekMap = new Dictionary<string, DayOfWeek>
-    {
-        { "poniedzialek", DayOfWeek.Monday },
-        { "wtorek", DayOfWeek.Tuesday },
-        { "sroda", DayOfWeek.Wednesday },
-        { "czwartek", DayOfWeek.Thursday },
-        { "piatek", DayOfWeek.Friday },
-        { "sobota", DayOfWeek.Saturday },
-        { "niedziela", DayOfWeek.Sunday }
-    };
+        {
+            { "poniedzialek", DayOfWeek.Monday },
+            { "wtorek", DayOfWeek.Tuesday },
+            { "sroda", DayOfWeek.Wednesday },
+            { "czwartek", DayOfWeek.Thursday },
+            { "piatek", DayOfWeek.Friday },
+            { "sobota", DayOfWeek.Saturday },
+            { "niedziela", DayOfWeek.Sunday }
+        };
       
         foreach (var reservation in reservations)
         {
@@ -75,6 +76,7 @@ internal class GetScheduleInfoHandler : IRequestHandler<GetScheduleInfo, List<Sc
                 dto = new ScheduleInfoAdminDto
                 {
                     Type = "Admin",
+                    Description = "Rezerwacja",
                     Date = reservation.DataOd,
                     StartTime = reservation.DataOd.TimeOfDay,
                     EndTime = reservation.DataDo.TimeOfDay,
@@ -82,9 +84,9 @@ internal class GetScheduleInfoHandler : IRequestHandler<GetScheduleInfo, List<Sc
                     TrainerName = reservation.Trener?.PracownikNavigation != null
                         ? $"{reservation.Trener.PracownikNavigation.Imie} {reservation.Trener.PracownikNavigation.Nazwisko}"
                         : "Brak trenera",
-                    Participants = new List<string> { $"{reservation.Klient.KlientNavigation.Imie} {reservation.Klient.KlientNavigation.Nazwisko}" },
                     Cost = reservation.Koszt,
-                    Discount = reservation.Klient?.ZnizkaNaZajecia ?? 0
+                    Discount = reservation.Klient?.ZnizkaNaZajecia ?? 0,
+                    Participants = new List<string> { $"{reservation.Klient.KlientNavigation.Imie} {reservation.Klient.KlientNavigation.Nazwisko}" }
                 };
             }
             else if (isTrainerRole)
@@ -92,6 +94,7 @@ internal class GetScheduleInfoHandler : IRequestHandler<GetScheduleInfo, List<Sc
                 dto = new ScheduleInfoTrainerDto
                 {
                     Type = "Trainer",
+                    Description = "Rezerwacja",
                     Date = reservation.DataOd,
                     StartTime = reservation.DataOd.TimeOfDay,
                     EndTime = reservation.DataDo.TimeOfDay,
@@ -107,6 +110,7 @@ internal class GetScheduleInfoHandler : IRequestHandler<GetScheduleInfo, List<Sc
                 dto = new ScheduleInfoBasicDto
                 {
                     Type = "Basic",
+                    Description = "Rezerwacja",
                     Date = reservation.DataOd,
                     StartTime = reservation.DataOd.TimeOfDay,
                     EndTime = reservation.DataDo.TimeOfDay,
@@ -132,7 +136,7 @@ internal class GetScheduleInfoHandler : IRequestHandler<GetScheduleInfo, List<Sc
             }
             else
             {
-                throw new InvalidOperationException($"Nieznany dzień tygodnia: {dayOfWeekString}");
+                throw new InvalidOperationException($"Unknown day of week: {dayOfWeekString}");
             }
 
             if (isAdminRole)
@@ -140,6 +144,7 @@ internal class GetScheduleInfoHandler : IRequestHandler<GetScheduleInfo, List<Sc
                 dto = new ScheduleInfoAdminDto
                 {
                     Type = "Admin",
+                    Description = "Zajęcia",
                     Date = startDate,
                     StartTime = startTime.TimeOfDay,
                     EndTime = endTime.TimeOfDay,
@@ -164,6 +169,7 @@ internal class GetScheduleInfoHandler : IRequestHandler<GetScheduleInfo, List<Sc
                 dto = new ScheduleInfoTrainerDto
                 {
                     Type = "Trainer",
+                    Description = "Zajęcia",
                     Date = startDate,
                     StartTime = startTime.TimeOfDay,
                     EndTime = endTime.TimeOfDay,
@@ -179,22 +185,34 @@ internal class GetScheduleInfoHandler : IRequestHandler<GetScheduleInfo, List<Sc
                         .ToList()
                 };
             }
-            else
+            else if (isBasicRole)
             {
                 dto = new ScheduleInfoBasicDto
                 {
                     Type = "Basic",
+                    Description = "Zajęcia",
                     Date = startDate,
                     StartTime = startTime.TimeOfDay,
                     EndTime = endTime.TimeOfDay,
                     CourtNumber = scheduledClass.KortId,
+                    TrainerName = scheduledClass.Pracownik?.PracownikNavigation != null
+                        ? $"{scheduledClass.Pracownik.PracownikNavigation.Imie} {scheduledClass.Pracownik.PracownikNavigation.Nazwisko}"
+                        : "Brak trenera",
+                    GroupName = scheduledClass.Zajecia?.Nazwa,
+                    SkillLevel = scheduledClass.Zajecia?.IdPoziomZajecNavigation?.Nazwa
                 };
+            }
+            else
+            {
+                throw new UnauthorizedAccessException("Unknown user role.");
             }
 
             scheduleInfoDtos.Add(dto);
         }
 
-        return scheduleInfoDtos;
+        return scheduleInfoDtos
+            .OrderBy(dto => new DateTime(dto.Date.Year, dto.Date.Month, dto.Date.Day)
+            .Add(dto.StartTime))
+            .ToList();
     }
-
 }

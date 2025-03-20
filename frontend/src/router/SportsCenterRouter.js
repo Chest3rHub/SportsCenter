@@ -18,6 +18,8 @@ import News from "../pages/News";
 import AddNews from "../pages/AddNews";
 import Logout from "../pages/Logout";
 import EditNews from "../pages/EditNews";
+import NewsDetails from "../pages/NewsDetails";
+import ChangePassword from "../pages/ChangePassword";
 
 // pozmieniac dla klienta na komponenty trasy itd
 
@@ -39,12 +41,20 @@ const clientRouter = [
                 element: <News />,
             },
             {
+                path: "news/:id", 
+                element: <NewsDetails />, 
+            },
+            {
                 path: "/error",  
                 element: <Error />,
             },
             {
                 path: "/logout",  
                 element: <Logout />,
+            },
+            {
+                path: "/change-password",
+                element: <ChangePassword />,
             },
             {
                 path: "*",
@@ -73,6 +83,10 @@ const clientRouter = [
                     element: <News />,
                 },
                 {
+                    path: "news/:id", 
+                    element: <NewsDetails />, 
+                },
+                {
                     path: "/add-news",
                     element: <AddNews />,
                 },
@@ -87,6 +101,10 @@ const clientRouter = [
                 {
                     path: "/logout",  
                     element: <Logout />,
+                },
+                {
+                    path: "/change-password",
+                    element: <ChangePassword />,
                 },
                 {
                     path: "*",
@@ -115,12 +133,20 @@ const clientRouter = [
                     element: <News />,
                 },
                 {
+                    path: "news/:id", 
+                    element: <NewsDetails />, 
+                },
+                {
                     path: "/error",  
                     element: <Error />,
                 },
                 {
                     path: "/logout",  
                     element: <Logout />,
+                },
+                {
+                    path: "/change-password",
+                    element: <ChangePassword />,
                 },
                 {
                     path: "*",
@@ -149,12 +175,20 @@ const clientRouter = [
                     element: <News />,
                 },
                 {
+                    path: "news/:id", 
+                    element: <NewsDetails />, 
+                },
+                {
                     path: "/error",  
                     element: <Error />,
                 },
                 {
                     path: "/logout",  
                     element: <Logout />,
+                },
+                {
+                    path: "/change-password",
+                    element: <ChangePassword />,
                 },
                 {
                     path: "*",
@@ -183,6 +217,10 @@ const clientRouter = [
                     element: <News />,
                 },
                 {
+                    path: "news/:id", 
+                    element: <NewsDetails />, 
+                },
+                {
                     path: "/add-news",
                     element: <AddNews />,
                 },
@@ -197,6 +235,10 @@ const clientRouter = [
                 {
                     path: "/logout",  
                     element: <Logout />,
+                },
+                {
+                    path: "/change-password",
+                    element: <ChangePassword />,
                 },
                 {
                     path: "*",
@@ -228,6 +270,10 @@ const clientRouter = [
                 {
                     path: "/news",
                     element: <News />,
+                },
+                {
+                    path: "news/:id", 
+                    element: <NewsDetails />, 
                 },
                 {
                     path: "/error",  

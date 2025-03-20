@@ -153,5 +153,21 @@ export default {
       failureLabel: 'Error!',
       savedFailureLabel: 'Failed to save changes!',
       clickAnywhereFailureLabel: 'Click anywhere on the screen.',
+    },
+    newsDetailsPage: {
+      returnLabel: 'Back',
+    },
+    changePasswordPage: {
+      changePasswordLabel: 'Change password',
+      newPasswordLabel: 'New password',
+      confirmNewPasswordLabel: 'Confirm password',
+      saveLabel: 'Save',
+      returnLabel:'Back',
+      successLabel:'Success!',
+      savedSuccessLabel: 'Changes saved successfully!',
+      clickAnywhereLabel:'Click anywhere on the screen.',
+      failureLabel: 'Error!',
+      savedFailureLabel: 'Failed to save changes!',
+      clickAnywhereFailureLabel: 'Click anywhere on the screen.',
     }
   };

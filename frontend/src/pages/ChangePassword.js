@@ -5,36 +5,28 @@ import GreenButton from '../components/GreenButton';
 import GreenBackground from '../components/GreenBackground';
 import OrangeBackground from '../components/OrangeBackground';
 import { SportsContext } from '../context/SportsContext';
-import addNews from '../api/addNews';
 import CustomInput from '../components/CustomInput';
 import { Box, Typography, Avatar } from '@mui/material';
 import Backdrop from '@mui/material/Backdrop';
 import SentimentSatisfiedIcon from '@mui/icons-material/SentimentSatisfied';
 import SentimentDissatisfiedIcon from '@mui/icons-material/SentimentDissatisfied';
-function AddNews() {
+import changePasswordRequest from '../api/changePasswordRequest';
+function ChangePassword() {
 
   const { dictionary, toggleLanguage, token } = useContext(SportsContext);
 
-  //na razie bez zdjecia (mozna dodac)
   const [formData, setFormData] = useState({
-    title: '',
-    content: '',
-    validFrom: '',
-    validUntil: '',
+    newPassword: '',
+    confirmNewPassword: ''
   });
 
-  const [titleError, setTitleError] = useState(false);
+  const [newPasswordError, setNewPasswordError] = useState(false);
 
-  const [contentError, setContentError] = useState(false);
-
-  const [validFromError, setValidFromError] = useState(false);
-
-  const [validUntilError, setValidUntilError] = useState(false);
+  const [confirmNewPasswordError, setConfirmNewPasswordError] = useState(false);
 
   const [openSuccessBackdrop, setOpenSuccessBackdrop] = React.useState(false);
   const [openFailureBackdrop, setOpenFailureBackdrop] = React.useState(false);
-
-
+  
   const handleCloseSuccess = () => {
     setOpenSuccessBackdrop(false);
   };
@@ -48,54 +40,28 @@ function AddNews() {
     setOpenFailureBackdrop(true);
   };
 
+
   const validateForm = () => {
     let isValid = true;
 
-
-    if (formData.title.length > 20) {
+    if (formData.newPassword.length < 6) {
       isValid = false;
-      setTitleError(true);
+      setNewPasswordError(true);
     } else {
-      setTitleError(false);
+      setNewPasswordError(false);
     }
 
 
-    if (formData.content.length > 4000) {
+    if (formData.newPassword !== formData.confirmNewPassword) {
       isValid = false;
-      setContentError(true);
+      setConfirmNewPasswordError(true);
     } else {
-      setContentError(false);
+      setConfirmNewPasswordError(false);
     }
-    const validFromDate = new Date(formData.validFrom);
-    const validUntilDate = new Date(formData.validUntil);
-
-    if (validFromDate >= validUntilDate) {
-      isValid = false;
-      setValidFromError(true);  
-      setValidUntilError(true); 
-    } else {
-      setValidFromError(false);
-      setValidUntilError(false);
-    }
-
-    if (validFromDate >= validUntilDate) {
-      isValid = false;
-      setValidFromError(true);
-      setValidUntilError(true);
-  } else {
-      setValidFromError(false);
-      setValidUntilError(false);
-  }
-
-  if(!formData.validFrom || validFromDate >= validUntilDate ){
-      isValid = false;
-      setValidFromError(true);
-  } else {
-      setValidFromError(false);
-  }
 
     return isValid;
   };
+
 
   function handleError(textToDisplay) {
     // navigate('/error', {
@@ -103,6 +69,7 @@ function AddNews() {
     // });
     handleOpenFailure();
   }
+
 
   const navigate = useNavigate();
 
@@ -123,26 +90,22 @@ function AddNews() {
 
 
     try {
-      const response = await addNews(formData, token);
+      const response = await changePasswordRequest(formData, token);
 
       if (!response.ok) {
         const errorData = await response.json();
         console.log(errorData);
-        handleError('Blad dodawania aktualności... sprawdz konsole');
+        handleError('Blad zmiany hasła... sprawdz konsole');
       } else {
-        //navigate('/add-news');
         setFormData({
-          title: '',
-          content: '',
-          validFrom: '',
-          validUntil: '',});
+            newPassword: '',
+            confirmNewPassword: '',
+        });
         handleOpenSuccess();
       }
 
     } catch (error) {
-      //console.error('Błąd dodawania aktualności:', error);
-      handleError('Blad dodawania aktualności... sprawdz konsole');
-
+        handleError('Blad zmiany hasła... sprawdz konsole');
     }
   };
 
@@ -153,76 +116,44 @@ function AddNews() {
   return (
     <>
       <GreenBackground height={"55vh"} marginTop={"2vh"}>
-        <Header>{dictionary.addNewsPage.newsLabel}</Header>
+        <Header>{dictionary.changePasswordPage.changePasswordLabel}</Header>
         <OrangeBackground width="70%">
           <form onSubmit={handleSubmit}>
             <Box sx={{ display: "flex", flexDirection: "column", gap: "1rem", marginBottom: "2vh", }}>
               <CustomInput
-                label={dictionary.addNewsPage.titleLabel}
-                type="text"
-                id="title"
-                name="title"
+                label={dictionary.changePasswordPage.newPasswordLabel}
+                type="password"
+                id="newPassword"
+                name="newPassword"
                 fullWidth
-                value={formData.title}
+                value={formData.newPassword}
                 onChange={handleChange}
-                error={titleError}
-                helperText={titleError ? dictionary.addNewsPage.titleError : ""}
+                error={newPasswordError}
+                helperText={newPasswordError ? dictionary.changePasswordPage.newPasswordError : ""}
                 required
                 size="small"
               />
               <CustomInput
-                label={dictionary.addNewsPage.contentLabel}
-                type="text"
-                id="content"
-                name="content"
+                label={dictionary.changePasswordPage.confirmNewPasswordLabel}
+                type="password"
+                id="confirmNewPassword"
+                name="confirmNewPassword"
                 fullWidth
-                value={formData.content}
+                value={formData.confirmNewPassword}
                 onChange={handleChange}
-                error={contentError}
-                helperText={contentError ? dictionary.addNewsPage.contentError : ""}
+                error={confirmNewPasswordError}
+                helperText={confirmNewPasswordError ? dictionary.changePasswordPage.confirmNewPasswordError : ""}
                 required
                 size="small"
-              />
-              <CustomInput
-                label={dictionary.addNewsPage.validFromLabel}
-                type="date"
-                id="validFrom"
-                name="validFrom"
-                fullWidth
-                value={formData.validFrom}
-                onChange={handleChange}
-                error={validFromError}
-                helperText={validFromError ? dictionary.addNewsPage.validFromError : ""}
-                size="small"
-                InputLabelProps={{
-                  shrink: true
-                }}
-              />
-              <CustomInput
-                label={dictionary.addNewsPage.validUntilLabel}
-                type="date"
-                id="validUntil"
-                name="validUntil"
-                fullWidth
-                value={formData.validUntil}
-                onChange={handleChange}
-                error={validUntilError}
-                helperText={validUntilError ? dictionary.addNewsPage.validUntilError : ""}
-                size="small"
-                InputLabelProps={{
-                  shrink: true
-                }}
               />
               <Box sx={{
                 display: "flex",
                 flexDirection: "row",
                 justifyContent: 'center',
                 columnGap: "4vw"
-                // ten pierwszy nie jest zielony tylko czerwony xd ale juz niech tak zostanie poki co 
-                // ewentualnie mozna go zmienic na taki pomaranczowy jak przycisk do edycji newsa
               }}>
-                <GreenButton onClick={handleCancel} style={{ maxWidth: "10vw", backgroundColor: "#F46C63" }} hoverBackgroundColor={'#c3564f'}>{dictionary.addNewsPage.returnLabel}</GreenButton>
-                <GreenButton type="submit" style={{ maxWidth: "10vw" }}>{dictionary.addNewsPage.saveLabel}</GreenButton>
+                <GreenButton onClick={handleCancel} style={{ maxWidth: "10vw", backgroundColor: "#F46C63" }} hoverBackgroundColor={'#c3564f'}>{dictionary.changePasswordPage.returnLabel}</GreenButton>
+                <GreenButton type="submit" style={{ maxWidth: "10vw" }}>{dictionary.changePasswordPage.saveLabel}</GreenButton>
               </Box>
             </Box>
             <Backdrop
@@ -247,7 +178,7 @@ function AddNews() {
                     marginTop: '2vh',
 
                   }}>
-                    {dictionary.addNewsPage.successLabel}
+                    {dictionary.changePasswordPage.successLabel}
                   </Typography>
                 </Box>
                 <Box>
@@ -255,7 +186,7 @@ function AddNews() {
                     color: 'black',
                     fontSize: '1.5rem',
                   }}>
-                    {dictionary.addNewsPage.savedSuccessLabel}
+                    {dictionary.changePasswordPage.savedSuccessLabel}
                   </Typography>
                 </Box>
                 <Box>
@@ -263,7 +194,7 @@ function AddNews() {
                     color: 'black',
                     fontSize: '1.5rem',
                   }}>
-                    {dictionary.addNewsPage.clickAnywhereLabel}
+                    {dictionary.changePasswordPage.clickAnywhereLabel}
                   </Typography>
                 </Box>
                 <Box sx={{ textAlign: 'center', display: "flex", justifyContent: "center" }}>
@@ -295,7 +226,7 @@ function AddNews() {
                     marginTop: '2vh',
 
                   }}>
-                    {dictionary.addNewsPage.failureLabel}
+                    {dictionary.changePasswordPage.failureLabel}
                   </Typography>
                 </Box>
                 <Box>
@@ -303,7 +234,7 @@ function AddNews() {
                     color: 'black',
                     fontSize: '1.5rem',
                   }}>
-                    {dictionary.addNewsPage.savedFailureLabel}
+                    {dictionary.changePasswordPage.savedFailureLabel}
                   </Typography>
                 </Box>
                 <Box>
@@ -311,7 +242,7 @@ function AddNews() {
                     color: 'black',
                     fontSize: '1.5rem',
                   }}>
-                    {dictionary.addNewsPage.clickAnywhereFailureLabel}
+                    {dictionary.changePasswordPage.clickAnywhereFailureLabel}
                   </Typography>
                 </Box>
                 <Box sx={{ textAlign: 'center', display: "flex", justifyContent: "center" }}>
@@ -328,4 +259,4 @@ function AddNews() {
   );
 }
 
-export default AddNews;
+export default ChangePassword;

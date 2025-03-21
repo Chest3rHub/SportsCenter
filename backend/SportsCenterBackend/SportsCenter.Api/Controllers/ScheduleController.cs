@@ -12,8 +12,8 @@ namespace SportsCenter.Api.Controllers
         public ScheduleController(IMediator mediator) : base(mediator)
         {
         }
-
-        [Authorize(Roles = "Wlasciciel,Klient,Gosc,Pomoc sprzatajaca,Trener,Pracownik administracyjny")]
+        [AllowAnonymous]
+        [Authorize(Roles = "Wlasciciel,Klient,Pomoc sprzatajaca,Trener,Pracownik administracyjny")]
         [HttpGet("Schedule-info")]
         public async Task<IActionResult> GetScheduleInfo([FromQuery] int weekOffset = 0)
         {

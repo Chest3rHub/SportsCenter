@@ -9,11 +9,11 @@ namespace SportsCenter.Application.SportsCenterManagement.Queries.GetSportsCente
 {
     public class GetSportsCenterWorkingHours : IQuery<IEnumerable<SportsCenterWorkingHoursDto>>
     {
-        public DateOnly StartDate {  get; set; }
+        public int WeekOffset {  get; set; }
 
-        public GetSportsCenterWorkingHours(DateOnly startDate)
+        public GetSportsCenterWorkingHours(int weekOffset)
         {
-            StartDate = startDate;
+           WeekOffset = weekOffset;
         }
     }
 }

@@ -63,9 +63,9 @@ namespace SportsCenter.Api.Controllers
         }
 
         [HttpGet("get-sports-club-working-hours")]
-        public async Task<IActionResult> GetWorkingHoursForWeek([FromQuery] DateOnly startDate)
+        public async Task<IActionResult> GetWorkingHoursForWeek([FromQuery] int weekOffset)
         {
-            var workingHours = await Mediator.Send(new GetSportsCenterWorkingHours(startDate));
+            var workingHours = await Mediator.Send(new GetSportsCenterWorkingHours(weekOffset));
             return Ok(workingHours);
         }
 

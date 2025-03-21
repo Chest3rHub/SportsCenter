@@ -11,8 +11,7 @@ public class AddSportActivityValidator : AbstractValidator<AddSportActivity>
     .MaximumLength(100).WithMessage("Sport Activity Name cannot exceed 100 characters.");
 
         RuleFor(x => x.StartDate)
-            .NotEmpty().WithMessage("Start Date is required.")
-            .GreaterThan(DateOnly.FromDateTime(DateTime.Now)).WithMessage("Start Date must be in the future.");
+            .NotEmpty().WithMessage("Start Date is required.");
 
         RuleFor(x => x.DayOfWeek)
             .NotEmpty().WithMessage("Day of Week is required.");

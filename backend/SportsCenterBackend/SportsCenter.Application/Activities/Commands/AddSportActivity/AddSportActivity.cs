@@ -1,4 +1,5 @@
 using MediatR;
+using Newtonsoft.Json;
 using SportsCenter.Application.Abstractions;
 
 namespace SportsCenter.Application.Activities.Commands.AddSportActivity;
@@ -8,6 +9,7 @@ public sealed record AddSportActivity : ICommand<Unit>
     public string SportActivityName { get; set; }
     public DateOnly StartDate { get; set; }
     public string DayOfWeek { get; set; }
+    [JsonConverter(typeof(TimeOnlyConverter))]
     public TimeOnly StartHour { get; set; }
     public int DurationInMinutes { get; set; }
     public string LevelName { get; set; }

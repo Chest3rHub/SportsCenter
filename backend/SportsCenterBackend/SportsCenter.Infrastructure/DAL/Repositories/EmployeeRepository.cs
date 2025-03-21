@@ -343,12 +343,6 @@ namespace SportsCenter.Infrastructure.DAL.Repositories
                 return PaymentResultEnum.ClientNotFound;
             }
 
-            decimal discount = client.ZnizkaNaZajecia ?? 0m;
-            if (discount > 0)
-            {
-                cost *= (1 - discount / 100m);
-            }
-
             if (client.Saldo < cost)
             {
                 return PaymentResultEnum.InsufficientFunds;

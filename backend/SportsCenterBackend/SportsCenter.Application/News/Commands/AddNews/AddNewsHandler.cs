@@ -5,6 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace SportsCenter.Application.News.Commands.AddNews
@@ -28,7 +30,7 @@ namespace SportsCenter.Application.News.Commands.AddNews
             };
 
             await _newsRepository.AddNewsAsync(news, cancellationToken);
-
+            
             return Unit.Value;
         }
     }

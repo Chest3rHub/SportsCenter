@@ -54,6 +54,7 @@ namespace SportsCenter.Infrastructure.DAL.Handlers.SportActivitiesHandlers
                     CourtName = g.Kort.Nazwa,
                     CostWithoutEquipment = g.KosztBezSprzetu,
                     CostWithEquipment = g.KosztZeSprzetem,
+                    IsEquipmentReserved = combined.ik.CzyUwzglednicSprzet ? "Tak" : "Nie",
 
                     IsActivityPaid = combined.ik.CzyOplacone.HasValue
                         ? (combined.ik.CzyOplacone.Value ? "Tak" : "Nie")
@@ -62,6 +63,8 @@ namespace SportsCenter.Infrastructure.DAL.Handlers.SportActivitiesHandlers
                         ? (combined.iz.CzyOdwolane.Value ? "Tak" : "Nie")
                         : "Nie"
                 })
+            .OrderBy(activity => activity.DateOfActivity)
+            .ThenBy(activity => activity.StartHour)
             .ToListAsync(cancellationToken);
 
             return sportActivities;

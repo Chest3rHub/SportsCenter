@@ -213,4 +213,21 @@ public class SportActivityRepository : ISportActivityRepository
             .Where(gzk => gzk.InstancjaZajecId == instanceOfActivityId)
             .FirstOrDefaultAsync(cancellationToken);
     }
+    public async Task<Zajecium> GetActivityByInstanceOfActivityIdAsync(int instanceOfActivityId, CancellationToken cancellationToken)
+    {
+        var instanceOfActivity = await _dbContext.InstancjaZajecs
+            .Where(i => i.InstancjaZajecId == instanceOfActivityId)
+            .FirstOrDefaultAsync(cancellationToken);
+
+        var activitySchedule = await _dbContext.GrafikZajecs
+            .Where(gz => gz.GrafikZajecId == instanceOfActivity.GrafikZajecId)
+            .FirstOrDefaultAsync(cancellationToken);
+
+        var activity = await _dbContext.Zajecia
+            .Where(z => z.ZajeciaId == activitySchedule.ZajeciaId)
+            .FirstOrDefaultAsync(cancellationToken);
+
+        return activity;
+    }
+
 }

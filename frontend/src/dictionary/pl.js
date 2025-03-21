@@ -84,8 +84,10 @@ export default {
         timetableLabel: 'Grafik',
         todoLabel: 'Do zrobienia',
         changePasswordLabel: 'Zmiana hasła',
-        trainingsLabel: 'Zajęcia',
         reservationsLabel: 'Rezerwacje',
+        trainingsLabel: 'Zajęcia',
+        productsLabel: 'Produkty',
+        newsLabel: 'Aktualności',
       },
       ownerSidebar: {
         employeesLabel: 'Pracownicy',
@@ -156,5 +158,18 @@ export default {
     },
     newsDetailsPage: {
       returnLabel: 'Wróć',
+    },
+    changePasswordPage: {
+      changePasswordLabel: 'Zmiana hasła',
+      newPasswordLabel: 'Nowe hasło',
+      confirmNewPasswordLabel: 'Powtórz hasło',
+      saveLabel: 'Zapisz',
+      returnLabel:'Wróć',
+      successLabel:'Sukces!',
+      savedSuccessLabel: 'Udało się zapisać zmiany!',
+      clickAnywhereLabel:'Kliknij w dowolne miejsce ekranu.',
+      failureLabel: 'Błąd!',
+      savedFailureLabel: 'Nie udało się zapisać zmian!',
+      clickAnywhereFailureLabel: 'Kliknij w dowolne miejsce ekranu.',
     }
   };

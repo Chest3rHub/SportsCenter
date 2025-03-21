@@ -23,4 +23,6 @@ public interface ISportActivityRepository
     Task<int> CancelInstanceOfActivityAsync(int instatnceOfActivity, CancellationToken cancellationToken);
     Task<InstancjaZajec> GetInstanceOfActivityAsync(int instatnceOfActivity, CancellationToken cancellationToken);
     Task<InstancjaZajecKlient> GetInstanceOfActivityClientAsync(int instanceOfActivity, CancellationToken cancellationToken);
+    Task<Zajecium> GetActivityByInstanceOfActivityIdAsync(int instanceOfActivityId, CancellationToken cancellationToken);
+
 }

@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace SportsCenter.Application.News.Commands.AddNews
@@ -16,6 +17,7 @@ namespace SportsCenter.Application.News.Commands.AddNews
 
         public DateTime ValidFrom { get; set; }
 
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public DateTime? ValidUntil { get; set; }
 
         public AddNews(string title, string content, DateTime validFrom, DateTime validUntil)

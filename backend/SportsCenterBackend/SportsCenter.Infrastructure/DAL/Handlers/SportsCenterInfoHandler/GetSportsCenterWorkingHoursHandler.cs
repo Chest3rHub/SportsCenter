@@ -19,7 +19,8 @@ namespace SportsCenter.Infrastructure.DAL.Handlers.SportsCenterInfoHandler
 
         public async Task<IEnumerable<SportsCenterWorkingHoursDto>> Handle(GetSportsCenterWorkingHours request, CancellationToken cancellationToken)
         {
-            DateOnly monday = request.StartDate.AddDays(-(int)request.StartDate.DayOfWeek + 1);
+            DateOnly startDate = DateOnly.FromDateTime(DateTime.UtcNow).AddDays(request.WeekOffset * 7);
+            DateOnly monday = startDate.AddDays(-(int)startDate.DayOfWeek + 1);
             DateOnly sunday = monday.AddDays(6);
 
             var dniTygodnia = new Dictionary<DayOfWeek, string>

@@ -43,6 +43,13 @@ namespace SportsCenter.Application.Activities.Commands.SignUpForActivity
                 throw new UnauthorizedAccessException("Only customers can sign up for activities.");
             }
 
+            //PO INTEGRACJI Z FRONTENDEM:
+            //uzytkownik kliknie w kalendarzu kafelek instancjaZajec
+            //frontend to zwroci i z tego obiektu na podstawie instancjaZajecId
+            //znajde w bazie zajecia i juz cala dalsza logika bedzie sie zgadzała
+
+            //wystarczy uzyc tej metody:
+            //var activity = await _sportActivityRepository.GetActivityByInstanceOfActivityIdAsync(instanceOfActivityId, cancellationToken);
             var scheduleActivity = await _sportActivityRepository.GetScheduleByActivityIdAsync(request.ActivityId, cancellationToken);
             if (scheduleActivity == null)
             {
@@ -103,7 +110,7 @@ namespace SportsCenter.Application.Activities.Commands.SignUpForActivity
                 KlientId = clientId,
                 DataZapisu = DateOnly.FromDateTime(DateTime.UtcNow),
                 DataWypisu = null,
-                CzyUwzglednicSprzet = request.IsEquipmentIncluded,
+                CzyUwzglednicSprzet = request.IsEquipmentIncluded ? true : false,
                 InstancjaZajecId = instanceOfActivity.InstancjaZajecId,
                 CzyOplacone = false,
                 CzyZwroconoPieniadze = false

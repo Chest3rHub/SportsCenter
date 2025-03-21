@@ -1,7 +1,7 @@
 import { Typography, Box } from "@mui/material";
 import OrangeBackground from "./OrangeBackground";
 import { SportsContext } from "../context/SportsContext";
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import NewsButton from "./NewsButton";
 import removeNews from "../api/removeNews";
 import { useNavigate } from "react-router-dom";

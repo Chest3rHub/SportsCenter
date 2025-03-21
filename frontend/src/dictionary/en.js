@@ -161,6 +161,8 @@ export default {
       changePasswordLabel: 'Change password',
       newPasswordLabel: 'New password',
       confirmNewPasswordLabel: 'Confirm password',
+      newPasswordError:'Password must be at least 6 characters long.',
+      confirmNewPasswordError:'Passwords must match.',
       saveLabel: 'Save',
       returnLabel:'Back',
       successLabel:'Success!',

@@ -2,7 +2,6 @@ import GreenButton from "../components/GreenButton";
 import { useNavigate, useLocation } from 'react-router-dom';
 import { SportsContext } from "../context/SportsContext";
 import { useContext } from "react";
-import Navbar from "../components/Navbar";
 
 export default function Error() {
     const navigate = useNavigate();

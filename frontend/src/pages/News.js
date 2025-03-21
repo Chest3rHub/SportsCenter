@@ -12,6 +12,9 @@ import { useNavigate } from 'react-router-dom';
 export default function News() {
     const { dictionary, toggleLanguage, role } = useContext(SportsContext);
 
+    // max 3 newsy na stronie poki co
+    const maxNewsPerPage = 3;
+
     const navigate = useNavigate();
 
     const [news, setNews] = useState([]);
@@ -40,8 +43,8 @@ export default function News() {
 
     console.log(news);
 
-    // max 3 newsy na stronie poki co
-    const limitedNews = news.slice(0, 3);
+    
+    const limitedNews = news.slice(0, maxNewsPerPage);
     return (
         <GreenBackground gap={"4vh"} height={"76.5vh"}>
             <Header>{dictionary.newsPage.newsLabel}</Header>

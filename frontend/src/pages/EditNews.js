@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useContext } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import Header from '../components/Header';
 import GreenButton from '../components/GreenButton';
@@ -38,8 +38,8 @@ export default function EditNews() {
 
     const [validUntilError, setValidUntilError] = useState(false);
 
-    const [openSuccessBackdrop, setOpenSuccessBackdrop] = React.useState(false);
-    const [openFailureBackdrop, setOpenFailureBackdrop] = React.useState(false);
+    const [openSuccessBackdrop, setOpenSuccessBackdrop] = useState(false);
+    const [openFailureBackdrop, setOpenFailureBackdrop] = useState(false);
 
 
     const handleCloseSuccess = () => {

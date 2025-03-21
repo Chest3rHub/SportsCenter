@@ -163,6 +163,8 @@ export default {
       changePasswordLabel: 'Zmiana hasła',
       newPasswordLabel: 'Nowe hasło',
       confirmNewPasswordLabel: 'Powtórz hasło',
+      newPasswordError:'Hasło musi mieć co najmniej 6 znaków.',
+      confirmNewPasswordError:'Hasła muszą być identyczne.',
       saveLabel: 'Zapisz',
       returnLabel:'Wróć',
       successLabel:'Sukces!',

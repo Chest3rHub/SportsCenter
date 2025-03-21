@@ -1,6 +1,5 @@
-import { Box, Button } from '@mui/material';
+import { Box } from '@mui/material';
 import NavbarButton from './NavbarButton';
-import useDictionary from '../hooks/useDictionary';
 import { SportsContext } from '../context/SportsContext';
 import React, { useContext } from 'react';
 

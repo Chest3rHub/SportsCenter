@@ -110,7 +110,7 @@ namespace SportsCenter.Application.Activities.Commands.SignUpForActivity
                 KlientId = clientId,
                 DataZapisu = DateOnly.FromDateTime(DateTime.UtcNow),
                 DataWypisu = null,
-                CzyUwzglednicSprzet = request.IsEquipmentIncluded,
+                CzyUwzglednicSprzet = request.IsEquipmentIncluded ? true : false,
                 InstancjaZajecId = instanceOfActivity.InstancjaZajecId,
                 CzyOplacone = false,
                 CzyZwroconoPieniadze = false

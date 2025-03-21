@@ -77,6 +77,7 @@ internal class GetScheduleInfoHandler : IRequestHandler<GetScheduleInfo, List<Sc
                 {
                     Type = "Admin",
                     Description = "Rezerwacja",
+                    Id = reservation.RezerwacjaId,
                     Date = reservation.DataOd,
                     StartTime = reservation.DataOd.TimeOfDay,
                     EndTime = reservation.DataDo.TimeOfDay,
@@ -95,6 +96,7 @@ internal class GetScheduleInfoHandler : IRequestHandler<GetScheduleInfo, List<Sc
                 {
                     Type = "Trainer",
                     Description = "Rezerwacja",
+                    Id = reservation.RezerwacjaId,
                     Date = reservation.DataOd,
                     StartTime = reservation.DataOd.TimeOfDay,
                     EndTime = reservation.DataDo.TimeOfDay,
@@ -111,6 +113,7 @@ internal class GetScheduleInfoHandler : IRequestHandler<GetScheduleInfo, List<Sc
                 {
                     Type = "Basic",
                     Description = "Rezerwacja",
+                    Id = reservation.RezerwacjaId,
                     Date = reservation.DataOd,
                     StartTime = reservation.DataOd.TimeOfDay,
                     EndTime = reservation.DataDo.TimeOfDay,
@@ -145,6 +148,7 @@ internal class GetScheduleInfoHandler : IRequestHandler<GetScheduleInfo, List<Sc
                 {
                     Type = "Admin",
                     Description = "Zajęcia",
+                    Id = scheduledClass.ZajeciaId,
                     Date = startDate,
                     StartTime = startTime.TimeOfDay,
                     EndTime = endTime.TimeOfDay,
@@ -170,6 +174,7 @@ internal class GetScheduleInfoHandler : IRequestHandler<GetScheduleInfo, List<Sc
                 {
                     Type = "Trainer",
                     Description = "Zajęcia",
+                    Id = scheduledClass.ZajeciaId,
                     Date = startDate,
                     StartTime = startTime.TimeOfDay,
                     EndTime = endTime.TimeOfDay,
@@ -191,6 +196,7 @@ internal class GetScheduleInfoHandler : IRequestHandler<GetScheduleInfo, List<Sc
                 {
                     Type = "Basic",
                     Description = "Zajęcia",
+                    Id = scheduledClass.ZajeciaId,
                     Date = startDate,
                     StartTime = startTime.TimeOfDay,
                     EndTime = endTime.TimeOfDay,

@@ -1,5 +1,5 @@
 -- Created by Vertabelo (http://vertabelo.com)
--- Last modification date: 2025-03-17 11:06:24.051
+-- Last modification date: 2025-03-21 11:01:58.069
 
 -- tables
 -- Table: Aktualnosci
@@ -70,7 +70,7 @@ CREATE TABLE InstancjaZajec_Klient (
     KlientID int  NOT NULL,
     DataZapisu date  NOT NULL,
     DataWypisu date  NULL,
-    CzyUwzglednicSprzet bit  NOT NULL,
+    CzyUwzglednicSprzet bit  NOT NULL DEFAULT 0,
     InstancjaZajecID int  NOT NULL,
     CzyOplacone bit  NOT NULL,
     CzyZwroconoPieniadze bit  NOT NULL,

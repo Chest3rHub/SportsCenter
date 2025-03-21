@@ -13,11 +13,16 @@ namespace SportsCenter.Application.Activities.Commands.SignUpForActivity
 
             RuleFor(x => x.SelectedDate)
                 .NotNull()
-                .WithMessage("SelectedDate is required.");
+                .WithMessage("SelectedDate is required.")
+                .Must(date => date >= DateOnly.FromDateTime(DateTime.Today))
+                .WithMessage("SelectedDate must be today or a future date.");
 
             RuleFor(x => x.IsEquipmentIncluded)
                 .NotNull()
-                .WithMessage("IsEquipmentIncluded is required.");
+                .WithMessage("IsEquipmentIncluded is required.")
+                .Must(x => x == true || x == false)
+                .WithMessage("IsEquipmentIncluded must be true or false.");
+
         }
     }
 }

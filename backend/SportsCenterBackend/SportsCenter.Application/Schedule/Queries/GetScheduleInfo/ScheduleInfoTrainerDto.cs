@@ -10,7 +10,7 @@ namespace SportsCenter.Application.Schedule.Queries.GetScheduleInfo
     public class ScheduleInfoTrainerDto : ScheduleInfoBaseDto
     {
         public ScheduleInfoTrainerDto() => Type = "Trainer";
-        [JsonProperty(Order = 9)]
+        [JsonProperty(Order = 10)]
         public List<string> Participants { get; set; } = new List<string>();   
     }
 }

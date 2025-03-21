@@ -63,7 +63,9 @@ namespace SportsCenter.Infrastructure.DAL.Handlers.SportActivitiesHandler
                     });              
                 }
             }
-            return result;
+            return result.OrderBy(a => a.ActivityDate)
+                       .ThenBy(a => a.StartHour)
+                       .ToList();
         }
         private int DzienTygodniaNaNumer(string dzien)
         {

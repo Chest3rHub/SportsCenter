@@ -173,5 +173,12 @@ export default {
       failureLabel: 'Błąd!',
       savedFailureLabel: 'Nie udało się zapisać zmian!',
       clickAnywhereFailureLabel: 'Kliknij w dowolne miejsce ekranu.',
+    },
+    employeesPage: {
+      employeesLabel: 'Pracownicy',
+      employeeLabel: 'Pracownik',
+      positionLabel:'Stanowisko',
+      changePasswordLabel:'Zmień hasło',
+      fireLabel:'Zwolnij',
     }
   };

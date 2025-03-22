@@ -171,5 +171,12 @@ export default {
       failureLabel: 'Error!',
       savedFailureLabel: 'Failed to save changes!',
       clickAnywhereFailureLabel: 'Click anywhere on the screen.',
+    },
+    employeesPage: {
+      employeesLabel: 'Employees',
+      employeeLabel: 'Employee',
+      positionLabel:'Position',
+      changePasswordLabel:'Change password',
+      fireLabel:'Fire',
     }
   };

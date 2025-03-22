@@ -19,6 +19,7 @@ import Logout from "../pages/Logout";
 import EditNews from "../pages/EditNews";
 import NewsDetails from "../pages/NewsDetails";
 import ChangePassword from "../pages/ChangePassword";
+import Employees from "../pages/Emploees";
 
 // pozmieniac dla klienta na komponenty trasy itd
 
@@ -104,6 +105,10 @@ const clientRouter = [
                 {
                     path: "/change-password",
                     element: <ChangePassword />,
+                },
+                {
+                    path: "/employees",
+                    element: <Employees />,
                 },
                 {
                     path: "*",

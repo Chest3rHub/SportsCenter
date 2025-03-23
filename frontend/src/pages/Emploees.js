@@ -5,10 +5,12 @@ import EmployeesButton from "../components/EmployeesButton";
 import { SportsContext } from "../context/SportsContext";
 import { useContext, useEffect, useState } from "react";
 import getEmployees from "../api/getEmployees";
+import { useNavigate } from "react-router-dom";
 
 export default function Employees() {
 
     const { dictionary, token } = useContext(SportsContext);
+    const navigate = useNavigate();
 
     const [employees, setEmployees] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -28,6 +30,12 @@ export default function Employees() {
                 console.error('Błąd podczas wywoływania getEmployees:', error);
             });
     }, []);
+
+    function handleChangeEmployeePassword(id){
+        navigate(`/change-password`, {
+            state: { id }  
+          });
+    }
 
     return (
         <>
@@ -112,7 +120,7 @@ export default function Employees() {
                                 </Typography>
                             </Box>
                         </Box>
-                        <EmployeesButton backgroundColor={"#f0aa4f"} onClick={() => console.log('click')} minWidth={'11vw'}>
+                        <EmployeesButton backgroundColor={"#f0aa4f"} onClick={() => handleChangeEmployeePassword(employee.id)} minWidth={'11vw'}>
                             {dictionary.employeesPage.changePasswordLabel}
                         </EmployeesButton>
                         <EmployeesButton backgroundColor={"#F46C63"} onClick={() => console.log('click')} minWidth={'11vw'}>

@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import Header from '../components/Header';
 import GreenButton from '../components/GreenButton';
 import GreenBackground from '../components/GreenBackground';
@@ -11,7 +11,12 @@ import Backdrop from '@mui/material/Backdrop';
 import SentimentSatisfiedIcon from '@mui/icons-material/SentimentSatisfied';
 import SentimentDissatisfiedIcon from '@mui/icons-material/SentimentDissatisfied';
 import changePasswordRequest from '../api/changePasswordRequest';
+import changeSomeonePassword from '../api/changeSomeonePassword';
 function ChangePassword() {
+
+  const location = useLocation();
+
+  const { id } = location.state || {};
 
   const { dictionary, toggleLanguage, token } = useContext(SportsContext);
 
@@ -90,7 +95,12 @@ function ChangePassword() {
 
 
     try {
-      const response = await changePasswordRequest(formData, token);
+      let response;
+      if(id){
+        response = await changeSomeonePassword(formData, id, token);
+      } else {
+        response = await changePasswordRequest(formData, token);
+      }
 
       if (!response.ok) {
         const errorData = await response.json();

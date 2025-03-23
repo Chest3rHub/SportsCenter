@@ -23,7 +23,8 @@ namespace SportsCenter.Infrastructure.DAL.Handlers.EmployeesHandlers
             return await _dbContext.Pracowniks.Include(x => x.PracownikNavigation)
                 .Select(p => new EmployeeDto
                 {
-                    FullName = p.PracownikNavigation.Nazwisko,
+                    Id = p.PracownikNavigation.OsobaId,
+                    FullName = p.PracownikNavigation.Imie + " " + p.PracownikNavigation.Nazwisko,
                     Email = p.PracownikNavigation.Email
                 }).AsNoTracking().ToListAsync(cancellationToken);
         }

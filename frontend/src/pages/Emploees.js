@@ -1,12 +1,13 @@
 import Header from "../components/Header";
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, Modal } from "@mui/material";
 import SmallGreenHeader from "../components/SmallGreenHeader";
 import EmployeesButton from "../components/EmployeesButton";
 import { SportsContext } from "../context/SportsContext";
 import { useContext, useEffect, useState } from "react";
 import getEmployees from "../api/getEmployees";
 import { useNavigate } from "react-router-dom";
-
+import GreenButton from "../components/GreenButton";
+import fireEmployee from "../api/fireEmployee";
 export default function Employees() {
 
     const { dictionary, token } = useContext(SportsContext);
@@ -14,6 +15,10 @@ export default function Employees() {
 
     const [employees, setEmployees] = useState([]);
     const [loading, setLoading] = useState(true);
+
+    const [selectedEmployee, setSelectedEmployee] = useState(null);
+    const handleOpen = (employee) => setSelectedEmployee(employee);;
+    const handleClose = () => setSelectedEmployee(null);;
 
     const maxEmployeesPerPage = 6;
 
@@ -33,10 +38,21 @@ export default function Employees() {
             });
     }, []);
 
-    function handleChangeEmployeePassword(id){
+    function handleChangeEmployeePassword(id) {
         navigate(`/change-password`, {
-            state: { id }  
-          });
+            state: { id }
+        });
+    }
+
+    function handleFireEmployee(id) {
+        fireEmployee(id, token)
+            .then(response => {})
+            .then(data => {
+                console.log("Pracownik zwolniony:", data);
+            })
+            .catch(error => {
+                console.error("Błąd podczas zwalniania pracownika:", error);
+            });
     }
 
     const limitedEmployees = employees.slice(0, maxEmployeesPerPage);
@@ -127,13 +143,52 @@ export default function Employees() {
                         <EmployeesButton backgroundColor={"#f0aa4f"} onClick={() => handleChangeEmployeePassword(employee.id)} minWidth={'11vw'}>
                             {dictionary.employeesPage.changePasswordLabel}
                         </EmployeesButton>
-                        {!employee.fireDate ? <EmployeesButton backgroundColor={"#F46C63"} onClick={() => console.log('click')} minWidth={'11vw'}> 
+                        {!employee.fireDate ? <EmployeesButton backgroundColor={"#F46C63"} onClick={() => handleOpen(employee)} minWidth={'11vw'}>
                             {dictionary.employeesPage.fireLabel}
-                        </EmployeesButton> : <EmployeesButton backgroundColor={"#F46C63"} onClick={() => console.log('click')} minWidth={'11vw'} disabled={employee.fireDate}> 
+                        </EmployeesButton> : <EmployeesButton backgroundColor={"#F46C63"} onClick={() => { }} minWidth={'11vw'} disabled={employee.fireDate}>
                             {employee.fireDate}
                         </EmployeesButton>}
+
                     </Box>))}
                 </Box>
+                <Modal
+                    open={selectedEmployee}
+                    onClose={handleClose}
+                >
+                    <Box
+                        sx={{
+                            width: '30vw',
+                            height: '30vh',
+                            position: 'absolute',
+                            top: '50vh',
+                            left: '50vw',
+                            transform: 'translate(-50%, -50%)',
+                            backgroundColor: 'white',
+                            borderRadius: '10px',
+                            boxShadow: 24,
+                            display: 'flex',
+                            flexDirection: 'column',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                        }}
+                    >
+                        <Typography sx={{
+                            fontWeight: 'Bold',
+                            fontSize: '2.2rem',
+                            marginTop: '1vh',
+                        }} >
+                            {dictionary.employeesPage.confirmLabel}
+                        </Typography>
+                        <Typography sx={{
+                            color: 'black',
+                            fontSize: '1.5rem',
+                        }}>{selectedEmployee ? selectedEmployee.fullName : ''}</Typography>
+                        <Box sx={{ display: 'flex', gap: '3rem', marginTop: '1rem' }}>
+                            <GreenButton onClick={() => { handleClose() }} style={{ maxWidth: "10vw", backgroundColor: "#F46C63", minWidth: '7vw' }} hoverBackgroundColor={'#c3564f'}>{dictionary.employeesPage.noLabel}</GreenButton>
+                            <GreenButton onClick={() => { handleFireEmployee(selectedEmployee.id) }} style={{ maxWidth: "10vw", minWidth: '7vw' }}>{dictionary.employeesPage.yesLabel}</GreenButton>
+                        </Box>
+                    </Box>
+                </Modal>
             </Box>
         </>
     );

@@ -180,5 +180,8 @@ export default {
       positionLabel:'Stanowisko',
       changePasswordLabel:'Zmień hasło',
       fireLabel:'Zwolnij',
+      confirmLabel:'Potwierdź zwolnienie:',
+      noLabel:'Nie',
+      yesLabel:'Tak',
     }
   };

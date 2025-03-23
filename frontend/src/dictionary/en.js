@@ -178,5 +178,8 @@ export default {
       positionLabel:'Position',
       changePasswordLabel:'Change password',
       fireLabel:'Fire',
+      confirmLabel:'Confirm fire:',
+      noLabel:'No',
+      yesLabel:'Yes',
     }
   };

@@ -15,6 +15,8 @@ export default function Employees() {
     const [employees, setEmployees] = useState([]);
     const [loading, setLoading] = useState(true);
 
+    const maxEmployeesPerPage = 6;
+
 
     useEffect(() => {
         getEmployees(token)
@@ -36,6 +38,8 @@ export default function Employees() {
             state: { id }  
           });
     }
+
+    const limitedEmployees = employees.slice(0, maxEmployeesPerPage);
 
     return (
         <>
@@ -73,7 +77,7 @@ export default function Employees() {
                         <SmallGreenHeader width={'37%'}>{dictionary.employeesPage.employeeLabel}</SmallGreenHeader>
                         <SmallGreenHeader width={'37%'}>{dictionary.employeesPage.positionLabel}</SmallGreenHeader>
                     </Box>
-                    {employees.map((employee) => (<Box
+                    {limitedEmployees.map((employee) => (<Box
                         sx={{
                             marginTop: '1vh',
                             display: 'flex',
@@ -88,7 +92,7 @@ export default function Employees() {
                             sx={{
                                 width: '60.8%',
                                 borderRadius: '70px',
-                                backgroundColor: 'white',
+                                backgroundColor: employee.fireDate ? '#ffe6e6' : 'white',
                                 boxShadow: '0 5px 5px rgb(0, 0, 0, 0.6)',
                                 display: 'flex',
                                 justifyContent: 'space-between',
@@ -116,16 +120,18 @@ export default function Employees() {
                                 }}
                             >
                                 <Typography>
-                                    {employee.email}
+                                    {employee.role}
                                 </Typography>
                             </Box>
                         </Box>
                         <EmployeesButton backgroundColor={"#f0aa4f"} onClick={() => handleChangeEmployeePassword(employee.id)} minWidth={'11vw'}>
                             {dictionary.employeesPage.changePasswordLabel}
                         </EmployeesButton>
-                        <EmployeesButton backgroundColor={"#F46C63"} onClick={() => console.log('click')} minWidth={'11vw'}>
+                        {!employee.fireDate ? <EmployeesButton backgroundColor={"#F46C63"} onClick={() => console.log('click')} minWidth={'11vw'}> 
                             {dictionary.employeesPage.fireLabel}
-                        </EmployeesButton>
+                        </EmployeesButton> : <EmployeesButton backgroundColor={"#F46C63"} onClick={() => console.log('click')} minWidth={'11vw'} disabled={employee.fireDate}> 
+                            {employee.fireDate}
+                        </EmployeesButton>}
                     </Box>))}
                 </Box>
             </Box>

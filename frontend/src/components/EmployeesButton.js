@@ -3,11 +3,12 @@ import { Button} from '@mui/material';
 import { darken } from '@mui/system';
 
 
-const EmployeesButton = ({ backgroundColor, onClick, children, minWidth }) => {
+const EmployeesButton = ({ backgroundColor, onClick, children, minWidth, disabled }) => {
     const darkenedColor = darken(backgroundColor, 0.2);
     return (
         <Button
             onClick={onClick}
+            disabled={disabled}
             sx={{backgroundColor: backgroundColor,                                  
                 borderRadius: '5px', 
                 border:"none", 

@@ -25,7 +25,8 @@ namespace SportsCenter.Infrastructure.DAL.Handlers.EmployeesHandlers
                 {
                     Id = p.PracownikNavigation.OsobaId,
                     FullName = p.PracownikNavigation.Imie + " " + p.PracownikNavigation.Nazwisko,
-                    Email = p.PracownikNavigation.Email
+                    Email = p.PracownikNavigation.Email,
+                    Role = p.IdTypPracownikaNavigation.Nazwa
                 }).AsNoTracking().ToListAsync(cancellationToken);
         }
     }

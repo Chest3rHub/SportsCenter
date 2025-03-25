@@ -16,6 +16,8 @@ using SportsCenter.Application.Clients.Commands.AddDepositYourself;
 using SportsCenter.Application.Clients.Commands.UpdateClientDeposit;
 using SportsCenter.Application.Clients.Commands.UpdateDiscount;
 using static System.Net.Mime.MediaTypeNames;
+using SportsCenter.Application.Clients.Queries.GetClientByEmail;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace SportsCenter.Api.Controllers;
 
@@ -27,10 +29,27 @@ public class ClientsController : BaseController
     }
 
     [Authorize(Roles = "Pracownik administracyjny,Wlasciciel")]
-    [HttpGet]
-    public async Task<IActionResult> GetClientAsync([FromQuery] int offset = 0)
+    [HttpGet("get-clients")]
+    public async Task<IActionResult> GetClientsAsync([FromQuery] int offset = 0)
     {
         return Ok(await Mediator.Send(new GetClients(offset)));
+    }
+
+    [Authorize(Roles = "Pracownik administracyjny,Wlasciciel")]
+    [HttpGet("get-client-by-email")]
+    public async Task<IActionResult> GetClientByEmailAsync([FromQuery] string email)
+    {
+        if (string.IsNullOrEmpty(email))
+        {
+            return BadRequest("Email cannot be empty.");
+        }
+        var client = await Mediator.Send(new GetClientByEmail(email));
+
+        if (client == null)
+        {
+            return NotFound($"No client found with email: {email}");
+        }
+        return Ok(client);
     }
 
     [AllowAnonymous]

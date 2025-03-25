@@ -20,7 +20,7 @@ namespace SportsCenter.Application.News.Commands.AddNews
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public DateTime? ValidUntil { get; set; }
 
-        public AddNews(string title, string content, DateTime validFrom, DateTime validUntil)
+        public AddNews(string title, string content, DateTime validFrom, DateTime? validUntil = null)
         {
             Title = title;
             Content = content;

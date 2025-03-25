@@ -99,8 +99,13 @@ namespace SportsCenter.Application.Activities.Commands.SignUpForActivity
                 await _sportActivityRepository.AddInstanceAsync(instanceOfActivity, cancellationToken);
             }
 
-            var czyJuzZapisany = await _sportActivityRepository.IsClientSignedUpAsync(clientId, instanceOfActivity.InstancjaZajecId, cancellationToken);
-            if (czyJuzZapisany)
+            if (instanceOfActivity.CzyOdwolane.HasValue && instanceOfActivity.CzyOdwolane.Value == true)
+            {
+                throw new ActivityCanceledException(instanceOfActivity.GrafikZajec.ZajeciaId);
+            }
+
+            var iaAlreagdySignedUp = await _sportActivityRepository.IsClientSignedUpAsync(clientId, instanceOfActivity.InstancjaZajecId, cancellationToken);
+            if (iaAlreagdySignedUp)
             {
                 throw new ClientAlreadySignedUpException(clientId);
             }

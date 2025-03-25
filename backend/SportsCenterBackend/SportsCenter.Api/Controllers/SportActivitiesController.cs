@@ -143,6 +143,10 @@ namespace SportsCenter.Api.Controllers;
         {
             return Conflict(new { message = ex.Message });
         }
+        catch (ActivityCanceledException ex)
+        {
+            return Conflict(new { message = ex.Message });
+        }
         catch (ActivityTimeTooFarException ex)
         {
             return Conflict(new { message = ex.Message });

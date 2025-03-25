@@ -18,9 +18,9 @@ namespace SportsCenter.Api.Controllers
 
         [AllowAnonymous]
         [HttpGet("Get-news")]
-        public async Task<IActionResult> GetNewsAsync()
+        public async Task<IActionResult> GetNewsAsync([FromQuery] int offset=0)
         {
-            return Ok(await Mediator.Send(new GetNews()));
+            return Ok(await Mediator.Send(new GetNews(offset)));
         }
 
         [Authorize(Roles = "Pracownik administracyjny,Wlasciciel")]

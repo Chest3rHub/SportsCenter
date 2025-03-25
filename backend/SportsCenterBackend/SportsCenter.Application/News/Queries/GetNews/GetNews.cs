@@ -9,5 +9,10 @@ namespace SportsCenter.Application.News.Queries.GetNews
 {
     public class GetNews : IQuery<IEnumerable<NewsDto>>
     {
+        public int Offset { get; set; } = 0;
+        public GetNews(int offSet)
+        {
+            Offset = offSet;
+        }
     }
 }

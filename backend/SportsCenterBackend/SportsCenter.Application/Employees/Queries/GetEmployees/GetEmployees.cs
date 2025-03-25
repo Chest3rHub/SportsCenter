@@ -10,5 +10,10 @@ namespace SportsCenter.Application.Employees.Queries.GetEmployees
 {
     public class GetEmployees : IQuery<IEnumerable<EmployeeDto>>
     {
+        public int Offset { get; set; }
+        public GetEmployees(int offSet)
+        {
+            Offset = offSet;
+        }
     }
 }

@@ -23,6 +23,29 @@ namespace SportsCenter.Application.SportsCenterManagement.Commands.SetSpecialSpo
         {
             var existingDate = await _sportsCenterRepository.GetSpecialWorkingHoursByDateAsync(request.Date, cancellationToken);
 
+            TimeOnly newOpenHour = TimeOnly.FromTimeSpan(request.OpenHour);
+            TimeOnly newCloseHour = TimeOnly.FromTimeSpan(request.CloseHour);
+
+            var conflictingReservations = await _sportsCenterRepository.GetConflictingReservationsOrActivities(DateOnly.FromDateTime(request.Date), newOpenHour, newCloseHour, cancellationToken);
+
+            //w przyszlosci to zostanie wyslane na frontend
+            if (conflictingReservations.Any())
+            {
+                Console.WriteLine("Istnieją rezerwacje lub zajęcia kolidujące z nowymi godzinami pracy:");
+
+                foreach (var conflict in conflictingReservations)
+                {
+                    if (conflict is Rezerwacja reservation)
+                    {
+                        Console.WriteLine($"Rezerwacja ID: {reservation.RezerwacjaId}");
+                    }
+                    else if (conflict is InstancjaZajec activityInstance)
+                    {
+                        Console.WriteLine($"Zajęcia ID: {activityInstance.GrafikZajec.ZajeciaId}");
+                    }
+                }
+            }
+
             if (existingDate != null)
             {
 

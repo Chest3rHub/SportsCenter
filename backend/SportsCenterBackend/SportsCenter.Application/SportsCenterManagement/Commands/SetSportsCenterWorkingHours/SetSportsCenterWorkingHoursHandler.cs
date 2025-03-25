@@ -22,6 +22,35 @@ namespace SportsCenter.Application.SportsClubManagement.Commands.AddSportsClubWo
         public async Task<Unit> Handle(SetSportsCenterWorkingHours request, CancellationToken cancellationToken)
         {
 
+            TimeOnly newOpenHour = TimeOnly.FromTimeSpan(request.OpenHour);
+            TimeOnly newCloseHour = TimeOnly.FromTimeSpan(request.CloseHour);
+
+            DayOfWeek targetDayOfWeek = ConvertStringToDayOfWeek(request.DayOfWeek);
+
+            var conflictingReservations = await _sportsCenterRepository.GetConflictingReservationsOrActivitiesByDayOfWeek(targetDayOfWeek, newOpenHour, newCloseHour, cancellationToken);
+
+            // w przyszlosci to zostanie zwrocone na frontend
+            if (conflictingReservations.Any())
+            {
+                Console.WriteLine($"Istnieją rezerwacje lub zajęcia kolidujące z nowymi godzinami pracy:{newOpenHour}, {newCloseHour}");
+
+                foreach (var conflict in conflictingReservations)
+                {
+                    if (conflict is Rezerwacja reservation)
+                    {
+                        Console.WriteLine($"Rezerwacja ID: {reservation.RezerwacjaId}");
+                    }
+                    else if (conflict is InstancjaZajec activityInstance)
+                    {
+                        Console.WriteLine($"Zajęcia ID: {activityInstance.GrafikZajec.ZajeciaId}, {activityInstance.Data}");
+                    }
+                    else
+                    {
+                        Console.WriteLine($"Nieoczekiwany typ obiektu: {conflict.GetType().Name}");
+                    }
+                }
+            }
+
             var dayOfWeekExists = await _sportsCenterRepository.CheckIfDayExistsAsync(request.DayOfWeek, cancellationToken);
 
             if (!dayOfWeekExists)
@@ -53,5 +82,28 @@ namespace SportsCenter.Application.SportsClubManagement.Commands.AddSportsClubWo
 
             return Unit.Value;
         }
+        public static DayOfWeek ConvertStringToDayOfWeek(string dayOfWeekString)
+        {
+            var dayOfWeekMapping = new Dictionary<string, DayOfWeek>
+            {
+                { "poniedzialek", DayOfWeek.Monday },
+                { "wtorek", DayOfWeek.Tuesday },
+                { "sroda", DayOfWeek.Wednesday },
+                { "czwartek", DayOfWeek.Thursday },
+                { "piatek", DayOfWeek.Friday },
+                { "sobota", DayOfWeek.Saturday },
+                { "niedziela", DayOfWeek.Sunday }
+            };
+
+            if (dayOfWeekMapping.TryGetValue(dayOfWeekString.ToLower(), out var dayOfWeek))
+            {
+                return dayOfWeek;
+            }
+            else
+            {
+                throw new ArgumentException($"Invalid day of the week: {dayOfWeekString}");
+            }
+        }
+
     }
 }

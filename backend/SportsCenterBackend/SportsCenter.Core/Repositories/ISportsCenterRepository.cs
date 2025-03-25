@@ -16,5 +16,7 @@ namespace SportsCenter.Core.Repositories
         Task<WyjatkoweGodzinyPracy> GetSpecialWorkingHoursByDateAsync(DateTime date, CancellationToken cancellationToken);
         Task UpdateDateWorkingHours(WyjatkoweGodzinyPracy workingHours, CancellationToken cancellationToken);
         Task AddWorkingHoursForGivenDate(WyjatkoweGodzinyPracy workingHoursOfDay, CancellationToken cancellationToken);
+        Task<List<object>> GetConflictingReservationsOrActivities(DateOnly date, TimeOnly newOpenHour, TimeOnly newCloseHour, CancellationToken cancellationToken);
+        Task<IEnumerable<object>> GetConflictingReservationsOrActivitiesByDayOfWeek(DayOfWeek dayOfWeek, TimeOnly newOpenHour, TimeOnly newCloseHour, CancellationToken cancellationToken);
     }
 }

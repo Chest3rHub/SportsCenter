@@ -15,6 +15,7 @@ using SportsCenter.Application.Clients.Commands.AddDiscount;
 using SportsCenter.Application.Clients.Commands.AddDepositYourself;
 using SportsCenter.Application.Clients.Commands.UpdateClientDeposit;
 using SportsCenter.Application.Clients.Commands.UpdateDiscount;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace SportsCenter.Api.Controllers;
 
@@ -27,9 +28,9 @@ public class ClientsController : BaseController
 
     [Authorize(Roles = "Pracownik administracyjny,Wlasciciel")]
     [HttpGet]
-    public async Task<IActionResult> GetClientAsync()
+    public async Task<IActionResult> GetClientAsync([FromQuery] int offset = 0)
     {
-        return Ok(await Mediator.Send(new GetClients()));
+        return Ok(await Mediator.Send(new GetClients(offset)));
     }
 
     [AllowAnonymous]
@@ -84,13 +85,9 @@ public class ClientsController : BaseController
 
     [Authorize(Roles = "Pracownik administracyjny,Wlasciciel")]
     [HttpGet("byAge")]
-    public async Task<IActionResult> GetClientsByAgeAsync([FromQuery] int minAge, [FromQuery] int maxAge)
+    public async Task<IActionResult> GetClientsByAgeAsync([FromQuery] int minAge, [FromQuery] int maxAge, [FromQuery] int offset = 0)
     {
-        var query = new GetClientsByAge
-        {
-            MinAge = minAge,
-            MaxAge = maxAge
-        };
+        var query = new GetClientsByAge(offset, minAge, maxAge);
 
         var clients = await Mediator.Send(query);
         return Ok(clients);
@@ -98,12 +95,9 @@ public class ClientsController : BaseController
 
     [Authorize(Roles = "Pracownik administracyjny,Wlasciciel")]
     [HttpGet("byTags")]
-    public async Task<IActionResult> GetClientsByTagsAsync([FromQuery] List<int> tagIds)
+    public async Task<IActionResult> GetClientsByTagsAsync([FromQuery] List<int> tagIds, [FromQuery] int offset = 0)
     {
-        var query = new GetClientsByTags
-        {
-            TagIds = tagIds
-        };
+        var query = new GetClientsByTags(offset, tagIds);
 
         var clients = await Mediator.Send(query);
         return Ok(clients);

@@ -5,6 +5,7 @@ using SportsCenter.Application.Exceptions.EmployeesException;
 using SportsCenter.Application.Exceptions.EmployeesExceptions;
 using SportsCenter.Application.Exceptions.ReservationExceptions;
 using SportsCenter.Application.Exceptions.SportActivitiesException;
+using SportsCenter.Application.Exceptions.SportActivitiesExceptions;
 using SportsCenter.Application.Exceptions.SubstitutionsExceptions;
 using SportsCenter.Application.Substitutions.Commands.AssignSubstitution;
 using SportsCenter.Application.Substitutions.Commands.ReportSubstitutionForActivities;
@@ -33,6 +34,10 @@ namespace SportsCenter.Api.Controllers
             catch (SportActivityNotFoundException ex)
             {
                 return NotFound(new { message = ex.Message });
+            }
+            catch (ActivityCanceledException ex)
+            {
+                return Conflict(new { message = ex.Message });
             }
             catch (SubstitutionForActivitiesNotAllowedException ex)
             {

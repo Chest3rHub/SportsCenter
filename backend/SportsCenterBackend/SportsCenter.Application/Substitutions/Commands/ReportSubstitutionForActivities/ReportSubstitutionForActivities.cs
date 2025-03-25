@@ -11,7 +11,8 @@ namespace SportsCenter.Application.Substitutions.Commands.ReportSubstitutionForA
 
     public sealed record ReportSubstitutionForActivities : ICommand<Unit>
     {
-        public int ActivitiesId { get; set; }
+        public int ActivityId { get; set; }
+        public DateOnly ActivityDate { get; set; }
 
     }
 }

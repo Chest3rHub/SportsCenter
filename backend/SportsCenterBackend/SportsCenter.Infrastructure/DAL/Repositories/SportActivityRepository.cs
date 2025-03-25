@@ -229,5 +229,11 @@ public class SportActivityRepository : ISportActivityRepository
 
         return activity;
     }
+    public async Task<InstancjaZajec?> GetInstanceOfActivityAsync(int activityId, DateOnly date, CancellationToken cancellationToken)
+    {
+        return await _dbContext.InstancjaZajecs
+            .Where(i => i.GrafikZajec.ZajeciaId == activityId && i.Data == date)
+            .FirstOrDefaultAsync(cancellationToken);
+    }
 
 }

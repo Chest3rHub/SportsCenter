@@ -19,12 +19,17 @@ internal class GetClientsHandler : IRequestHandler<GetClients, IEnumerable<Clien
 
     public async Task<IEnumerable<ClientDto>> Handle(GetClients request, CancellationToken cancellationToken)
     {
-        return await _dbContext.Klients.Include(x => x.KlientNavigation)
-            .Select(k => new ClientDto
-            {
-                Name = k.KlientNavigation.Imie,
-                Surname = k.KlientNavigation.Nazwisko,
-                Email = k.KlientNavigation.Email
-            }).AsNoTracking().ToListAsync(cancellationToken);
+        return await _dbContext.Klients
+       .Include(x => x.KlientNavigation)
+       .Select(k => new ClientDto
+       {
+           Name = k.KlientNavigation.Imie,
+           Surname = k.KlientNavigation.Nazwisko,
+           Email = k.KlientNavigation.Email
+       })
+       .AsNoTracking()
+       .Skip(request.Offset * 6)
+       .Take(6)
+       .ToListAsync(cancellationToken);
     }
 }

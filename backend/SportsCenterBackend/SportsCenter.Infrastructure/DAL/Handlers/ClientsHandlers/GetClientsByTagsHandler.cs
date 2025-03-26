@@ -18,6 +18,9 @@ namespace SportsCenter.Infrastructure.DAL.Handlers.ClientsHandlers
             return await _dbContext.Klients
                 .Include(x => x.KlientNavigation)
                 .Where(k => request.TagIds.All(tagId => k.Tags.Any(t => t.TagId == tagId)))
+                .OrderBy(k => k.KlientNavigation.Nazwisko)
+                .Skip(request.Offset * 6)
+                .Take(6)
                 .Select(k => new ClientByTagsDto
                 {
                     FullName = k.KlientNavigation.Nazwisko,

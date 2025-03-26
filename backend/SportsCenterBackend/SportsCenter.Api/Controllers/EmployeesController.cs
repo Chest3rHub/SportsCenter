@@ -37,9 +37,9 @@ namespace SportsCenter.Api.Controllers
 
         [Authorize(Roles = "Wlasciciel")]
         [HttpGet]
-        public async Task<IActionResult> ShowEmployeeAsync()
+        public async Task<IActionResult> ShowEmployeeAsync([FromQuery] int offset = 0)
         {
-            return Ok(await Mediator.Send(new GetEmployees()));
+            return Ok(await Mediator.Send(new GetEmployees(offset)));
         }
 
         //[Authorize(Roles = "Wlasciciel")]

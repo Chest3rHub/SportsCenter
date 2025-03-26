@@ -28,7 +28,12 @@ namespace SportsCenter.Infrastructure.DAL.Handlers.EmployeesHandlers
                     Email = p.PracownikNavigation.Email,
                     Role = p.IdTypPracownikaNavigation.Nazwa,
                     FireDate = p.DataZwolnienia,
-                }).AsNoTracking().ToListAsync(cancellationToken);
+                })
+                .OrderByDescending(p => p.Id)//od najnowszych
+                .Skip(request.Offset * 6)
+                .Take(6)
+                .AsNoTracking()
+                .ToListAsync(cancellationToken);
         }
     }
 }

@@ -32,6 +32,9 @@ namespace SportsCenter.Infrastructure.DAL.Handlers.ClientsHandlers
                     || today.Month == k.KlientNavigation.DataUr.Value.Month && today.Day < k.KlientNavigation.DataUr.Value.Day ? 1 : 0)
                 })
                 .Where(k => k.Age >= request.MinAge && k.Age <= request.MaxAge)
+                .OrderBy(k => k.Age)
+                .Skip(request.Offset * 6)
+                .Take(6)
                 .Select(k => new ClientByAgeDto
                 {
                     FullName = k.Nazwisko,

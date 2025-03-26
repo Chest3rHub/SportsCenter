@@ -10,6 +10,7 @@ using SportsCenter.Application.Users.Commands.ChangePassword;
 using SportsCenter.Application.Users.Commands.ChangeUserPassword;
 using SportsCenter.Application.Users.Commands.Login;
 using SportsCenter.Application.Users.Commands.RefreshToken;
+using SportsCenter.Application.Users.Queries.GetUserAccountInfo;
 
 namespace SportsCenter.Api.Controllers
 {
@@ -101,6 +102,21 @@ namespace SportsCenter.Api.Controllers
                 var result = await Mediator.Send(changePassword);
                 return Ok(result);
 
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "An error occurred while sending the request", details = ex.Message });
+            }
+        }
+
+        [Authorize]
+        [HttpGet("account-info")]
+        public async Task<IActionResult> GetUserAccountInfoAsync(CancellationToken cancellationToken)
+        {
+            try
+            {
+                var userAccountInfo = await Mediator.Send(new GetUserAccountInfo(), cancellationToken);
+                return Ok(userAccountInfo);
             }
             catch (Exception ex)
             {

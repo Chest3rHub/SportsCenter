@@ -31,16 +31,4 @@
       <Folder Include="Schedule\Commands\" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Compile Remove="Users\Queries\**" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <EmbeddedResource Remove="Users\Queries\**" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <None Remove="Users\Queries\**" />
-    </ItemGroup>
-
 </Project>

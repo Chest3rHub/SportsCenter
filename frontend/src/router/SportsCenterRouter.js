@@ -20,7 +20,7 @@ import EditNews from "../pages/EditNews";
 import NewsDetails from "../pages/NewsDetails";
 import ChangePassword from "../pages/ChangePassword";
 import Employees from "../pages/Emploees";
-
+import MyAccount from "../pages/MyAccount";
 // pozmieniac dla klienta na komponenty trasy itd
 
 const clientRouter = [
@@ -55,6 +55,10 @@ const clientRouter = [
             {
                 path: "/change-password",
                 element: <ChangePassword />,
+            },
+            {
+                path: '/account',
+                element: <MyAccount />,
             },
             {
                 path: "*",
@@ -107,6 +111,10 @@ const clientRouter = [
                     element: <ChangePassword />,
                 },
                 {
+                    path: '/account',
+                    element: <MyAccount />,
+                },
+                {
                     path: "/employees",
                     element: <Employees />,
                 },
@@ -153,6 +161,10 @@ const clientRouter = [
                     element: <ChangePassword />,
                 },
                 {
+                    path: '/account',
+                    element: <MyAccount />,
+                },
+                {
                     path: "*",
                     element: <NotFound />,
                 }
@@ -193,6 +205,10 @@ const clientRouter = [
                 {
                     path: "/change-password",
                     element: <ChangePassword />,
+                },
+                {
+                    path: '/account',
+                    element: <MyAccount />,
                 },
                 {
                     path: "*",
@@ -243,6 +259,10 @@ const clientRouter = [
                 {
                     path: "/change-password",
                     element: <ChangePassword />,
+                },
+                {
+                    path: '/account',
+                    element: <MyAccount />,
                 },
                 {
                     path: "*",

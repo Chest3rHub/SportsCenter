@@ -183,5 +183,19 @@ export default {
       confirmLabel:'Potwierdź zwolnienie:',
       noLabel:'Nie',
       yesLabel:'Tak',
-    }
+    },
+    accountPage: {
+      title: 'Moje konto',
+      personalDataLabel: 'Dane osobowe',
+      firstNameLabel: 'Imię',
+      lastNameLabel: 'Nazwisko',
+      addressLabel: 'Adres',
+      dateOfBirthLabel: 'Data urodzenia',
+      phoneNumberLabel: 'Numer telefonu',
+      emailLabel: 'E-mail',
+      role: 'Rola',
+      balance: 'Saldo',
+      addBalance: 'Doładuj saldo',
+      changePassword: 'Zmień hasło',
+    },
   };

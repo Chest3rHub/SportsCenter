@@ -181,5 +181,19 @@ export default {
       confirmLabel:'Confirm fire:',
       noLabel:'No',
       yesLabel:'Yes',
-    }
+    },
+    accountPage: {
+      title: 'My account',
+      personalDataLabel: 'Personal data',
+      firstNameLabel: 'First name',
+      lastNameLabel: 'Last name',
+      addressLabel: 'Address',
+      dateOfBirthLabel: 'Date of birth',
+      phoneNumberLabel: 'Phone number',
+      emailLabel: 'E-mail',
+      role: 'Role',
+      balance: 'Balance',
+      addBalance: 'Add deposit',
+      changePassword: 'Change password',
+    },
   };

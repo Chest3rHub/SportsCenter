@@ -12,10 +12,12 @@ export default function NewsDetails() {
     const navigate = useNavigate();
     const { dictionary }= useContext(SportsContext);
 
-    const { oneNewsDetails } = location.state || {};
+    const { oneNewsDetails, offsetFromLocation} = location.state || {};
     console.log(oneNewsDetails);
     function handleCancel() {
-        navigate(-1);
+        navigate('/news', {
+            state: { offsetFromLocation }  
+          });
     }
     return (<>
         <GreenBackground gap={"4vh"} height={"76.5vh"}>

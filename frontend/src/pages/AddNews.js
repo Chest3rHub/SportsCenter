@@ -147,7 +147,7 @@ function AddNews() {
   };
 
   function handleCancel() {
-    navigate(-1);
+    navigate('/news');
 }
 
   return (

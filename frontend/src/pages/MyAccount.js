@@ -38,7 +38,7 @@ export default function MyAccount() {
 
         fetchUserData();
       }
-  }, [token]); 
+  }, []); 
 
   function handleChangePassword() {
     navigate('/change-password');

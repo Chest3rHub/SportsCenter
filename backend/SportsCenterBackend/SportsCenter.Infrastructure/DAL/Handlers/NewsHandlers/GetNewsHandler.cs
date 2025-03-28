@@ -23,7 +23,7 @@ namespace SportsCenter.Infrastructure.DAL.Handlers.NewsHandlers
         public async Task<IEnumerable<NewsDto>> Handle(GetNews request, CancellationToken cancellationToken)
         {
             var today = DateOnly.FromDateTime(DateTime.UtcNow);
-            int pageSize = 6;
+            int pageSize = 3;
 
             var newsList = await _dbContext.Aktualnoscis
                 .Where(news =>  DateOnly.FromDateTime(news.WazneDo.Value) >= today || !news.WazneDo.HasValue)

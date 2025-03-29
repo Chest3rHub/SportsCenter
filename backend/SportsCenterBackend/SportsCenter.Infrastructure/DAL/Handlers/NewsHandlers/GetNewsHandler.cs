@@ -23,13 +23,16 @@ namespace SportsCenter.Infrastructure.DAL.Handlers.NewsHandlers
         public async Task<IEnumerable<NewsDto>> Handle(GetNews request, CancellationToken cancellationToken)
         {
             var today = DateOnly.FromDateTime(DateTime.UtcNow);
+            // zwraca 4 ale wyswietlane sa tylko 3 zeby bylo wiadomo czy odpytywac ze zwiekszonym 
+            // offsetem czy juz wiecej rekordow nie ma wiec sie nie da i tak
             int pageSize = 3;
+            int numberPerPage = 4;
 
             var newsList = await _dbContext.Aktualnoscis
                 .Where(news =>  DateOnly.FromDateTime(news.WazneDo.Value) >= today || !news.WazneDo.HasValue)
                 .OrderByDescending(news => news.WazneOd)
                 .Skip(request.Offset * pageSize)
-                .Take(pageSize)
+                .Take(numberPerPage)
                 .Select(news => new NewsDto
                 {
                     Id = news.AktualnosciId,

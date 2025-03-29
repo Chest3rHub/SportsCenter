@@ -8,6 +8,7 @@ import getEmployees from "../api/getEmployees";
 import { useNavigate } from "react-router-dom";
 import GreenButton from "../components/GreenButton";
 import fireEmployee from "../api/fireEmployee";
+import ChangePageButton from "../components/ChangePageButton";
 export default function Employees() {
 
     const { dictionary, token } = useContext(SportsContext);
@@ -17,14 +18,20 @@ export default function Employees() {
     const [loading, setLoading] = useState(true);
 
     const [selectedEmployee, setSelectedEmployee] = useState(null);
+    const [offset, setOffset] = useState(0);
+    const [stateToTriggerUseEffectAfterDeleting, setStateToTriggerUseEffectAfterDeleting] = useState(false);
+
+
     const handleOpen = (employee) => setSelectedEmployee(employee);;
     const handleClose = () => setSelectedEmployee(null);;
 
+    // max 6 pracownikow na stronie poki co
     const maxEmployeesPerPage = 6;
+    const employeesRequiredToEnablePagination = 7;
 
 
     useEffect(() => {
-        getEmployees(token)
+        getEmployees(token, offset)
             .then(response => {
                 return response.json();
             })
@@ -36,7 +43,7 @@ export default function Employees() {
             .catch(error => {
                 console.error('Błąd podczas wywoływania getEmployees:', error);
             });
-    }, []);
+    }, [offset,stateToTriggerUseEffectAfterDeleting]);
 
     function handleChangeEmployeePassword(id) {
         navigate(`/change-password`, {
@@ -45,15 +52,32 @@ export default function Employees() {
     }
 
     function handleFireEmployee(id) {
+        handleClose();
         fireEmployee(id, token)
             .then(response => {})
             .then(data => {
                 console.log("Pracownik zwolniony:", data);
+                setStateToTriggerUseEffectAfterDeleting((prev) => !prev);
+
             })
             .catch(error => {
                 console.error("Błąd podczas zwalniania pracownika:", error);
             });
     }
+
+    function handleNextPage(){
+        if (employees.length < 6) {
+            return;
+        }
+        setOffset(prevOffset => prevOffset + 1);
+    };
+
+    function handlePreviousPage(){
+        if (offset === 0) {
+            return;
+        }
+        setOffset(prevOffset => prevOffset - 1);
+    };
 
     const limitedEmployees = employees.slice(0, maxEmployeesPerPage);
 
@@ -189,6 +213,18 @@ export default function Employees() {
                         </Box>
                     </Box>
                 </Modal>
+                {<Box sx={{
+                display: "flex",
+                flexDirection: "row",
+                justifyContent: 'center',
+                columnGap: "4vw",
+                marginTop:'5vh',
+                
+        
+            }}>
+                <ChangePageButton disabled={offset === 0} onClick={handlePreviousPage} backgroundColor={"#F46C63"} minWidth={"10vw"}>{dictionary.newsPage.previousLabel}</ChangePageButton>
+                <ChangePageButton disabled={employees.length<employeesRequiredToEnablePagination} onClick={handleNextPage} backgroundColor={"#8edfb4"} minWidth={"10vw"}>{dictionary.newsPage.nextLabel}</ChangePageButton>
+            </Box>}
             </Box>
         </>
     );

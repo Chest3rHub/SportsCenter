@@ -43,7 +43,7 @@ export default function Employees() {
             .catch(error => {
                 console.error('Błąd podczas wywoływania getEmployees:', error);
             });
-    }, [offset,stateToTriggerUseEffectAfterDeleting]);
+    }, [offset, stateToTriggerUseEffectAfterDeleting]);
 
     function handleChangeEmployeePassword(id) {
         navigate(`/change-password`, {
@@ -54,7 +54,7 @@ export default function Employees() {
     function handleFireEmployee(id) {
         handleClose();
         fireEmployee(id, token)
-            .then(response => {})
+            .then(response => { })
             .then(data => {
                 console.log("Pracownik zwolniony:", data);
                 setStateToTriggerUseEffectAfterDeleting((prev) => !prev);
@@ -65,14 +65,14 @@ export default function Employees() {
             });
     }
 
-    function handleNextPage(){
+    function handleNextPage() {
         if (employees.length < 6) {
             return;
         }
         setOffset(prevOffset => prevOffset + 1);
     };
 
-    function handlePreviousPage(){
+    function handlePreviousPage() {
         if (offset === 0) {
             return;
         }
@@ -214,17 +214,17 @@ export default function Employees() {
                     </Box>
                 </Modal>
                 {<Box sx={{
-                display: "flex",
-                flexDirection: "row",
-                justifyContent: 'center',
-                columnGap: "4vw",
-                marginTop:'5vh',
-                
-        
-            }}>
-                <ChangePageButton disabled={offset === 0} onClick={handlePreviousPage} backgroundColor={"#F46C63"} minWidth={"10vw"}>{dictionary.newsPage.previousLabel}</ChangePageButton>
-                <ChangePageButton disabled={employees.length<employeesRequiredToEnablePagination} onClick={handleNextPage} backgroundColor={"#8edfb4"} minWidth={"10vw"}>{dictionary.newsPage.nextLabel}</ChangePageButton>
-            </Box>}
+                    display: "flex",
+                    flexDirection: "row",
+                    justifyContent: 'center',
+                    columnGap: "4vw",
+                    marginTop: '5vh',
+
+
+                }}>
+                    <ChangePageButton disabled={offset === 0} onClick={handlePreviousPage} backgroundColor={"#F46C63"} minWidth={"10vw"}>{dictionary.newsPage.previousLabel}</ChangePageButton>
+                    <ChangePageButton disabled={employees.length < employeesRequiredToEnablePagination} onClick={handleNextPage} backgroundColor={"#8edfb4"} minWidth={"10vw"}>{dictionary.newsPage.nextLabel}</ChangePageButton>
+                </Box>}
             </Box>
         </>
     );

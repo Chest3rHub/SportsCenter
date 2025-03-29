@@ -25,7 +25,6 @@ export default function MyAccount() {
     });
     
     useEffect(() => {
-      if (token) {
         const fetchUserData = async () => {
           try {
             const response = await getAccountInfo(token);
@@ -35,9 +34,7 @@ export default function MyAccount() {
               console.error("Błąd podczas pobierania danych użytkownika:", error);
           }
         };
-
         fetchUserData();
-      }
   }, []); 
 
   function handleChangePassword() {

@@ -114,7 +114,7 @@ export default {
       editLabel: 'Edytuj',
       removeLabel: 'Usuń',
       nothingHappenedLabel: 'Brak nowych aktualności.',
-      checkAgainSoonLabel: 'Sprawdź później lub wróć do poprzednich.',
+      checkAgainSoonLabel: 'Sprawdź ponownie później.',
       addNewsLabel: 'Utwórz',
       createNewsLabel: 'Utwórz aktualność',
       nextLabel:'Następne',

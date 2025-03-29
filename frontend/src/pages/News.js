@@ -18,6 +18,8 @@ export default function News() {
     // max 3 newsy na stronie poki co
     const maxNewsPerPage = 3;
 
+    const newsRequiredToEnablePagination = 4;
+
     const navigate = useNavigate();
 
     const [news, setNews] = useState([]);
@@ -78,7 +80,7 @@ export default function News() {
    // console.log(news);
 
     
-   // const limitedNews = news.slice(0, maxNewsPerPage);
+    const limitedNews = news.slice(0, maxNewsPerPage);
     return (
         <GreenBackground gap={"4vh"} height={"76.5vh"}>
             <Header>{dictionary.newsPage.newsLabel}</Header>
@@ -106,7 +108,7 @@ export default function News() {
                         rowGap:'3vh',
                         marginTop:'-3vh',
                         }}>
-                    {news.map((oneNews) => (
+                    {limitedNews.map((oneNews) => (
                         <SingleNews key={oneNews.id} oneNewsDetails={oneNews} onNewsDeleted={handleDeleteNews} offset={offset}/>
                     ))}
                     {news.length === 0 && (
@@ -145,7 +147,7 @@ export default function News() {
         
             }}>
                 <ChangePageButton disabled={offset === 0} onClick={handlePreviousPage} backgroundColor={"#F46C63"} minWidth={"10vw"}>{dictionary.newsPage.previousLabel}</ChangePageButton>
-                <ChangePageButton disabled={news.length<3} onClick={handleNextPage} backgroundColor={"#8edfb4"} minWidth={"10vw"}>{dictionary.newsPage.nextLabel}</ChangePageButton>
+                <ChangePageButton disabled={news.length<newsRequiredToEnablePagination} onClick={handleNextPage} backgroundColor={"#8edfb4"} minWidth={"10vw"}>{dictionary.newsPage.nextLabel}</ChangePageButton>
             </Box>}
 
         </GreenBackground>

@@ -20,6 +20,10 @@ namespace SportsCenter.Infrastructure.DAL.Handlers.EmployeesHandlers
 
         public async Task<IEnumerable<EmployeeDto>> Handle(GetEmployees request, CancellationToken cancellationToken)
         {
+            // zwraca 7 ale wyswietlanych jest tylko 6 zeby bylo wiadomo czy odpytywac ze zwiekszonym 
+            // offsetem czy juz wiecej rekordow nie ma wiec sie nie da i tak
+            int pageSize = 6;
+            int numberPerPage = 7;
             return await _dbContext.Pracowniks.Include(x => x.PracownikNavigation)
                 .Select(p => new EmployeeDto
                 {
@@ -30,8 +34,8 @@ namespace SportsCenter.Infrastructure.DAL.Handlers.EmployeesHandlers
                     FireDate = p.DataZwolnienia,
                 })
                 .OrderByDescending(p => p.Id)//od najnowszych
-                .Skip(request.Offset * 6)
-                .Take(6)
+                .Skip(request.Offset * pageSize)
+                .Take(numberPerPage)
                 .AsNoTracking()
                 .ToListAsync(cancellationToken);
         }

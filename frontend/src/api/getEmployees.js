@@ -1,7 +1,7 @@
 import API_URL from "../appConfig";
 
-export default async function getEmployees(token){
-    return fetch(`${API_URL}/Employees`, {
+export default async function getEmployees(token,offset){
+    return fetch(`${API_URL}/Employees?offset=${offset}`, {
         method: 'GET',
         headers: {
           'Authorization': `Bearer ${token}`,

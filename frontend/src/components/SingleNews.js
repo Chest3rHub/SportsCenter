@@ -6,7 +6,7 @@ import NewsButton from "./NewsButton";
 import removeNews from "../api/removeNews";
 import { useNavigate } from "react-router-dom";
 
-export default function SingleNews({ oneNewsDetails, onNewsDeleted }) {
+export default function SingleNews({ oneNewsDetails, onNewsDeleted, offset }) {
     const {role, dictionary, token} = useContext(SportsContext);
     const navigate = useNavigate();
 
@@ -36,14 +36,14 @@ export default function SingleNews({ oneNewsDetails, onNewsDeleted }) {
         }
     };
 
-    const handleEdit = (oneNewsDetails) => {
+    const handleEdit = (oneNewsDetails, offset) => {
         navigate('/edit-news', {
-          state: { oneNewsDetails }  
+          state: { oneNewsDetails, offsetFromLocation: offset }  
         });
       };
       const handleShow = (id) => {
         navigate(`/news/${id}`, {
-          state: { oneNewsDetails }  
+          state: { oneNewsDetails, offsetFromLocation: offset }  
         });
     };
 
@@ -86,7 +86,7 @@ export default function SingleNews({ oneNewsDetails, onNewsDeleted }) {
             }}>
                 <NewsButton backgroundColor={"#8edfb4"} onClick={() => handleShow(oneNewsDetails.id)}>{dictionary.newsPage.showLabel}</NewsButton>
                 { (role ==="Wlasciciel" || role ==="Pracownik administracyjny") &&
-                 <NewsButton backgroundColor={"#f0aa4f"} onClick={() => handleEdit(oneNewsDetails)}>{dictionary.newsPage.editLabel}</NewsButton>}
+                 <NewsButton backgroundColor={"#f0aa4f"} onClick={() => handleEdit(oneNewsDetails, offset)}>{dictionary.newsPage.editLabel}</NewsButton>}
                 { (role ==="Wlasciciel" || role ==="Pracownik administracyjny") &&
                  <NewsButton backgroundColor={"#F46C63"} onClick={() => handleDelete(oneNewsDetails.id)}>{dictionary.newsPage.removeLabel}</NewsButton>}
 

@@ -29,6 +29,13 @@ export default function CustomInput(props) {
           "&.Mui-focused fieldset": {
             borderColor: props.error ? "red" : "#1976d2",
           },
+          ...(props.readonlyStyle && {
+            "&.Mui-focused fieldset": {
+              borderColor: "transparent", 
+              outline: "none",
+              
+            },
+          }),
         },
         ...props.additionalStyles,
       }}

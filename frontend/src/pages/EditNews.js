@@ -17,7 +17,7 @@ import SentimentDissatisfiedIcon from '@mui/icons-material/SentimentDissatisfied
 export default function EditNews() {
 
     const location = useLocation();
-    const { oneNewsDetails } = location.state || {};
+    const { oneNewsDetails, offsetFromLocation } = location.state || {};
 
     const { dictionary, toggleLanguage, token } = useContext(SportsContext);
 
@@ -142,7 +142,9 @@ export default function EditNews() {
         }
     };
     function handleCancel() {
-        navigate(-1);
+        navigate('/news', {
+            state: { offsetFromLocation }  
+          });
     }
 
     return (

@@ -25,7 +25,6 @@ export default function MyAccount() {
     });
     
     useEffect(() => {
-      if (token) {
         const fetchUserData = async () => {
           try {
             const response = await getAccountInfo(token);
@@ -35,10 +34,8 @@ export default function MyAccount() {
               console.error("Błąd podczas pobierania danych użytkownika:", error);
           }
         };
-
         fetchUserData();
-      }
-  }, [token]); 
+  }, []); 
 
   function handleChangePassword() {
     navigate('/change-password');
@@ -77,6 +74,7 @@ export default function MyAccount() {
                 value={userData.name}
                 size="small"
                 InputProps={{ readOnly: true }}
+                readonlyStyle
               />
               <CustomInput
                 label={dictionary.accountPage.lastNameLabel}
@@ -87,6 +85,7 @@ export default function MyAccount() {
                 value={userData.lastName}
                 size="small"
                 InputProps={{ readOnly: true }}
+                readonlyStyle
               />
               <CustomInput
                 label={dictionary.accountPage.addressLabel}
@@ -97,6 +96,7 @@ export default function MyAccount() {
                 value={userData.address}
                 size="small"
                 InputProps={{ readOnly: true }}
+                readonlyStyle
               />
               <CustomInput
                 label={dictionary.accountPage.dateOfBirthLabel}
@@ -110,6 +110,7 @@ export default function MyAccount() {
                   shrink: true
                 }}
                 InputProps={{ readOnly: true }}
+                readonlyStyle
               />
               <CustomInput
                 label={dictionary.accountPage.phoneNumberLabel}
@@ -120,6 +121,7 @@ export default function MyAccount() {
                 value={userData.phoneNumber}
                 size="small"
                 InputProps={{ readOnly: true }}
+                readonlyStyle
               />
             </Box>
 

@@ -196,4 +196,27 @@ export default {
       addBalance: 'Add deposit',
       changePassword: 'Change password',
     },
+    mainPage: {
+      title: "Strona główna",
+      whatIsNewLabel: "Co nowego?",
+      noNewsLabel: "Brak nowości",
+      upcomingClassesLabel: "Nadchodzące zajęcia",
+      noClassesLabel: "Brak zajęć",
+      currentBalanceLabel: "Aktualne saldo:",
+      activeDiscountsLabel: "Aktywne zniżki:",
+      noDiscountsLabel: "brak",
+      classesDiscountLabel: "Zajęcia",
+      productsDiscountLabel: "Rezerwacje",
+      topUpLabel: "Doładuj",
+      howToGetDiscountsLabel: "Jak uzyskać zniżki",
+      },
+      daysOfWeekShort: {
+        monday: 'pn',
+        tuesday: 'wt',
+        wednesday: 'śr',
+        thursday: 'czw',
+        friday: 'pt',
+        saturday: 'sb',
+        sunday: 'nd'
+    },
   };

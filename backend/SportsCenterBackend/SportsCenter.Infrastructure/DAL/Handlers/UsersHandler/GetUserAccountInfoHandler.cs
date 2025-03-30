@@ -47,10 +47,14 @@ internal class GetUserAccountInfoHandler : IRequestHandler<GetUserAccountInfo, U
 
         string role = roleClaim ?? "Unknown";
         decimal? balance = null;
+        int? classesdiscount = null;
+        int? productsdiscount=null;
 
         if (user.Klient != null)
         {
             balance = user.Klient.Saldo;
+            classesdiscount=user.Klient.ZnizkaNaZajecia;
+            productsdiscount=user.Klient.ZnizkaNaProdukty;
         }
 
         return new UserAccountInfoDto
@@ -62,7 +66,9 @@ internal class GetUserAccountInfoHandler : IRequestHandler<GetUserAccountInfo, U
             DateOfBirth = user.DataUr,
             Email = user.Email,
             Role = role,
-            Balance = balance
+            Balance = balance,
+            ClassesDiscount = classesdiscount,
+            ProductsDiscount = productsdiscount 
         };
     }
 }

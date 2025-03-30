@@ -258,5 +258,12 @@ namespace SportsCenter.Infrastructure.DAL.Repositories
             await _dbContext.SaveChangesAsync(cancellationToken);
             return 1;
         }
+        public async Task<decimal> GetClientBalanceAsync(int clientId, CancellationToken cancellationToken)
+        {
+            return await _dbContext.Klients
+                .Where(k => k.KlientId == clientId)
+                .Select(k => k.Saldo)
+                .FirstOrDefaultAsync(cancellationToken);
+        }
     }
 }

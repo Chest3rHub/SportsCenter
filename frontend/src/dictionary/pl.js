@@ -198,4 +198,28 @@ export default {
       addBalance: 'Doładuj saldo',
       changePassword: 'Zmień hasło',
     },
+    mainPage: {
+      title: "Strona główna",
+      whatIsNewLabel: "Co nowego?",
+      noNewsLabel: "Brak nowości",
+      upcomingClassesLabel: "Nadchodzące zajęcia",
+      noClassesLabel: "Brak zajęć",
+      currentBalanceLabel: "Aktualne saldo:",
+      activeDiscountsLabel: "Aktywne zniżki:",
+      noDiscountsLabel: "brak",
+      classesDiscountLabel: "Zajęcia",
+      productsDiscountLabel: "Rezerwacje",
+      addBalanceLabel: "Doładuj",
+      howToGetDiscountsLabel: "Jak uzyskać zniżki",
+    },
+    daysOfWeekShort: {
+      monday: 'pn',
+      tuesday: 'wt',
+      wednesday: 'śr',
+      thursday: 'czw',
+      friday: 'pt',
+      saturday: 'sb',
+      sunday: 'nd'
+  },
+
   };

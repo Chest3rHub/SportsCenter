@@ -15,6 +15,7 @@ using SportsCenter.Application.Clients.Commands.AddDiscount;
 using SportsCenter.Application.Clients.Commands.AddDepositYourself;
 using SportsCenter.Application.Clients.Commands.UpdateClientDeposit;
 using SportsCenter.Application.Clients.Commands.UpdateDiscount;
+using SportsCenter.Application.Clients.Queries.GetClientBalance;
 using static System.Net.Mime.MediaTypeNames;
 using SportsCenter.Application.Clients.Queries.GetClientByEmail;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
@@ -267,6 +268,18 @@ public class ClientsController : BaseController
         {
             return StatusCode(500, new { message = "An error occurred while sending the request", details = ex.Message });
         }
+    }
+    
+    [HttpGet("get-client-balance")]
+    public async Task<IActionResult> GetClientBalanceAsync([FromQuery] int clientId)
+    {
+        if (clientId <= 0)
+        {
+            return BadRequest("Invalid client ID.");
+        }
+    
+        var balance = await Mediator.Send(new GetClientBalance(clientId));
+        return Ok(balance);
     }
 }
 

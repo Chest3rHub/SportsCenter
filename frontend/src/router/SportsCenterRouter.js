@@ -21,6 +21,8 @@ import NewsDetails from "../pages/NewsDetails";
 import ChangePassword from "../pages/ChangePassword";
 import Employees from "../pages/Emploees";
 import MyAccount from "../pages/MyAccount";
+import ClientDashboard from "../pages/ClientDashboard"
+
 // pozmieniac dla klienta na komponenty trasy itd
 
 const clientRouter = [
@@ -30,7 +32,7 @@ const clientRouter = [
         children: [
             {
                 path: "/",
-                element: <Home />,
+                element: <ClientDashboard />,
             },
             {
                 path: "/dashboard",  

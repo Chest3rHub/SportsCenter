@@ -9,4 +9,6 @@ public class UserAccountInfoDto
     public string Email { get; set; }
     public string Role { get; set; }
     public decimal? Balance { get; set; }
+    public int? ClassesDiscount { get; set; } 
+    public int? ProductsDiscount { get; set; } 
 }

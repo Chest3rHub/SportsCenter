@@ -23,5 +23,6 @@ namespace SportsCenter.Core.Repositories
         Task<List<Klient>> GetClientsWhoPaidForCancelledActivitiesAsync(int instanceOfActivityId, CancellationToken cancellationToken);
         Task<decimal> CalculateRefundAmountAsync(Klient client, int instanceOfActivityId, CancellationToken cancellationToken);
         Task<int> RefundClientAsync(int clientId, decimal amount, int activityId, CancellationToken cancellationToken);
+        Task<decimal> GetClientBalanceAsync(int clientId, CancellationToken cancellationToken);
     }
 }

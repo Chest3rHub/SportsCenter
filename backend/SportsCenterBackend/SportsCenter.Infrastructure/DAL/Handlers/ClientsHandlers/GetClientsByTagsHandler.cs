@@ -15,12 +15,15 @@ namespace SportsCenter.Infrastructure.DAL.Handlers.ClientsHandlers
 
         public async Task<IEnumerable<ClientByTagsDto>> Handle(GetClientsByTags request, CancellationToken cancellationToken)
         {
+            int PageSize = 6;
+            int NumberPerPage = 7;
+
             return await _dbContext.Klients
                 .Include(x => x.KlientNavigation)
                 .Where(k => request.TagIds.All(tagId => k.Tags.Any(t => t.TagId == tagId)))
                 .OrderBy(k => k.KlientNavigation.Nazwisko)
-                .Skip(request.Offset * 6)
-                .Take(6)
+                .Skip(request.Offset * PageSize)
+                .Take(NumberPerPage)
                 .Select(k => new ClientByTagsDto
                 {
                     FullName = k.KlientNavigation.Nazwisko,

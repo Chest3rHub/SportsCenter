@@ -31,15 +31,23 @@ namespace SportsCenter.Infrastructure.DAL.Handlers.EmployeesHandlers
                 throw new UnauthorizedAccessException("You cannot access your schedule without being logged in on your trainer account.");
             }
 
-            var zajeciaSchedule = await _dbContext.GrafikZajecs
+            int PageSize = 6;
+            int NumberPerPage = 7;
+
+            var zajeciaScheduleQuery = _dbContext.GrafikZajecs
                 .Include(dz => dz.Zajecia)
                 .ThenInclude(z => z.IdPoziomZajecNavigation)
                 .Where(dz => dz.PracownikId == trainerId)
-                .ToListAsync(cancellationToken);
+                .AsQueryable();
 
-
-            var rezerwacjaSchedule = await _dbContext.Rezerwacjas
+            var rezerwacjaScheduleQuery = _dbContext.Rezerwacjas
                 .Where(r => r.TrenerId == trainerId)
+                .AsQueryable();
+
+            var zajeciaSchedule = await zajeciaScheduleQuery
+                 .ToListAsync(cancellationToken);
+
+            var rezerwacjaSchedule = await rezerwacjaScheduleQuery
                 .ToListAsync(cancellationToken);
 
             var zajeciaScheduleDtos = zajeciaSchedule.Select(dz => new TrainerScheduleDto
@@ -70,7 +78,15 @@ namespace SportsCenter.Infrastructure.DAL.Handlers.EmployeesHandlers
                     .FirstOrDefault()
             }).ToList();
 
-            return zajeciaScheduleDtos.Union(rezerwacjaScheduleDtos);
+            var combinedSchedule = zajeciaScheduleDtos.Concat(rezerwacjaScheduleDtos).ToList();
+
+            var sortedAndPaginatedSchedule = combinedSchedule
+               .OrderByDescending(schedule => schedule.StartDate)
+               .Skip(request.Offset * PageSize)
+               .Take(NumberPerPage)
+               .ToList();
+
+            return sortedAndPaginatedSchedule;
         }
 
         private DateTime GetStartDate(GrafikZajec grafik)

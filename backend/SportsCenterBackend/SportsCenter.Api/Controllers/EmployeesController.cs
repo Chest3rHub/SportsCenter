@@ -42,7 +42,7 @@ namespace SportsCenter.Api.Controllers
             return Ok(await Mediator.Send(new GetEmployees(offset)));
         }
 
-        //[Authorize(Roles = "Wlasciciel")]
+        [Authorize(Roles = "Wlasciciel")]
         [HttpPost("Register")]
         public async Task<IActionResult> RegisterEmployeesAsync([FromBody] RegisterEmployee registerEmployee)
         {
@@ -169,11 +169,11 @@ namespace SportsCenter.Api.Controllers
 
         [Authorize(Roles = "Pracownik administracyjny,Wlasciciel")]
         [HttpGet("get-your-tasks")]
-        public async Task<IActionResult> GetTasksForEmployee(CancellationToken cancellationToken)
+        public async Task<IActionResult> GetTasksForEmployee([FromQuery] int offset = 0)
         {
             try
             {
-                var tasks = await Mediator.Send(new GetTasks(), cancellationToken);
+                var tasks = await Mediator.Send(new GetTasks(offset));
 
                 if (tasks == null || !tasks.Any())
                 {
@@ -285,11 +285,11 @@ namespace SportsCenter.Api.Controllers
 
         [Authorize(Roles = "Wlasciciel")]
         [HttpGet("Get-trainer-certificates")]
-        public async Task<IActionResult> GetTrainerCertificates(int trainerId)
+        public async Task<IActionResult> GetTrainerCertificates(int trainerId, [FromQuery] int offset = 0)
         {
             try
             {
-                return Ok(await Mediator.Send(new GetTrainerCertificates(trainerId)));
+                return Ok(await Mediator.Send(new GetTrainerCertificates(trainerId, offset)));
             }
             catch (EmployeeNotFoundException ex)
             {
@@ -307,9 +307,9 @@ namespace SportsCenter.Api.Controllers
 
         [Authorize(Roles = "Trener")]
         [HttpGet("Get-your-certificates")]
-        public async Task<IActionResult> GetYourCertificates()
+        public async Task<IActionResult> GetYourCertificates([FromQuery] int offset = 0)
         {
-            return Ok(await Mediator.Send(new GetYourCertificates()));
+            return Ok(await Mediator.Send(new GetYourCertificates(offset)));
         }
 
         [Authorize(Roles = "Trener")]
@@ -335,9 +335,9 @@ namespace SportsCenter.Api.Controllers
 
         [Authorize(Roles = "Wlasciciel,Pracownik administracyjny")]
         [HttpGet("get-absence-requests")]
-        public async Task<IActionResult> GetAbsenceRequests()
+        public async Task<IActionResult> GetAbsenceRequests([FromQuery] int offset = 0)
         {
-            return Ok(await Mediator.Send(new GetAbsenceRequests()));
+            return Ok(await Mediator.Send(new GetAbsenceRequests(offset)));
         }
 
         [Authorize(Roles = "Wlasciciel,Pracownik administracyjny")]
@@ -364,16 +364,16 @@ namespace SportsCenter.Api.Controllers
 
         [Authorize(Roles = "Trener")]
         [HttpGet("get-your-absence-requests")]
-        public async Task<IActionResult> GetYourAbsenceRequests()
+        public async Task<IActionResult> GetYourAbsenceRequests([FromQuery] int offset = 0)
         {
-            return Ok(await Mediator.Send(new GetYourAbsenceRequests()));
+            return Ok(await Mediator.Send(new GetYourAbsenceRequests(offset)));
         }
 
         [Authorize(Roles = "Trener")]
         [HttpGet("get-your-schedule")]
-        public async Task<IActionResult> GetYourSchedule()
+        public async Task<IActionResult> GetYourSchedule([FromQuery] int offset = 0)
         {
-            return Ok(await Mediator.Send(new GetTrainerSchedule()));
+            return Ok(await Mediator.Send(new GetTrainerSchedule(offset)));
         }
     }
 }

@@ -21,17 +21,24 @@ namespace SportsCenter.Infrastructure.DAL.Handlers.EmployeesHandlers
 
         public async Task<IEnumerable<AbsenceRequestDto>> Handle(GetAbsenceRequests request, CancellationToken cancellationToken)
         {
+        int PageSize = 6;
+        int NumberPerPage = 7;
+
             var absenceRequests = await _dbContext.BrakDostepnoscis
-               .Where(b => !b.CzyZatwierdzone)
-               .Select(b => new AbsenceRequestDto
-               {
-                   RequestId = b.BrakDostepnosciId,
-                   Date = b.Data,
-                   StartHour = b.GodzinaOd.ToTimeSpan(),
-                   EndHour = b.GodzinaDo.ToTimeSpan(),
-                   EmployeeId = b.PracownikId
-               })
-               .ToListAsync(cancellationToken);
+              .Where(b => !b.CzyZatwierdzone)
+              .OrderByDescending(b => b.Data) //Sortowane od najnowszych poki co
+              .Skip(request.Offset * PageSize)
+              .Take(NumberPerPage)
+              .Select(b => new AbsenceRequestDto
+              {
+                  RequestId = b.BrakDostepnosciId,
+                  Date = b.Data,
+                  StartHour = b.GodzinaOd.ToTimeSpan(),
+                  EndHour = b.GodzinaDo.ToTimeSpan(),
+                  EmployeeId = b.PracownikId
+              })
+              .AsNoTracking()
+              .ToListAsync(cancellationToken);
 
             return absenceRequests;
         }

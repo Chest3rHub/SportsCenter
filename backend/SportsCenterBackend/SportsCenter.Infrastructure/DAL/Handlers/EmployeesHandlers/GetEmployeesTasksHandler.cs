@@ -33,15 +33,22 @@ namespace SportsCenter.Infrastructure.DAL.Handlers.EmployeesHandlers
                 throw new UnauthorizedAccessException("You cannot access your tasks without being logged in on your account.");
             }
 
-            return await _dbContext.Zadanies
-                     .Where(t => t.PracownikId == employeeId)
-                     .Select(t => new TaskDto
-                     {            
-                         Description = t.Opis,
-                         DateTo = (DateOnly)t.DataDo
-                     })
-                     .AsNoTracking()  
-                     .ToListAsync(cancellationToken); 
+            int PageSize = 6;
+            int NumberPerPage = 7;
+
+            var tasks = await _dbContext.Zadanies
+           .Where(t => t.PracownikId == employeeId)
+           .OrderByDescending(t => t.DataDo) //Sortowane od najbliższego terminu
+           .Skip(request.Offset * PageSize)
+           .Take(NumberPerPage)
+           .Select(t => new TaskDto
+           {
+               Description = t.Opis,
+               DateTo = (DateOnly)t.DataDo
+           })
+           .AsNoTracking()
+           .ToListAsync(cancellationToken);
+            return tasks;
         }
     }
 }

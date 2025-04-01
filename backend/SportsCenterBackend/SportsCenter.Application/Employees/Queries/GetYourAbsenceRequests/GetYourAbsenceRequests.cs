@@ -10,5 +10,10 @@ namespace SportsCenter.Application.Employees.Queries.GetYourAbsenceRequests
 {
     public class GetYourAbsenceRequests : IQuery<IEnumerable<YourAbsenceRequestsDto>>
     {
+        public int Offset { get; set; } = 0;
+        public GetYourAbsenceRequests(int offSet)
+        {
+            Offset = offSet;
+        }
     }
 }

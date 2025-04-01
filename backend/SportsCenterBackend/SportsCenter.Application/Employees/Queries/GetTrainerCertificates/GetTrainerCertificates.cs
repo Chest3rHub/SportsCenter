@@ -10,10 +10,12 @@ namespace SportsCenter.Application.Employees.Queries.GetTrainerCertificates
     public class GetTrainerCertificates : IQuery<IEnumerable<TrainerCertificateDto>>
     {
         public int TrainerId { get; set; }
+        public int Offset { get; set; } = 0;
 
-        public GetTrainerCertificates(int trainerId)
+        public GetTrainerCertificates(int trainerId, int offset)
         {
             TrainerId = trainerId;
+            Offset = offset;
         }
     }
 }

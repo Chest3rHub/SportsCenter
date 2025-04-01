@@ -30,8 +30,14 @@ namespace SportsCenter.Infrastructure.DAL.Handlers.EmployeesHandlers
                 throw new UnauthorizedAccessException("You cannot access your absence requests without being logged in on your trainer account.");
             }
 
+            int PageSize = 6;
+            int NumberPerPage = 7;
+
             var absenceRequests = await _dbContext.BrakDostepnoscis
                 .Where(b => b.PracownikId == trainerId)
+                .OrderByDescending(b => b.Data)//Sortowane od najnowszych
+                .Skip(request.Offset * PageSize)
+                .Take(NumberPerPage)
                 .Select(b => new YourAbsenceRequestsDto
                 {
                     RequestId = b.BrakDostepnosciId,

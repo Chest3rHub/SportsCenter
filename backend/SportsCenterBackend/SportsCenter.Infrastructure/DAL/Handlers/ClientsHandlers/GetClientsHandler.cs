@@ -19,6 +19,9 @@ internal class GetClientsHandler : IRequestHandler<GetClients, IEnumerable<Clien
 
     public async Task<IEnumerable<ClientDto>> Handle(GetClients request, CancellationToken cancellationToken)
     {
+        int PageSize = 6;
+        int NumberPerPage = 7;
+
         return await _dbContext.Klients
        .Include(x => x.KlientNavigation)
        .Select(k => new ClientDto
@@ -28,8 +31,8 @@ internal class GetClientsHandler : IRequestHandler<GetClients, IEnumerable<Clien
            Email = k.KlientNavigation.Email
        })
        .AsNoTracking()
-       .Skip(request.Offset * 6)
-       .Take(6)
+       .Skip(request.Offset * PageSize)
+       .Take(NumberPerPage)
        .ToListAsync(cancellationToken);
     }
 }

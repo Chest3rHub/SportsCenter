@@ -20,6 +20,9 @@ namespace SportsCenter.Infrastructure.DAL.Handlers.ClientsHandlers
         {
             var today = DateOnly.FromDateTime(_clock.Current());
 
+            int PageSize = 6;
+            int NumberPerPage = 7;
+
             return await _dbContext.Klients.Include(x => x.KlientNavigation)
                 .Select(k => new
                 {
@@ -33,8 +36,8 @@ namespace SportsCenter.Infrastructure.DAL.Handlers.ClientsHandlers
                 })
                 .Where(k => k.Age >= request.MinAge && k.Age <= request.MaxAge)
                 .OrderBy(k => k.Age)
-                .Skip(request.Offset * 6)
-                .Take(6)
+                .Skip(request.Offset * PageSize)
+                .Take(NumberPerPage)
                 .Select(k => new ClientByAgeDto
                 {
                     FullName = k.Nazwisko,

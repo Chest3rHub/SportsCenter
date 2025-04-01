@@ -30,6 +30,9 @@ namespace SportsCenter.Infrastructure.DAL.Handlers.EmployeesHandlers
                 throw new UnauthorizedAccessException("You cannot access certificates without being logged in on your trainer account.");
             }
 
+            int PageSize = 6;
+            int NumberPerPage = 7;
+
             var certificates = await _dbContext.TrenerCertyfikats
                 .Where(tc => tc.PracownikId == trainerId)
                 .Join(_dbContext.Certyfikats, tc => tc.CertyfikatId, c => c.CertyfikatId, (tc, c) => new YourCertificatesDto
@@ -37,6 +40,9 @@ namespace SportsCenter.Infrastructure.DAL.Handlers.EmployeesHandlers
                     CertificateName = c.Nazwa,
                     ReceivedDate = tc.DataOtrzymania
                 })
+                .OrderByDescending(tc => tc.ReceivedDate)
+                .Skip(request.Offset * PageSize)
+                .Take(NumberPerPage)
                 .ToListAsync(cancellationToken);
 
             return certificates;

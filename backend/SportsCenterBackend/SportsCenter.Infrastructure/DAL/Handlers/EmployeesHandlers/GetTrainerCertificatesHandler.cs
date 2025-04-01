@@ -41,19 +41,29 @@ namespace SportsCenter.Infrastructure.DAL.Handlers.EmployeesHandlers
                 throw new NotTrainerEmployeeException(request.TrainerId);
             }
 
-            var trainerCertificates = await _dbContext.TrenerCertyfikats
+            int PageSize = 6;
+            int NumberPerPage = 7;
+
+            var trainerCertificatesQuery = _dbContext.TrenerCertyfikats
                 .Where(tc => tc.PracownikId == request.TrainerId)
+                .OrderByDescending(tc => tc.DataOtrzymania)
+                .Skip(request.Offset * PageSize)
+                .Take(NumberPerPage)
+                .AsNoTracking();
+
+            var trainerCertificates = await trainerCertificatesQuery
                 .Join(_dbContext.Certyfikats,
                     tc => tc.CertyfikatId,
                     c => c.CertyfikatId,
                     (tc, c) => new TrainerCertificateDto
-                    {                       
+                    {
                         CertificateName = c.Nazwa,
                         ReceivedDate = tc.DataOtrzymania
                     })
                 .ToListAsync(cancellationToken);
 
             return trainerCertificates;
+
         }
 
         private async Task<int?> GetEmployeeTypeByNameAsync(string name, CancellationToken cancellationToken)

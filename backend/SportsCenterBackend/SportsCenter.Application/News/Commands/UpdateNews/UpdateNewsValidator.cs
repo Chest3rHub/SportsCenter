@@ -12,8 +12,9 @@ namespace SportsCenter.Application.News.Commands.UpdateNews
         public UpdateNewsValidator()
         {
             RuleFor(x => x.ValidFrom)
-               .LessThan(x => x.ValidUntil)
-               .WithMessage("The 'Valid From' date must be earlier than the 'Valid Until' date.");
+             .LessThan(x => x.ValidUntil)
+             .When(x => x.ValidUntil.HasValue)
+             .WithMessage("The 'Valid From' date must be earlier than the 'Valid Until' date.");
         }
     }
 }

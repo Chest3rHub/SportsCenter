@@ -93,9 +93,9 @@ namespace SportsCenter.Api.Controllers
 
         [Authorize(Roles = "Wlasciciel,Pracownik administracyjny,Klient")]
         [HttpGet("get-products")]
-        public async Task<IActionResult> GetProducts()
+        public async Task<IActionResult> GetProducts([FromQuery] int offset = 0)
         {
-            var products = await Mediator.Send(new GetProducts());
+            var products = await Mediator.Send(new GetProducts(offset));
             return Ok(products);
         }
 
@@ -134,9 +134,9 @@ namespace SportsCenter.Api.Controllers
 
         [Authorize(Roles = "Klient")]
         [HttpGet("client-cart")]
-        public async Task<IActionResult> GetCartProducts()
+        public async Task<IActionResult> GetCartProducts([FromQuery] int offset = 0)
         {
-            var products = await Mediator.Send(new GetCartProducts());
+            var products = await Mediator.Send(new GetCartProducts(offset));
             return Ok(products);
         }
 

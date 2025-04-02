@@ -18,8 +18,14 @@ namespace SportsCenter.Infrastructure.DAL.Handlers.ProductsHandlers
             _dbContext = dbContext;
         }
         public async Task<IEnumerable<ProductDto>> Handle(GetProducts request, CancellationToken cancellationToken)
-        {          
+        {
+            int pageSize = 6;
+            int numberPerPage = 7;
+
             var products = await _dbContext.Produkts
+                .OrderBy(p => p.Nazwa)
+                .Skip(request.Offset * pageSize)
+                .Take(numberPerPage)
                 .Select(p => new ProductDto
                 {                 
                     Name = p.Nazwa,

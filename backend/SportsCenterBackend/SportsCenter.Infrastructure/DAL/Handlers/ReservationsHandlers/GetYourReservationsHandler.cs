@@ -29,8 +29,14 @@ namespace SportsCenter.Infrastructure.DAL.Handlers.ReservationsHandlers
                 throw new UnauthorizedAccessException("You cannot access your absence requests without being logged in on your account.");
             }
 
+            int pageSize = 6;
+            int numberPerPage = 7;
+
             var reservations = await _dbContext.Rezerwacjas
                   .Where(r => r.KlientId == userId)
+                  .OrderByDescending(r => r.DataOd)
+                  .Skip(request.Offset * pageSize)
+                  .Take(numberPerPage)
                   .Select(r => new YourReservationDto
                   {
                       CourtId = r.KortId,

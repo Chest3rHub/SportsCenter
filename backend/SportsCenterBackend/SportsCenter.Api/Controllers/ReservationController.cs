@@ -298,9 +298,9 @@ public class ReservationController : BaseController
 
     [Authorize(Roles = "Klient")]
     [HttpGet("get-your-reservations")]
-    public async Task<IActionResult> GetYourReservations()
+    public async Task<IActionResult> GetYourReservations([FromQuery] int offset = 0)
     {
-        return Ok(await Mediator.Send(new GetYourReservations()));
+        return Ok(await Mediator.Send(new GetYourReservations(offset)));
     }
 
     [Authorize(Roles = "Klient")]

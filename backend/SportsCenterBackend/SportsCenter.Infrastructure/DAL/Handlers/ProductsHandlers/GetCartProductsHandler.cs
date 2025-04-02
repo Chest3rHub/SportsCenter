@@ -38,9 +38,15 @@ namespace SportsCenter.Infrastructure.DAL.Handlers.ProductsHandlers
                 return new List<CartProductDto>();
             }
 
+            int pageSize = 6;
+            int numberPerPage = 7;
+
             var orderProducts = await _dbContext.ZamowienieProdukts
                 .Where(op => op.ZamowienieId == order.ZamowienieId)
                 .Include(op => op.Produkt)
+                .OrderBy(op => op.Produkt.Nazwa)
+                .Skip(request.Offset * pageSize)
+                .Take(numberPerPage)
                 .ToListAsync(cancellationToken);
 
             var cartProducts = orderProducts.Select(op => new CartProductDto

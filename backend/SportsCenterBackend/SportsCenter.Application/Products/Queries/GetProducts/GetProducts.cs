@@ -9,5 +9,10 @@ namespace SportsCenter.Application.Products.Queries.GetProducts
 {
     public class GetProducts : IQuery<IEnumerable<ProductDto>>
     {
+        public int Offset { get; set; } = 0;
+        public GetProducts(int offSet)
+        {
+            Offset = offSet;
+        }
     }
 }

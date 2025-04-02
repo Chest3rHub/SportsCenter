@@ -9,6 +9,10 @@ namespace SportsCenter.Application.Reservations.Queries.GetYourReservations
 {
     public class GetYourReservations : IQuery<IEnumerable<YourReservationDto>>
     {
-
+        public int Offset { get; set; } = 0;
+        public GetYourReservations(int offSet)
+        {
+            Offset = offSet;
+        }
     }
 }

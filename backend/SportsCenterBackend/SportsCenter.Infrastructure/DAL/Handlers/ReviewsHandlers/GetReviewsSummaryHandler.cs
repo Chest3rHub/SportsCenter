@@ -21,6 +21,9 @@ namespace SportsCenter.Infrastructure.DAL.Handlers.ReviewsHandler
 
           public async Task<IEnumerable<ReviewsSummaryDto>> Handle(GetReviewsSummary request, CancellationToken cancellationToken)
         {
+            int pageSize = 6;
+            int numberPerPage = 7;
+
             var reviews = await _dbContext.Ocenas
                 .Where(o =>
                     o.DataWystawienia >= DateOnly.FromDateTime(request.StartDate) && o.DataWystawienia <= DateOnly.FromDateTime(request.EndDate))
@@ -37,6 +40,9 @@ namespace SportsCenter.Infrastructure.DAL.Handlers.ReviewsHandler
                     .ThenInclude(gz => gz.GrafikZajec)
                     .ThenInclude(gz => gz.Zajecia)
                     .ThenInclude(z => z.IdPoziomZajecNavigation)
+                .OrderByDescending(o => o.DataWystawienia)
+                .Skip(request.Offset * pageSize)
+                .Take(numberPerPage)
                 .Select(o => new ReviewsSummaryDto
                 {
                     Description = o.Opis,

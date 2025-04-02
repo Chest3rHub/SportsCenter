@@ -9,5 +9,10 @@ namespace SportsCenter.Application.Orders.Queries.GetClientOrders
 {
     public class GetClientOrders : IQuery<IEnumerable<ClientOrdersDto>>
     {
+        public int Offset { get; set; } = 0;
+        public GetClientOrders(int offSet)
+        {
+            Offset = offSet;
+        }
     }
 }

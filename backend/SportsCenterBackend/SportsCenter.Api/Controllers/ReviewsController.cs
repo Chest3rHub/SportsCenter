@@ -47,14 +47,14 @@ namespace SportsCenter.Api.Controllers
 
         [Authorize(Roles = "Wlasciciel")]
         [HttpGet("Get-reviews")]
-        public async Task<IActionResult> GetReviewsSummary([FromQuery] DateTime startDate, [FromQuery] DateTime endDate)
+        public async Task<IActionResult> GetReviewsSummary([FromQuery] DateTime startDate, [FromQuery] DateTime endDate, [FromQuery] int offset = 0)
         {
             if (startDate > endDate)//nie jestem pewna gdzie ten warunek umiescic
             {
                 return BadRequest("StartDate cannot be greater than EndDate.");
             }
 
-            var query = new GetReviewsSummary(startDate, endDate);
+            var query = new GetReviewsSummary(startDate, endDate, offset);
             var result = await Mediator.Send(query);
 
             return Ok(result);         

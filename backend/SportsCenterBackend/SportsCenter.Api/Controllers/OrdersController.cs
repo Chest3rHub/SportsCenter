@@ -19,9 +19,9 @@ namespace SportsCenter.Api.Controllers
 
         [Authorize(Roles = "Pracownik administracyjny")]
         [HttpGet("Get-orders-to-process")]
-        public async Task<IActionResult> GetOrdersToProcessAsync()
+        public async Task<IActionResult> GetOrdersToProcessAsync([FromQuery] int offset = 0)
         {
-            return Ok(await Mediator.Send(new GetOrdersToProcess()));
+            return Ok(await Mediator.Send(new GetOrdersToProcess(offset)));
         }
 
         [Authorize(Roles = "Pracownik administracyjny")]
@@ -75,9 +75,9 @@ namespace SportsCenter.Api.Controllers
 
         [Authorize(Roles = "Klient")]
         [HttpGet("Get-orders")]
-        public async Task<IActionResult> GetOrdersAsync()
+        public async Task<IActionResult> GetOrdersAsync([FromQuery] int offset = 0)
         {
-            return Ok(await Mediator.Send(new GetClientOrders()));
+            return Ok(await Mediator.Send(new GetClientOrders(offset)));
         }
 
         [Authorize(Roles = "Pracownik administracyjny")]

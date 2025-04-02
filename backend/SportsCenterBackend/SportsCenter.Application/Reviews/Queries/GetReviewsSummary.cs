@@ -11,11 +11,13 @@ namespace SportsCenter.Application.Reviews.Queries
     {
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
+        public int Offset { get; set; } = 0;
 
-        public GetReviewsSummary(DateTime startDate, DateTime endDate)
+        public GetReviewsSummary(DateTime startDate, DateTime endDate, int offset)
         {
             StartDate = startDate;
             EndDate = endDate;
+            Offset = offset;
         }
     }
 }

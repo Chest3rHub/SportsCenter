@@ -8,5 +8,10 @@ namespace SportsCenter.Application.Orders.Queries.GetOrdersToProcess
 {
     public class GetOrdersToProcess : IQuery<IEnumerable<OrdersToProcessDto>>
     {
+        public int Offset { get; set; } = 0;
+        public GetOrdersToProcess(int offSet)
+        {
+            Offset = offSet;
+        }
     }
 }

@@ -30,6 +30,9 @@ namespace SportsCenter.Infrastructure.DAL.Handlers.OrdersHandler
                 throw new UnauthorizedAccessException("You cannot access the orders without logging in.");
             }
 
+            int pageSize = 6;
+            int numberPerPage = 7;
+
             var orders = await _dbContext.Zamowienies
                 .Where(z => z.KlientId == clientId)
                 .Join(_dbContext.ZamowienieProdukts, z => z.ZamowienieId, zp => zp.ZamowienieId, (z, zp) => new { z, zp })
@@ -43,6 +46,9 @@ namespace SportsCenter.Infrastructure.DAL.Handlers.OrdersHandler
                     CompletionDate = joined.z.DataRealizacji.HasValue ? (DateOnly)joined.z.DataRealizacji : DateOnly.MinValue,                
                     Status = joined.z.Status
                 })
+                .OrderByDescending(o => o.OrderDate)
+                .Skip(request.Offset * pageSize)
+                .Take(numberPerPage)
                 .ToListAsync(cancellationToken);
 
             return orders;

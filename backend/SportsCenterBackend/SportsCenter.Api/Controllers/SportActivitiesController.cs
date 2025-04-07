@@ -20,6 +20,7 @@ using SportsCenter.Application.Exceptions.SportActivitiesException;
 using SportsCenter.Application.Exceptions.SportActivitiesExceptions;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 using System.Security.Cryptography;
+using SportsCenter.Application.Activities.Queries.GetYourUpcomingActivities;
 
 namespace SportsCenter.Api.Controllers;
 
@@ -264,6 +265,14 @@ namespace SportsCenter.Api.Controllers;
         {
             return StatusCode(500, new { message = "An error occurred while sending the request", details = ex.Message });
         }
+    }
+
+    [Authorize(Roles = "Klient")]
+    [HttpGet("get-your-upcoming-activities")]
+    public async Task<IActionResult> GetYourUpcomingActivities([FromQuery] int limit = 5)
+    {
+        var result = await Mediator.Send(new GetYourUpcomingActivities(limit));
+        return Ok(result);
     }
 
     [Authorize(Roles = "Wlasciciel,Pracownik administracyjny")]

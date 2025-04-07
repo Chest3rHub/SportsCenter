@@ -36,13 +36,8 @@ internal class GetUserAccountInfoHandler : IRequestHandler<GetUserAccountInfo, U
             throw new UnauthorizedAccessException("You are not authorized to access account informations.");
         }
 
-        int pageSize = 6;
-        int numberPerPage = 7;
-
         var user = await _dbContext.Osobas
             .Include(o => o.Klient)
-            .Skip(request.Offset * pageSize)
-            .Take(numberPerPage)
             .FirstOrDefaultAsync(o => o.OsobaId == userId, cancellationToken);
 
         if (user == null)

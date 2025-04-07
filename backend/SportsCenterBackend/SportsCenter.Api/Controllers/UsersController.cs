@@ -111,11 +111,11 @@ namespace SportsCenter.Api.Controllers
 
         [Authorize]
         [HttpGet("account-info")]
-        public async Task<IActionResult> GetUserAccountInfoAsync(CancellationToken cancellationToken, [FromQuery] int offset = 0)
+        public async Task<IActionResult> GetUserAccountInfoAsync(CancellationToken cancellationToken)
         {
             try
             {
-                var userAccountInfo = await Mediator.Send(new GetUserAccountInfo(offset), cancellationToken);
+                var userAccountInfo = await Mediator.Send(new GetUserAccountInfo(), cancellationToken);
                 return Ok(userAccountInfo);
             }
             catch (Exception ex)

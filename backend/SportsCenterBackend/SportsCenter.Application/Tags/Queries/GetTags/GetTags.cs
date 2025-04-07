@@ -9,5 +9,10 @@ namespace SportsCenter.Application.Tags.Queries.GetTags
 {
     public class GetTags : IQuery<IEnumerable<TagDto>>
     {
+        public int Offset { get; set; } = 0;
+        public GetTags(int offSet)
+        {
+            Offset = offSet;
+        }
     }
 }

@@ -18,7 +18,8 @@ namespace SportsCenter.Infrastructure.DAL.Handlers.SportActivitiesHandlers
             _dbContext = dbContext;
         }
         public async Task<ActivitySummaryDto> Handle(GetActivitySummary request, CancellationToken cancellationToken)
-        {      
+        {
+
             int activityCount = await _dbContext.InstancjaZajecs
                 .CountAsync(r => r.Data >= DateOnly.FromDateTime(request.StartDate) && r.Data <= DateOnly.FromDateTime(request.EndDate), cancellationToken);
 

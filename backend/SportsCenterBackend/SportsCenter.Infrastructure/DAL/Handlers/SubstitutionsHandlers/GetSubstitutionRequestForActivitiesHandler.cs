@@ -21,6 +21,9 @@ namespace SportsCenter.Infrastructure.DAL.Handlers.SubstitutionsHandlers
 
         public async Task<IEnumerable<SubstitutionRequestDto>> Handle(GetSubstitutionRequests request, CancellationToken cancellationToken)
         {
+            int pageSize = 6;
+            int numberPerPage = 7;
+
             var substitutionRequests = await _dbContext.Zastepstwos
                 .Where(z => z.PracownikZastepujacy == null)
                 .Select(z => new SubstitutionRequestDto
@@ -33,6 +36,8 @@ namespace SportsCenter.Infrastructure.DAL.Handlers.SubstitutionsHandlers
                     ReservationId = z.RezerwacjaId,
                     EmployeeId = z.PracownikNieobecnyId
                 })
+                 .Skip(request.Offset * pageSize)
+                .Take(numberPerPage)
                 .ToListAsync(cancellationToken);
 
             return substitutionRequests;

@@ -19,6 +19,7 @@ namespace SportsCenter.Infrastructure.DAL.Handlers.SportActivitiesHandler
 
         public async Task<SportActivityDto> Handle(GetSportActivity request, CancellationToken cancellationToken)
         {
+
             var sportActivity = await _dbContext.Zajecia
            .Include(sa => sa.IdPoziomZajecNavigation)
            .Include(sa => sa.GrafikZajecs)

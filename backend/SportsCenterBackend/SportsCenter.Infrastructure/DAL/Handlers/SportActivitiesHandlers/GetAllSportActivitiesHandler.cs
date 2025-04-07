@@ -18,6 +18,9 @@ namespace SportsCenter.Infrastructure.DAL.Handlers.SportActivitiesHandler
 
         public async Task<IEnumerable<SportActivityDto>> Handle(GetAllSportActivities request, CancellationToken cancellationToken)
         {
+            int pageSize = 6;
+            int numberPerPage = 7;
+
             DateOnly today = DateOnly.FromDateTime(DateTime.UtcNow);
             DateOnly startOfWeek = today.AddDays(-(int)today.DayOfWeek + 1).AddDays(request.WeekOffset * 7);
             DateOnly endOfWeek = startOfWeek.AddDays(6);
@@ -65,6 +68,8 @@ namespace SportsCenter.Infrastructure.DAL.Handlers.SportActivitiesHandler
             }
             return result.OrderBy(a => a.ActivityDate)
                        .ThenBy(a => a.StartHour)
+                       .Skip(request.WeekOffset * pageSize)
+                       .Take(numberPerPage)
                        .ToList();
         }
         private int DzienTygodniaNaNumer(string dzien)

@@ -218,9 +218,9 @@ namespace SportsCenter.Api.Controllers;
 
     [Authorize(Roles = "Klient")]
     [HttpGet("get-your-activities")]
-    public async Task<IActionResult> GetYourSportActivities()
+    public async Task<IActionResult> GetYourSportActivities([FromQuery] int offset = 0)
     {
-        return Ok(await Mediator.Send(new GetYourSportActivities()));
+        return Ok(await Mediator.Send(new GetYourSportActivities(offset)));
     }
 
     [Authorize(Roles = "Klient")]

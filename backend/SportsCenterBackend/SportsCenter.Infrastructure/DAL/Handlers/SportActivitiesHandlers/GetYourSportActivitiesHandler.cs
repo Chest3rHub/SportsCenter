@@ -29,6 +29,9 @@ namespace SportsCenter.Infrastructure.DAL.Handlers.SportActivitiesHandlers
                 throw new UnauthorizedAccessException("You cannot access your absence requests without being logged in on your account.");
             }
 
+            int pageSize = 6;
+            int numberPerPage = 7;
+
             var sportActivities = await _dbContext.InstancjaZajecKlients
             .Where(ik => ik.KlientId == userId)
             .Join(
@@ -63,8 +66,10 @@ namespace SportsCenter.Infrastructure.DAL.Handlers.SportActivitiesHandlers
                         ? (combined.iz.CzyOdwolane.Value ? "Tak" : "Nie")
                         : "Nie"
                 })
-            .OrderBy(activity => activity.DateOfActivity)
+            .OrderByDescending(activity => activity.DateOfActivity)
             .ThenBy(activity => activity.StartHour)
+            .Skip(request.Offset * pageSize)
+            .Take(numberPerPage)
             .ToListAsync(cancellationToken);
 
             return sportActivities;

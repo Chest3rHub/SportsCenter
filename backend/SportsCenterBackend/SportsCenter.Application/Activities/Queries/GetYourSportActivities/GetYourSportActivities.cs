@@ -9,5 +9,11 @@ namespace SportsCenter.Application.Activities.Queries.GetYourSportActivities
 {
     public class GetYourSportActivities : IQuery<IEnumerable<YourSportActivityDto>>
     {
+        public int Offset { get; set; } = 0;
+
+        public GetYourSportActivities(int offSet)
+        {
+            Offset = offSet;
+        }
     }
 }

@@ -82,21 +82,16 @@ namespace SportsCenter.Api.Controllers
         }
         [Authorize(Roles = "Wlasciciel,Pracownik administracyjny")]
         [HttpGet("get-substitution-requests")]
-        public async Task<IActionResult> GetSubstitutionRequests()
+        public async Task<IActionResult> GetSubstitutionRequests([FromQuery] int offset = 0)
         {
-            return Ok(await Mediator.Send(new GetSubstitutionRequests()));
+            return Ok(await Mediator.Send(new GetSubstitutionRequests(offset)));
         }
 
         [Authorize(Roles = "Wlasciciel,Pracownik administracyjny")]
         [HttpGet("get-free-trainers-for-substitution")]
-        public async Task<IActionResult> GetFreeTrainersForSubstitutions([FromQuery] DateTime date, [FromQuery] TimeSpan startHour, [FromQuery] TimeSpan endHour)
+        public async Task<IActionResult> GetFreeTrainersForSubstitutions([FromQuery] DateTime date, [FromQuery] TimeSpan startHour, [FromQuery] TimeSpan endHour, [FromQuery] int offset = 0)
         {
-            var query = new GetFreeTrainersForSubstitution
-            {
-                Date = date,
-                StartHour = startHour,
-                EndHour = endHour
-            };
+            var query = new GetFreeTrainersForSubstitution(date,startHour,endHour,offset);
 
             var availableTrainers = await Mediator.Send(query);
 

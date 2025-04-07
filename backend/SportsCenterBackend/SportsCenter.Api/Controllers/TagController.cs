@@ -18,9 +18,9 @@ namespace SportsCenter.Api.Controllers
 
         [Authorize(Roles = "Wlasciciel, Pracownik administracyjny")]
         [HttpGet]
-        public async Task<IActionResult> GetTagsAsync()
+        public async Task<IActionResult> GetTagsAsync([FromQuery] int offset = 0)
         {
-            return Ok(await Mediator.Send(new GetTags()));
+            return Ok(await Mediator.Send(new GetTags(offset)));
         }
 
         [Authorize(Roles = "Wlasciciel, Pracownik administracyjny")]

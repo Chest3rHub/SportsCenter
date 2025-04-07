@@ -20,11 +20,17 @@ namespace SportsCenter.Infrastructure.DAL.Handlers.TagsHandler
         }
         public async Task<IEnumerable<TagDto>> Handle(GetTags request, CancellationToken cancellationToken)
         {
+            int pageSize = 6;
+            int numberPerPage = 7;
+
             return await _dbContext.Tags
            .Select(k => new TagDto
            {
                TagName = k.Nazwa
-           }).AsNoTracking().ToListAsync(cancellationToken);
+           }).AsNoTracking()
+             .Skip(request.Offset * pageSize)
+             .Take(numberPerPage)
+             .ToListAsync(cancellationToken);
         }
     }
 }

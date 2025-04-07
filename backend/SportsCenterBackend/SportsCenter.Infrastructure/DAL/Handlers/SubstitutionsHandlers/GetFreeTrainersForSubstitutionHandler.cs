@@ -59,11 +59,17 @@ internal sealed class GetFreeTrainersForSubstitutionHandler : IRequestHandler<Ge
 
     public async Task<IEnumerable<FreeTrainerForSubstitutionDto>> Handle(GetFreeTrainersForSubstitution request, CancellationToken cancellationToken)
     {
+
+        int pageSize = 6;
+        int numberPerPage = 7;
+
         //uwaga: typ pracownika 3 jako trener (mozna by bylo ewentualnie znajdowac id po nazwie Trener"
         //o ile to jest dużo lepszy pomysł bo po czesci tez zaklada potrzebe seedowania danych
         var allTrainers = await _dbContext.Pracowniks
             .Where(p => p.IdTypPracownika == 3 && p.DataZwolnienia == null)
             .Include(p => p.PracownikNavigation)
+            .Skip(request.Offset * pageSize)
+            .Take(numberPerPage)
             .ToListAsync(cancellationToken);
 
 

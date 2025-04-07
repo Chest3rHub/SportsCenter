@@ -10,7 +10,7 @@ import getNews from "../api/getNews";
 import { SportsContext } from "../context/SportsContext";
 import CircularProgress from '@mui/material/CircularProgress';
 import getAccountInfo from "../api/getAccountInfo";
-import getYourActivities from "../api/getYourActivities";
+import getYourUpcomingActivities from "../api/getYourUpcomingActivities";
 
 export default function ClientDashboard() {
   const { dictionary, token, user } = useContext(SportsContext);
@@ -51,13 +51,13 @@ export default function ClientDashboard() {
           products: accountData.productsDiscount || 0
         });
         
-        const newsResponse = await getNews();
+        const newsResponse = await getNews(0);
         const newsData = await newsResponse.json();
         if (newsData?.length > 0) {
           setLatestNews([...newsData].sort((a, b) => new Date(b.date) - new Date(a.date))[0]);
         }
 
-        const activitiesResponse = await getYourActivities(token);
+        const activitiesResponse = await getYourUpcomingActivities(token);
         if (!activitiesResponse.ok) {
           throw new Error(`Activities request failed: ${activitiesResponse.status}`);
         }
@@ -80,13 +80,7 @@ export default function ClientDashboard() {
     };
 
     fetchUserAndData();
-  }, [token]);
-
-  const handleNewsDeleted = (deletedId) => {
-    if (latestNews && latestNews.id === deletedId) {
-      setLatestNews(null);
-    }
-  };
+  });
 
   function handleAddBalance() {
     alert("Funkcja doładowania salda jeszcze niezaimplementowana.");
@@ -154,7 +148,7 @@ export default function ClientDashboard() {
               }}>
                 <SingleNews 
                   oneNewsDetails={latestNews} 
-                  onNewsDeleted={handleNewsDeleted} 
+                  onNewsDeleted={()=>{}} 
                 />
               </Box>
             ) : (

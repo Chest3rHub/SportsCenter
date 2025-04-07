@@ -1,7 +1,7 @@
 import API_URL from "../appConfig";
 
-const getYourActivities = (token) => {
-    return fetch(`${API_URL}/SportActivities/get-your-activities`, {
+const getYourUpcomingActivities = (token) => {
+    return fetch(`${API_URL}/SportActivities/get-your-upcoming-activities`, {
         method: 'GET',
         headers: {
             'Authorization': `Bearer ${token}`,
@@ -10,4 +10,4 @@ const getYourActivities = (token) => {
     });
 };
 
-export default getYourActivities;
+export default getYourUpcomingActivities;

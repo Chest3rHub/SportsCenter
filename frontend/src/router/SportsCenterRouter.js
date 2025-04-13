@@ -22,6 +22,7 @@ import ChangePassword from "../pages/ChangePassword";
 import Employees from "../pages/Emploees";
 import MyAccount from "../pages/MyAccount";
 import ClientDashboard from "../pages/ClientDashboard"
+import EmployeeDashboard from "../pages/EmployeeDashboard";
 
 // pozmieniac dla klienta na komponenty trasy itd
 
@@ -228,7 +229,7 @@ const clientRouter = [
             children: [
                 {
                     path: "/",
-                    element: <Home />,
+                    element: <EmployeeDashboard />,
                 },
                 {
                     path: "/dashboard",  

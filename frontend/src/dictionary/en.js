@@ -221,4 +221,21 @@ export default {
         saturday: 'sat',
         sunday: 'sun'
     },
+    empMainPage: {
+      title: "Dashboard",
+      whatIsNewLabel: "What's new?",
+      noNewsLabel: "No news",
+      todoLabel: "To-Do",
+      noTasksLabel: "No tasks",
+      deadlineLabel: "Perform by",
+      contentLabel: "Content",
+      ordersLabel: "Orders to process",
+      orderIdLabel: "Order ID",
+      dateLabel: "Date",
+      clientLabel: "Client",
+      productLabel: "Product",
+      quantityLabel: "Quantity",
+      noOrdersLabel: "You have no assigned orders",
+      moreOrdersLabel: "More orders",
+    },
   };

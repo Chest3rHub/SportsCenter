@@ -223,5 +223,22 @@ export default {
       saturday: 'sb',
       sunday: 'nd'
   },
+  empMainPage: {
+    title: "Strona główna",
+    whatIsNewLabel: "Co nowego?",
+    noNewsLabel: "Brak aktualności",
+    todoLabel: "Do zrobienia",
+    noTasksLabel: "Brak zadań",
+    deadlineLabel: "Wykonać do",
+    contentLabel: "Treść",
+    ordersLabel: "Zamówienia do realizacji",
+    orderIdLabel: "ID zam.",
+    dateLabel: "Data",
+    clientLabel: "Klient",
+    productLabel: "Produkt",
+    quantityLabel: "Ilość",
+    noOrdersLabel: "Nie masz przypisanych zamówień do realizacji",
+    moreOrdersLabel: "Reszta zamówień",
+  },
 
   };

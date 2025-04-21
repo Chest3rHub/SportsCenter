@@ -240,5 +240,29 @@ export default {
     noOrdersLabel: "Nie masz przypisanych zamówień do realizacji",
     moreOrdersLabel: "Reszta zamówień",
   },
-
+  clientsPage: {
+    clientsLabel: 'Klienci',
+    clientLabel: 'Imię i nazwisko',
+    emailLabel: 'Email',
+    changePasswordLabel: 'Zmień hasło',
+    giveDiscountLabel: 'Nadaj zniżkę',
+    nextLabel:'Następne',
+    previousLabel:'Poprzednie',
+  },
+  addClientDiscountPage: {
+    clientEmailLabel: 'Email',
+    discountLabel: 'Nadaj zniżkę',
+    activityDiscountLabel: 'Wysokość zniżki na zajęcia',
+    activityDiscountError : 'Wartość zniżki na zajęcia musi być większa niż 0',
+    productDiscountLabel: 'Wysokość zniżki na produkty',
+    productDiscountError : 'Wartość zniżki na produkty musi być większa niż 0',
+    returnLabel:'Wróć',
+    saveLabel: 'Zapisz',
+    successLabel:'Sukces!',
+    savedSuccessLabel: 'Udało się zapisać zmiany!',
+    clickAnywhereLabel:'Kliknij w dowolne miejsce ekranu.',
+    failureLabel: 'Błąd!',
+    savedFailureLabel: 'Nie udało się zapisać zmian!',
+    clickAnywhereFailureLabel: 'Kliknij w dowolne miejsce ekranu.',
+  }
   };

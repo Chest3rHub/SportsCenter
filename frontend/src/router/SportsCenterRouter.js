@@ -23,6 +23,8 @@ import Employees from "../pages/Emploees";
 import MyAccount from "../pages/MyAccount";
 import ClientDashboard from "../pages/ClientDashboard"
 import EmployeeDashboard from "../pages/EmployeeDashboard";
+import Clients from "../pages/Clients"
+import AddClientDiscount from "../pages/AddClientDiscount"
 
 // pozmieniac dla klienta na komponenty trasy itd
 
@@ -62,7 +64,7 @@ const clientRouter = [
             {
                 path: '/account',
                 element: <MyAccount />,
-            },
+            },              
             {
                 path: "*",
                 element: <NotFound />,
@@ -121,6 +123,14 @@ const clientRouter = [
                     path: "/employees",
                     element: <Employees />,
                 },
+                {
+                    path: "/clients",
+                    element: <Clients />,
+                },
+                {
+                    path: "/add-client-discount",
+                    element: <AddClientDiscount />
+                },          
                 {
                     path: "*",
                     element: <NotFound />,

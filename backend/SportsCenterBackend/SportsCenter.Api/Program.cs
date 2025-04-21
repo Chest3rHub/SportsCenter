@@ -15,6 +15,13 @@ using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
+
+// Konfiguracja portu HTTP na 5277 by kazdy mial ten sam
+builder.WebHost.ConfigureKestrel(options =>
+{
+    options.ListenAnyIP(5277);
+});
+
 builder.Services.Configure<StripeSettings>(builder.Configuration.GetSection("Stripe"));
 
 builder.Host.UseSerilog((context, loggerConfiguration) =>
@@ -103,14 +110,21 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(options =>
+    {
+        options.SwaggerEndpoint("http://localhost:5277/swagger/v1/swagger.json", "API V1");
+        options.RoutePrefix = string.Empty;
+    });
 }
+
+app.UseCors("CorsPolicy");
 
 app.UseMiddleware<ExceptionMiddleware>();
 
-app.UseHttpsRedirection();
-
-app.UseCors("CorsPolicy");
+if (!app.Environment.IsDevelopment())
+{
+    app.UseHttpsRedirection();
+}
 
 app.UseAuthentication();
 app.UseAuthorization(); 

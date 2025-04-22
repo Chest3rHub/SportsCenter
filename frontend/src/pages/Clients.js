@@ -10,7 +10,7 @@ import GreenButton from "../components/GreenButton";
 import ChangePageButton from "../components/ChangePageButton";
 export default function Clients() {
 
-    const { dictionary, token } = useContext(SportsContext);
+    const { dictionary, token,  role } = useContext(SportsContext);
     const navigate = useNavigate();
 
     const [clients, setClients] = useState([]);
@@ -25,8 +25,8 @@ export default function Clients() {
     const handleClose = () => setSelectedClient(null);;
 
 
-    const maxClientsPerPage = 3;
-    const clientsRequiredToEnablePagination = 4;
+    const maxClientsPerPage = 6;
+    const clientsRequiredToEnablePagination = 7;
 
 
     useEffect(() => {
@@ -147,12 +147,14 @@ export default function Clients() {
                                 alignItems: 'center',
                                 paddingTop: '0.6rem',
                                 paddingBottom: '0.4rem',
+                                maxWidth:'20.5vw'
                             }}
                         >
                             <Box
                                 sx={{
                                     width: '50%',
                                     textAlign: 'center',
+                                    
                                 }}
                             >
                                 <Typography>
@@ -172,9 +174,9 @@ export default function Clients() {
                                 </Typography>
                             </Box>
                         </Box>
-                        <ClientsButton backgroundColor={"#f0aa4f"} onClick={() => handleChangeClientPassword(client.id)} minWidth={'9vw'}>
+                        {role==='Wlasciciel' && <ClientsButton backgroundColor={"#f0aa4f"} onClick={() => handleChangeClientPassword(client.id)} minWidth={'9vw'}>
                             {dictionary.clientsPage.changePasswordLabel}
-                        </ClientsButton>
+                        </ClientsButton>}
                         <ClientsButton backgroundColor={"#8edfb4"} onClick={() => handleGiveDiscount(client.email)} minWidth={'9vw'}>
                             {dictionary.clientsPage.giveDiscountLabel}
                         </ClientsButton>

@@ -283,6 +283,18 @@ const clientRouter = [
                     element: <MyAccount />,
                 },
                 {
+                    path: "/clients",
+                    element: <Clients />,
+                },
+                {
+                    path: "/add-client-discount",
+                    element: <AddClientDiscount />
+                },  
+                {
+                    path: "/add-deposit-to-client",
+                    element: <AddDepositToClient />
+                },          
+                {
                     path: "*",
                     element: <NotFound />,
                 }

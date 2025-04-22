@@ -242,7 +242,7 @@ export default {
   },
   clientsPage: {
     clientsLabel: 'Klienci',
-    clientLabel: 'Imię i nazwisko',
+    clientLabel: 'Klient',
     emailLabel: 'Email',
     changePasswordLabel: 'Zmień hasło',
     giveDiscountLabel: 'Nadaj zniżkę',

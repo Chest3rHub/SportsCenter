@@ -112,8 +112,8 @@ export default function Clients() {
                             marginBottom: '3vh',
                         }}
                     >
-                        <SmallGreenHeader width={'37%'}>{dictionary.clientsPage.clientLabel}</SmallGreenHeader>
-                        <SmallGreenHeader width={'37%'}>{dictionary.clientsPage.emailLabel}</SmallGreenHeader>
+                        <SmallGreenHeader width={'24%'}>{dictionary.clientsPage.clientLabel}</SmallGreenHeader>
+                        <SmallGreenHeader width={'24%'}>{dictionary.clientsPage.emailLabel}</SmallGreenHeader>
                     </Box>
                     {limitedClients.map((client) => (<Box
                         sx={{

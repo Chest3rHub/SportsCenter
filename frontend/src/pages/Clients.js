@@ -55,6 +55,12 @@ export default function Clients() {
             state: { email }
         });
     }
+
+    function handleAddDeposit(email) {
+        navigate(`/add-deposit-to-client`, {
+            state: { email }
+        });
+    }
     
 
     function handleNextPage() {
@@ -161,6 +167,9 @@ export default function Clients() {
                         </ClientsButton>
                         <ClientsButton backgroundColor={"#8edfb4"} onClick={() => handleGiveDiscount(client.email)} minWidth={'11vw'}>
                             {dictionary.clientsPage.giveDiscountLabel}
+                        </ClientsButton>
+                        <ClientsButton backgroundColor={"#F46C63"} onClick={() => handleAddDeposit(client.email)} minWidth={'11vw'}>
+                            {dictionary.clientsPage.addDepositLabel}
                         </ClientsButton>
                     </Box>))}
                 </Box>

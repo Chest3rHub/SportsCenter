@@ -244,6 +244,7 @@ export default {
       emailLabel:'Email',
       changePasswordLabel:'Change password',
       giveDiscountLabel: 'Give discount',
+      addDepositLabel: 'Add deposit',
       nextLabel:'Next',
       previousLabel:'Previous',
     },
@@ -266,4 +267,18 @@ export default {
       savedFailureLabel: 'Failed to save changes!',
       clickAnywhereFailureLabel: 'Click anywhere on the screen.',
     },
+    addDepositToClientPage:{
+      depositLabel: 'Add deposit',
+      clientEmailLabel: 'Email',
+      depositValueLabel: 'Deposit Amount',
+      depositError: 'The deposit amount must be greater than 0 and no more than 5000',
+      returnLabel:'Back',
+      saveLabel: 'Save',
+      successLabel:'Success!',
+      savedSuccessLabel: 'Changes saved successfully!',
+      clickAnywhereLabel:'Click anywhere on the screen.',
+      failureLabel: 'Error!',
+      savedFailureLabel: 'Failed to save changes!',
+      clickAnywhereFailureLabel: 'Click anywhere on the screen.',
+    }
   };

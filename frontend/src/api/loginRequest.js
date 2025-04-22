@@ -10,6 +10,7 @@ export default async function loginRequest(loginData){
         body: JSON.stringify({
           email: loginData.email,
           password: loginData.password,
-        }) 
+        }) ,
+        credentials: 'include',
       });
 }

@@ -17,7 +17,7 @@ function Login() {
   const [passwordError, setPasswordError] = useState(false);
   const [serverError, setServerError] = useState(false);
 
-  const { dictionary, toggleLanguage, role, setRole, token, setToken} = useContext(SportsContext);
+  const { dictionary, toggleLanguage, role, setRole,} = useContext(SportsContext);
 
   const navigate = useNavigate();
 
@@ -55,24 +55,19 @@ function Login() {
 
     try {
       const response = await loginRequest(loginData);
-
+      console.log(response);
       if (response.ok) {
-        const data = await response.json();
-        console.log("Zalogowano pomyślnie:", data);
 
-        localStorage.setItem("token", data.token);
+        // do dodania jak backend zwroci role w formacie obiekt o polu Role
+        // const data = await response.json();
+        // console.log("Zalogowano pomyślnie:", data);
+        //setRole(data.role);
+        // lub
+        // setRole(data.Role);
 
-        // przekazywac ta role potem do routera...
-        const payload = decodeJWT(data.token);
-        console.log(payload);
-        console.log(payload.role);
-
-        setRole(payload.role);
-        setToken(data.token);
+        setRole('Wlasciciel');
         setServerError(false);
         navigate('/');
-
-        // alert("Logowanie zakończone sukcesem!");
       } else {
         const errorData = await response.json();
 
@@ -81,6 +76,8 @@ function Login() {
         setPasswordError(true);
       }
     } catch (error) {
+      
+
       handleError(error);
     }
   };

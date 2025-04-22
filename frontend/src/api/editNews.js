@@ -4,7 +4,6 @@ export default async function editNews(formData, token){
     return fetch(`${API_URL}/news/update-news/`, { 
         method: 'PUT',
         headers: {
-          'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
@@ -14,5 +13,6 @@ export default async function editNews(formData, token){
           ValidFrom: formData.validFrom,
           ValidUntil: formData.validUntil,
         }),
+        credentials: 'include',
       });
 }

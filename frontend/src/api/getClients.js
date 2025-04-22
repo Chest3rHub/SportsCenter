@@ -6,6 +6,6 @@ export default async function getClients(token, offset) {
         headers: {
             'Content-Type': 'application/json'
         },
-         credentials: 'include'
+        credentials: 'include',
     });
 }

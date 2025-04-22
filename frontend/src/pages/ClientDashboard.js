@@ -29,11 +29,7 @@ export default function ClientDashboard() {
 
   useEffect(() => {
     const fetchUserAndData = async () => {
-      if (!token) {
-        setLoading(false);
-        setBalanceLoading(false);
-        return;
-      }
+      
 
       try {
         const accountResponse = await getAccountInfo(token);
@@ -80,7 +76,7 @@ export default function ClientDashboard() {
     };
 
     fetchUserAndData();
-  });
+  },[]);
 
   function handleAddBalance() {
     alert("Funkcja doładowania salda jeszcze niezaimplementowana.");

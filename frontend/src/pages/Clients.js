@@ -25,9 +25,9 @@ export default function Clients() {
 
     const [ageError, setAgeError] = useState('');
 
+    const maxClientsPerPage = 6;
+    const clientsRequiredToEnablePagination = 7;
 
-    const maxClientsPerPage = 3;
-    const clientsRequiredToEnablePagination = 4;
 
     useEffect(() => {
         setLoading(true);
@@ -159,6 +159,7 @@ export default function Clients() {
                 placeholder={dictionary.clientsPage.maxAgePlaceholder}
             sx={{ width: '12vw' }}
             />
+
             <GreenButton
                 onClick={handleSearchByAge}
                 style={{

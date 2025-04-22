@@ -25,8 +25,8 @@ export default function Clients() {
     const handleClose = () => setSelectedClient(null);;
 
 
-    const maxClientsPerPage = 6;
-    const clientsRequiredToEnablePagination = 7;
+    const maxClientsPerPage = 3;
+    const clientsRequiredToEnablePagination = 4;
 
 
     useEffect(() => {
@@ -61,6 +61,16 @@ export default function Clients() {
             state: { email }
         });
     }
+
+    function handleChangeDeposit(client) {
+        navigate(`/update-client-deposit`, {
+          state: {
+            email: client.email,
+            name: client.name,
+            surname: client.surname
+          }
+        });
+      }      
     
 
     function handleNextPage() {
@@ -112,8 +122,8 @@ export default function Clients() {
                             marginBottom: '3vh',
                         }}
                     >
-                        <SmallGreenHeader width={'24%'}>{dictionary.clientsPage.clientLabel}</SmallGreenHeader>
-                        <SmallGreenHeader width={'24%'}>{dictionary.clientsPage.emailLabel}</SmallGreenHeader>
+                        <SmallGreenHeader width={'20%'}>{dictionary.clientsPage.clientLabel}</SmallGreenHeader>
+                        <SmallGreenHeader width={'20%'}>{dictionary.clientsPage.emailLabel}</SmallGreenHeader>
                     </Box>
                     {limitedClients.map((client) => (<Box
                         sx={{
@@ -162,14 +172,17 @@ export default function Clients() {
                                 </Typography>
                             </Box>
                         </Box>
-                        <ClientsButton backgroundColor={"#f0aa4f"} onClick={() => handleChangeClientPassword(client.id)} minWidth={'11vw'}>
+                        <ClientsButton backgroundColor={"#f0aa4f"} onClick={() => handleChangeClientPassword(client.id)} minWidth={'9vw'}>
                             {dictionary.clientsPage.changePasswordLabel}
                         </ClientsButton>
-                        <ClientsButton backgroundColor={"#8edfb4"} onClick={() => handleGiveDiscount(client.email)} minWidth={'11vw'}>
+                        <ClientsButton backgroundColor={"#8edfb4"} onClick={() => handleGiveDiscount(client.email)} minWidth={'9vw'}>
                             {dictionary.clientsPage.giveDiscountLabel}
                         </ClientsButton>
-                        <ClientsButton backgroundColor={"#F46C63"} onClick={() => handleAddDeposit(client.email)} minWidth={'11vw'}>
+                        <ClientsButton backgroundColor={"#f0aa4f"} onClick={() => handleAddDeposit(client.email)} minWidth={'9vw'}>
                             {dictionary.clientsPage.addDepositLabel}
+                        </ClientsButton>
+                        <ClientsButton backgroundColor={"#F46C63"} onClick={() => handleChangeDeposit(client)}minWidth={'9vw'}>
+                            {dictionary.clientsPage.changeDeposit}
                         </ClientsButton>
                     </Box>))}
                 </Box>

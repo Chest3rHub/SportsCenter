@@ -34,12 +34,14 @@ namespace SportsCenter.Application.Users.Commands.Login
                 throw new InactiveAccountException();
             }
 
-            var token = _jwtTokenGenerator.GenerateToken(user);
+            var role = _jwtTokenGenerator.DetermineUserRole(user);
+            var token = _jwtTokenGenerator.GenerateToken(user, role);
             // var refresToken = _jwtTokenGenerator.GenerateRefreshToken();
 
             return new LoginResponse
             {
-                Token = token
+                Token = token,
+                Role = role
             };
         }
     }

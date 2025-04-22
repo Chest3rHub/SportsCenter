@@ -58,14 +58,10 @@ function Login() {
       console.log(response);
       if (response.ok) {
 
-        // do dodania jak backend zwroci role w formacie obiekt o polu Role
-        // const data = await response.json();
-        // console.log("Zalogowano pomyślnie:", data);
-        //setRole(data.role);
-        // lub
-        // setRole(data.Role);
+        const data = await response.json();
+        console.log("Zalogowano pomyślnie:", data);
+        setRole(data.role);
 
-        setRole('Wlasciciel');
         setServerError(false);
         navigate('/');
       } else {

@@ -12,7 +12,7 @@ import GreenButton from "../components/GreenButton";
 import ChangePageButton from "../components/ChangePageButton";
 
 export default function Clients() {
-    const { dictionary, token } = useContext(SportsContext);
+    const { dictionary, token, role } = useContext(SportsContext);
     const navigate = useNavigate();
 
     const [clients, setClients] = useState([]);
@@ -27,7 +27,6 @@ export default function Clients() {
 
     const maxClientsPerPage = 6;
     const clientsRequiredToEnablePagination = 7;
-
 
     useEffect(() => {
         setLoading(true);
@@ -52,19 +51,19 @@ export default function Clients() {
     }, [offset, minAge, maxAge, token]);
 
     function handleChangeClientPassword(id) {
-        navigate(`/change-password`, { state: { id } });
+        navigate("/change-password", { state: { id } });
     }
 
     function handleGiveDiscount(email) {
-        navigate(`/add-client-discount`, { state: { email } });
+        navigate("/add-client-discount", { state: { email } });
     }
 
     function handleAddDeposit(email) {
-        navigate(`/add-deposit-to-client`, { state: { email } });
+        navigate("/add-deposit-to-client", { state: { email } });
     }
 
     function handleChangeDeposit(client) {
-        navigate(`/update-client-deposit`, {
+        navigate("/update-client-deposit", {
             state: {
                 email: client.email,
                 name: client.name,
@@ -74,7 +73,7 @@ export default function Clients() {
     }
 
     function handleNextPage() {
-        if (clients.length >= 6) setOffset((prev) => prev + 1);
+        if (clients.length >= clientsRequiredToEnablePagination) setOffset((prev) => prev + 1);
     }
 
     function handlePreviousPage() {
@@ -92,7 +91,6 @@ export default function Clients() {
             if (!minAge) minAgeError = dictionary.clientsPage.ageFieldsRequiredError;
             if (!maxAge) maxAgeError = dictionary.clientsPage.ageFieldsRequiredError;
         } else {
-
             if (min <= 0 || max <= 0) {
                 if (min <= 0) minAgeError = dictionary.clientsPage.ageMustBePositiveError;
                 if (max <= 0) maxAgeError = dictionary.clientsPage.ageMustBePositiveError;
@@ -109,7 +107,6 @@ export default function Clients() {
         setAgeError({ minAgeError: '', maxAgeError: '' });
         setOffset(0);
     }
-    
 
     const limitedClients = clients.slice(0, maxClientsPerPage);
 
@@ -128,52 +125,52 @@ export default function Clients() {
                 <Header>{dictionary.clientsPage.clientsLabel}</Header>
                 <Box
                     sx={{
-                    backgroundColor: '#eafaf1',
-                    padding: '1.2rem',
-                    borderRadius: '20px',
-                    margin: '1.5rem 0',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    gap: '1.2rem',
-                    boxShadow: '0 6px 12px rgba(0, 0, 0, 0.1)',
-                }}
-            >
-            <CustomInput
-                label={dictionary.clientsPage.ageFromLabel}
-                type="number"
-                value={minAge}
-                onChange={(e) => setMinAge(e.target.value)}
-                error={Boolean(ageError.minAgeError)}
-                helperText={ageError.minAgeError}
-                placeholder={dictionary.clientsPage.minAgePlaceholder}
-                sx={{ width: '12vw' }}
-            />
-            <CustomInput
-                label={dictionary.clientsPage.ageToLabel}
-                type="number"
-                value={maxAge}
-                onChange={(e) => setMaxAge(e.target.value)}
-                error={Boolean(ageError.maxAgeError)}
-                helperText={ageError.maxAgeError}
-                placeholder={dictionary.clientsPage.maxAgePlaceholder}
-            sx={{ width: '12vw' }}
-            />
+                        backgroundColor: '#eafaf1',
+                        padding: '1.2rem',
+                        borderRadius: '20px',
+                        margin: '1.5rem 0',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        gap: '1.2rem',
+                        boxShadow: '0 6px 12px rgba(0, 0, 0, 0.1)',
+                    }}
+                >
+                    <CustomInput
+                        label={dictionary.clientsPage.ageFromLabel}
+                        type="number"
+                        value={minAge}
+                        onChange={(e) => setMinAge(e.target.value)}
+                        error={Boolean(ageError.minAgeError)}
+                        helperText={ageError.minAgeError}
+                        placeholder={dictionary.clientsPage.minAgePlaceholder}
+                        sx={{ width: '12vw' }}
+                    />
+                    <CustomInput
+                        label={dictionary.clientsPage.ageToLabel}
+                        type="number"
+                        value={maxAge}
+                        onChange={(e) => setMaxAge(e.target.value)}
+                        error={Boolean(ageError.maxAgeError)}
+                        helperText={ageError.maxAgeError}
+                        placeholder={dictionary.clientsPage.maxAgePlaceholder}
+                        sx={{ width: '12vw' }}
+                    />
 
-            <GreenButton
-                onClick={handleSearchByAge}
-                style={{
-                minWidth: '7vw',
-                height: '2.8rem',
-                paddingLeft: '1rem',
-                paddingRight: '1rem',
-                fontSize: '0.9rem',
-                whiteSpace: 'nowrap',
-            }}
-        >
-            {dictionary.clientsPage.searchLabel}
-            </GreenButton>
-        </Box>
+                    <GreenButton
+                        onClick={handleSearchByAge}
+                        style={{
+                            minWidth: '7vw',
+                            height: '2.8rem',
+                            paddingLeft: '1rem',
+                            paddingRight: '1rem',
+                            fontSize: '0.9rem',
+                            whiteSpace: 'nowrap',
+                        }}
+                    >
+                        {dictionary.clientsPage.searchLabel}
+                    </GreenButton>
+                </Box>
                 <Box
                     sx={{
                         height: '55vh',
@@ -224,9 +221,11 @@ export default function Clients() {
                                     <Typography>{client.email}</Typography>
                                 </Box>
                             </Box>
-                            <ClientsButton backgroundColor="#f0aa4f" onClick={() => handleChangeClientPassword(client.id)} minWidth="9vw">
-                                {dictionary.clientsPage.changePasswordLabel}
-                            </ClientsButton>
+                            {role === 'Wlasciciel' && (
+                                <ClientsButton backgroundColor="#f0aa4f" onClick={() => handleChangeClientPassword(client.id)} minWidth="9vw">
+                                    {dictionary.clientsPage.changePasswordLabel}
+                                </ClientsButton>
+                            )}
                             <ClientsButton backgroundColor="#8edfb4" onClick={() => handleGiveDiscount(client.email)} minWidth="9vw">
                                 {dictionary.clientsPage.giveDiscountLabel}
                             </ClientsButton>

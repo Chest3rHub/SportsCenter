@@ -30,7 +30,17 @@ namespace SportsCenter.Api.Controllers
             try
             {
                 var loginResponse = await Mediator.Send(loginCommand);
-                return Ok(loginResponse);
+
+                var cookieOptions = new CookieOptions
+                {
+                    HttpOnly = false,
+                    Secure = true, 
+                    SameSite = SameSiteMode.None,
+                    Expires = DateTimeOffset.UtcNow.AddHours(1) // na godzine, moze w config gdzies to dac?
+                };
+
+                Response.Cookies.Append("accessToken", loginResponse.Token, cookieOptions);
+                return Ok();
             }
             catch (InvalidLoginException ex)
             {
@@ -47,17 +57,28 @@ namespace SportsCenter.Api.Controllers
         {
             try
             {
-                var token = Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last();
+                var token = Request.Cookies["accessToken"];
 
                 if (string.IsNullOrEmpty(token))
                 {
-                    return Unauthorized(new { message = "Token is missing from the request." });
+                    return Unauthorized(new { message = "Token is missing from cookies." });
                 }
-                var refreshTokenRequest = new RefreshToken(token);
 
+                var refreshTokenRequest = new RefreshToken(token);
                 var refreshTokenResponse = await Mediator.Send(refreshTokenRequest);
 
-                return Ok(refreshTokenResponse);
+                
+                var cookieOptions = new CookieOptions
+                {
+                    HttpOnly = false,
+                    Secure = true,
+                    SameSite = SameSiteMode.None,
+                    Expires = DateTimeOffset.UtcNow.AddHours(1)
+                };
+
+                Response.Cookies.Append("accessToken", refreshTokenResponse.Token, cookieOptions);
+
+                return Ok();
             }
             catch (InvalidTokenException ex)
             {

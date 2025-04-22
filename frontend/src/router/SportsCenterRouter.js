@@ -26,6 +26,7 @@ import EmployeeDashboard from "../pages/EmployeeDashboard";
 import Clients from "../pages/Clients"
 import AddClientDiscount from "../pages/AddClientDiscount"
 import AddDepositToClient from "../pages/AddDepositToClient";
+import updateClientDeposit from "../pages/UpdateClientDeposit";
 
 // pozmieniac dla klienta na komponenty trasy itd
 
@@ -135,7 +136,11 @@ const clientRouter = [
                 {
                     path: "/add-deposit-to-client",
                     element: <AddDepositToClient />
-                },          
+                },  
+                {
+                    path: "/update-client-deposit",
+                    element: <updateClientDeposit />
+                },           
                 {
                     path: "*",
                     element: <NotFound />,

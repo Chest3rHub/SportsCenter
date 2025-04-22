@@ -23,6 +23,9 @@ import Employees from "../pages/Emploees";
 import MyAccount from "../pages/MyAccount";
 import ClientDashboard from "../pages/ClientDashboard"
 import EmployeeDashboard from "../pages/EmployeeDashboard";
+import Clients from "../pages/Clients"
+import AddClientDiscount from "../pages/AddClientDiscount"
+import AddDepositToClient from "../pages/AddDepositToClient";
 
 // pozmieniac dla klienta na komponenty trasy itd
 
@@ -62,7 +65,7 @@ const clientRouter = [
             {
                 path: '/account',
                 element: <MyAccount />,
-            },
+            },              
             {
                 path: "*",
                 element: <NotFound />,
@@ -121,6 +124,18 @@ const clientRouter = [
                     path: "/employees",
                     element: <Employees />,
                 },
+                {
+                    path: "/clients",
+                    element: <Clients />,
+                },
+                {
+                    path: "/add-client-discount",
+                    element: <AddClientDiscount />
+                },  
+                {
+                    path: "/add-deposit-to-client",
+                    element: <AddDepositToClient />
+                },          
                 {
                     path: "*",
                     element: <NotFound />,
@@ -267,6 +282,18 @@ const clientRouter = [
                     path: '/account',
                     element: <MyAccount />,
                 },
+                {
+                    path: "/clients",
+                    element: <Clients />,
+                },
+                {
+                    path: "/add-client-discount",
+                    element: <AddClientDiscount />
+                },  
+                {
+                    path: "/add-deposit-to-client",
+                    element: <AddDepositToClient />
+                },          
                 {
                     path: "*",
                     element: <NotFound />,

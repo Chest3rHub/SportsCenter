@@ -26,6 +26,8 @@ namespace SportsCenter.Infrastructure.DAL.Handlers.ClientsHandlers
             return await _dbContext.Klients.Include(x => x.KlientNavigation)
                 .Select(k => new
                 {
+                    k.KlientId,
+                    k.KlientNavigation.Imie,
                     k.KlientNavigation.Nazwisko,
                     k.KlientNavigation.Email,
                     k.KlientNavigation.DataUr,
@@ -40,7 +42,9 @@ namespace SportsCenter.Infrastructure.DAL.Handlers.ClientsHandlers
                 .Take(NumberPerPage)
                 .Select(k => new ClientByAgeDto
                 {
-                    FullName = k.Nazwisko,
+                    Id = k.KlientId,
+                    Name = k.Imie,
+                    Surname = k.Nazwisko,
                     Email = k.Email,
                     DateOfBirth = k.DataUr
                 })

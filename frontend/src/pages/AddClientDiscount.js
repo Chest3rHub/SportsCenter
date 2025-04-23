@@ -22,7 +22,7 @@ function AddClientDiscount() {
   
     const [formData, setFormData] = useState({
       clientEmail: email || '',
-      acitivityDiscount: '',
+      activityDiscount: '',
       productDiscount: ''
     });
   
@@ -58,7 +58,7 @@ function AddClientDiscount() {
   
     const validateForm = () => {
 
-      const activityDiscountValue = parseFloat(formData.acitivityDiscount);
+      const activityDiscountValue = parseFloat(formData.activityDiscount);
       if (isNaN(activityDiscountValue) || activityDiscountValue < 0) {
         setActivityDiscountError(true);
         return false;
@@ -104,7 +104,7 @@ function AddClientDiscount() {
         } else {
           setFormData({
             clientEmail: '',
-            acitivityDiscount: '',
+            activityDiscount: '',
             productDiscount: ''
           });
           handleOpenSuccess();
@@ -139,10 +139,10 @@ function AddClientDiscount() {
                 <CustomInput
                   label={dictionary.addClientDiscountPage.activityDiscountLabel}
                   type="number"
-                  id="acitivityDiscount"
-                  name="acitivityDiscount"
+                  id="activityDiscount"
+                  name="activityDiscount"
                   fullWidth
-                  value={formData.acitivityDiscount}
+                  value={formData.activityDiscount}
                   onChange={handleChange}
                   error={activityDiscountError}
                   helperText={activityDiscountError ? dictionary.addClientDiscountPage.activityDiscountError : ''}

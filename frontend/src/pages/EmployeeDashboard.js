@@ -21,10 +21,6 @@ export default function EmployeeDashboard() {
 
   useEffect(() => {
     const fetchData = async () => {
-      if (!token) {
-        setLoading(false);
-        return;
-      }
 
       try {
         const newsResponse = await getNews(0);
@@ -71,7 +67,7 @@ export default function EmployeeDashboard() {
     };
 
     fetchData();
-  }, [token]);
+  }, []);
 
   const formatDeadline = (dateString) => {
     if (!dateString) return dictionary.empMainPage.noDateLabel || 'No date';

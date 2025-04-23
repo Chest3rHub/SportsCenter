@@ -40,7 +40,7 @@ namespace SportsCenter.Api.Controllers
                 };
 
                 Response.Cookies.Append("accessToken", loginResponse.Token, cookieOptions);
-                return Ok();
+                return Ok(new { role = loginResponse.Role });
             }
             catch (InvalidLoginException ex)
             {

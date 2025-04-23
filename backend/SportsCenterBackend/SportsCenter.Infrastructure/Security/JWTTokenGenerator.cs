@@ -21,7 +21,7 @@ namespace SportsCenter.Infrastructure.Security
             _configuration = configuration;
         }
 
-        public string GenerateToken(Osoba osoba)
+        public string GenerateToken(Osoba osoba, string role)
         {
             var jwtSecret = _configuration["Auth:SigningKey"];
             var jwtIssuer = _configuration["Auth:Issuer"];
@@ -33,8 +33,6 @@ namespace SportsCenter.Infrastructure.Security
 
             var signingKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSecret));
             var signingCredentials = new SigningCredentials(signingKey, SecurityAlgorithms.HmacSha256);
-
-            var role = DetermineUserRole(osoba);
 
             var claims = new[]
             {
@@ -113,7 +111,7 @@ namespace SportsCenter.Infrastructure.Security
             return new JwtSecurityTokenHandler().WriteToken(tokenDescriptor);
         }
 
-        private string DetermineUserRole(Osoba osoba)
+        public string DetermineUserRole(Osoba osoba)
         {
             if (osoba.Klient != null)
                 return "Klient";

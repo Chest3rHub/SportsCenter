@@ -26,6 +26,7 @@ internal class GetClientsHandler : IRequestHandler<GetClients, IEnumerable<Clien
        .Include(x => x.KlientNavigation)
        .Select(k => new ClientDto
        {
+           Id = k.KlientNavigation.OsobaId,
            Name = k.KlientNavigation.Imie,
            Surname = k.KlientNavigation.Nazwisko,
            Email = k.KlientNavigation.Email

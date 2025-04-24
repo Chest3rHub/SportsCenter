@@ -13,7 +13,7 @@ import CustomInput from "../components/CustomInput";
 
 export default function Clients() {
 
-    const { dictionary, token,  role } = useContext(SportsContext);
+    const { dictionary, token, role } = useContext(SportsContext);
     const navigate = useNavigate();
 
     const [clients, setClients] = useState([]);
@@ -51,11 +51,11 @@ export default function Clients() {
             } else {
                 response = await getClients(token, offset);
             }
-    
+
             if (!response.ok) {
                 throw new Error('Failed to fetch clients');
             }
-    
+
             const data = await response.json();
             setClients(data);
         } catch (error) {
@@ -64,13 +64,13 @@ export default function Clients() {
             setLoading(false);
         }
     };
-    
+
 
     useEffect(() => {
         setLoading(true);
         fetchClients();
-    }, [offset, token, stateToTriggerUseEffectAfterDeleting]);
-    
+    }, [offset, stateToTriggerUseEffectAfterDeleting]);
+
 
     function handleClearFilters() {
         setMinAge('');
@@ -81,10 +81,10 @@ export default function Clients() {
         setMaxAgeValue(null);
         setOffset(0);
         setLoading(true);
-        fetchClients(); 
+        fetchClients();
     }
-    
-    
+
+
     function handleChangeClientPassword(id) {
         navigate(`/change-password`, {
             state: { id }
@@ -105,14 +105,14 @@ export default function Clients() {
 
     function handleChangeDeposit(client) {
         navigate(`/update-client-deposit`, {
-          state: {
-            email: client.email,
-            name: client.name,
-            surname: client.surname
-          }
+            state: {
+                email: client.email,
+                name: client.name,
+                surname: client.surname
+            }
         });
-      }      
-    
+    }
+
 
     function handleNextPage() {
         if (clients.length < 6) {
@@ -131,7 +131,7 @@ export default function Clients() {
     function handleSearchByAge() {
         const min = Number(minAge);
         const max = Number(maxAge);
-    
+
         let minAgeError = '';
         let maxAgeError = '';
 
@@ -163,14 +163,14 @@ export default function Clients() {
         setOffset(0);
 
         getClientsByAge(token, min, max, 0)
-        .then(response => response.json())
-        .then(data => {
-            setClients(data);
-            setOffset(0);
-        })
-        .catch(error => {
-            console.error("Błąd pobierania danych:", error);
-        });
+            .then(response => response.json())
+            .then(data => {
+                setClients(data);
+                setOffset(0);
+            })
+            .catch(error => {
+                console.error("Błąd pobierania danych:", error);
+            });
     }
 
     const limitedClients = clients.slice(0, maxClientsPerPage);
@@ -191,66 +191,67 @@ export default function Clients() {
                 <Header>{dictionary.clientsPage.clientsLabel}</Header>
                 <Box
                     sx={{
-                    backgroundColor: '#eafaf1',
-                    padding: '1.2rem',
-                    borderRadius: '20px',
-                    margin: '1.5rem 0',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    gap: '1.2rem',
-                    boxShadow: '0 6px 12px rgba(0, 0, 0, 0.1)',
-                }}
-            >
-            <CustomInput
-                label={dictionary.clientsPage.ageFromLabel}
-                type="number"
-                value={minAge}
-                onChange={(e) => setMinAge(e.target.value)}
-                error={Boolean(ageError.minAgeError)}
-                helperText={ageError.minAgeError}
-                placeholder={dictionary.clientsPage.minAgePlaceholder}
-                sx={{ width: '12vw' }}
-            />
-            <CustomInput
-                label={dictionary.clientsPage.ageToLabel}
-                type="number"
-                value={maxAge}
-                onChange={(e) => setMaxAge(e.target.value)}
-                error={Boolean(ageError.maxAgeError)}
-                helperText={ageError.maxAgeError}
-                placeholder={dictionary.clientsPage.maxAgePlaceholder}
-            sx={{ width: '12vw' }}
-            />
-            <GreenButton
-                onClick={handleSearchByAge}
-                style={{
-                minWidth: '7vw',
-                height: '2.8rem',
-                paddingLeft: '1rem',
-                paddingRight: '1rem',
-                fontSize: '0.9rem',
-                whiteSpace: 'nowrap',
-            }}
-        >
-            {dictionary.clientsPage.searchLabel}
-            </GreenButton>
-            <GreenButton
-                onClick={handleClearFilters}
-                style={{
-                minWidth: '7vw',
-                height: '2.8rem',
-                paddingLeft: '1rem',
-                paddingRight: '1rem',
-                fontSize: '0.9rem',
-                whiteSpace: 'nowrap',
-                backgroundColor: '#ccc',
-                color: 'black'
-            }}
-        >
-                {dictionary.clientsPage.clearLabel}
-            </GreenButton>
-            </Box>
+                        backgroundColor: '#eafaf1',
+                        padding: '1.2rem',
+                        borderRadius: '20px',
+                        margin: '1.5rem 0',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        gap: '1.2rem',
+                        boxShadow: '0 6px 12px rgba(0, 0, 0, 0.1)',
+                    }}
+                >
+                    <CustomInput
+                        label={dictionary.clientsPage.ageFromLabel}
+                        type="number"
+                        value={minAge}
+                        onChange={(e) => setMinAge(e.target.value)}
+                        error={Boolean(ageError.minAgeError)}
+                        helperText={ageError.minAgeError}
+                        placeholder={dictionary.clientsPage.minAgePlaceholder}
+                        additionalStyles={{ marginLeft:'1vw',minWidth: '8vw', marginRight:'1.3rem' }}
+                    />
+                    <CustomInput
+                        label={dictionary.clientsPage.ageToLabel}
+                        type="number"
+                        value={maxAge}
+                        onChange={(e) => setMaxAge(e.target.value)}
+                        error={Boolean(ageError.maxAgeError)}
+                        helperText={ageError.maxAgeError}
+                        placeholder={dictionary.clientsPage.maxAgePlaceholder}
+                        sx={{ width: '12vw' }}
+                        additionalStyles={{ minWidth: '8vw',marginRight:'1.5rem' }}
+                    />
+                    <GreenButton
+                        onClick={handleSearchByAge}
+                        style={{
+                            minWidth: '7vw',
+                            height: '2.8rem',
+                            paddingLeft: '1rem',
+                            paddingRight: '1rem',
+                            fontSize: '0.9rem',
+                            whiteSpace: 'nowrap',
+                        }}
+                    >
+                        {dictionary.clientsPage.searchLabel}
+                    </GreenButton>
+                    <GreenButton
+                        onClick={handleClearFilters}
+                        style={{
+                            minWidth: '7vw',
+                            height: '2.8rem',
+                            paddingLeft: '1rem',
+                            paddingRight: '1rem',
+                            fontSize: '0.9rem',
+                            whiteSpace: 'nowrap',
+                            backgroundColor: '#ccc',
+                            color: 'black'
+                        }}
+                    >
+                        {dictionary.clientsPage.clearLabel}
+                    </GreenButton>
+                </Box>
                 <Box
                     sx={{
                         height: '55vh',
@@ -295,7 +296,7 @@ export default function Clients() {
                                 alignItems: 'center',
                                 paddingTop: '0.6rem',
                                 paddingBottom: '0.4rem',
-                                maxWidth:'20.5vw'
+                                maxWidth: '20.5vw'
                             }}
                         >
                             <Box
@@ -321,7 +322,7 @@ export default function Clients() {
                                 </Typography>
                             </Box>
                         </Box>
-                        {role==='Wlasciciel' && <ClientsButton backgroundColor={"#f0aa4f"} onClick={() => handleChangeClientPassword(client.id)} minWidth={'9vw'}>
+                        {role === 'Wlasciciel' && <ClientsButton backgroundColor={"#f0aa4f"} onClick={() => handleChangeClientPassword(client.id)} minWidth={'9vw'}>
                             {dictionary.clientsPage.changePasswordLabel}
                         </ClientsButton>}
                         <ClientsButton backgroundColor={"#8edfb4"} onClick={() => handleGiveDiscount(client.email)} minWidth={'9vw'}>
@@ -330,39 +331,39 @@ export default function Clients() {
                         <ClientsButton backgroundColor={"#f0aa4f"} onClick={() => handleAddDeposit(client.email)} minWidth={'9vw'}>
                             {dictionary.clientsPage.addDepositLabel}
                         </ClientsButton>
-                        <ClientsButton backgroundColor={"#F46C63"} onClick={() => handleChangeDeposit(client)}minWidth={'9vw'}>
+                        <ClientsButton backgroundColor={"#F46C63"} onClick={() => handleChangeDeposit(client)} minWidth={'9vw'}>
                             {dictionary.clientsPage.changeDeposit}
                         </ClientsButton>
                     </Box>))}
                 </Box>
                 <Box
-                sx={{
-                    display: "flex",
-                    flexDirection: "row",
-                    justifyContent: 'center',
-                    columnGap: "4vw",
-                    marginTop: '5vh',
-                }}
-            >
-                <ChangePageButton
-                    disabled={offset === 0}
-                    onClick={handlePreviousPage}
-                    backgroundColor={"#F46C63"}
-                    minWidth={"10vw"}
+                    sx={{
+                        display: "flex",
+                        flexDirection: "row",
+                        justifyContent: 'center',
+                        columnGap: "4vw",
+                        marginTop: '5vh',
+                    }}
                 >
-                    {dictionary.clientsPage.previousLabel}
-                </ChangePageButton>
-                <ChangePageButton
-                    disabled={clients.length < clientsRequiredToEnablePagination}
-                    onClick={handleNextPage}
-                    backgroundColor={"#8edfb4"}
-                    minWidth={"10vw"}
-                >
-                    {dictionary.clientsPage.nextLabel}
-                </ChangePageButton>
+                    <ChangePageButton
+                        disabled={offset === 0}
+                        onClick={handlePreviousPage}
+                        backgroundColor={"#F46C63"}
+                        minWidth={"10vw"}
+                    >
+                        {dictionary.clientsPage.previousLabel}
+                    </ChangePageButton>
+                    <ChangePageButton
+                        disabled={clients.length < clientsRequiredToEnablePagination}
+                        onClick={handleNextPage}
+                        backgroundColor={"#8edfb4"}
+                        minWidth={"10vw"}
+                    >
+                        {dictionary.clientsPage.nextLabel}
+                    </ChangePageButton>
+                </Box>
             </Box>
-        </Box>
-    </>
-);
+        </>
+    );
 
 }

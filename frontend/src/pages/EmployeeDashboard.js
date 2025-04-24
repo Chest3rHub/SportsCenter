@@ -9,6 +9,7 @@ import { SportsContext } from "../context/SportsContext";
 import CircularProgress from '@mui/material/CircularProgress';
 import getYourTasks from "../api/getYourTasks";
 import getOrdersToProcess from "../api/getOrdersToProcess";
+import { useNavigate } from 'react-router-dom';
 
 export default function EmployeeDashboard() {
   const { dictionary, token } = useContext(SportsContext);
@@ -18,6 +19,7 @@ export default function EmployeeDashboard() {
   const [tasksLoading, setTasksLoading] = useState(true);
   const [orders, setOrders] = useState([]);
   const [ordersLoading, setOrdersLoading] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -31,7 +33,7 @@ export default function EmployeeDashboard() {
           setLatestNews([...newsData].sort((a, b) => new Date(b.date) - new Date(a.date))[0]);
         }
 
-        const tasksResponse = await getYourTasks(token);
+        const tasksResponse = await getYourTasks(token,0);
         if (!tasksResponse.ok) throw new Error('Failed to fetch tasks');
         const tasksData = await tasksResponse.json();
         
@@ -82,7 +84,7 @@ export default function EmployeeDashboard() {
   };
 
   const handleTodoListClick = () => {
-    alert("Nie zaimplementowano.");
+    navigate('/todo');
   };
 
   const handleMoreOrdersClick = () => {

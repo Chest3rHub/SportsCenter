@@ -1,14 +1,15 @@
 import API_URL from "../appConfig";
 
-const getYourTasks = (token, offset) => {
-  return fetch(`${API_URL}/Employees/get-your-tasks?offset=${offset}`, {
-    method: 'GET',
+const deleteTask = (token, taskId) => {
+  return fetch(`${API_URL}/Employees/Delete-task`, {
+    method: 'DELETE',
     headers: {
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${token}`
     },
+    body: JSON.stringify({ taskId }),
     credentials: 'include'
   });
 };
 
-export default getYourTasks;
+export default deleteTask;

@@ -1,14 +1,15 @@
 import API_URL from "../appConfig";
 
-const getYourTasks = (token, offset) => {
-  return fetch(`${API_URL}/Employees/get-your-tasks?offset=${offset}`, {
-    method: 'GET',
+const editTask = (token, taskData) => {
+  return fetch(`${API_URL}/Employees/Edit-task`, {
+    method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${token}`
     },
+    body: JSON.stringify(taskData),
     credentials: 'include'
   });
 };
 
-export default getYourTasks;
+export default editTask;

@@ -29,6 +29,7 @@ import AddDepositToClient from "../pages/AddDepositToClient";
 import updateClientDeposit from "../pages/UpdateClientDeposit";
 import AddReservationYourself from "../pages/AddReservationYourself";
 import ClientReservations from "../pages/ClientReservations";
+import ToDoPage from "../pages/ToDo";
 
 // pozmieniac dla klienta na komponenty trasy itd
 
@@ -308,7 +309,11 @@ const clientRouter = [
                 {
                     path: "/add-deposit-to-client",
                     element: <AddDepositToClient />
-                },          
+                },       
+                {
+                    path: "/todo",
+                    element: <ToDoPage />
+                },     
                 {
                     path: "*",
                     element: <NotFound />,

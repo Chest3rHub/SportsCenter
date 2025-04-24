@@ -326,4 +326,23 @@ export default {
     title: 'Moje rezerwacje',
     createReservation: 'Stwórz rezerwację',
   },
+  toDoPage: {
+    toDoLabel: "Lista zadań",
+    taskLabel: "Zadanie",
+    dueDateLabel: "Data wykonania",
+    editLabel: "Edytuj",
+    deleteLabel: "Usuń",
+    addTaskLabel: "Dodaj zadanie",
+    previousLabel: "Poprzednia strona",
+    nextLabel: "Następna strona",
+    editTaskLabel: "Edytuj zadanie",
+    taskDescriptionLabel: "Opis zadania",
+    saveLabel: "Zapisz",
+    backLabel: "Wróć",
+    noTasksLabel: "Brak zadań",
+    loadingLabel: "Ładowanie...",
+    taskAdded: "Zadanie dodane",
+    taskUpdated: "Zadanie zaktualizowane",
+    taskDeleted: "Zadanie usunięte"
+  },
   };

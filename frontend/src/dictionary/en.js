@@ -327,4 +327,23 @@ export default {
     title: 'My reservations',
     createReservation: 'Create reservation',
   },  
+  toDoPage: {
+    toDoLabel: "To-Do List",
+    taskLabel: "Task",
+    dueDateLabel: "Due Date",
+    editLabel: "Edit",
+    deleteLabel: "Delete",
+    addTaskLabel: "Add Task",
+    previousLabel: "Previous Page",
+    nextLabel: "Next Page",
+    editTaskLabel: "Edit Task",
+    taskDescriptionLabel: "Task Description",
+    saveLabel: "Save",
+    backLabel: "Back",
+    noTasksLabel: "No tasks",
+    loadingLabel: "Loading...",
+    taskAdded: "Task added",
+    taskUpdated: "Task updated",
+    taskDeleted: "Task deleted"
+  },
   };

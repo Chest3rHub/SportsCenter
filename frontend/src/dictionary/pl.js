@@ -303,5 +303,27 @@ export default {
     failureLabel: 'Błąd!',
     savedFailureLabel: 'Nie udało się zapisać zmian!',
     clickAnywhereFailureLabel: 'Kliknij w dowolne miejsce ekranu.',
-  }
+  },
+  addReservationYourselfPage:{
+    title: 'Rezerwacja',
+    courtIdLabel: 'Kort id',
+    courtIdError: 'Bledny numer id kortu',
+    startTimeLabel: 'Czas od',
+    startTimeError: 'Czas rozpoczęcia jest wymagany',
+    endTimeLabel: 'Czas do',
+    endTimeRequiredError: 'Czas zakończenia jest wymagany',
+    endTimeBeforeStartError: 'Czas zakończenia musi byc późniejszy niż rozpoczęcia',
+    endTimeDurationError: 'Czas rezerwacji musi wynosić min. 1h i max. 5h',
+    trainerIdLabel: 'Trener id',
+    trainerIdError: 'Bledny numer id trenera',
+    participantsCountLabel: 'liczba uczestników',
+    participantsCountError: 'Liczba uczestników musi być od 1 do 8',
+    isEquipmentReservedLabel: 'Czy rezerwujesz sprzęt',
+    isEquipmentReservedError: 'Wybierz, czy chcesz zarezerwować sprzęt',
+    confirmLabel: 'Potwierdź',
+  },
+  clientReservations:{
+    title: 'Moje rezerwacje',
+    createReservation: 'Stwórz rezerwację',
+  },
   };

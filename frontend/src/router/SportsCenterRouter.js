@@ -27,6 +27,8 @@ import Clients from "../pages/Clients"
 import AddClientDiscount from "../pages/AddClientDiscount"
 import AddDepositToClient from "../pages/AddDepositToClient";
 import updateClientDeposit from "../pages/UpdateClientDeposit";
+import AddReservationYourself from "../pages/AddReservationYourself";
+import ClientReservations from "../pages/ClientReservations";
 
 // pozmieniac dla klienta na komponenty trasy itd
 
@@ -66,7 +68,15 @@ const clientRouter = [
             {
                 path: '/account',
                 element: <MyAccount />,
-            },              
+            },
+            {
+                path: '/Create-single-reservation-yourself',
+                element: <AddReservationYourself />,
+            },
+            {
+                path: '/my-reservations',
+                element: <ClientReservations />,
+            },                      
             {
                 path: "*",
                 element: <NotFound />,

@@ -304,5 +304,27 @@ export default {
       failureLabel: 'Error!',
       savedFailureLabel: 'Failed to save changes!',
       clickAnywhereFailureLabel: 'Click anywhere on the screen.',
-    }
+    },
+    addReservationYourselfPage: {
+      title: 'Reservation',
+      courtIdLabel: 'Court id',
+      courtIdError: 'Invalid court id number',
+      startTimeLabel: 'Start time',
+      startTimeError: 'Start time is required',
+      endTimeLabel: 'End time',
+      endTimeRequiredError: 'End time is required',
+      endTimeBeforeStartError: 'End time must be later than start time',
+      endTimeDurationError: 'Reservation time must be at least 1 hour and no more than 5 hours',
+      trainerIdLabel: 'Trainer id',
+      trainerIdError: 'Invalid trainer id number',
+      participantsCountLabel: 'Number of participants',
+      participantsCountError: 'Number of participants must be between 1 and 8',
+      isEquipmentReservedLabel: 'Do you want to reserve equipment',
+      isEquipmentReservedError: 'Please choose whether to reserve equipment',
+      confirmLabel: 'Confirm',
+  },
+  clientReservations:{
+    title: 'My reservations',
+    createReservation: 'Create reservation',
+  },  
   };

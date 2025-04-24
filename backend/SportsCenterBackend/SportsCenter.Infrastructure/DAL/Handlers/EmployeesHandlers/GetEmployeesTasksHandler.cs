@@ -43,6 +43,7 @@ namespace SportsCenter.Infrastructure.DAL.Handlers.EmployeesHandlers
            .Take(NumberPerPage)
            .Select(t => new TaskDto
            {
+               TaskId=t.ZadanieId,
                Description = t.Opis,
                DateTo = (DateOnly)t.DataDo
            })

@@ -8,6 +8,7 @@ namespace SportsCenter.Application.Employees.Queries.GetTasks
 {
     public class TaskDto
     {
+        public int TaskId { get; set; }
         public string Description { get; set; }
         public DateOnly DateTo { get; set; }
         

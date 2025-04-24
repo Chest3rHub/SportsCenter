@@ -26,6 +26,12 @@ export default function Clients() {
     const [maxAge, setMaxAge] = useState('');
     const [ageError, setAgeError] = useState('');
 
+    //by pamietac filtr wiekowy podczas przechodzenia na kolejne strony (paginacja)
+    const [isFilteringByAge, setIsFilteringByAge] = useState(false);
+    const [minAgeValue, setMinAgeValue] = useState(null);
+    const [maxAgeValue, setMaxAgeValue] = useState(null);
+
+
     const [stateToTriggerUseEffectAfterDeleting, setStateToTriggerUseEffectAfterDeleting] = useState(false);
 
 
@@ -38,7 +44,13 @@ export default function Clients() {
 
     const fetchClients = async () => {
         try {
-            const response = await getClients(token, offset);
+            let response;
+            
+            if (isFilteringByAge && minAgeValue !== null && maxAgeValue !== null) {
+                response = await getClientsByAge(token, minAgeValue, maxAgeValue, offset);
+            } else {
+                response = await getClients(token, offset);
+            }
     
             if (!response.ok) {
                 throw new Error('Failed to fetch clients');
@@ -64,6 +76,9 @@ export default function Clients() {
         setMinAge('');
         setMaxAge('');
         setAgeError({ minAgeError: '', maxAgeError: '' });
+        setIsFilteringByAge(false);
+        setMinAgeValue(null);
+        setMaxAgeValue(null);
         setOffset(0);
         setLoading(true);
         fetchClients(); 
@@ -142,6 +157,9 @@ export default function Clients() {
         }
 
         setAgeError({ minAgeError: '', maxAgeError: '' });
+        setMinAgeValue(min);
+        setMaxAgeValue(max);
+        setIsFilteringByAge(true);
         setOffset(0);
 
         getClientsByAge(token, min, max, 0)

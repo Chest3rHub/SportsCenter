@@ -1,4 +1,4 @@
-import { Box, Typography, Modal, Button } from "@mui/material";
+import { Box, Typography, Modal, Button, MenuItem, Select, FormControl, InputLabel } from "@mui/material";
 import { useContext, useEffect, useState } from "react";
 import { SportsContext } from "../context/SportsContext";
 import Header from "../components/Header";
@@ -7,26 +7,33 @@ import GreenButton from "../components/GreenButton";
 import ChangePageButton from "../components/ChangePageButton";
 import CustomInput from "../components/CustomInput";
 import getYourTasks from "../api/getYourTasks";
-import addTask from "../api/addTask";
+import selfAddTask from "../api/selfAddTask";
 import editTask from "../api/editTask";
 import deleteTask from "../api/deleteTask";
+import getEmployees from "../api/getEmployees";
+import addTask from "../api/addTask";
 
 export default function ToDoPage() {
-    const { dictionary, token } = useContext(SportsContext);
+    const { dictionary, role } = useContext(SportsContext);
     const [tasks, setTasks] = useState([]);
     const [loading, setLoading] = useState(true);
     const [offset, setOffset] = useState(0);
     const [openModal, setOpenModal] = useState(false);
+    const [openEmployeeModal, setOpenEmployeeModal] = useState(false);
     const [currentTask, setCurrentTask] = useState(null);
     const [editMode, setEditMode] = useState(false);
+    const [employees, setEmployees] = useState([]);
+    const [selectedEmployee, setSelectedEmployee] = useState('');
     const [newTask, setNewTask] = useState({
         description: "",
         dateTo: ""
     });
 
+    const isOwner = role === "Wlasciciel";
+
     const fetchTasks = async () => {
         try {
-            const response = await getYourTasks(token, offset);
+            const response = await getYourTasks(offset);
             if (!response.ok) throw new Error('Failed to fetch tasks');
             const data = await response.json();
             setTasks(data);
@@ -37,15 +44,35 @@ export default function ToDoPage() {
         }
     };
 
+    const fetchEmployees = async () => {
+        try {
+            const response = await getEmployees(0);
+            if (!response.ok) throw new Error('Failed to fetch employees');
+            const data = await response.json();
+            setEmployees(data);
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    };
+
     useEffect(() => {
         setLoading(true);
         fetchTasks();
+        if (isOwner) {
+            fetchEmployees();
+        }
     }, [offset]);
 
     const handleOpenAddModal = () => {
         setNewTask({ description: "", dateTo: "" });
         setEditMode(false);
         setOpenModal(true);
+    };
+
+    const handleOpenEmployeeModal = () => {
+        setNewTask({ description: "", dateTo: "" });
+        setSelectedEmployee('');
+        setOpenEmployeeModal(true);
     };
 
     const handleOpenEditModal = (task) => {
@@ -57,6 +84,7 @@ export default function ToDoPage() {
 
     const handleCloseModal = () => {
         setOpenModal(false);
+        setOpenEmployeeModal(false);
     };
 
     const handleInputChange = (e) => {
@@ -64,9 +92,25 @@ export default function ToDoPage() {
         setNewTask(prev => ({ ...prev, [name]: value }));
     };
 
+    const handleEmployeeChange = (e) => {
+        setSelectedEmployee(e.target.value);
+    };
+
+    const validateDate = (dateString) => {
+        const selectedDate = new Date(dateString);
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        return selectedDate >= today;
+    };
+
     const handleAddTask = async () => {
+        if (!validateDate(newTask.dateTo)) {
+            alert(dictionary.toDoPage.invalidDateError);
+            return;
+        }
+        
         try {
-            const response = await addTask(token, newTask);
+            const response = await selfAddTask(newTask);
             if (!response.ok) throw new Error('Failed to add task');
             setOffset(0);
             await fetchTasks();
@@ -76,9 +120,38 @@ export default function ToDoPage() {
         }
     };
 
-    const handleEditTask = async () => {
+    const handleAddEmployeeTask = async () => {
+        if (!validateDate(newTask.dateTo)) {
+            alert(dictionary.toDoPage.invalidDateError);
+            return;
+        }
+        if (!selectedEmployee) {
+            alert(dictionary.toDoPage.selectEmployeeError);
+            return;
+        }
+        
         try {
-            const response = await editTask(token, {
+            const response = await addTask({
+                ...newTask,
+                employeeId: selectedEmployee
+            });
+            if (!response.ok) throw new Error('Failed to add task');
+            setOffset(0);
+            await fetchTasks();
+            handleCloseModal();
+        } catch (error) {
+            console.error('Error adding employee task:', error);
+        }
+    };
+
+    const handleEditTask = async () => {
+        if (!validateDate(newTask.dateTo)) {
+            alert(dictionary.toDoPage.invalidDateError);
+            return;
+        }
+        
+        try {
+            const response = await editTask({
                 ...newTask,
                 taskId: currentTask.taskId
             });
@@ -94,7 +167,7 @@ export default function ToDoPage() {
         try {
             const taskToDelete = tasks[taskIndex];
             if (!taskToDelete) throw new Error('Task not found');
-            const response = await deleteTask(token, taskToDelete.taskId);
+            const response = await deleteTask(taskToDelete.taskId);
             if (!response.ok) throw new Error('Failed to delete task');
             setOffset(0);
             await fetchTasks();
@@ -259,20 +332,39 @@ export default function ToDoPage() {
                             {dictionary.toDoPage.previousLabel}
                         </ChangePageButton>
                         
-                        <GreenButton
-                            onClick={handleOpenAddModal}
-                            style={{
-                                width: 'fit-content',
-                                height: '2.8rem',
-                                fontSize: '1rem',
-                                padding: '0 2rem',
-                                backgroundColor: '#8edfb4',
-                                color: 'black',
-                                fontWeight: 'bold'
-                            }}
-                        >
-                            {dictionary.toDoPage.addTaskLabel}
-                        </GreenButton>
+                        <Box sx={{ display: 'flex', gap: '1rem' }}>
+                            {isOwner && (
+                                <GreenButton
+                                    onClick={handleOpenEmployeeModal}
+                                    style={{
+                                        width: 'fit-content',
+                                        height: '2.8rem',
+                                        fontSize: '1rem',
+                                        padding: '0 2rem',
+                                        backgroundColor: '#8edfb4',
+                                        color: 'black',
+                                        fontWeight: 'bold'
+                                    }}
+                                >
+                                    {dictionary.toDoPage.addEmployeeTaskLabel}
+                                </GreenButton>
+                            )}
+                            
+                            <GreenButton
+                                onClick={handleOpenAddModal}
+                                style={{
+                                    width: 'fit-content',
+                                    height: '2.8rem',
+                                    fontSize: '1rem',
+                                    padding: '0 2rem',
+                                    backgroundColor: '#8edfb4',
+                                    color: 'black',
+                                    fontWeight: 'bold'
+                                }}
+                            >
+                                {dictionary.toDoPage.addTaskLabel}
+                            </GreenButton>
+                        </Box>
                         
                         <ChangePageButton
                             disabled={tasks.length <= 6}
@@ -285,7 +377,7 @@ export default function ToDoPage() {
                     </Box>
                 </Box>
             </Box>
-            
+
             <Modal
                 open={openModal}
                 onClose={handleCloseModal}
@@ -339,6 +431,9 @@ export default function ToDoPage() {
                             '& .MuiOutlinedInput-root': { color: 'black' }
                         }}
                         InputLabelProps={{ shrink: true }}
+                        inputProps={{ 
+                            min: new Date().toISOString().split('T')[0] 
+                        }}
                     />
                     
                     <Box sx={{ 
@@ -374,6 +469,121 @@ export default function ToDoPage() {
                                 fontWeight: 'bold'
                             }}
                             onClick={editMode ? handleEditTask : handleAddTask}
+                        >
+                            {dictionary.toDoPage.saveLabel}
+                        </Button>
+                    </Box>
+                </Box>
+            </Modal>
+            
+            <Modal
+                open={openEmployeeModal}
+                onClose={handleCloseModal}
+                aria-labelledby="employee-task-modal-title"
+                sx={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                }}
+            >
+                <Box sx={{
+                    backgroundColor: 'white',
+                    borderRadius: '20px',
+                    boxShadow: '0 10px 20px rgba(0, 0, 0, 0.2)',
+                    padding: '3rem',
+                    width: '500px',
+                    maxWidth: '90%',
+                }}>
+                    <Typography variant="h5" component="h2" sx={{ 
+                        marginBottom: '2.5rem',
+                        fontWeight: 'bold',
+                        color: 'black'
+                    }}>
+                        {dictionary.toDoPage.addEmployeeTaskLabel}
+                    </Typography>
+                    
+                    <FormControl fullWidth sx={{ mb: 4 }}>
+                        <InputLabel sx={{ color: 'black' }}>
+                            {dictionary.toDoPage.selectEmployeeLabel}
+                        </InputLabel>
+                        <Select
+                            value={selectedEmployee}
+                            onChange={handleEmployeeChange}
+                            label={dictionary.toDoPage.selectEmployeeLabel}
+                            sx={{ color: 'black' }}
+                        >
+                            {employees.map((employee) => (
+                                <MenuItem key={employee.id} value={employee.id}>
+                                    {employee.fullName}
+                                </MenuItem>
+                            ))}
+                        </Select>
+                    </FormControl>
+                    
+                    <CustomInput
+                        label={dictionary.toDoPage.taskDescriptionLabel}
+                        name="description"
+                        value={newTask.description}
+                        onChange={handleInputChange}
+                        fullWidth
+                        sx={{ 
+                            marginBottom: '4rem',
+                            '& .MuiInputLabel-root': { color: 'black' },
+                            '& .MuiOutlinedInput-root': { color: 'black' }
+                        }}
+                    />
+                    
+                    <CustomInput
+                        label={dictionary.toDoPage.dueDateLabel}
+                        name="dateTo"
+                        type="date"
+                        value={newTask.dateTo}
+                        onChange={handleInputChange}
+                        fullWidth
+                        sx={{ 
+                            marginBottom: '3.5rem',
+                            '& .MuiInputLabel-root': { color: 'black' },
+                            '& .MuiOutlinedInput-root': { color: 'black' }
+                        }}
+                        InputLabelProps={{ shrink: true }}
+                        inputProps={{ 
+                            min: new Date().toISOString().split('T')[0] 
+                        }}
+                    />
+                    
+                    <Box sx={{ 
+                        display: 'flex', 
+                        justifyContent: 'space-between',
+                        marginTop: '1.5rem'
+                    }}>
+                        <Button 
+                            variant="contained" 
+                            sx={{ 
+                                backgroundColor: '#FFE3B3',
+                                '&:hover': { backgroundColor: '#e8d2a1' },
+                                minWidth: '120px',
+                                height: '42px',
+                                fontSize: '1rem',
+                                color: 'black',
+                                fontWeight: 'bold'
+                            }}
+                            onClick={handleCloseModal}
+                        >
+                            {dictionary.toDoPage.backLabel}
+                        </Button>
+                        
+                        <Button 
+                            variant="contained" 
+                            sx={{ 
+                                backgroundColor: '#8edfb4',
+                                '&:hover': { backgroundColor: '#7ecba3' },
+                                minWidth: '120px',
+                                height: '42px',
+                                fontSize: '1rem',
+                                color: 'black',
+                                fontWeight: 'bold'
+                            }}
+                            onClick={handleAddEmployeeTask}
                         >
                             {dictionary.toDoPage.saveLabel}
                         </Button>

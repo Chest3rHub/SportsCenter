@@ -1,7 +1,7 @@
 import API_URL from "../appConfig";
 
-const addTask = (taskData) => {
-  return fetch(`${API_URL}/Employees/Add-task`, {
+const selfAddTask = (taskData) => {
+  return fetch(`${API_URL}/Employees/Self-Add-task`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -11,4 +11,4 @@ const addTask = (taskData) => {
   });
 };
 
-export default addTask;
+export default selfAddTask;

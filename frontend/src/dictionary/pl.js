@@ -343,6 +343,10 @@ export default {
     loadingLabel: "Ładowanie...",
     taskAdded: "Zadanie dodane",
     taskUpdated: "Zadanie zaktualizowane",
-    taskDeleted: "Zadanie usunięte"
+    taskDeleted: "Zadanie usunięte",
+    addEmployeeTaskLabel: "Dodaj zadanie pracownikowi",
+    selectEmployeeLabel: "Wybierz pracownika",
+    selectEmployeeError: "Wystąpił błąd podczas wyboru pracownika",
+    invalidDateError: "Wybrana data jest nieprawidłowa"
   },
   };

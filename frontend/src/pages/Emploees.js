@@ -11,7 +11,7 @@ import fireEmployee from "../api/fireEmployee";
 import ChangePageButton from "../components/ChangePageButton";
 export default function Employees() {
 
-    const { dictionary, token } = useContext(SportsContext);
+    const { dictionary } = useContext(SportsContext);
     const navigate = useNavigate();
 
     const [employees, setEmployees] = useState([]);
@@ -31,7 +31,7 @@ export default function Employees() {
 
 
     useEffect(() => {
-        getEmployees(token, offset)
+        getEmployees(offset)
             .then(response => {
                 return response.json();
             })
@@ -53,7 +53,7 @@ export default function Employees() {
 
     function handleFireEmployee(id) {
         handleClose();
-        fireEmployee(id, token)
+        fireEmployee(id)
             .then(response => { })
             .then(data => {
                 console.log("Pracownik zwolniony:", data);

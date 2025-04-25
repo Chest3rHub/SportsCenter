@@ -344,6 +344,10 @@ export default {
     loadingLabel: "Loading...",
     taskAdded: "Task added",
     taskUpdated: "Task updated",
-    taskDeleted: "Task deleted"
+    taskDeleted: "Task deleted",
+    addEmployeeTaskLabel: "Add task for employee",
+    selectEmployeeLabel: "Choose an employee",
+    selectEmployeeError: "Error while chosing an employee",
+    invalidDateError: "Selected date is invalid"
   },
   };

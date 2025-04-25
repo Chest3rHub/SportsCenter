@@ -12,7 +12,7 @@ import getOrdersToProcess from "../api/getOrdersToProcess";
 import { useNavigate } from 'react-router-dom';
 
 export default function EmployeeDashboard() {
-  const { dictionary, token } = useContext(SportsContext);
+  const { dictionary } = useContext(SportsContext);
   const [latestNews, setLatestNews] = useState(null);
   const [loading, setLoading] = useState(true);
   const [tasks, setTasks] = useState([]);
@@ -33,7 +33,7 @@ export default function EmployeeDashboard() {
           setLatestNews([...newsData].sort((a, b) => new Date(b.date) - new Date(a.date))[0]);
         }
 
-        const tasksResponse = await getYourTasks(token,0);
+        const tasksResponse = await getYourTasks(0);
         if (!tasksResponse.ok) throw new Error('Failed to fetch tasks');
         const tasksData = await tasksResponse.json();
         
@@ -44,7 +44,7 @@ export default function EmployeeDashboard() {
           setTasks([]);
         }
 
-        const ordersResponse = await getOrdersToProcess(token);
+        const ordersResponse = await getOrdersToProcess();
         if (!ordersResponse.ok) throw new Error('Failed to fetch orders');
         const ordersData = await ordersResponse.json();
         

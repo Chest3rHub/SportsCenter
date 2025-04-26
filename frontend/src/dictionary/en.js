@@ -368,6 +368,7 @@ export default {
     nextLabel: 'Next',
     previousLabel: 'Previous',
     moreInfoLabel: 'Show Details',
+    deleteActivityLabel: 'Remove activity',
     addActivityLabel: 'Add Activity',
     showSummaryLabel: 'Show Activities Summary',
 },

@@ -6,10 +6,12 @@ using SportsCenter.Core.Repositories;
 
 namespace SportsCenter.Infrastructure.DAL.Handlers.SportActivitiesHandler
 {
-
     internal sealed class GetAllSportActivitiesHandler : IRequestHandler<GetAllSportActivities, IEnumerable<SportActivityDto>>
     {
         private readonly SportsCenterDbContext _dbContext;
+
+        int pageSize = 6;
+        int numberPerPage = 7;
 
         public GetAllSportActivitiesHandler(SportsCenterDbContext dbContext)
         {
@@ -18,73 +20,33 @@ namespace SportsCenter.Infrastructure.DAL.Handlers.SportActivitiesHandler
 
         public async Task<IEnumerable<SportActivityDto>> Handle(GetAllSportActivities request, CancellationToken cancellationToken)
         {
-            int pageSize = 6;
-            int numberPerPage = 7;
-
-            DateOnly today = DateOnly.FromDateTime(DateTime.UtcNow);
-            DateOnly startOfWeek = today.AddDays(-(int)today.DayOfWeek + 1).AddDays(request.WeekOffset * 7);
-            DateOnly endOfWeek = startOfWeek.AddDays(6);
-
-            var weeklyActivities = await _dbContext.GrafikZajecs
+            var activities = await _dbContext.GrafikZajecs
                 .Include(g => g.Zajecia)
-                .ThenInclude(z => z.IdPoziomZajecNavigation)
+                    .ThenInclude(z => z.IdPoziomZajecNavigation)
                 .Include(g => g.Kort)
+                .OrderBy(g => g.Zajecia.ZajeciaId)
+                .ThenBy(g => g.GodzinaOd)
+                .Skip(request.Offset * pageSize)
+                .Take(numberPerPage)
                 .ToListAsync(cancellationToken);
 
-            var existingInstances = await _dbContext.InstancjaZajecs
-                .Where(i => i.Data >= startOfWeek && i.Data <= endOfWeek)
-                .ToListAsync(cancellationToken);
-
-            var result = new List<SportActivityDto>();
-
-            foreach (var activity in weeklyActivities)
+            var result = activities.Select(activity => new SportActivityDto
             {
-                for (int i = 0; i < 7; i++)
-                {
-                    DateOnly activityDate = startOfWeek.AddDays(i);
+                SportActivityId = activity.ZajeciaId,
+                ActivityName = activity.Zajecia.Nazwa,
+                LevelName = activity.Zajecia.IdPoziomZajecNavigation.Nazwa,
+                StartDate = activity.DataStartuZajec,
+                DayOfWeek = activity.DzienTygodnia,
+                StartHour = TimeOnly.FromTimeSpan(activity.GodzinaOd),
+                DurationInMinutes = activity.CzasTrwania,
+                CourtName = activity.Kort.Nazwa,
+                MaxParticipants = 10,
+                CostWithoutEquipment = 0,
+                CostWithEquipment = 0,
+                isCanleced = false
+            });
 
-                    if ((int)activityDate.DayOfWeek != DzienTygodniaNaNumer(activity.DzienTygodnia)) continue;
-
-                    var existingInstance = existingInstances.FirstOrDefault(x => x.GrafikZajecId == activity.GrafikZajecId && x.Data == activityDate);
-                    bool isCanceled = existingInstance?.CzyOdwolane ?? false;
-
-                    result.Add(new SportActivityDto
-                    {
-                        SportActivityId = activity.ZajeciaId,
-                        ActivityName = activity.Zajecia.Nazwa,
-                        LevelName = activity.Zajecia.IdPoziomZajecNavigation.Nazwa,
-                        ActivityDate = activityDate,
-                        StartDate = activity.DataStartuZajec,
-                        DayOfWeek = activity.DzienTygodnia,
-                        StartHour = TimeOnly.FromTimeSpan(activity.GodzinaOd),
-                        DurationInMinutes = activity.CzasTrwania,
-                        CourtName = activity.Kort.Nazwa,
-                        MaxParticipants = 10,
-                        CostWithoutEquipment = 0,
-                        CostWithEquipment = 0,
-                        isCanleced = isCanceled
-                    });              
-                }
-            }
-            return result.OrderBy(a => a.ActivityDate)
-                       .ThenBy(a => a.StartHour)
-                       .Skip(request.WeekOffset * pageSize)
-                       .Take(numberPerPage)
-                       .ToList();
-        }
-        private int DzienTygodniaNaNumer(string dzien)
-        {
-            return dzien.ToLower() switch
-            {
-                "poniedzialek" => 1,
-                "wtorek" => 2,
-                "sroda" => 3,
-                "czwartek" => 4,
-                "piatek" => 5,
-                "sobota" => 6,
-                "niedziela" => 0,
-                _ => -1
-            };
+            return result.ToList();
         }
     }
 }

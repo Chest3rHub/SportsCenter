@@ -75,36 +75,25 @@ export default function GetActivityInfo() {
         return (
             <GreenBackground height={"55vh"} marginTop={"2vh"}>
             <Header>{dictionary.getActivityInfoPage.title}</Header>
-            <OrangeBackground width="70%">
-    
-                <Box sx={{  
-                    display: "flex",
-                    flexDirection: "row",
-                    justifyContent: 'center',
-                    columnGap: "4vw" 
-                    }}>
-                  <ActivitiesButton backgroundColor={"#f0aa4f"} onClick={() => handleCancelActivityInstance(id)} minWidth={'11vw'}>
-                      {dictionary.getActivityInfoPage.cancelActivityInstanceLabel}
-                  </ActivitiesButton>
-                  <GreenButton onClick={handleCancel} style={{ maxWidth: "10vw", backgroundColor: "#F46C63" }} hoverBackgroundColor={'#c3564f'}>{dictionary.getActivityInfoPage.returnLabel}</GreenButton>
-                  
-                </Box>
-    
+            <OrangeBackground width="40%">
                 <Box
                     sx={{
                         display: "flex",
                         flexDirection: "row",
                         justifyContent: "space-between",
-                        width: "100%",
+                        width: "80%",
                     }}
                 >
                 <Box sx={{ 
                     display: "flex", 
                     flexDirection: "column", 
+                    justifyContent: "center",
+                    alignItems: "center", 
+                    width: "100%", 
                     gap: "1rem", 
                     marginTop: "4vh",
-                    marginBottom: "2vh",  
-                    width: "60%"
+                    marginBottom: "2vh", 
+                    marginLeft: "9vh", 
                   }}>
                   <CustomInput
                     label={dictionary.getActivityInfoPage.sportActivityId}
@@ -217,24 +206,15 @@ export default function GetActivityInfo() {
                             readonlyStyle
                         />                
                 </Box>
-    
-                {/* <Box sx={{ width: "48%" }}> */}
-                  {/* <Typography variant="h6" align="left">{dictionary.accountPage.role}: {activityData.role}</Typography> */}
-                      {/* {activityData.role === "Wlasciciel" && ( */}
-                        <>
-                          {/* <Typography variant="h6" align="left" sx={{ marginBottom: "20px" }}>
-                            {dictionary.accountPage.balance}: {activityData.balance} zł
-                          </Typography> */}
-                          {/* <Box sx={{ display: "flex", flexDirection: "column", marginBottom: "20px" }}> */}
-                           {/* // <GreenButton onClick={handleAddBalance}>{dictionary.accountPage.addBalance}</GreenButton> */}
-                          {/* </Box> */}
-                        </>
-                      {/* )} */}
-                  <Box sx={{ display: "flex", flexDirection: "column"}}>
-                    {/* //<GreenButton onClick={handleChangePassword}>{dictionary.accountPage.changePassword}</GreenButton> */}
-                  </Box>
                 </Box>
-                {/* </Box> */}
+                <Box sx={{  
+                    display: "flex",
+                    flexDirection: "row",
+                    justifyContent: 'center',
+                    columnGap: "4vw" 
+                    }}>
+                  <GreenButton onClick={handleCancel} style={{ maxWidth: "10vw", backgroundColor: "#F46C63" }} hoverBackgroundColor={'#c3564f'}>{dictionary.getActivityInfoPage.returnLabel}</GreenButton>
+                </Box>
             </OrangeBackground>
             </GreenBackground>
         );

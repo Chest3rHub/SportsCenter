@@ -371,6 +371,7 @@ export default {
     nextLabel:'Następne',
     previousLabel:'Poprzednie',
     moreInfoLabel: 'Wyświetl szczegóły',
+    deleteActivityLabel: 'Usuń zajęcia',
     addActivityLabel: 'Dodaj zajęcia',
     showSummaryLabel: 'Pokaż podsumowanie zajęć',
   },

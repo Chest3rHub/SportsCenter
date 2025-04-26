@@ -3,7 +3,7 @@ import { Box, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import GreenBackground from "../components/GreenBackground";
 import OrangeBackground from "../components/OrangeBackground";
-import GreenButton from "../components/GreenButton";
+import GreenButton from '../components/buttons/GreenButton';
 import Header from "../components/Header";
 import SingleNews from "../components/SingleNews";
 import getNews from "../api/getNews";

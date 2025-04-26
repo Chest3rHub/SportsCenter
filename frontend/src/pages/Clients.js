@@ -1,15 +1,15 @@
 import Header from "../components/Header";
 import { Box, Typography, Modal } from "@mui/material";
 import SmallGreenHeader from "../components/SmallGreenHeader";
-import ClientsButton from "../components/ClientsButton";
+import ClientsButton from "../components/buttons/ClientsButton";
 import { SportsContext } from "../context/SportsContext";
 import { useContext, useEffect, useState } from "react";
 import getClients from "../api/getClients";
 import getClientsByAge from "../api/getClientsByAge";
 import { useNavigate } from "react-router-dom";
-import GreenButton from "../components/GreenButton";
-import GreyButton from "../components/GreyButton";
-import ChangePageButton from "../components/ChangePageButton";
+import GreenButton from "../components/buttons/GreenButton";
+import GreyButton from "../components/buttons/GreyButton";
+import ChangePageButton from "../components/buttons/ChangePageButton";
 import CustomInput from "../components/CustomInput";
 
 export default function Clients() {

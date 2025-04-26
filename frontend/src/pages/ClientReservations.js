@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { SportsContext } from '../context/SportsContext';
 import Header from '../components/Header';
 import GreenBackground from '../components/GreenBackground';
-import ReservationButton from '../components/reservatonButton';
+import ReservationButton from '../components/buttons/ReservationButton';
 import { Box } from '@mui/material';
 
 export default function ClientReservations() {

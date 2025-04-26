@@ -1,5 +1,5 @@
 import { Box } from '@mui/material';
-import NavbarButton from './NavbarButton';
+import NavbarButton from './buttons/NavbarButton';
 import { SportsContext } from '../context/SportsContext';
 import React, { useContext } from 'react';
 

@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import Header from '../components/Header';
-import GreenButton from '../components/GreenButton';
+import GreenButton from '../components/buttons/GreenButton';
 import GreenBackground from '../components/GreenBackground';
 import OrangeBackground from '../components/OrangeBackground';
 import { SportsContext } from '../context/SportsContext';
@@ -9,7 +9,7 @@ import editNews from '../api/editNews';
 import CustomInput from '../components/CustomInput';
 import { Box, Typography, Avatar } from '@mui/material';
 import parseStringToDate from '../utils/parseStringToDate';
-import NewsButton from '../components/NewsButton';
+import NewsButton from '../components/buttons/NewsButton';
 import Backdrop from '@mui/material/Backdrop';
 import SentimentSatisfiedIcon from '@mui/icons-material/SentimentSatisfied';
 import SentimentDissatisfiedIcon from '@mui/icons-material/SentimentDissatisfied';

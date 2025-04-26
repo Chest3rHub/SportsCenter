@@ -3,12 +3,12 @@ import { Box, Typography, Modal } from "@mui/material";
 import SmallGreenHeader from "../components/SmallGreenHeader";
 import { SportsContext } from "../context/SportsContext";
 import { useContext, useEffect, useState } from "react";
-import ActivitiesButton from "../components/ActivitiesButton";
+import ActivitiesButton from "../components/buttons/ActivitiesButton";
 import getScheduleActivities from "../api/getScheduleActivities";
 import { useNavigate } from "react-router-dom";
-import GreenButton from "../components/GreenButton";
-import GreyButton from "../components/GreyButton";
-import ChangePageButton from "../components/ChangePageButton";
+import GreenButton from "../components/buttons/GreenButton";
+import GreyButton from "../components/buttons/GreyButton";
+import ChangePageButton from "../components/buttons/ChangePageButton";
 import CustomInput from "../components/CustomInput";
 
 export default function SportActivities() {

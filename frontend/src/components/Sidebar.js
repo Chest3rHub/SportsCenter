@@ -1,6 +1,6 @@
 import React from 'react';
 import { Box } from '@mui/material';
-import SidebarButton from './SidebarButton';
+import SidebarButton from './buttons/SidebarButton';
 
 export default function Sidebar({ menuItems }) {
 

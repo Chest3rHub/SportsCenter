@@ -1,14 +1,14 @@
 import Header from "../components/Header";
 import { Box, Typography, Modal } from "@mui/material";
 import SmallGreenHeader from "../components/SmallGreenHeader";
-import EmployeesButton from "../components/EmployeesButton";
+import EmployeesButton from "../components/buttons/EmployeesButton";
 import { SportsContext } from "../context/SportsContext";
 import { useContext, useEffect, useState } from "react";
 import getEmployees from "../api/getEmployees";
 import { useNavigate } from "react-router-dom";
-import GreenButton from "../components/GreenButton";
+import GreenButton from "../components/buttons/GreenButton";
 import fireEmployee from "../api/fireEmployee";
-import ChangePageButton from "../components/ChangePageButton";
+import ChangePageButton from "../components/buttons/ChangePageButton";
 export default function Employees() {
 
     const { dictionary } = useContext(SportsContext);

@@ -6,9 +6,9 @@ import GreenBackground from '../components/GreenBackground';
 import Header from '../components/Header';
 import { SportsContext } from '../context/SportsContext';
 import SentimentDissatisfiedIcon from '@mui/icons-material/SentimentDissatisfied';
-import NewsButton from '../components/NewsButton';
+import NewsButton from '../components/buttons/NewsButton';
 import { useNavigate, useLocation } from 'react-router-dom';
-import ChangePageButton from '../components/ChangePageButton';
+import ChangePageButton from '../components/buttons/ChangePageButton';
 
 export default function News() {
     const location = useLocation();

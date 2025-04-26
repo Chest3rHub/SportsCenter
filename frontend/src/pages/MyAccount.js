@@ -3,7 +3,7 @@ import { Box, Typography, TextField } from "@mui/material";
 import { useNavigate } from "react-router-dom";  
 import GreenBackground from "../components/GreenBackground";
 import OrangeBackground from "../components/OrangeBackground";
-import GreenButton from "../components/GreenButton";
+import GreenButton from '../components/buttons/GreenButton';
 import { SportsContext } from "../context/SportsContext";
 import Header from "../components/Header";
 import CustomInput from "../components/CustomInput";

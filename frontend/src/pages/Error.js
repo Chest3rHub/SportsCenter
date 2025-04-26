@@ -1,4 +1,4 @@
-import GreenButton from "../components/GreenButton";
+import GreenButton from '../components/buttons/GreenButton';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { SportsContext } from "../context/SportsContext";
 import { useContext } from "react";

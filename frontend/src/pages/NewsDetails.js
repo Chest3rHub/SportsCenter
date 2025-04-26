@@ -2,7 +2,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import Header from "../components/Header";
 import OrangeBackground from "../components/OrangeBackground";
 import GreenBackground from "../components/GreenBackground";
-import NewsButton from "../components/NewsButton";
+import NewsButton from "../components/buttons/NewsButton";
 import { Box, Typography } from "@mui/material";
 import { SportsContext } from "../context/SportsContext";
 import { useContext } from "react";

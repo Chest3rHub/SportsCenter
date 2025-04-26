@@ -165,7 +165,7 @@ const clientRouter = [
                 {
                     path: "/get-sport-activity-with-id",
                     element: <GetActivityInfo />
-                },                     
+                },                    
                 {
                     path: "*",
                     element: <NotFound />,

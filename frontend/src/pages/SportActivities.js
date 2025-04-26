@@ -9,6 +9,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import GreenButton from "../components/GreenButton";
 import GreyButton from "../components/GreyButton";
 import ChangePageButton from "../components/ChangePageButton";
+import deleteActivity from "../api/deleteActivity";
 import CustomInput from "../components/CustomInput";
 
 export default function SportActivities() {
@@ -55,6 +56,21 @@ export default function SportActivities() {
         navigate(`/get-sport-activity-with-id`, {
             state: { id }
         });
+    }
+
+    function handleDeleteActivity(id) {
+        deleteActivity(id)
+            .then(response => {
+                if (response.ok) {
+                    console.log("Zajęcia zostały usunięte");
+                    setStateToTriggerUseEffectAfterDeleting(prev => !prev);
+                } else {
+                    console.error("Błąd podczas usuwania zajęć");
+                }
+            })
+            .catch(error => {
+                console.error("Błąd podczas wywoływania deleteActivity:", error);
+            });
     }
 
     function handleNextPage() {
@@ -131,7 +147,7 @@ export default function SportActivities() {
                 </Box>
                 <Box
                     sx={{
-                        height: '55vh',
+                        height: '60vh',
                         borderRadius: '20px',
                         boxShadow: '0 10px 20px rgba(0, 0, 0, 0.2)',
                         backgroundColor: 'white',
@@ -143,7 +159,7 @@ export default function SportActivities() {
                             display: 'flex',
                             alignContent: 'start',
                             alignItems: 'center',
-                            width: '80%',
+                            width: '62%',
                             gap: '2%',
                             marginBottom: '3vh',
                         }}
@@ -174,7 +190,7 @@ export default function SportActivities() {
                                 justifyContent: 'space-between',
                                 alignItems: 'center',
                                 paddingTop: '0.6rem',
-                                paddingBottom: '0.4rem',
+                                paddingBottom: '0.4rem',                          
                             }}
                         >
                             <Box
@@ -224,7 +240,7 @@ export default function SportActivities() {
                                 }}
                             >
                                 <Typography>
-                                    {activity.startHour}
+                                    {activity.startHour.slice(0, 5)}
                                 </Typography>
                             </Box>
                             <Box
@@ -240,6 +256,9 @@ export default function SportActivities() {
                             </Box>
                             <ActivitiesButton backgroundColor={"#f0aa4f"} onClick={() => handleShowMoreInfo(activity.sportActivityId)} minWidth={'11vw'}>
                                 {dictionary.sportActivitiesPage.moreInfoLabel}
+                            </ActivitiesButton>
+                            <ActivitiesButton backgroundColor={"#F46C63"} onClick={() => handleDeleteActivity(activity.sportActivityId)} minWidth={'11vw'}>
+                                {dictionary.sportActivitiesPage.deleteActivityLabel}
                             </ActivitiesButton>
                         </Box>))}
                     </Box>

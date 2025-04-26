@@ -33,8 +33,8 @@ namespace SportsCenter.Infrastructure.DAL.Handlers.EmployeesHandlers
                 throw new UnauthorizedAccessException("You cannot access your tasks without being logged in on your account.");
             }
 
-            int PageSize = 6;
-            int NumberPerPage = 7;
+            int PageSize = 7;
+            int NumberPerPage = 8;
 
             var tasks = await _dbContext.Zadanies
            .Where(t => t.PracownikId == employeeId)

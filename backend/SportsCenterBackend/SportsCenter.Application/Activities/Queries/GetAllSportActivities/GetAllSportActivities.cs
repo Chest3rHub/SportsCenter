@@ -6,11 +6,11 @@ namespace SportsCenter.Application.Activities.Queries.GetAllSportActivities
 
     public class GetAllSportActivities : IQuery<IEnumerable<SportActivityDto>>
     {
-        public int WeekOffset { get; set; } = 0;
+        public int Offset { get; set; } = 0;
 
-        public GetAllSportActivities(int weekOffSet)
+        public GetAllSportActivities(int offSet)
         {
-            WeekOffset = weekOffSet;
+            Offset = offSet;
         }
     }
 }

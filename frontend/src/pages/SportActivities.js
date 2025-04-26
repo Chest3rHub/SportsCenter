@@ -5,7 +5,7 @@ import { SportsContext } from "../context/SportsContext";
 import { useContext, useEffect, useState } from "react";
 import ActivitiesButton from "../components/ActivitiesButton";
 import getScheduleActivities from "../api/getScheduleActivities";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import GreenButton from "../components/GreenButton";
 import GreyButton from "../components/GreyButton";
 import ChangePageButton from "../components/ChangePageButton";
@@ -13,7 +13,9 @@ import CustomInput from "../components/CustomInput";
 
 export default function SportActivities() {
 
-    const { dictionary } = useContext(SportsContext);
+    const location = useLocation();
+    const { dictionary, role  } = useContext(SportsContext);
+
     const navigate = useNavigate();
 
     const [activities, setActivities] = useState([]);
@@ -21,8 +23,8 @@ export default function SportActivities() {
 
     const [selectedActivity, setSelectedActivity] = useState(null);
     const [offset, setOffset] = useState(0);
-    const [stateToTriggerUseEffectAfterDeleting, setStateToTriggerUseEffectAfterDeleting] = useState(false);
 
+    const [stateToTriggerUseEffectAfterDeleting, setStateToTriggerUseEffectAfterDeleting] = useState(false);
 
     const handleOpen = (activity) => setSelectedActivity(activity);;
     const handleClose = () => setSelectedActivity(null);;
@@ -31,8 +33,11 @@ export default function SportActivities() {
     const activitiesRequiredToEnablePagination = 7;
 
     useEffect(() => {
+        console.log('Aktualny offset:', offset);
+    
         getScheduleActivities(offset)
             .then(response => {
+                console.log('Response:', response);
                 return response.json();
             })
             .then(data => {
@@ -43,7 +48,8 @@ export default function SportActivities() {
             .catch(error => {
                 console.error('Błąd podczas wywoływania getScheduleActivities:', error);
             });
-    }, [offset, stateToTriggerUseEffectAfterDeleting]);
+    }, [offset]);
+    
     
     function handleShowMoreInfo(id) {
         navigate(`/get-sport-activity-with-id`, {
@@ -144,12 +150,11 @@ export default function SportActivities() {
                     >
                         <SmallGreenHeader width={'16.6%'}>{dictionary.sportActivitiesPage.sportActivityId}</SmallGreenHeader>
                         <SmallGreenHeader width={'16.6%'}>{dictionary.sportActivitiesPage.sportActivityName}</SmallGreenHeader>
-                        <SmallGreenHeader width={'16.6%'}>{dictionary.sportActivitiesPage.sportActivityLevelName}</SmallGreenHeader>
-                        <SmallGreenHeader width={'16.6%'}>{dictionary.sportActivitiesPage.dayOfWeek}</SmallGreenHeader>
+                        <SmallGreenHeader width={'16.6%'}>{dictionary.sportActivitiesPage.sportActivityLevelName}</SmallGreenHeader>                        <SmallGreenHeader width={'16.6%'}>{dictionary.sportActivitiesPage.dayOfWeek}</SmallGreenHeader>
                         <SmallGreenHeader width={'16.6%'}>{dictionary.sportActivitiesPage.startHour}</SmallGreenHeader>
                         <SmallGreenHeader width={'16.6%'}>{dictionary.sportActivitiesPage.courtName}</SmallGreenHeader>
                         </Box>
-                        {limitedActivities.map((activity) => (<Box
+                        {limitedActivities.map((activity) => (<Box key={activity.sportActivityId}
                             sx={{
                                 marginTop: '1vh',
                                 display: 'flex',

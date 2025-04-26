@@ -85,9 +85,9 @@ namespace SportsCenter.Api.Controllers;
     }
 
     [HttpGet("Get-schedule-activities")]
-    public async Task<IActionResult> GetAllSportActivitiesAsync([FromQuery] int weekOffset = 0)
+    public async Task<IActionResult> GetAllSportActivitiesAsync([FromQuery] int offset = 0)
         {
-            var activities = await Mediator.Send(new GetAllSportActivities(weekOffset));
+            var activities = await Mediator.Send(new GetAllSportActivities(offset));
             return Ok(activities);
         }
 

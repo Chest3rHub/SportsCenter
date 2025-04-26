@@ -1,3 +1,7 @@
+import { duration } from "@mui/material";
+import SportActivities from "../pages/SportActivities";
+import getActivityInfo from "../api/getActivityInfo";
+
 export default {
     navbar: {
       changeLanguageLabel: 'EN',
@@ -348,5 +352,44 @@ export default {
     selectEmployeeLabel: "Wybierz pracownika",
     selectEmployeeError: "Wystąpił błąd podczas wyboru pracownika",
     invalidDateError: "Wybrana data jest nieprawidłowa"
+  },
+  sportActivitiesPage: {
+    sportActivitiesLabel: 'Zajęcia sportowe',
+    sportActivityId: 'Id',
+    sportActivityName: 'Nazwa',
+    sportActivityLevelName: 'Poziom',
+    startDate: 'Data startu',
+    dayOfWeek: 'Dzień tygodnia',
+    startHour: 'Godzina od',
+    endHour: 'Godzina do',
+    durationInMinutes: 'Czas trwania (w min.)',
+    courtName: 'Nazwa kortu',
+    maxParticipants: 'Max ilość uczestników',
+    costWithoutequipment: 'Koszt bez sprzętu',
+    costWithEquipment: 'Koszt ze sprzętem',
+    isCanceled: 'Czy odwołane',
+    nextLabel:'Następne',
+    previousLabel:'Poprzednie',
+    moreInfoLabel: 'Wyświetl szczegóły',
+    addActivityLabel: 'Dodaj zajęcia',
+    showSummaryLabel: 'Pokaż podsumowanie zajęć',
+  },
+  getActivityInfoPage:{
+    title: 'Szczegółowe informacje o zajęciach',
+    sportActivityId: 'Id',
+    sportActivityName: 'Nazwa',
+    sportActivityLevelName: 'Poziom',
+    startDate: 'Data startu',
+    dayOfWeek: 'Dzień tygodnia',
+    startHour: 'Godzina od',
+    endHour: 'Godzina do',
+    durationInMinutes: 'Czas trwania (w min.)',
+    courtName: 'Nazwa kortu',
+    maxParticipants: 'Max ilość uczestników',
+    costWithoutequipment: 'Koszt bez sprzętu',
+    costWithEquipment: 'Koszt ze sprzętem',
+    isCanceled: 'Czy odwołane',
+    cancelActivityInstanceLabel: 'Odwołaj zajęcia',
+    returnLabel: 'Wróć',
   },
   };

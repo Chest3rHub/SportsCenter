@@ -8,6 +8,7 @@ import getClients from "../api/getClients";
 import getClientsByAge from "../api/getClientsByAge";
 import { useNavigate } from "react-router-dom";
 import GreenButton from "../components/GreenButton";
+import GreyButton from "../components/GreyButton";
 import ChangePageButton from "../components/ChangePageButton";
 import CustomInput from "../components/CustomInput";
 
@@ -236,7 +237,7 @@ export default function Clients() {
                     >
                         {dictionary.clientsPage.searchLabel}
                     </GreenButton>
-                    <GreenButton
+                    <GreyButton
                         onClick={handleClearFilters}
                         style={{
                             minWidth: '7vw',
@@ -245,12 +246,11 @@ export default function Clients() {
                             paddingRight: '1rem',
                             fontSize: '0.9rem',
                             whiteSpace: 'nowrap',
-                            backgroundColor: '#ccc',
                             color: 'black'
                         }}
                     >
                         {dictionary.clientsPage.clearLabel}
-                    </GreenButton>
+                    </GreyButton>
                 </Box>
                 <Box
                     sx={{

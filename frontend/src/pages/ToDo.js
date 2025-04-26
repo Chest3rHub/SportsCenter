@@ -3,8 +3,9 @@ import { useContext, useEffect, useState } from "react";
 import { SportsContext } from "../context/SportsContext";
 import Header from "../components/Header";
 import OrangeBackground from "../components/OrangeBackground";
-import GreenButton from "../components/GreenButton";
-import ChangePageButton from "../components/ChangePageButton";
+import GreenButton from "../components/buttons/GreenButton";
+import ChangePageButton from "../components/buttons/ChangePageButton";
+import TasksButton from "../components/buttons/TasksButton";
 import CustomInput from "../components/CustomInput";
 import getYourTasks from "../api/getYourTasks";
 import selfAddTask from "../api/selfAddTask";
@@ -28,6 +29,10 @@ export default function ToDoPage() {
         description: "",
         dateTo: ""
     });
+
+    const maxTasksPerPage = 7;
+
+    const tasksRequiredToEnablePagination = 8;
 
     const isOwner = role === "Wlasciciel";
 
@@ -108,7 +113,7 @@ export default function ToDoPage() {
             alert(dictionary.toDoPage.invalidDateError);
             return;
         }
-        
+
         try {
             const response = await selfAddTask(newTask);
             if (!response.ok) throw new Error('Failed to add task');
@@ -129,7 +134,7 @@ export default function ToDoPage() {
             alert(dictionary.toDoPage.selectEmployeeError);
             return;
         }
-        
+
         try {
             const response = await addTask({
                 ...newTask,
@@ -149,7 +154,7 @@ export default function ToDoPage() {
             alert(dictionary.toDoPage.invalidDateError);
             return;
         }
-        
+
         try {
             const response = await editTask({
                 ...newTask,
@@ -185,7 +190,7 @@ export default function ToDoPage() {
         setOffset(prev => prev - 1);
     };
 
-    const displayedTasks = tasks.slice(0, 6);
+    const displayedTasks = tasks.slice(0, maxTasksPerPage);
 
     return (
         <>
@@ -197,15 +202,16 @@ export default function ToDoPage() {
                 flexGrow: 1,
                 marginLeft: 'auto',
                 marginRight: 'auto',
+                marginTop: '10vh',
             }}>
                 <Header>{dictionary.toDoPage.toDoLabel}</Header>
-                
+
                 <Box sx={{
                     minHeight: '65vh',
                     borderRadius: '20px',
                     boxShadow: '0 10px 20px rgba(0, 0, 0, 0.2)',
                     backgroundColor: 'white',
-                    padding: '2rem',
+                    padding: '1rem',
                     display: 'flex',
                     flexDirection: 'column',
                 }}>
@@ -216,8 +222,8 @@ export default function ToDoPage() {
                         paddingBottom: '0.5rem',
                         borderBottom: '1px solid #eee',
                     }}>
-                        <Typography variant="h6" sx={{ 
-                            width: '60%', 
+                        <Typography variant="h6" sx={{
+                            width: '60%',
                             fontWeight: 'bold',
                             fontSize: '1.1rem',
                             paddingLeft: '1rem',
@@ -225,8 +231,8 @@ export default function ToDoPage() {
                         }}>
                             {dictionary.toDoPage.taskLabel}
                         </Typography>
-                        <Typography variant="h6" sx={{ 
-                            width: '20%', 
+                        <Typography variant="h6" sx={{
+                            width: '20%',
                             fontWeight: 'bold',
                             fontSize: '1.1rem',
                             color: 'black',
@@ -235,8 +241,22 @@ export default function ToDoPage() {
                         }}>
                             {dictionary.toDoPage.dueDateLabel}
                         </Typography>
+                        <Button onClick={handleOpenAddModal}
+                            variant="contained"
+                            sx={{
+                                fontSize: '2rem',
+                                maxHeight: '2rem',
+                                color: 'black',
+                                backgroundColor: '#FFE3B3',
+                                '&:hover': { backgroundColor: '#e8d2a1' },
+                                borderRadius: '30px',
+                                marginTop: '-0.2rem'
+
+                            }}>
+                            +
+                        </Button>
                     </Box>
-                    
+
                     <Box sx={{ flexGrow: 1 }}>
                         {loading ? (
                             <Typography sx={{ color: 'black' }}>
@@ -252,44 +272,43 @@ export default function ToDoPage() {
                                     display: 'flex',
                                     alignItems: 'center',
                                     marginBottom: '1rem',
-                                    padding: '0.5rem 0',
+                                    
                                 }}>
-                                    <Typography sx={{ 
-                                        width: '60%', 
+                                    <Typography sx={{
+                                        width: '60%',
                                         textAlign: 'left',
                                         paddingLeft: '1rem',
                                         color: 'black'
                                     }}>
                                         • {task.description}
                                     </Typography>
-                                    
-                                    <Box sx={{ 
-                                        width: '20%', 
-                                        display: 'flex', 
+
+                                    <Box sx={{
+                                        width: '20%',
+                                        display: 'flex',
                                         justifyContent: 'center',
                                         position: 'relative',
                                         left: '0.5%'
                                     }}>
-                                        <OrangeBackground sx={{ 
-                                            padding: '0.2rem 1rem',
-                                            minWidth: 'fit-content',
-                                            height: '24px',
-                                            display: 'flex',
-                                            alignItems: 'center',
-                                            justifyContent: 'center'
+                                        <Box sx={{
+                                            backgroundColor: '#FFE3B3',
+                                            borderRadius: '20px',
+                                            padding:'8px 20px',
+                                            marginLeft:'-11vh',
+                                            boxShadow: '0 10px 20px rgba(0, 0, 0, 0.2)',
                                         }}>
-                                            <Typography sx={{ color: 'black' }}>{task.dateTo}</Typography>
-                                        </OrangeBackground>
+                                        <Typography sx={{ color: 'black' }}>{task.dateTo}</Typography>
+                                        </Box>  
                                     </Box>
-                                    
-                                    <Box sx={{ 
-                                        width: '20%', 
-                                        display: 'flex', 
+
+                                    <Box sx={{
+                                        width: '20%',
+                                        display: 'flex',
                                         gap: '1rem',
                                         justifyContent: 'flex-end',
                                         paddingRight: '1rem'
                                     }}>
-                                        <ChangePageButton
+                                        <TasksButton
                                             onClick={() => handleOpenEditModal(task)}
                                             backgroundColor="#8edfb4"
                                             minWidth="80px"
@@ -298,8 +317,8 @@ export default function ToDoPage() {
                                             textColor="black"
                                         >
                                             {dictionary.toDoPage.editLabel}
-                                        </ChangePageButton>
-                                        <ChangePageButton
+                                        </TasksButton>
+                                        <TasksButton
                                             onClick={() => handleDeleteTask(index)}
                                             backgroundColor="#F46C63"
                                             minWidth="80px"
@@ -308,20 +327,51 @@ export default function ToDoPage() {
                                             textColor="black"
                                         >
                                             {dictionary.toDoPage.deleteLabel}
-                                        </ChangePageButton>
+                                        </TasksButton>
                                     </Box>
                                 </Box>
                             ))
                         )}
                     </Box>
-                    
+
+
+
+                    {isOwner && (<Box sx={{
+                        position: "fixed",
+                        top: "12vh",
+                        right: "3vw",
+                        minWidth: "17vw"
+                    }}>
+
+                        <GreenButton
+                            onClick={handleOpenEmployeeModal}
+                            style={{
+
+
+                                fontSize: '0.8rem',
+                                padding: "3px 8px",
+                                backgroundColor: '#8edfb4',
+                                color: 'black',
+                                fontWeight: 'bold',
+
+                            }}
+                        >
+                            {dictionary.toDoPage.addEmployeeTaskLabel}
+                        </GreenButton>
+
+
+
+                    </Box>)}
+
                     <Box sx={{
                         display: "flex",
-                        justifyContent: 'space-between',
+                        flexDirection: "row",
+                        justifyContent: 'center',
+                        columnGap: "4vw",
                         alignItems: 'center',
-                        marginTop: '2rem',
-                        paddingTop: '1.5rem',
-                        borderTop: '1px solid #eee'
+                        justifyItems: 'center',
+                        alignContent: 'center',
+                        textAlign: 'center',
                     }}>
                         <ChangePageButton
                             disabled={offset === 0}
@@ -331,43 +381,8 @@ export default function ToDoPage() {
                         >
                             {dictionary.toDoPage.previousLabel}
                         </ChangePageButton>
-                        
-                        <Box sx={{ display: 'flex', gap: '1rem' }}>
-                            {isOwner && (
-                                <GreenButton
-                                    onClick={handleOpenEmployeeModal}
-                                    style={{
-                                        width: 'fit-content',
-                                        height: '2.8rem',
-                                        fontSize: '1rem',
-                                        padding: '0 2rem',
-                                        backgroundColor: '#8edfb4',
-                                        color: 'black',
-                                        fontWeight: 'bold'
-                                    }}
-                                >
-                                    {dictionary.toDoPage.addEmployeeTaskLabel}
-                                </GreenButton>
-                            )}
-                            
-                            <GreenButton
-                                onClick={handleOpenAddModal}
-                                style={{
-                                    width: 'fit-content',
-                                    height: '2.8rem',
-                                    fontSize: '1rem',
-                                    padding: '0 2rem',
-                                    backgroundColor: '#8edfb4',
-                                    color: 'black',
-                                    fontWeight: 'bold'
-                                }}
-                            >
-                                {dictionary.toDoPage.addTaskLabel}
-                            </GreenButton>
-                        </Box>
-                        
                         <ChangePageButton
-                            disabled={tasks.length <= 6}
+                            disabled={tasks.length<tasksRequiredToEnablePagination}
                             onClick={handleNextPage}
                             backgroundColor="#8edfb4"
                             minWidth="12vw"
@@ -397,27 +412,29 @@ export default function ToDoPage() {
                     width: '500px',
                     maxWidth: '90%',
                 }}>
-                    <Typography variant="h5" component="h2" sx={{ 
+                    <Typography variant="h5" component="h2" sx={{
                         marginBottom: '2.5rem',
                         fontWeight: 'bold',
                         color: 'black'
                     }}>
                         {editMode ? dictionary.toDoPage.editTaskLabel : dictionary.toDoPage.addTaskLabel}
                     </Typography>
-                    
+
                     <CustomInput
                         label={dictionary.toDoPage.taskDescriptionLabel}
                         name="description"
                         value={newTask.description}
                         onChange={handleInputChange}
                         fullWidth
-                        sx={{ 
-                            marginBottom: '4rem',
+                        additionalStyles={{ marginBottom:'2.5vh', 
                             '& .MuiInputLabel-root': { color: 'black' },
-                            '& .MuiOutlinedInput-root': { color: 'black' }
-                        }}
+                            '& .MuiOutlinedInput-root': {
+                              color: 'black',
+                              borderRadius:'40px',
+                            },}}
+                        variant={"outlined"}
                     />
-                    
+
                     <CustomInput
                         label={dictionary.toDoPage.dueDateLabel}
                         name="dateTo"
@@ -425,48 +442,51 @@ export default function ToDoPage() {
                         value={newTask.dateTo}
                         onChange={handleInputChange}
                         fullWidth
-                        sx={{ 
-                            marginBottom: '3.5rem',
+                        additionalStyles={{ marginBottom:'2.5vh', 
                             '& .MuiInputLabel-root': { color: 'black' },
-                            '& .MuiOutlinedInput-root': { color: 'black' }
-                        }}
+                            '& .MuiOutlinedInput-root': {
+                              color: 'black',
+                              borderRadius:'40px',
+                            },}}
                         InputLabelProps={{ shrink: true }}
-                        inputProps={{ 
-                            min: new Date().toISOString().split('T')[0] 
+                        inputProps={{
+                            min: new Date().toISOString().split('T')[0]
                         }}
                     />
-                    
-                    <Box sx={{ 
-                        display: 'flex', 
+
+                    <Box sx={{
+                        display: 'flex',
                         justifyContent: 'space-between',
                         marginTop: '1.5rem'
                     }}>
-                        <Button 
-                            variant="contained" 
-                            sx={{ 
+                        <Button
+                            variant="contained"
+                            sx={{
                                 backgroundColor: '#FFE3B3',
                                 '&:hover': { backgroundColor: '#e8d2a1' },
                                 minWidth: '120px',
                                 height: '42px',
                                 fontSize: '1rem',
                                 color: 'black',
-                                fontWeight: 'bold'
+                                fontWeight: 'bold',
+                                borderRadius: '20px',
                             }}
                             onClick={handleCloseModal}
                         >
                             {dictionary.toDoPage.backLabel}
                         </Button>
-                        
-                        <Button 
-                            variant="contained" 
-                            sx={{ 
+
+                        <Button
+                            variant="contained"
+                            sx={{
                                 backgroundColor: '#8edfb4',
                                 '&:hover': { backgroundColor: '#7ecba3' },
                                 minWidth: '120px',
                                 height: '42px',
                                 fontSize: '1rem',
                                 color: 'black',
-                                fontWeight: 'bold'
+                                fontWeight: 'bold',
+                                borderRadius: '20px',
                             }}
                             onClick={editMode ? handleEditTask : handleAddTask}
                         >
@@ -475,7 +495,7 @@ export default function ToDoPage() {
                     </Box>
                 </Box>
             </Modal>
-            
+
             <Modal
                 open={openEmployeeModal}
                 onClose={handleCloseModal}
@@ -494,14 +514,14 @@ export default function ToDoPage() {
                     width: '500px',
                     maxWidth: '90%',
                 }}>
-                    <Typography variant="h5" component="h2" sx={{ 
+                    <Typography variant="h5" component="h2" sx={{
                         marginBottom: '2.5rem',
                         fontWeight: 'bold',
                         color: 'black'
                     }}>
                         {dictionary.toDoPage.addEmployeeTaskLabel}
                     </Typography>
-                    
+
                     <FormControl fullWidth sx={{ mb: 4 }}>
                         <InputLabel sx={{ color: 'black' }}>
                             {dictionary.toDoPage.selectEmployeeLabel}
@@ -510,7 +530,17 @@ export default function ToDoPage() {
                             value={selectedEmployee}
                             onChange={handleEmployeeChange}
                             label={dictionary.toDoPage.selectEmployeeLabel}
-                            sx={{ color: 'black' }}
+                            sx={{
+                                color: 'black',
+                                borderRadius: '40px',
+                                '& .MuiOutlinedInput-root': {
+                                  borderRadius: '40px',
+                                },
+                                '& fieldset': {
+                                  borderRadius: '40px',
+                                },
+                              }}
+                            
                         >
                             {employees.map((employee) => (
                                 <MenuItem key={employee.id} value={employee.id}>
@@ -519,20 +549,21 @@ export default function ToDoPage() {
                             ))}
                         </Select>
                     </FormControl>
-                    
+
                     <CustomInput
                         label={dictionary.toDoPage.taskDescriptionLabel}
                         name="description"
                         value={newTask.description}
                         onChange={handleInputChange}
                         fullWidth
-                        sx={{ 
-                            marginBottom: '4rem',
+                        additionalStyles={{ marginBottom:'2.5vh', 
                             '& .MuiInputLabel-root': { color: 'black' },
-                            '& .MuiOutlinedInput-root': { color: 'black' }
-                        }}
+                            '& .MuiOutlinedInput-root': {
+                              color: 'black',
+                              borderRadius:'40px',
+                            },}}
                     />
-                    
+
                     <CustomInput
                         label={dictionary.toDoPage.dueDateLabel}
                         name="dateTo"
@@ -540,48 +571,51 @@ export default function ToDoPage() {
                         value={newTask.dateTo}
                         onChange={handleInputChange}
                         fullWidth
-                        sx={{ 
-                            marginBottom: '3.5rem',
+                        additionalStyles={{ marginBottom:'2.5vh', 
                             '& .MuiInputLabel-root': { color: 'black' },
-                            '& .MuiOutlinedInput-root': { color: 'black' }
-                        }}
+                            '& .MuiOutlinedInput-root': {
+                              color: 'black',
+                              borderRadius:'40px',
+                            },}}
                         InputLabelProps={{ shrink: true }}
-                        inputProps={{ 
-                            min: new Date().toISOString().split('T')[0] 
+                        inputProps={{
+                            min: new Date().toISOString().split('T')[0]
                         }}
                     />
-                    
-                    <Box sx={{ 
-                        display: 'flex', 
+
+                    <Box sx={{
+                        display: 'flex',
                         justifyContent: 'space-between',
                         marginTop: '1.5rem'
                     }}>
-                        <Button 
-                            variant="contained" 
-                            sx={{ 
+                        <Button
+                            variant="contained"
+                            sx={{
                                 backgroundColor: '#FFE3B3',
                                 '&:hover': { backgroundColor: '#e8d2a1' },
                                 minWidth: '120px',
                                 height: '42px',
                                 fontSize: '1rem',
                                 color: 'black',
-                                fontWeight: 'bold'
+                                fontWeight: 'bold',
+                                borderRadius: '20px',
                             }}
                             onClick={handleCloseModal}
                         >
                             {dictionary.toDoPage.backLabel}
                         </Button>
-                        
-                        <Button 
-                            variant="contained" 
-                            sx={{ 
+
+                        <Button
+                            variant="contained"
+                            sx={{
                                 backgroundColor: '#8edfb4',
                                 '&:hover': { backgroundColor: '#7ecba3' },
                                 minWidth: '120px',
                                 height: '42px',
                                 fontSize: '1rem',
                                 color: 'black',
-                                fontWeight: 'bold'
+                                fontWeight: 'bold',
+                                borderRadius: '20px',
                             }}
                             onClick={handleAddEmployeeTask}
                         >

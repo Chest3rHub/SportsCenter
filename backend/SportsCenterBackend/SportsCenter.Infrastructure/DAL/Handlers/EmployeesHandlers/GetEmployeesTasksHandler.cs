@@ -45,7 +45,9 @@ namespace SportsCenter.Infrastructure.DAL.Handlers.EmployeesHandlers
            {
                TaskId=t.ZadanieId,
                Description = t.Opis,
-               DateTo = (DateOnly)t.DataDo
+               DateTo = (DateOnly)t.DataDo,
+               EmpId =t.PracownikId,
+               AssigningEmpId= t.PracownikZlecajacyId
            })
            .AsNoTracking()
            .ToListAsync(cancellationToken);

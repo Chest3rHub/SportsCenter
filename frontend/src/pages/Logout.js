@@ -6,6 +6,7 @@ export default function Logout(){
     useEffect(()=>{
         setRole('Anonim');
         setToken(null);
+        document.cookie = "accessToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
     },[]);
     return (
         <>

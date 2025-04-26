@@ -54,7 +54,8 @@ export default function ToDoPage() {
             const response = await getEmployees(0);
             if (!response.ok) throw new Error('Failed to fetch employees');
             const data = await response.json();
-            setEmployees(data);
+            const adminEmployees = data.filter(emp => emp.role === "Pracownik administracyjny");
+            setEmployees(adminEmployees);
         } catch (error) {
             console.error('Error:', error);
         }
@@ -310,11 +311,12 @@ export default function ToDoPage() {
                                     }}>
                                         <TasksButton
                                             onClick={() => handleOpenEditModal(task)}
-                                            backgroundColor="#8edfb4"
+                                            disabled={task.assigningEmpId !== task.empId}
+                                            backgroundColor={task.assigningEmpId !== task.empId ? "#e0e0e0" : "#8edfb4"}
+                                            textColor={task.assigningEmpId !== task.empId ? "#9e9e9e" : "black"}
                                             minWidth="80px"
                                             height="36px"
                                             fontSize="0.9rem"
-                                            textColor="black"
                                         >
                                             {dictionary.toDoPage.editLabel}
                                         </TasksButton>

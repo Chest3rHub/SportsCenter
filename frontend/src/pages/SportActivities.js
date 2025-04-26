@@ -6,9 +6,9 @@ import { useContext, useEffect, useState } from "react";
 import ActivitiesButton from "../components/buttons/ActivitiesButton";
 import getScheduleActivities from "../api/getScheduleActivities";
 import { useNavigate, useLocation } from "react-router-dom";
-import GreenButton from "../components/GreenButton";
-import GreyButton from "../components/GreyButton";
-import ChangePageButton from "../components/ChangePageButton";
+import GreenButton from "../components/buttons/GreenButton";
+import GreyButton from "../components/buttons/GreyButton";
+import ChangePageButton from "../components/buttons/ChangePageButton";
 import deleteActivity from "../api/deleteActivity";
 import CustomInput from "../components/CustomInput";
 

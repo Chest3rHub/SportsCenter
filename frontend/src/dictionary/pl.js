@@ -401,7 +401,7 @@ export default {
     sportActivityNameLabel: 'Nazwa zajęć',
     sportActivityNameError: 'Nazwa zajęć jest wymagana i nie może przekraczać 100 znaków',
     startDateLabel: 'Data startu',
-    startDateError: 'Data startu jest wymagana',
+    startDateError: 'Data startu musi być z przyszłości',
     dayOfWeekLabel: 'Dzień tygodnia',
     dayOfWeekError: 'Dzień tygodnia wymagany',
     startHourLabel: 'Godzina startu',

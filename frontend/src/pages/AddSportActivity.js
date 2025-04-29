@@ -11,7 +11,7 @@ import { Box } from '@mui/material';
 import MenuItem from '@mui/material/MenuItem';
 import getTrainers from '../api/getTrainers';
 import getCourts from '../api/getCourts';
-
+import getActivityLevelNames from '../api/getActivityLevelName';
 
 function AddSportActivity() {
 
@@ -31,7 +31,6 @@ function AddSportActivity() {
         costWithEquipment: '',
     });
 
-    
     const [activityNameError, setActivityNameError] = useState(false);
    
     const [startDateError, setStartDateError] = useState(false); 
@@ -56,6 +55,7 @@ function AddSportActivity() {
 
     const [trainers, setTrainers] = useState([]);
     const [courts, setCourts] = useState([]);
+    const [levels, setLevels] = useState([]);
 
     useEffect(() => {
         async function fetchData() {
@@ -63,11 +63,11 @@ function AddSportActivity() {
             const [trainersData, courtsData, levelsData] = await Promise.all([
               getTrainers(),
               getCourts(),
-              //getLevels()
+              getActivityLevelNames()
             ]);
             setTrainers(trainersData);
             setCourts(courtsData);
-            //setLevels(levelsData);
+            setLevels(levelsData);
           } catch (error) {
             console.error('Error loading data:', error);
           }
@@ -90,7 +90,16 @@ function AddSportActivity() {
             isValid = false;
             setStartDateError(true);
         } else {
-            setStartDateError(false);
+            const selectedDate = new Date(formData.startDate);
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+        
+            if (selectedDate <= today) {
+                isValid = false;
+                setStartDateError(true);
+            } else {
+                setStartDateError(false);
+            }
         }
     
         if (!formData.dayOfWeek) {
@@ -115,22 +124,22 @@ function AddSportActivity() {
             setDurationInMinutesError(false);
         }
     
-        if (!formData.levelName || formData.levelName.trim() === "") {
+        if (!formData.levelName) {
             isValid = false;
             setLevelNameError(true);
         } else {
             setLevelNameError(false);
         }
     
-        const trainerId = parseInt(formData.trainerId);
-        if (isNaN(trainerId) || trainerId <= 0) {
+        const trainerId = parseInt(formData.employeeId);
+        if (isNaN(trainerId)) {
             isValid = false;
             setTrainerIdError(true);
         } else {
             setTrainerIdError(false);
         }
     
-        const participants = parseInt(formData.participantsCount);
+        const participants = parseInt(formData.participantLimit);
         if (isNaN(participants) || participants <= 0) {
             isValid = false;
             setParticipantsCountError(true);
@@ -138,7 +147,7 @@ function AddSportActivity() {
             setParticipantsCountError(false);
         }
     
-        if (!formData.courtName || formData.courtName.trim() === "") {
+        if (!formData.courtName) {
             isValid = false;
             setCourtNameError(true);
         } else {
@@ -164,7 +173,6 @@ function AddSportActivity() {
         return isValid;
     };
     
-
     function handleError(textToDisplay) {
         navigate('/error', {
           state: { message: textToDisplay }
@@ -197,7 +205,8 @@ function AddSportActivity() {
         
               if (!response.ok) {
                 const errorData = await response.json();
-                console.log(errorData);        
+                console.log(errorData); 
+                  console.log(formData)       
                   handleError('Blad dodawnia zajęć... sprawdz konsole');
               } else {
                 navigate('/trainings');
@@ -258,13 +267,13 @@ function AddSportActivity() {
                     sx: { textAlign: 'left' }
                   }}
             >
-                <MenuItem value="Monday">{dictionary.addActivityPage.monday}</MenuItem>
-                <MenuItem value="Tuesday">{dictionary.addActivityPage.tuesday}</MenuItem>
-                <MenuItem value="Wednesday">{dictionary.addActivityPage.wednesday}</MenuItem>
-                <MenuItem value="Thursday">{dictionary.addActivityPage.thursday}</MenuItem>
-                <MenuItem value="Friday">{dictionary.addActivityPage.friday}</MenuItem>
-                <MenuItem value="Saturday">{dictionary.addActivityPage.saturday}</MenuItem>
-                <MenuItem value="Sunday">{dictionary.addActivityPage.sunday}</MenuItem>
+                <MenuItem value="poniedzialek">{dictionary.addActivityPage.monday}</MenuItem>
+                <MenuItem value="wtorek">{dictionary.addActivityPage.tuesday}</MenuItem>
+                <MenuItem value="sroda">{dictionary.addActivityPage.wednesday}</MenuItem>
+                <MenuItem value="czwartek">{dictionary.addActivityPage.thursday}</MenuItem>
+                <MenuItem value="piatek">{dictionary.addActivityPage.friday}</MenuItem>
+                <MenuItem value="sobota">{dictionary.addActivityPage.saturday}</MenuItem>
+                <MenuItem value="niedziela">{dictionary.addActivityPage.sunday}</MenuItem>
             </CustomInput>
             <CustomInput
                 label={dictionary.addActivityPage.startHourLabel}
@@ -293,7 +302,8 @@ function AddSportActivity() {
                 required
                 size="small"
             />
-             <CustomInput
+            <CustomInput
+                select
                 label={dictionary.addActivityPage.levelNameLabel}
                 type="text"
                 id="levelName"
@@ -305,7 +315,18 @@ function AddSportActivity() {
                 helperText={levelNameError ? dictionary.addActivityPage.levelNameError : ""}
                 required
                 size="small"
-            />
+                SelectProps={{
+                    sx: { textAlign: 'left' }
+                  }}
+                >
+                <MenuItem value="">
+                </MenuItem>
+                    {levels.map(lvl => (
+                <MenuItem key={lvl.levelId} value={lvl.levelName}>
+                    {lvl.levelName}
+                </MenuItem>
+                ))}
+            </CustomInput>
             <CustomInput
                 select
                 label={dictionary.addActivityPage.employeeIdLabel}
@@ -363,7 +384,7 @@ function AddSportActivity() {
                 <MenuItem value="">
                 </MenuItem>
                     {courts.map(court => (
-                <MenuItem key={court.id} value={court.id}>
+                <MenuItem key={court.id} value={court.name}>
                     {court.name}
                 </MenuItem>
                 ))}

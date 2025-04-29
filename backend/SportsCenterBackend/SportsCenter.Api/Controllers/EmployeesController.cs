@@ -45,9 +45,9 @@ namespace SportsCenter.Api.Controllers
 
         [Authorize(Roles = "Wlasciciel")]
         [HttpGet("get-trainers")]
-        public async Task<IActionResult> GetTrainersAsync([FromQuery] int offset = 0)
+        public async Task<IActionResult> GetTrainersAsync()
         {
-            return Ok(await Mediator.Send(new GetTrainers(offset)));
+            return Ok(await Mediator.Send(new GetTrainers()));
         }
 
         [Authorize(Roles = "Wlasciciel")]

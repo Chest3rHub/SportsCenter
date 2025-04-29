@@ -21,9 +21,7 @@ namespace SportsCenter.Infrastructure.DAL.Handlers.EmployeesHandlers
         }
 
         public async Task<IEnumerable<TrainerDto>> Handle(GetTrainers request, CancellationToken cancellationToken)
-        {
-            int pageSize = 6;
-            int numberPerPage = 7;
+        {    
 
             return await _dbContext.Pracowniks
                .Include(x => x.PracownikNavigation)
@@ -35,8 +33,6 @@ namespace SportsCenter.Infrastructure.DAL.Handlers.EmployeesHandlers
                    FullName = p.PracownikNavigation.Imie + " " + p.PracownikNavigation.Nazwisko,
                })
                .OrderByDescending(p => p.Id)
-               .Skip(request.Offset * pageSize)
-               .Take(numberPerPage)
                .AsNoTracking()
                .ToListAsync(cancellationToken);
         }

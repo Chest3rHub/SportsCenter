@@ -5,11 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SportsCenter.Application.Employees.Queries.GetTrainers
+namespace SportsCenter.Application.SportsCenterManagement.Queries.GetCourts
 {
-    public class GetTrainers : IQuery<IEnumerable<TrainerDto>>
+    public class GetCourts : IQuery<IEnumerable<CourtDto>>
     {
-        public GetTrainers()
+        public GetCourts()
         {
         }
     }

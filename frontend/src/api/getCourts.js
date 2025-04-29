@@ -1,7 +1,7 @@
 import API_URL from "../appConfig";
 
-export default async function getTrainers() {
-    const response = await fetch(`${API_URL}/Employees/get-trainers`, {
+export default async function getCourts() {
+    const response = await fetch(`${API_URL}/SportsCenterManagement/get-sports-club-courts`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json'

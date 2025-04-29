@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using SportsCenter.Application.Clients.Queries.GetClients;
 using SportsCenter.Application.Exceptions.SportsCenterExceptions;
 using SportsCenter.Application.SportsCenterManagement.Commands.SetSpecialSportsCenterWorkingHours;
+using SportsCenter.Application.SportsCenterManagement.Queries.GetCourts;
 using SportsCenter.Application.SportsCenterManagement.Queries.GetSportsCenterWorkingHours;
 using SportsCenter.Application.SportsClubManagement.Commands.AddSportsClubWorkingHours;
 
@@ -67,6 +68,14 @@ namespace SportsCenter.Api.Controllers
         {
             var workingHours = await Mediator.Send(new GetSportsCenterWorkingHours(weekOffset));
             return Ok(workingHours);
+        }
+
+
+        [HttpGet("get-sports-club-courts")]
+        public async Task<IActionResult> GetCourts()
+        {
+            var courts = await Mediator.Send(new GetCourts());
+            return Ok(courts);
         }
 
     }

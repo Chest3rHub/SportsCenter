@@ -21,6 +21,7 @@ using SportsCenter.Application.Exceptions.SportActivitiesExceptions;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 using System.Security.Cryptography;
 using SportsCenter.Application.Activities.Queries.GetYourUpcomingActivities;
+using SportsCenter.Application.Activities.Queries.GetActivitiesLevelNames;
 
 namespace SportsCenter.Api.Controllers;
 
@@ -97,6 +98,13 @@ namespace SportsCenter.Api.Controllers;
             var activity = await Mediator.Send(new GetSportActivity(sportActivityId));
             return Ok(activity);
         }
+
+    [HttpGet("get-activities-level-names")]
+    public async Task<IActionResult> GetActivitiesLevelNames()
+    {
+        var activitiesLevelNames = await Mediator.Send(new GetActivitiesLevelNames());
+        return Ok(activitiesLevelNames);
+    }
 
     [Authorize(Roles = "Wlasciciel")]
     [HttpDelete("remove-sport-activity")]

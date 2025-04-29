@@ -10,6 +10,7 @@ import CustomInput from '../components/CustomInput';
 import { Box } from '@mui/material';
 import MenuItem from '@mui/material/MenuItem';
 import getTrainers from '../api/getTrainers';
+import getCourts from '../api/getCourts';
 
 
 function AddSportActivity() {
@@ -54,17 +55,18 @@ function AddSportActivity() {
     const [costWithEquipmentError, setCostWithEquipmentError] = useState(false);
 
     const [trainers, setTrainers] = useState([]);
+    const [courts, setCourts] = useState([]);
 
     useEffect(() => {
         async function fetchData() {
           try {
             const [trainersData, courtsData, levelsData] = await Promise.all([
               getTrainers(),
-              //getCourts(),
+              getCourts(),
               //getLevels()
             ]);
             setTrainers(trainersData);
-           // setCourts(courtsData);
+            setCourts(courtsData);
             //setLevels(levelsData);
           } catch (error) {
             console.error('Error loading data:', error);
@@ -321,7 +323,6 @@ function AddSportActivity() {
                   }}
             >
             <MenuItem value="">
-    <em>-- {dictionary.addActivityPage.selectTrainerLabel || "Wybierz trenera"} --</em>
             </MenuItem>
                 {trainers.map(emp => (
             <MenuItem key={emp.id} value={emp.id}>
@@ -343,6 +344,7 @@ function AddSportActivity() {
                 size="small"
             />
             <CustomInput
+                select
                 label={dictionary.addActivityPage.courtNameLabel}
                 type="text"
                 id="courtName"
@@ -354,7 +356,18 @@ function AddSportActivity() {
                 helperText={courtNameError ? dictionary.addActivityPage.courtNameError : ""}
                 required
                 size="small"
-            />
+                SelectProps={{
+                    sx: { textAlign: 'left' }
+                  }}
+                  >
+                <MenuItem value="">
+                </MenuItem>
+                    {courts.map(court => (
+                <MenuItem key={court.id} value={court.id}>
+                    {court.name}
+                </MenuItem>
+                ))}
+                </CustomInput>
             <CustomInput
                 label={dictionary.addActivityPage.costWithoutEquipmentLabel}
                 type="number"

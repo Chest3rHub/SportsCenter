@@ -428,6 +428,7 @@ export default {
     saturday: 'Sobota',
     sunday: 'Niedziela',
     confirmLabel: 'Potwierdź',
-    returnLabel: 'Wróć'
+    returnLabel: 'Wróć',
   },
+
   };

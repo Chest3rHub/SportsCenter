@@ -12,6 +12,7 @@ import MenuItem from '@mui/material/MenuItem';
 import getTrainers from '../api/getTrainers';
 import getCourts from '../api/getCourts';
 import getActivityLevelNames from '../api/getActivityLevelName';
+import ErrorModal from '../components/ErrorModal';
 
 function AddSportActivity() {
 
@@ -52,6 +53,9 @@ function AddSportActivity() {
     const [costWithoutEquipmentError, setCostWithoutEquipmentError] = useState(false);
 
     const [costWithEquipmentError, setCostWithEquipmentError] = useState(false);
+
+    const [openModal, setOpenModal] = useState(false);
+    const [errorMessage, setErrorMessage] = useState('');
 
     const [trainers, setTrainers] = useState([]);
     const [courts, setCourts] = useState([]);
@@ -172,12 +176,11 @@ function AddSportActivity() {
     
         return isValid;
     };
-    
-    function handleError(textToDisplay) {
-        navigate('/error', {
-          state: { message: textToDisplay }
-        });
-    }
+
+    const handleError = (message) => {
+        setErrorMessage(message);
+        setOpenModal(true);
+    };
     
     const navigate = useNavigate();
 
@@ -205,15 +208,16 @@ function AddSportActivity() {
         
               if (!response.ok) {
                 const errorData = await response.json();
-                console.log(errorData); 
-                  console.log(formData)       
-                  handleError('Blad dodawnia zajęć... sprawdz konsole');
+                console.log(errorData);                     
+                const errorMessage = errorData.message || 'Błąd dodawania zajęć. Spróbuj ponownie później.';
+                handleError(errorMessage);
               } else {
                 navigate('/trainings');
               }
         
             } catch (error) {
-              console.error('Błąd dodawania:', error);
+                console.error('Błąd dodawania:', error);
+                handleError('Wystąpił błąd serwera. Spróbuj ponownie później.');
             }
           };
         
@@ -429,6 +433,7 @@ function AddSportActivity() {
           </form>
         </OrangeBackground>
       </GreenBackground>
+      <ErrorModal open={openModal} onClose={() => setOpenModal(false)} errorMessage={errorMessage} />
     </>
   );
 }

@@ -397,7 +397,7 @@ addActivityPage:{
   title: 'Add Activity',
   sportActivityNameLabel: 'Activity Name',
   sportActivityNameError: 'Activity name is required and must not exceed 100 characters',
-  startDateLabel: 'Start Date ',
+  startDateLabel: 'Start Date',
   startDateError: 'Start date must be from the future',
   dayOfWeekLabel: 'Day of week',
   dayOfWeekError: 'Day of week required',

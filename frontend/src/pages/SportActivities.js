@@ -1,34 +1,26 @@
 import Header from "../components/Header";
-import { Box, Typography, Modal } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import SmallGreenHeader from "../components/SmallGreenHeader";
 import { SportsContext } from "../context/SportsContext";
 import { useContext, useEffect, useState } from "react";
 import ActivitiesButton from "../components/buttons/ActivitiesButton";
 import getScheduleActivities from "../api/getScheduleActivities";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate} from "react-router-dom";
 import GreenButton from "../components/buttons/GreenButton";
 import GreyButton from "../components/buttons/GreyButton";
 import ChangePageButton from "../components/buttons/ChangePageButton";
-import deleteActivity from "../api/deleteActivity";
-import CustomInput from "../components/CustomInput";
 
 export default function SportActivities() {
 
-    const location = useLocation();
     const { dictionary, role  } = useContext(SportsContext);
 
     const navigate = useNavigate();
 
     const [activities, setActivities] = useState([]);
     const [loading, setLoading] = useState(true);
-
-    const [selectedActivity, setSelectedActivity] = useState(null);
     const [offset, setOffset] = useState(0);
 
     const [stateToTriggerUseEffectAfterDeleting, setStateToTriggerUseEffectAfterDeleting] = useState(false);
-
-    const handleOpen = (activity) => setSelectedActivity(activity);;
-    const handleClose = () => setSelectedActivity(null);;
 
     const maxActivitiesPerPage = 6;
     const activitiesRequiredToEnablePagination = 7;
@@ -49,7 +41,7 @@ export default function SportActivities() {
             .catch(error => {
                 console.error('Błąd podczas wywoływania getScheduleActivities:', error);
             });
-    }, [offset]);
+    }, [offset, stateToTriggerUseEffectAfterDeleting]);
     
     
     function handleShowMoreInfo(id) {
@@ -58,19 +50,9 @@ export default function SportActivities() {
         });
     }
 
-    function handleDeleteActivity(id) {
-        deleteActivity(id)
-            .then(response => {
-                if (response.ok) {
-                    console.log("Zajęcia zostały usunięte");
-                    setStateToTriggerUseEffectAfterDeleting(prev => !prev);
-                } else {
-                    console.error("Błąd podczas usuwania zajęć");
-                }
-            })
-            .catch(error => {
-                console.error("Błąd podczas wywoływania deleteActivity:", error);
-            });
+    function handleAddActivity() {
+        navigate(`/Add-activity`, {
+        });
     }
 
     function handleNextPage() {
@@ -117,7 +99,7 @@ export default function SportActivities() {
                         }}
                 >                   
                     <GreenButton
-                       //onClick={} //bedzie tu add-activity
+                        onClick={() => handleAddActivity()}
                         style={{
                         minWidth: '7vw',
                         height: '2.8rem',
@@ -256,50 +238,9 @@ export default function SportActivities() {
                             </Box>
                             <ActivitiesButton backgroundColor={"#f0aa4f"} onClick={() => handleShowMoreInfo(activity.sportActivityId)} minWidth={'11vw'}>
                                 {dictionary.sportActivitiesPage.moreInfoLabel}
-                            </ActivitiesButton>
-                            <ActivitiesButton backgroundColor={"#F46C63"} onClick={() => handleDeleteActivity(activity.sportActivityId)} minWidth={'11vw'}>
-                                {dictionary.sportActivitiesPage.deleteActivityLabel}
-                            </ActivitiesButton>
+                            </ActivitiesButton>                      
                         </Box>))}
                     </Box>
-                    <Modal
-                        open={selectedActivity}
-                        onClose={handleClose}
-                    >
-                        <Box
-                            sx={{
-                                width: '30vw',
-                                height: '30vh',
-                                position: 'absolute',
-                                top: '50vh',
-                                left: '50vw',
-                                transform: 'translate(-50%, -50%)',
-                                backgroundColor: 'white',
-                                borderRadius: '10px',
-                                boxShadow: 24,
-                                display: 'flex',
-                                flexDirection: 'column',
-                                alignItems: 'center',
-                                justifyContent: 'center',
-                            }}
-                        >
-                            <Typography sx={{
-                                fontWeight: 'Bold',
-                                fontSize: '2.2rem',
-                                marginTop: '1vh',
-                            }} >
-                                {dictionary.sportActivitiesPage.confirmLabel}
-                            </Typography>
-                            <Typography sx={{
-                                color: 'black',
-                                fontSize: '1.5rem',
-                            }}>{selectedActivity ? selectedActivity.activityName : ''}</Typography>
-                            <Box sx={{ display: 'flex', gap: '3rem', marginTop: '1rem' }}>
-                                <GreenButton onClick={() => { handleClose() }} style={{ maxWidth: "10vw", backgroundColor: "#F46C63", minWidth: '7vw' }} hoverBackgroundColor={'#c3564f'}>{dictionary.sportActivitiesPage.noLabel}</GreenButton>
-                                <GreenButton onClick={() => { handleShowMoreInfo(selectedActivity.id) }} style={{ maxWidth: "10vw", minWidth: '7vw' }}>{dictionary.sportActivitiesPage.yesLabel}</GreenButton>
-                            </Box>
-                        </Box>
-                    </Modal>
                     {<Box sx={{
                         display: "flex",
                         flexDirection: "row",

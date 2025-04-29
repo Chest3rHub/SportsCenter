@@ -1,5 +1,5 @@
-import React, { useState, useContext } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useContext, useEffect  } from 'react';
+import { useNavigate} from "react-router-dom";
 import Header from '../components/Header';
 import GreenButton from '../components/buttons/GreenButton';
 import GreenBackground from '../components/GreenBackground';
@@ -9,7 +9,7 @@ import addActivity from '../api/addActivity';
 import CustomInput from '../components/CustomInput';
 import { Box } from '@mui/material';
 import MenuItem from '@mui/material/MenuItem';
-import getEmployees from '../api/getEmployees';
+import getTrainers from '../api/getTrainers';
 
 
 function AddSportActivity() {
@@ -52,6 +52,27 @@ function AddSportActivity() {
     const [costWithoutEquipmentError, setCostWithoutEquipmentError] = useState(false);
 
     const [costWithEquipmentError, setCostWithEquipmentError] = useState(false);
+
+    const [trainers, setTrainers] = useState([]);
+
+    useEffect(() => {
+        async function fetchData() {
+          try {
+            const [trainersData, courtsData, levelsData] = await Promise.all([
+              getTrainers(),
+              //getCourts(),
+              //getLevels()
+            ]);
+            setTrainers(trainersData);
+           // setCourts(courtsData);
+            //setLevels(levelsData);
+          } catch (error) {
+            console.error('Error loading data:', error);
+          }
+        }
+      
+        fetchData();
+      }, []);
     
     const validateForm = () => {
         let isValid = true;
@@ -235,13 +256,13 @@ function AddSportActivity() {
                     sx: { textAlign: 'left' }
                   }}
             >
-            <MenuItem value="Monday">Poniedziałek</MenuItem>
-            <MenuItem value="Tuesday">Wtorek</MenuItem>
-            <MenuItem value="Wednesday">Środa</MenuItem>
-            <MenuItem value="Thursday">Czwartek</MenuItem>
-            <MenuItem value="Friday">Piątek</MenuItem>
-            <MenuItem value="Saturday">Sobota</MenuItem>
-            <MenuItem value="Sunday">Niedziela</MenuItem>
+                <MenuItem value="Monday">{dictionary.addActivityPage.monday}</MenuItem>
+                <MenuItem value="Tuesday">{dictionary.addActivityPage.tuesday}</MenuItem>
+                <MenuItem value="Wednesday">{dictionary.addActivityPage.wednesday}</MenuItem>
+                <MenuItem value="Thursday">{dictionary.addActivityPage.thursday}</MenuItem>
+                <MenuItem value="Friday">{dictionary.addActivityPage.friday}</MenuItem>
+                <MenuItem value="Saturday">{dictionary.addActivityPage.saturday}</MenuItem>
+                <MenuItem value="Sunday">{dictionary.addActivityPage.sunday}</MenuItem>
             </CustomInput>
             <CustomInput
                 label={dictionary.addActivityPage.startHourLabel}
@@ -284,18 +305,30 @@ function AddSportActivity() {
                 size="small"
             />
             <CustomInput
+                select
                 label={dictionary.addActivityPage.employeeIdLabel}
-                type="number"
                 id="employeeId"
                 name="employeeId"
-                fullWidth
                 value={formData.employeeId}
                 onChange={handleChange}
                 error={trainerIdError}
                 helperText={trainerIdError ? dictionary.addActivityPage.employeeIdError : ""}
                 required
                 size="small"
-            />
+                fullWidth
+                SelectProps={{
+                    sx: { textAlign: 'left' }
+                  }}
+            >
+            <MenuItem value="">
+    <em>-- {dictionary.addActivityPage.selectTrainerLabel || "Wybierz trenera"} --</em>
+            </MenuItem>
+                {trainers.map(emp => (
+            <MenuItem key={emp.id} value={emp.id}>
+                {emp.fullName}
+            </MenuItem>
+            ))}
+            </CustomInput>
             <CustomInput
                 label={dictionary.addActivityPage.participantLimitLabel}
                 type="number"

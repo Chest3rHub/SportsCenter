@@ -416,6 +416,13 @@ export default {
     costWithoutEquipmentError: 'Koszt bez sprzętu musi być większy niż 0',
     costWithEquipmentLabel: 'Koszt ze sprzętem',
     costWithEquipmentError: 'Koszt ze sprzętem musi być większy niż 0',
+    monday: 'Poniedziałek',
+    tuesday: 'Wtorek',
+    wednesday: 'Środa',
+    thursday: 'Czwartek',
+    friday: 'Piątek',
+    saturday: 'Sobota',
+    sunday: 'Niedziela',
     confirmLabel: 'Potwierdź',
     returnLabel: 'Wróć'
   },

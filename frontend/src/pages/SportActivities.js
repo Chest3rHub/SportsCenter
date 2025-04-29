@@ -141,7 +141,7 @@ export default function SportActivities() {
                             display: 'flex',
                             alignContent: 'start',
                             alignItems: 'center',
-                            width: '62%',
+                            width: '80%',
                             gap: '2%',
                             marginBottom: '3vh',
                         }}

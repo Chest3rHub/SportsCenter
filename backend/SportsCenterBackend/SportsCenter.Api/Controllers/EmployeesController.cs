@@ -24,6 +24,7 @@ using SportsCenter.Application.Employees.Queries.GetAbsenceRequest;
 using SportsCenter.Application.Employees.Commands.AcceptAbsenceRequest;
 using SportsCenter.Application.Employees.Queries.GetYourAbsenceRequests;
 using SportsCenter.Application.Employees.Queries.GetTrainerSchedule;
+using SportsCenter.Application.Employees.Queries.GetTrainers;
 
 
 namespace SportsCenter.Api.Controllers
@@ -40,6 +41,13 @@ namespace SportsCenter.Api.Controllers
         public async Task<IActionResult> ShowEmployeeAsync([FromQuery] int offset = 0)
         {
             return Ok(await Mediator.Send(new GetEmployees(offset)));
+        }
+
+        [Authorize(Roles = "Wlasciciel")]
+        [HttpGet("get-trainers")]
+        public async Task<IActionResult> GetTrainersAsync([FromQuery] int offset = 0)
+        {
+            return Ok(await Mediator.Send(new GetTrainers(offset)));
         }
 
         [Authorize(Roles = "Wlasciciel")]

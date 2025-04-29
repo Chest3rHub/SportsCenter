@@ -413,6 +413,13 @@ addActivityPage:{
   costWithoutEquipmentError: 'Cost without equipment must be greater than 0',
   costWithEquipmentLabel: 'Cost With Equipment',
   costWithEquipmentError: 'Cost with equipment must be greater than 0',
+  monday: 'Monday',
+  tuesday: 'Tuesday',
+  wednesday: 'Wednesday',
+  thursday: 'Thursday',
+  friday: 'Friday',
+  saturday: 'Saturday',
+  sunday: 'Sunday',
   confirmLabel: 'Confirm',
   returnLabel: 'Back'
 },

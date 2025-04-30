@@ -19,9 +19,6 @@ internal class GetScheduleInfoHandler : IRequestHandler<GetScheduleInfo, List<Sc
 
     public async Task<List<ScheduleInfoBaseDto>> Handle(GetScheduleInfo request, CancellationToken cancellationToken)
     {
-        //int pageSize = 3;
-        //int numberPerPage = 4;
-
         var user = _httpContextAccessor.HttpContext.User;
         var userRole = user.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value
                         ?? user.Claims.FirstOrDefault(c => c.Type == "role")?.Value
@@ -165,7 +162,19 @@ internal class GetScheduleInfoHandler : IRequestHandler<GetScheduleInfo, List<Sc
                             ? scheduledClass.KosztZeSprzetem
                             : (decimal?)0,
                     Participants = scheduledClass.InstancjaZajec
-                        .SelectMany(i => i.InstancjaZajecKlients)
+                        .Where(i =>
+                        {
+                            var instDate = i.Data.ToDateTime(TimeOnly.MinValue);
+                            return instDate >= startDate && instDate <= endTime;
+                        })
+                        .SelectMany(i => i.InstancjaZajecKlients
+                        .Where(ik => {
+                            var activityDateTime = i.Data.ToDateTime(TimeOnly.MinValue);
+                            var signUpDateTime = ik.DataZapisu.ToDateTime(TimeOnly.MinValue);
+                            var diff = activityDateTime - signUpDateTime;
+                            //Console.WriteLine($"AAAAAAAAAAAAsignUpdate{signUpDateTime}ActivityDate{activityDateTime}odstep{diff}");
+                            return diff.TotalHours <= 48 && diff.TotalHours >= 0;
+                        }))
                         .Select(ik => $"{ik.Klient.KlientNavigation.Imie} {ik.Klient.KlientNavigation.Nazwisko}")
                         .ToList()
                 };

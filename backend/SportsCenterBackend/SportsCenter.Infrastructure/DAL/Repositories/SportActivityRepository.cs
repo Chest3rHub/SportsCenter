@@ -41,20 +41,64 @@ public class SportActivityRepository : ISportActivityRepository
             .AsNoTracking()
             .ToListAsync(cancellationToken);
     }
+    //public async Task RemoveSportActivityAsync(Zajecium sportActivity, CancellationToken cancellationToken)
+    //{
+    //    var grafikZajec = await _dbContext.GrafikZajecs
+    //        .Where(g => g.ZajeciaId == sportActivity.ZajeciaId)
+    //        .ToListAsync(cancellationToken);
+
+    //    if (grafikZajec.Any())
+    //    {
+    //        _dbContext.GrafikZajecs.RemoveRange(grafikZajec);
+    //    }
+
+    //    _dbContext.Zajecia.Remove(sportActivity);
+    //    await _dbContext.SaveChangesAsync(cancellationToken);
+    //}
+
     public async Task RemoveSportActivityAsync(Zajecium sportActivity, CancellationToken cancellationToken)
     {
-        var grafikZajec = await _dbContext.GrafikZajecs
+        //garfik
+        var grafikZajecList = await _dbContext.GrafikZajecs
             .Where(g => g.ZajeciaId == sportActivity.ZajeciaId)
             .ToListAsync(cancellationToken);
 
-        if (grafikZajec.Any())
+        foreach (var grafik in grafikZajecList)
         {
-            _dbContext.GrafikZajecs.RemoveRange(grafikZajec);
+            //instancja
+            var instancje = await _dbContext.InstancjaZajecs
+                .Where(i => i.GrafikZajecId == grafik.GrafikZajecId)
+                .ToListAsync(cancellationToken);
+
+            foreach (var instancja in instancje)
+            {
+                //klienci zapisani na instancje
+                var klienci = await _dbContext.InstancjaZajecKlients
+                    .Where(k => k.InstancjaZajecId == instancja.InstancjaZajecId)
+                    .ToListAsync(cancellationToken);
+
+                foreach (var klient in klienci)
+                {
+                    //oceny instancji
+                    var oceny = await _dbContext.Ocenas
+                        .Where(o => o.InstancjaZajecKlientId == klient.InstancjaZajecKlientId)
+                        .ToListAsync(cancellationToken);
+
+                    _dbContext.Ocenas.RemoveRange(oceny);
+                }
+
+                _dbContext.InstancjaZajecKlients.RemoveRange(klienci);
+            }
+
+            _dbContext.InstancjaZajecs.RemoveRange(instancje);
         }
 
+        _dbContext.GrafikZajecs.RemoveRange(grafikZajecList);
         _dbContext.Zajecia.Remove(sportActivity);
+
         await _dbContext.SaveChangesAsync(cancellationToken);
     }
+
 
 
     public async Task<IEnumerable<GrafikZajec>> GetSchedulesByTrainerIdAsync(int trainerId, CancellationToken cancellationToken)

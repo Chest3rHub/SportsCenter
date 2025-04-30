@@ -197,7 +197,19 @@ internal class GetScheduleInfoHandler : IRequestHandler<GetScheduleInfo, List<Sc
                     GroupName = scheduledClass.Zajecia?.Nazwa,
                     SkillLevel = scheduledClass.Zajecia?.IdPoziomZajecNavigation?.Nazwa,
                     Participants = scheduledClass.InstancjaZajec
-                        .SelectMany(i => i.InstancjaZajecKlients)
+                        .Where(i =>
+                        {
+                            var instDate = i.Data.ToDateTime(TimeOnly.MinValue);
+                            return instDate >= startDate && instDate <= endTime;
+                        })
+                        .SelectMany(i => i.InstancjaZajecKlients
+                        .Where(ik => {
+                            var activityDateTime = i.Data.ToDateTime(TimeOnly.MinValue);
+                            var signUpDateTime = ik.DataZapisu.ToDateTime(TimeOnly.MinValue);
+                            var diff = activityDateTime - signUpDateTime;
+                            //Console.WriteLine($"AAAAAAAAAAAAsignUpdate{signUpDateTime}ActivityDate{activityDateTime}odstep{diff}");
+                            return diff.TotalHours <= 48 && diff.TotalHours >= 0;
+                        }))
                         .Select(ik => $"{ik.Klient.KlientNavigation.Imie} {ik.Klient.KlientNavigation.Nazwisko}")
                         .ToList()
                 };

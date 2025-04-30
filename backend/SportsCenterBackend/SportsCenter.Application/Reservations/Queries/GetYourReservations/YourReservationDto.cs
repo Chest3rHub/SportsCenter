@@ -8,14 +8,15 @@ namespace SportsCenter.Application.Reservations.Queries.GetYourReservations
 {
     public class YourReservationDto
     {
+        public int ReservationId { get; set; }
         public int CourtId { get; set; }
         public DateTime StartTime { get; set; }
         public DateTime EndTime { get; set; }
         public int? TrainerId { get; set; }
         public bool IsEquipmentReserved { get; set; }
         public decimal Cost { get; set; }
-        public string IsReservationPaid { get; set; }
-        public string IsReservationCanceled { get; set; }
-        public string IsMoneyRefunded { get; set; }
+        public bool IsReservationPaid { get; set; }
+        public bool IsReservationCanceled { get; set; }
+        public bool IsMoneyRefunded { get; set; }
     }
 }

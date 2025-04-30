@@ -39,21 +39,18 @@ namespace SportsCenter.Infrastructure.DAL.Handlers.ReservationsHandlers
                   .Take(numberPerPage)
                   .Select(r => new YourReservationDto
                   {
+                      ReservationId = r.RezerwacjaId,
                       CourtId = r.KortId,
                       StartTime = r.DataOd,
                       EndTime = r.DataDo,
                       TrainerId = r.TrenerId,
                       IsEquipmentReserved = r.CzyUwzglednicSprzet,
                       Cost = r.Koszt,
-                      IsReservationPaid = r.CzyOplacona.HasValue
-                        ? (r.CzyOplacona.Value ? "Tak" : "Nie")
-                        : "Nie",
-                      IsReservationCanceled = r.CzyOdwolana.HasValue 
-                        ? (r.CzyOdwolana.Value ? "Tak" : "Nie")
-                        : "Nie",
+                      IsReservationPaid = r.CzyOplacona ?? false,
+                      IsReservationCanceled = r.CzyOdwolana ?? false,
                       IsMoneyRefunded = r.CzyZwroconoPieniadze.HasValue
-                        ? (r.CzyZwroconoPieniadze.Value ? "Tak" : "Nie")
-                        : "Nie",
+                        ? (r.CzyZwroconoPieniadze.Value ? true : false)
+                        : false,
                   })
                   .ToListAsync(cancellationToken);
 

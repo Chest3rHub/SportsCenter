@@ -19,8 +19,8 @@ internal class GetScheduleInfoHandler : IRequestHandler<GetScheduleInfo, List<Sc
 
     public async Task<List<ScheduleInfoBaseDto>> Handle(GetScheduleInfo request, CancellationToken cancellationToken)
     {
-        int pageSize = 3;
-        int numberPerPage = 4;
+        //int pageSize = 3;
+        //int numberPerPage = 4;
 
         var user = _httpContextAccessor.HttpContext.User;
         var userRole = user.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value
@@ -42,8 +42,6 @@ internal class GetScheduleInfoHandler : IRequestHandler<GetScheduleInfo, List<Sc
             .Include(r => r.Kort)
             .Include(r => r.Trener)
             .ThenInclude(t => t.PracownikNavigation)
-            .Skip(request.WeekOffset * pageSize)
-            .Take(numberPerPage)
             .ToListAsync(cancellationToken);
 
         var scheduledClasses = await _dbContext.GrafikZajecs
@@ -57,8 +55,6 @@ internal class GetScheduleInfoHandler : IRequestHandler<GetScheduleInfo, List<Sc
             .ThenInclude(i => i.InstancjaZajecKlients)
             .ThenInclude(ik => ik.Klient)
             .ThenInclude(k => k.KlientNavigation)
-            .Skip(request.WeekOffset * pageSize)
-            .Take(numberPerPage)
             .ToListAsync(cancellationToken);
 
         var scheduleInfoDtos = new List<ScheduleInfoBaseDto>();

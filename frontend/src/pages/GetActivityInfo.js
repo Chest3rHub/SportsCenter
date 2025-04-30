@@ -36,6 +36,19 @@ export default function GetActivityInfo() {
           costWithEquipment: 0,
           isCanleced: false
       });
+
+      const translateDayOfWeek = (day) => {
+        const daysMapping = {
+            poniedzialek: dictionary.getActivityInfoPage.monday,
+            wtorek: dictionary.getActivityInfoPage.tuesday,
+            sroda: dictionary.getActivityInfoPage.wednesday,
+            czwartek: dictionary.getActivityInfoPage.thursday,
+            pistek: dictionary.getActivityInfoPage.friday,
+            sobota: dictionary.getActivityInfoPage.saturday,
+            niedziela: dictionary.getActivityInfoPage.sunday
+        };
+        return daysMapping[day.toLowerCase()] || day;
+    };
         
         useEffect(() => {
           if (!id) return;
@@ -143,68 +156,68 @@ export default function GetActivityInfo() {
                     readonlyStyle
                   />
                   <CustomInput
-                            label={dictionary.getActivityInfoPage.dayOfWeek}
-                            type="text"
-                            fullWidth
-                            value={activityData.dayOfWeek}
-                            size="small"
-                            InputProps={{ readOnly: true }}
-                            readonlyStyle
-                        />
-                        <CustomInput
-                            label={dictionary.getActivityInfoPage.startHour}
-                            type="time"
-                            fullWidth
-                            value={activityData.startHour}
-                            size="small"
-                            InputProps={{ readOnly: true }}
-                            readonlyStyle
-                        />
-                        <CustomInput
-                            label={dictionary.getActivityInfoPage.durationInMinutes}
-                            type="number"
-                            fullWidth
-                            value={activityData.durationInMinutes}
-                            size="small"
-                            InputProps={{ readOnly: true }}
-                            readonlyStyle
-                        />
-                        <CustomInput
-                            label={dictionary.getActivityInfoPage.courtName}
-                            type="text"
-                            fullWidth
-                            value={activityData.courtName}
-                            size="small"
-                            InputProps={{ readOnly: true }}
-                            readonlyStyle
-                        />
-                        <CustomInput
-                            label={dictionary.getActivityInfoPage.maxParticipants}
-                            type="number"
-                            fullWidth
-                            value={activityData.maxParticipants}
-                            size="small"
-                            InputProps={{ readOnly: true }}
-                            readonlyStyle
-                        />
-                        <CustomInput
-                            label={dictionary.getActivityInfoPage.costWithoutequipment}
-                            type="number"
-                            fullWidth
-                            value={activityData.costWithoutEquipment}
-                            size="small"
-                            InputProps={{ readOnly: true }}
-                            readonlyStyle
-                        />
-                        <CustomInput
-                            label={dictionary.getActivityInfoPage.costWithEquipment}
-                            type="number"
-                            fullWidth
-                            value={activityData.costWithEquipment}
-                            size="small"
-                            InputProps={{ readOnly: true }}
-                            readonlyStyle
-                        />                
+                    label={dictionary.getActivityInfoPage.dayOfWeek}
+                    type="text"
+                    fullWidth
+                    value={translateDayOfWeek(activityData.dayOfWeek)}
+                    size="small"
+                    InputProps={{ readOnly: true }}
+                    readonlyStyle
+                  />
+                  <CustomInput
+                    label={dictionary.getActivityInfoPage.startHour}
+                    type="time"
+                    fullWidth
+                    value={activityData.startHour}
+                    size="small"
+                    InputProps={{ readOnly: true }}
+                    readonlyStyle
+                  />
+                  <CustomInput
+                    label={dictionary.getActivityInfoPage.durationInMinutes}
+                    type="number"
+                    fullWidth
+                    value={activityData.durationInMinutes}
+                    size="small"
+                    InputProps={{ readOnly: true }}
+                    readonlyStyle
+                  />
+                  <CustomInput
+                    label={dictionary.getActivityInfoPage.courtName}
+                    type="text"
+                    fullWidth
+                    value={activityData.courtName}
+                    size="small"
+                    InputProps={{ readOnly: true }}
+                    readonlyStyle
+                  />
+                  <CustomInput
+                    label={dictionary.getActivityInfoPage.maxParticipants}
+                    type="number"
+                    fullWidth
+                    value={activityData.maxParticipants}
+                    size="small"
+                    InputProps={{ readOnly: true }}
+                    readonlyStyle
+                  />
+                  <CustomInput
+                    label={dictionary.getActivityInfoPage.costWithoutequipment}
+                    type="number"
+                    fullWidth
+                    value={activityData.costWithoutEquipment}
+                    size="small"
+                    InputProps={{ readOnly: true }}
+                    readonlyStyle
+                  />
+                  <CustomInput
+                    label={dictionary.getActivityInfoPage.costWithEquipment}
+                    type="number"
+                    fullWidth
+                    value={activityData.costWithEquipment}
+                    size="small"
+                    InputProps={{ readOnly: true }}
+                    readonlyStyle
+                  />                
                 </Box>
                 </Box>
                 <Box sx={{  

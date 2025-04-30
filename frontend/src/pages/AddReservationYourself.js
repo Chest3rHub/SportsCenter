@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect   } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
 import GreenButton from '../components/buttons/GreenButton';
@@ -9,6 +9,10 @@ import addReservationYourself from '../api/addReservationYourself';
 import CustomInput from '../components/CustomInput';
 import { Box } from '@mui/material';
 import { Checkbox, FormControlLabel } from '@mui/material';
+import getTrainers from '../api/getTrainers';
+import getCourts from '../api/getCourts';
+import MenuItem from '@mui/material/MenuItem';
+
 function AddReservationYourself() {
 
     const { dictionary, toggleLanguage } = useContext(SportsContext);
@@ -22,33 +26,23 @@ function AddReservationYourself() {
         participantsCount: '',
         isEquipmentReserved: '',
     });
-
-    const [courtIdError, setCourtIdError] = useState(false);
     
     const [startTimeError, setStartTimeError] = useState(false); 
 
     const [endTimeRequiredError, setEndTimeRequiredError] = useState(false);
     const [endTimeBeforeStartError, setEndTimeBeforeStartError] = useState(false);
     const [endTimeDurationError, setEndTimeDurationError] = useState(false);
-
-
-    const [trainerIdError, setTrainerIdError] = useState(false);
       
     const [participantsCountError, setParticipantsCountError] = useState(false);
       
     const [isEquipmentReservedError, setIsEquipmentReservedError] = useState(false);
 
-   
+    const [trainers, setTrainers] = useState([]);
+    const [courts, setCourts] = useState([]);
+    
     const validateForm = () => {
         let isValid = true;
-    
-        if (!formData.courtId || isNaN(parseInt(formData.courtId))) {
-            isValid = false;
-            setCourtIdError(true);
-        } else {
-            setCourtIdError(false);
-        }
-    
+
         const start = new Date(formData.startTime);
         const end = new Date(formData.endTime);
     
@@ -84,13 +78,6 @@ function AddReservationYourself() {
                 setEndTimeDurationError(false);
             }
         }
-
-        if (!formData.trainerId || isNaN(parseInt(formData.trainerId))) {
-            isValid = false;
-            setTrainerIdError(true);
-        } else {
-            setTrainerIdError(false);
-        }
     
         //ilosc uczestnikow od 1 do 8
         const participants = parseInt(formData.participantsCount);
@@ -104,8 +91,23 @@ function AddReservationYourself() {
        
         return isValid;
     };
-    
 
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const [trainersData, courtsData] = await Promise.all([
+          getTrainers(),
+          getCourts()
+        ]);
+        setTrainers(trainersData);
+        setCourts(courtsData);
+      } catch (error) {
+        console.error('Błąd podczas pobierania trenerów lub kortów:', error);
+      }
+    }
+
+    fetchData();
+  }, []);
 
 
     function handleError(textToDisplay) {
@@ -118,12 +120,13 @@ function AddReservationYourself() {
     const navigate = useNavigate();
     
     const handleChange = (e) => {
-        const { name, value, type, checked } = e.target;
-        setFormData((prev) => ({
-          ...prev,
-           [name]: type === "checkbox" ? checked : value,
-        }));
+      const { name, value, type, checked } = e.target;
+      setFormData((prev) => ({
+        ...prev,
+        [name]: type === "checkbox" ? checked : value,
+      }));
     };
+    
     
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -167,18 +170,27 @@ function AddReservationYourself() {
           <form onSubmit={handleSubmit}>
             <Box sx={{ display: "flex", flexDirection: "column", gap: "1rem", marginBottom: "2vh", }}>
               <CustomInput
-                label={dictionary.addReservationYourselfPage.courtIdLabel}
-                type="number"
-                id="courtId"
+                select
+                label={dictionary.addReservationYourselfPage.courtNameLabel}
+                id="courtName"
                 name="courtId"
-                fullWidth
                 value={formData.courtId}
+                fullWidth
                 onChange={handleChange}
-                error={courtIdError}
-                helperText={courtIdError ? dictionary.addReservationYourselfPage.courtIdError : ""}
                 required
                 size="small"
-              />
+                SelectProps={{
+                  sx: { textAlign: 'left' }
+                  }}
+                >
+                <MenuItem value="">
+                </MenuItem>
+                    {courts.map(court => (
+                <MenuItem key={court.id} value={court.id}>
+                    {court.name}
+                </MenuItem>
+                ))}
+              </CustomInput>
               <CustomInput
                 label={dictionary.addReservationYourselfPage.startTimeLabel}
                 type="datetime-local"
@@ -212,18 +224,27 @@ function AddReservationYourself() {
                 }}
               />
               <CustomInput
-                label={dictionary.addReservationYourselfPage.trainerIdLabel}
-                type="number"
-                id="trainerId"
+                select
+                label={dictionary.addReservationYourselfPage.trainerNameLabel}
+                id="trainerName"
                 name="trainerId"
-                fullWidth
                 value={formData.trainerId}
+                fullWidth
                 onChange={handleChange}
-                error={trainerIdError}
-                helperText={trainerIdError ? dictionary.addReservationYourselfPage.trainerIdError : ""}
                 required
                 size="small"
-              />
+                SelectProps={{
+                  sx: { textAlign: 'left' }
+                }}
+              >
+              <MenuItem value="">
+              </MenuItem>
+                  {trainers.map(trainer => (
+              <MenuItem key={trainer.id} value={trainer.id}>
+                  {trainer.fullName}
+              </MenuItem>
+              ))}
+              </CustomInput>
               <CustomInput
                 label={dictionary.addReservationYourselfPage.participantsCountLabel}
                 type="number"

@@ -164,7 +164,7 @@ CREATE TABLE Rezerwacja (
     Koszt decimal(5, 2)  NOT NULL,
     CzyOplacona bit  NOT NULL,
     CzyOdwolana bit  NOT NULL,
-    CzyZwroconoPieniadze int  NOT NULL,
+    CzyZwroconoPieniadze bit  NOT NULL,
     CONSTRAINT Rezerwacja_pk PRIMARY KEY  (RezerwacjaID)
 );
 

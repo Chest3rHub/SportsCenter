@@ -29,6 +29,7 @@ import AddDepositToClient from "../pages/AddDepositToClient";
 import updateClientDeposit from "../pages/UpdateClientDeposit";
 import AddReservationYourself from "../pages/AddReservationYourself";
 import ClientReservations from "../pages/ClientReservations";
+import MoveReservation from "../pages/MoveReservation";
 import ToDoPage from "../pages/ToDo";
 import SportActivities from "../pages/SportActivities";
 import GetActivityInfo from "../pages/GetActivityInfo";
@@ -76,6 +77,10 @@ const clientRouter = [
             {
                 path: '/Create-single-reservation-yourself',
                 element: <AddReservationYourself />,
+            },
+            {
+                path: '/move-reservation',
+                element: <MoveReservation />,
             },
             {
                 path: '/my-reservations',

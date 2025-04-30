@@ -1,5 +1,5 @@
 import Header from "../components/Header";
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, Modal } from "@mui/material";
 import SmallGreenHeader from "../components/SmallGreenHeader";
 import { SportsContext } from "../context/SportsContext";
 import { useContext, useEffect, useState } from "react";
@@ -9,6 +9,7 @@ import { useNavigate} from "react-router-dom";
 import GreenButton from "../components/buttons/GreenButton";
 import GreyButton from "../components/buttons/GreyButton";
 import ChangePageButton from "../components/buttons/ChangePageButton";
+import deleteSportActivity from "../api/deleteSportActivity";
 
 export default function SportActivities() {
 
@@ -19,6 +20,10 @@ export default function SportActivities() {
     const [activities, setActivities] = useState([]);
     const [loading, setLoading] = useState(true);
     const [offset, setOffset] = useState(0);
+
+    const [selectedActivity, setSelectedActivity] = useState(null);
+    const handleOpenModal = (activity) => setSelectedActivity(activity);
+    const handleCloseModal = () => setSelectedActivity(null);
 
     const [stateToTriggerUseEffectAfterDeleting, setStateToTriggerUseEffectAfterDeleting] = useState(false);
 
@@ -49,6 +54,29 @@ export default function SportActivities() {
             state: { id }
         });
     }
+
+    const handleDeleteActivity = async () => {
+        if (!selectedActivity) return;
+      
+        try {
+          const response = await deleteSportActivity(selectedActivity.sportActivityId);
+      
+          if (!response.ok) {
+            const errorData = await response.json();
+            console.error("Błąd usuwania:", errorData);
+            alert("Wystąpił błąd podczas usuwania zajęć.");
+            return;
+          }
+      
+          alert("Zajęcia zostały usunięte.");
+          handleCloseModal();
+          setStateToTriggerUseEffectAfterDeleting(prev => !prev);
+        } catch (error) {
+          console.error("Błąd połączenia z serwerem:", error);
+          alert("Nie udało się połączyć z serwerem.");
+        }
+      };
+      
 
     function handleAddActivity() {
         navigate(`/Add-activity`, {
@@ -141,7 +169,7 @@ export default function SportActivities() {
                             display: 'flex',
                             alignContent: 'start',
                             alignItems: 'center',
-                            width: '80%',
+                            width: '62%',
                             gap: '2%',
                             marginBottom: '3vh',
                         }}
@@ -238,9 +266,49 @@ export default function SportActivities() {
                             </Box>
                             <ActivitiesButton backgroundColor={"#f0aa4f"} onClick={() => handleShowMoreInfo(activity.sportActivityId)} minWidth={'11vw'}>
                                 {dictionary.sportActivitiesPage.moreInfoLabel}
-                            </ActivitiesButton>                      
+                            </ActivitiesButton>
+                            <ActivitiesButton backgroundColor={"#F46C63"}onClick={() => handleOpenModal(activity)} minWidth={'11vw'}>
+                                {dictionary.sportActivitiesPage.deleteActivityLabel}
+                            </ActivitiesButton>                    
                         </Box>))}
                     </Box>
+                    <Modal 
+                        open={!!selectedActivity} 
+                        onClose={handleCloseModal}
+                    >
+                        <Box sx={{
+                            width: '30vw',
+                            height: '30vh',
+                            position: 'absolute',
+                            top: '50vh',
+                            left: '50vw',
+                            transform: 'translate(-50%, -50%)',
+                            backgroundColor: 'white',
+                            borderRadius: '10px',
+                            boxShadow: 24,
+                            display: 'flex',
+                            flexDirection: 'column',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                        }}
+                    >
+                        <Typography sx={{
+                            fontWeight: 'Bold',
+                            fontSize: '2.2rem',
+                            marginTop: '1vh',
+                        }} >
+                            {dictionary.sportActivitiesPage.confirmLabel}
+                        </Typography>
+                        <Typography sx={{
+                            color: 'black',
+                            fontSize: '1.5rem',
+                        }}>{selectedActivity ? selectedActivity.activityName : ''}</Typography>
+                        <Box sx={{ display: 'flex', gap: '3rem', marginTop: '1rem' }}>
+                            <GreenButton onClick={handleCloseModal} style={{ maxWidth: "10vw", backgroundColor: "#F46C63", minWidth: '7vw' }} hoverBackgroundColor={'#c3564f'}>{dictionary.sportActivitiesPage.noLabel}</GreenButton>
+                            <GreenButton onClick={handleDeleteActivity} style={{ maxWidth: "10vw", minWidth: '7vw' }}>{dictionary.sportActivitiesPage.yesLabel}</GreenButton>
+                        </Box>
+                    </Box>
+                    </Modal>
                     {<Box sx={{
                         display: "flex",
                         flexDirection: "row",

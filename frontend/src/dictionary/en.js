@@ -368,6 +368,7 @@ export default {
     nextLabel: 'Next',
     previousLabel: 'Previous',
     moreInfoLabel: 'Show Details',
+    deleteActivityLabel: 'Delete activity',
     deleteActivityLabel: 'Remove activity',
     confirmLabel: 'Confirm deletion',
     noLabel: 'No',

@@ -372,6 +372,7 @@ export default {
     previousLabel:'Poprzednie',
     moreInfoLabel: 'Wyświetl szczegóły',
     deleteActivityLabel: 'Usuń zajęcia',
+    deleteActivityLabel: 'Usuń zajęcia',
     confirmLabel: 'Potwierdź usunięcie',
     noLabel: 'Nie',
     yesLabel: 'Tak',

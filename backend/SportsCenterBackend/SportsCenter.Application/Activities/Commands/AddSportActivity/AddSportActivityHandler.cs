@@ -42,8 +42,9 @@ internal class AddSportActivityHandler : IRequestHandler<AddSportActivity, Unit>
         var endHour = startHour.Add(TimeSpan.FromMinutes(request.DurationInMinutes));
 
         int reservationStartInMinutes = GetTimeInMinutes(request.StartHour);
+        //Console.WriteLine("AAAAAAAAAAAAAAAA START W MIN: " + reservationStartInMinutes);
         int reservationEndInMinutes = reservationStartInMinutes + request.DurationInMinutes;
-
+        //Console.WriteLine("AAAAAAAAAAAAAAAA END W MIN: " + reservationEndInMinutes);
         var specialWorkingHours = await _sportsCenterRepository.GetSpecialWorkingHoursByDateAsync(request.StartDate.ToDateTime(request.StartHour), cancellationToken);
 
         if (specialWorkingHours != null)
@@ -51,8 +52,9 @@ internal class AddSportActivityHandler : IRequestHandler<AddSportActivity, Unit>
             WyjatkoweGodzinyPracy workingHours = specialWorkingHours;
 
             int clubOpeningTimeInMinutes = GetTimeInMinutes(workingHours.GodzinaOtwarcia);
+            //Console.WriteLine("AAAAAAAAAAAAAAAA Start pracy klubu W MIN: " + clubOpeningTimeInMinutes);
             int clubClosingTimeInMinutes = GetTimeInMinutes(workingHours.GodzinaZamkniecia);
-
+            //Console.WriteLine("AAAAAAAAAAAAAAAA Koniec pracy klubu : " + clubClosingTimeInMinutes);
             if (reservationStartInMinutes < clubOpeningTimeInMinutes || reservationEndInMinutes > clubClosingTimeInMinutes)
             {
                 throw new ActivityOutsideWorkingHoursException();
@@ -61,6 +63,7 @@ internal class AddSportActivityHandler : IRequestHandler<AddSportActivity, Unit>
         else
         {
             string dayOfWeek = request.DayOfWeek;
+            //Console.WriteLine("AAAAAAAAAAAAAAAA Dzien tygodnia: " + dayOfWeek);
             var standardWorkingHours = await _sportsCenterRepository.GetWorkingHoursByDayAsync(dayOfWeek, cancellationToken);
 
             if (standardWorkingHours == null)

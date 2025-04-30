@@ -26,7 +26,10 @@ namespace SportsCenter.Infrastructure.DAL.Handlers.EmployeesHandlers
             return await _dbContext.Pracowniks
                .Include(x => x.PracownikNavigation)
                .ThenInclude(pn => pn.Pracownik.IdTypPracownikaNavigation)
-               .Where(p => p.PracownikNavigation.Pracownik.IdTypPracownikaNavigation.Nazwa == "Trener")
+                .Where(p =>
+                    p.PracownikNavigation.Pracownik.IdTypPracownikaNavigation.Nazwa == "Trener" &&
+                    p.DataZwolnienia == null
+                )
                .Select(p => new TrainerDto
                {
                    Id = p.PracownikNavigation.OsobaId,

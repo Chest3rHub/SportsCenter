@@ -49,35 +49,35 @@ namespace SportsCenter.Api.Controllers;
         }
         catch (ActivityOutsideWorkingHoursException ex)
         {
-            return Conflict(new { message = ex.Message });
+            return Conflict(new { errorCode = "ACTIVITY_OUTSIDE_WORKING_HOURS" });
         }
         catch (WrongCourtNameException ex)
         {
-            return Conflict(new { message = ex.Message });
+            return Conflict(new { errorCode = "WRONG_COURT_NAME" });
         }
         catch (InvalidDayOfWeekException ex)
         {
-            return Conflict(new { message = ex.Message });
+            return Conflict(new { errorCode = "INVALID_DAY_OF_WEEK" });
         }
         catch (CourtNotAvaliableException ex)
         {
-            return Conflict(new { message = ex.Message });
+            return Conflict(new { errorCode = "COURT_NOT_AVALIABLE" });
         }
         catch (EmployeeNotFoundException ex)
         {
-            return NotFound(new { message = ex.Message });
+            return NotFound(new { errorCode = "EMPLOYEE_NOT_FOUND" });
         }
         catch (NotTrainerEmployeeException ex)
         {
-            return Conflict(new { message = ex.Message });
+            return Conflict(new { errorCode = "NOT_TRAINER_EMPLOYEE" });
         }
         catch (EmployeeAlreadyDismissedException ex)
         {
-            return Conflict(new { message = ex.Message });
+            return Conflict(new { errorCode = "EMPLOYEE_ALREADY_DISMISSED" });
         }
         catch (TrainerNotAvaliableException ex)
         {
-            return Conflict(new { message = ex.Message });
+            return Conflict(new { errorCode = "TRAINER_NOT_AVALIABLE" });
         }
         catch (Exception ex)
         {

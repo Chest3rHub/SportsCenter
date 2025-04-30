@@ -425,6 +425,12 @@ addActivityPage:{
   saturday: 'Saturday',
   sunday: 'Sunday',
   confirmLabel: 'Confirm',
-  returnLabel: 'Back'
+  returnLabel: 'Back',
+  errors: {
+    ACTIVITY_OUTSIDE_WORKING_HOURS: 'The activity is outside of the club working hours',
+    COURT_NOT_AVALIABLE: 'The selected court is occupied at this time',
+    TRAINER_NOT_AVALIABLE: 'The selected trainer is not available at this time',
+    GENERIC_ERROR: 'An unexpected error occurred. Please try again later',
+},
 },
   };

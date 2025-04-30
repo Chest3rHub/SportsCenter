@@ -429,6 +429,11 @@ export default {
     sunday: 'Niedziela',
     confirmLabel: 'Potwierdź',
     returnLabel: 'Wróć',
+    errors: {
+      ACTIVITY_OUTSIDE_WORKING_HOURS: 'Zajęcia są poza godzinami pracy klubu',
+      COURT_NOT_AVALIABLE: 'Wybrany kort jest zajęty w tym czasie',
+      TRAINER_NOT_AVALIABLE: 'Wybrany pracownik nie jest dostępny w tym czasie',
+      GENERIC_ERROR: 'Wystąpił nieoczekiwany błąd. Spróbuj ponownie później',
   },
-
+},
   };

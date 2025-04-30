@@ -188,13 +188,36 @@ function AddSportActivity() {
         navigate(-1);
     }
 
-    const handleChange = (e) => {
+    function getWeekdayName(dateString) {
+        const days = ['niedziela', 'poniedzialek', 'wtorek', 'sroda', 'czwartek', 'piatek', 'sobota'];
+        const [year, month, day] = dateString.split('-').map(Number);
+        const date = new Date(year, month - 1, day);
+        return days[date.getDay()];
+      }
+      
+      const handleChange = (e) => {
         const { name, value } = e.target;
-        setFormData((prev) => ({
-          ...prev,
-          [name]: value
-        }));
+      
+        setFormData((prev) => {
+          const updatedData = {
+            ...prev,
+            [name]: value
+          };
+      
+          if (name === "startDate" && value) {
+            const weekday = getWeekdayName(value);
+            console.log(weekday);
+            updatedData.dayOfWeek = weekday;
+          }
+      
+          return updatedData;
+        });
       };
+      
+
+      function getErrorMessage(errorCode, dictionary) {
+        return dictionary.addActivityPage.errors?.[errorCode] || dictionary.errors?.GENERIC_ERROR;
+      }      
     
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -208,16 +231,16 @@ function AddSportActivity() {
         
               if (!response.ok) {
                 const errorData = await response.json();
-                console.log(errorData);                     
-                const errorMessage = errorData.message || 'Błąd dodawania zajęć. Spróbuj ponownie później.';
-                handleError(errorMessage);
+                //console.log(errorData);                     
+                const message = getErrorMessage(errorData.errorCode, dictionary);
+                handleError(message);
               } else {
                 navigate('/trainings');
               }
         
             } catch (error) {
                 console.error('Błąd dodawania:', error);
-                handleError('Wystąpił błąd serwera. Spróbuj ponownie później.');
+                handleError(getErrorMessage('GENERIC_ERROR', dictionary));
             }
           };
         
@@ -255,30 +278,6 @@ function AddSportActivity() {
                 size="small"
                 InputLabelProps={{ shrink: true }}
             />
-           <CustomInput
-                select
-                label={dictionary.addActivityPage.dayOfWeekLabel}
-                id="dayOfWeek"
-                name="dayOfWeek"
-                value={formData.dayOfWeek}
-                onChange={handleChange}
-                error={dayOfWeekError}
-                helperText={dayOfWeekError ? dictionary.addActivityPage.dayOfWeekError : ""}
-                required
-                size="small"
-                fullWidth
-                SelectProps={{
-                    sx: { textAlign: 'left' }
-                  }}
-            >
-                <MenuItem value="poniedzialek">{dictionary.addActivityPage.monday}</MenuItem>
-                <MenuItem value="wtorek">{dictionary.addActivityPage.tuesday}</MenuItem>
-                <MenuItem value="sroda">{dictionary.addActivityPage.wednesday}</MenuItem>
-                <MenuItem value="czwartek">{dictionary.addActivityPage.thursday}</MenuItem>
-                <MenuItem value="piatek">{dictionary.addActivityPage.friday}</MenuItem>
-                <MenuItem value="sobota">{dictionary.addActivityPage.saturday}</MenuItem>
-                <MenuItem value="niedziela">{dictionary.addActivityPage.sunday}</MenuItem>
-            </CustomInput>
             <CustomInput
                 label={dictionary.addActivityPage.startHourLabel}
                 type="time"

@@ -28,8 +28,9 @@ internal class GetScheduleInfoHandler : IRequestHandler<GetScheduleInfo, List<Sc
         bool isTrainerRole = userRole == "Trener";
         bool isBasicRole = userRole == "Klient" || userRole == "Pomoc sprzatajaca" || string.IsNullOrEmpty(userRole);
 
-        DateOnly today = DateOnly.FromDateTime(DateTime.UtcNow);
-        DateOnly startOfWeek = today.AddDays(-(int)today.DayOfWeek + 1).AddDays(request.WeekOffset * 7);
+        DateOnly today = DateOnly.FromDateTime(DateTime.Now);
+        int daysSinceMonday = ((int)today.DayOfWeek + 6) % 7;
+        DateOnly startOfWeek = today.AddDays(-daysSinceMonday).AddDays(request.WeekOffset * 7);
         DateOnly endOfWeek = startOfWeek.AddDays(6);
 
         var reservations = await _dbContext.Rezerwacjas
@@ -131,9 +132,16 @@ internal class GetScheduleInfoHandler : IRequestHandler<GetScheduleInfo, List<Sc
             DateTime startDate, startTime, endTime;
 
             var dayOfWeekString = scheduledClass.DzienTygodnia;
+
             if (dayOfWeekMap.TryGetValue(dayOfWeekString, out DayOfWeek dayOfWeek))
             {
                 startDate = startOfWeek.ToDateTime(TimeOnly.MinValue).AddDays((int)dayOfWeek - (int)startOfWeek.DayOfWeek);
+
+                if (dayOfWeek == DayOfWeek.Sunday)
+                {
+                    startDate = startDate.AddDays(7);
+                }
+
                 startTime = startDate.AddMinutes(scheduledClass.GodzinaOd.TotalMinutes);
                 endTime = startTime.AddMinutes(scheduledClass.CzasTrwania);
             }

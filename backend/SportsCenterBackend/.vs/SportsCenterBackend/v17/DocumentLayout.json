@@ -7,6 +7,22 @@
       "RelativeMoniker": "D:0:0:{1520B005-20E6-4F53-BFDB-456B93D4D37A}|SportsCenter.Infrastructure\\SportsCenter.Infrastructure.csproj|solutionrelative:sportscenter.infrastructure\\dal\\handlers\\schedulehandlers\\getscheduleinfohandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{1C4DC8AC-CE62-490B-B5CE-1C974879A2BF}|SportsCenter.Application\\SportsCenter.Application.csproj|c:\\users\\48660\\sportscenter\\backend\\sportscenterbackend\\sportscenter.application\\activities\\commands\\addsportactivity\\addsportactivityhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1C4DC8AC-CE62-490B-B5CE-1C974879A2BF}|SportsCenter.Application\\SportsCenter.Application.csproj|solutionrelative:sportscenter.application\\activities\\commands\\addsportactivity\\addsportactivityhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1C4DC8AC-CE62-490B-B5CE-1C974879A2BF}|SportsCenter.Application\\SportsCenter.Application.csproj|c:\\users\\48660\\sportscenter\\backend\\sportscenterbackend\\sportscenter.application\\sportscentermanagement\\commands\\setspecialsportscenterworkinghours\\setspecialsportscenterworkinghourshandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1C4DC8AC-CE62-490B-B5CE-1C974879A2BF}|SportsCenter.Application\\SportsCenter.Application.csproj|solutionrelative:sportscenter.application\\sportscentermanagement\\commands\\setspecialsportscenterworkinghours\\setspecialsportscenterworkinghourshandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1C4DC8AC-CE62-490B-B5CE-1C974879A2BF}|SportsCenter.Application\\SportsCenter.Application.csproj|c:\\users\\48660\\sportscenter\\backend\\sportscenterbackend\\sportscenter.application\\sportscentermanagement\\commands\\setspecialsportscenterworkinghours\\setspecialsportscenterworkinghours.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1C4DC8AC-CE62-490B-B5CE-1C974879A2BF}|SportsCenter.Application\\SportsCenter.Application.csproj|solutionrelative:sportscenter.application\\sportscentermanagement\\commands\\setspecialsportscenterworkinghours\\setspecialsportscenterworkinghours.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1C4DC8AC-CE62-490B-B5CE-1C974879A2BF}|SportsCenter.Application\\SportsCenter.Application.csproj|c:\\users\\48660\\sportscenter\\backend\\sportscenterbackend\\sportscenter.application\\schedule\\queries\\getscheduleinfo\\getscheduleinfo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1C4DC8AC-CE62-490B-B5CE-1C974879A2BF}|SportsCenter.Application\\SportsCenter.Application.csproj|solutionrelative:sportscenter.application\\schedule\\queries\\getscheduleinfo\\getscheduleinfo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{1C4DC8AC-CE62-490B-B5CE-1C974879A2BF}|SportsCenter.Application\\SportsCenter.Application.csproj|c:\\users\\48660\\sportscenter\\backend\\sportscenterbackend\\sportscenter.application\\schedule\\queries\\getscheduleinfo\\scheduleinfobasedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{1C4DC8AC-CE62-490B-B5CE-1C974879A2BF}|SportsCenter.Application\\SportsCenter.Application.csproj|solutionrelative:sportscenter.application\\schedule\\queries\\getscheduleinfo\\scheduleinfobasedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -21,10 +37,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{1C4DC8AC-CE62-490B-B5CE-1C974879A2BF}|SportsCenter.Application\\SportsCenter.Application.csproj|c:\\users\\48660\\sportscenter\\backend\\sportscenterbackend\\sportscenter.application\\activities\\commands\\signupforactivity\\signupforactivityvalidator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{1C4DC8AC-CE62-490B-B5CE-1C974879A2BF}|SportsCenter.Application\\SportsCenter.Application.csproj|solutionrelative:sportscenter.application\\activities\\commands\\signupforactivity\\signupforactivityvalidator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{1C4DC8AC-CE62-490B-B5CE-1C974879A2BF}|SportsCenter.Application\\SportsCenter.Application.csproj|c:\\users\\48660\\sportscenter\\backend\\sportscenterbackend\\sportscenter.application\\schedule\\queries\\getscheduleinfo\\getscheduleinfo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{1C4DC8AC-CE62-490B-B5CE-1C974879A2BF}|SportsCenter.Application\\SportsCenter.Application.csproj|solutionrelative:sportscenter.application\\schedule\\queries\\getscheduleinfo\\getscheduleinfo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{C0CFB4B0-02D2-4257-A9B0-A5ADAF990E5D}|SportsCenter.Api\\SportsCenter.Api.csproj|c:\\users\\48660\\sportscenter\\backend\\sportscenterbackend\\sportscenter.api\\controllers\\employeescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -57,10 +69,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{1520B005-20E6-4F53-BFDB-456B93D4D37A}|SportsCenter.Infrastructure\\SportsCenter.Infrastructure.csproj|c:\\users\\48660\\sportscenter\\backend\\sportscenterbackend\\sportscenter.infrastructure\\dal\\handlers\\employeeshandlers\\gettrainershandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{1520B005-20E6-4F53-BFDB-456B93D4D37A}|SportsCenter.Infrastructure\\SportsCenter.Infrastructure.csproj|solutionrelative:sportscenter.infrastructure\\dal\\handlers\\employeeshandlers\\gettrainershandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{1C4DC8AC-CE62-490B-B5CE-1C974879A2BF}|SportsCenter.Application\\SportsCenter.Application.csproj|c:\\users\\48660\\sportscenter\\backend\\sportscenterbackend\\sportscenter.application\\activities\\commands\\addsportactivity\\addsportactivityhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{1C4DC8AC-CE62-490B-B5CE-1C974879A2BF}|SportsCenter.Application\\SportsCenter.Application.csproj|solutionrelative:sportscenter.application\\activities\\commands\\addsportactivity\\addsportactivityhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{C0CFB4B0-02D2-4257-A9B0-A5ADAF990E5D}|SportsCenter.Api\\SportsCenter.Api.csproj|c:\\users\\48660\\sportscenter\\backend\\sportscenterbackend\\sportscenter.api\\controllers\\sportactivitiescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -569,14 +577,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{1C4DC8AC-CE62-490B-B5CE-1C974879A2BF}|SportsCenter.Application\\SportsCenter.Application.csproj|c:\\users\\48660\\sportscenter\\backend\\sportscenterbackend\\sportscenter.application\\sportscentermanagement\\commands\\setsportscenterworkinghours\\setsportscenterworkinghourshandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{1C4DC8AC-CE62-490B-B5CE-1C974879A2BF}|SportsCenter.Application\\SportsCenter.Application.csproj|solutionrelative:sportscenter.application\\sportscentermanagement\\commands\\setsportscenterworkinghours\\setsportscenterworkinghourshandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{1C4DC8AC-CE62-490B-B5CE-1C974879A2BF}|SportsCenter.Application\\SportsCenter.Application.csproj|c:\\users\\48660\\sportscenter\\backend\\sportscenterbackend\\sportscenter.application\\sportscentermanagement\\commands\\setspecialsportscenterworkinghours\\setspecialsportscenterworkinghourshandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{1C4DC8AC-CE62-490B-B5CE-1C974879A2BF}|SportsCenter.Application\\SportsCenter.Application.csproj|solutionrelative:sportscenter.application\\sportscentermanagement\\commands\\setspecialsportscenterworkinghours\\setspecialsportscenterworkinghourshandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{1C4DC8AC-CE62-490B-B5CE-1C974879A2BF}|SportsCenter.Application\\SportsCenter.Application.csproj|c:\\users\\48660\\sportscenter\\backend\\sportscenterbackend\\sportscenter.application\\sportscentermanagement\\commands\\setspecialsportscenterworkinghours\\setspecialsportscenterworkinghours.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{1C4DC8AC-CE62-490B-B5CE-1C974879A2BF}|SportsCenter.Application\\SportsCenter.Application.csproj|solutionrelative:sportscenter.application\\sportscentermanagement\\commands\\setspecialsportscenterworkinghours\\setspecialsportscenterworkinghours.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{217EA6B9-B1CC-4497-A494-1A809B507A2E}|SportsCenter.Core\\SportsCenter.Core.csproj|c:\\users\\48660\\sportscenter\\backend\\sportscenterbackend\\sportscenter.core\\repositories\\isubstitutionrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -1680,7 +1680,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 23,
+              "DocumentIndex": 25,
               "Title": "GetActivitiesLevelNamesHandler.cs",
               "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Infrastructure\\DAL\\Handlers\\SportActivitiesHandlers\\GetActivitiesLevelNamesHandler.cs",
               "RelativeDocumentMoniker": "SportsCenter.Infrastructure\\DAL\\Handlers\\SportActivitiesHandlers\\GetActivitiesLevelNamesHandler.cs",
@@ -1692,7 +1692,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 21,
+              "DocumentIndex": 23,
               "Title": "GetActivitiesLevelNames.cs",
               "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Application\\Activities\\Queries\\GetActivitiesLevelNames\\GetActivitiesLevelNames.cs",
               "RelativeDocumentMoniker": "SportsCenter.Application\\Activities\\Queries\\GetActivitiesLevelNames\\GetActivitiesLevelNames.cs",
@@ -1704,7 +1704,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 20,
+              "DocumentIndex": 22,
               "Title": "ActivityLevelNameDto.cs",
               "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Application\\Activities\\Queries\\GetActivitiesLevelNames\\ActivityLevelNameDto.cs",
               "RelativeDocumentMoniker": "SportsCenter.Application\\Activities\\Queries\\GetActivitiesLevelNames\\ActivityLevelNameDto.cs",
@@ -1716,7 +1716,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 24,
+              "DocumentIndex": 26,
               "Title": "GetCourtsHandler.cs",
               "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Infrastructure\\DAL\\Handlers\\SportsCenterInfoHandler\\GetCourtsHandler.cs",
               "RelativeDocumentMoniker": "SportsCenter.Infrastructure\\DAL\\Handlers\\SportsCenterInfoHandler\\GetCourtsHandler.cs",
@@ -1728,7 +1728,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 25,
+              "DocumentIndex": 27,
               "Title": "GetCourts.cs",
               "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Application\\SportsCenterManagement\\Queries\\GetCourts\\GetCourts.cs",
               "RelativeDocumentMoniker": "SportsCenter.Application\\SportsCenterManagement\\Queries\\GetCourts\\GetCourts.cs",
@@ -1740,7 +1740,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 22,
+              "DocumentIndex": 24,
               "Title": "CourtDto.cs",
               "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Application\\SportsCenterManagement\\Queries\\GetCourts\\CourtDto.cs",
               "RelativeDocumentMoniker": "SportsCenter.Application\\SportsCenterManagement\\Queries\\GetCourts\\CourtDto.cs",
@@ -1752,7 +1752,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 16,
               "Title": "GetTrainersHandler.cs",
               "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Infrastructure\\DAL\\Handlers\\EmployeesHandlers\\GetTrainersHandler.cs",
               "RelativeDocumentMoniker": "SportsCenter.Infrastructure\\DAL\\Handlers\\EmployeesHandlers\\GetTrainersHandler.cs",
@@ -1764,7 +1764,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 31,
+              "DocumentIndex": 33,
               "Title": "TrainerDto.cs",
               "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Application\\Employees\\Queries\\GetTrainers\\TrainerDto.cs",
               "RelativeDocumentMoniker": "SportsCenter.Application\\Employees\\Queries\\GetTrainers\\TrainerDto.cs",
@@ -1776,7 +1776,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 26,
+              "DocumentIndex": 28,
               "Title": "GetTrainers.cs",
               "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Application\\Employees\\Queries\\GetTrainers\\GetTrainers.cs",
               "RelativeDocumentMoniker": "SportsCenter.Application\\Employees\\Queries\\GetTrainers\\GetTrainers.cs",
@@ -1788,7 +1788,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 66,
+              "DocumentIndex": 68,
               "Title": "GetYourUpcomingActivitiesHandler.cs",
               "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Infrastructure\\DAL\\Handlers\\SportActivitiesHandlers\\GetYourUpcomingActivitiesHandler.cs",
               "RelativeDocumentMoniker": "SportsCenter.Infrastructure\\DAL\\Handlers\\SportActivitiesHandlers\\GetYourUpcomingActivitiesHandler.cs",
@@ -1800,7 +1800,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 69,
+              "DocumentIndex": 71,
               "Title": "UserAccountInfoDto.cs",
               "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Application\\Users\\Queries\\GetUserAccountInfo\\UserAccountInfoDto.cs",
               "RelativeDocumentMoniker": "SportsCenter.Application\\Users\\Queries\\GetUserAccountInfo\\UserAccountInfoDto.cs",
@@ -1812,7 +1812,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 68,
+              "DocumentIndex": 70,
               "Title": "GetUserAccountInfo.cs",
               "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Application\\Users\\Queries\\GetUserAccountInfo\\GetUserAccountInfo.cs",
               "RelativeDocumentMoniker": "SportsCenter.Application\\Users\\Queries\\GetUserAccountInfo\\GetUserAccountInfo.cs",
@@ -1824,7 +1824,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 70,
+              "DocumentIndex": 72,
               "Title": "GetUserAccountInfoHandler.cs",
               "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Infrastructure\\DAL\\Handlers\\UsersHandler\\GetUserAccountInfoHandler.cs",
               "RelativeDocumentMoniker": "SportsCenter.Infrastructure\\DAL\\Handlers\\UsersHandler\\GetUserAccountInfoHandler.cs",
@@ -1836,7 +1836,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 126,
+              "DocumentIndex": 128,
               "Title": "GetClientBalance.cs",
               "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Application\\Clients\\Queries\\GetClientBalance\\GetClientBalance.cs",
               "RelativeDocumentMoniker": "SportsCenter.Application\\Clients\\Queries\\GetClientBalance\\GetClientBalance.cs",
@@ -1848,7 +1848,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 127,
+              "DocumentIndex": 129,
               "Title": "ClientBalanceDto.cs",
               "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Application\\Clients\\Queries\\GetClientBalance\\ClientBalanceDto.cs",
               "RelativeDocumentMoniker": "SportsCenter.Application\\Clients\\Queries\\GetClientBalance\\ClientBalanceDto.cs",
@@ -1860,7 +1860,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 118,
+              "DocumentIndex": 120,
               "Title": "GetClientBalanceHandler.cs",
               "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Infrastructure\\DAL\\Handlers\\ClientsHandlers\\GetClientBalanceHandler.cs",
               "RelativeDocumentMoniker": "SportsCenter.Infrastructure\\DAL\\Handlers\\ClientsHandlers\\GetClientBalanceHandler.cs",
@@ -1872,7 +1872,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 117,
+              "DocumentIndex": 119,
               "Title": "GetClientByEmailHandler.cs",
               "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Infrastructure\\DAL\\Handlers\\ClientsHandlers\\GetClientByEmailHandler.cs",
               "RelativeDocumentMoniker": "SportsCenter.Infrastructure\\DAL\\Handlers\\ClientsHandlers\\GetClientByEmailHandler.cs",
@@ -1884,7 +1884,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 136,
+              "DocumentIndex": 138,
               "Title": "GetClientByEmail.cs",
               "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Application\\Clients\\Queries\\GetClientByEmail\\GetClientByEmail.cs",
               "RelativeDocumentMoniker": "SportsCenter.Application\\Clients\\Queries\\GetClientByEmail\\GetClientByEmail.cs",
@@ -1896,7 +1896,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 135,
+              "DocumentIndex": 137,
               "Title": "ClientDto.cs",
               "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Application\\Clients\\Queries\\GetClientByEmail\\ClientDto.cs",
               "RelativeDocumentMoniker": "SportsCenter.Application\\Clients\\Queries\\GetClientByEmail\\ClientDto.cs",
@@ -1932,7 +1932,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 58,
+              "DocumentIndex": 60,
               "Title": "UpdateClientDepositValidator.cs",
               "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Application\\Clients\\Commands\\UpdateClientDeposit\\UpdateClientDepositValidator.cs",
               "RelativeDocumentMoniker": "SportsCenter.Application\\Clients\\Commands\\UpdateClientDeposit\\UpdateClientDepositValidator.cs",
@@ -1968,7 +1968,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 59,
+              "DocumentIndex": 61,
               "Title": "UpdateClientDepositHandler.cs",
               "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Application\\Clients\\Commands\\UpdateClientDeposit\\UpdateClientDepositHandler.cs",
               "RelativeDocumentMoniker": "SportsCenter.Application\\Clients\\Commands\\UpdateClientDeposit\\UpdateClientDepositHandler.cs",
@@ -2304,7 +2304,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 44,
+              "DocumentIndex": 46,
               "Title": "GetYourSportActivitiesHandler.cs",
               "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Infrastructure\\DAL\\Handlers\\SportActivitiesHandlers\\GetYourSportActivitiesHandler.cs",
               "RelativeDocumentMoniker": "SportsCenter.Infrastructure\\DAL\\Handlers\\SportActivitiesHandlers\\GetYourSportActivitiesHandler.cs",
@@ -2316,7 +2316,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 82,
+              "DocumentIndex": 84,
               "Title": "YourSportActivityDto.cs",
               "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Application\\Activities\\Queries\\GetYourSportActivities\\YourSportActivityDto.cs",
               "RelativeDocumentMoniker": "SportsCenter.Application\\Activities\\Queries\\GetYourSportActivities\\YourSportActivityDto.cs",
@@ -2328,7 +2328,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 77,
+              "DocumentIndex": 79,
               "Title": "GetYourSportActivities.cs",
               "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Application\\Activities\\Queries\\GetYourSportActivities\\GetYourSportActivities.cs",
               "RelativeDocumentMoniker": "SportsCenter.Application\\Activities\\Queries\\GetYourSportActivities\\GetYourSportActivities.cs",
@@ -2340,7 +2340,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 85,
+              "DocumentIndex": 87,
               "Title": "GetYourReservationsHandler.cs",
               "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Infrastructure\\DAL\\Handlers\\ReservationsHandlers\\GetYourReservationsHandler.cs",
               "RelativeDocumentMoniker": "SportsCenter.Infrastructure\\DAL\\Handlers\\ReservationsHandlers\\GetYourReservationsHandler.cs",
@@ -2352,7 +2352,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 88,
+              "DocumentIndex": 90,
               "Title": "GetYourReservations.cs",
               "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Application\\Reservations\\Queries\\GetYourReservations\\GetYourReservations.cs",
               "RelativeDocumentMoniker": "SportsCenter.Application\\Reservations\\Queries\\GetYourReservations\\GetYourReservations.cs",
@@ -2364,7 +2364,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 96,
+              "DocumentIndex": 98,
               "Title": "YourReservationDto.cs",
               "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Application\\Reservations\\Queries\\GetYourReservations\\YourReservationDto.cs",
               "RelativeDocumentMoniker": "SportsCenter.Application\\Reservations\\Queries\\GetYourReservations\\YourReservationDto.cs",
@@ -2412,7 +2412,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 43,
+              "DocumentIndex": 45,
               "Title": "GetTagsHandler.cs",
               "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Infrastructure\\DAL\\Handlers\\TagsHandler\\GetTagsHandler.cs",
               "RelativeDocumentMoniker": "SportsCenter.Infrastructure\\DAL\\Handlers\\TagsHandler\\GetTagsHandler.cs",
@@ -2424,7 +2424,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 71,
+              "DocumentIndex": 73,
               "Title": "TagController.cs",
               "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Api\\Controllers\\TagController.cs",
               "RelativeDocumentMoniker": "SportsCenter.Api\\Controllers\\TagController.cs",
@@ -2448,7 +2448,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 72,
+              "DocumentIndex": 74,
               "Title": "GetTags.cs",
               "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Application\\Tags\\Queries\\GetTags\\GetTags.cs",
               "RelativeDocumentMoniker": "SportsCenter.Application\\Tags\\Queries\\GetTags\\GetTags.cs",
@@ -2556,7 +2556,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 125,
+              "DocumentIndex": 127,
               "Title": "GetClientsByTags.cs",
               "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Application\\Clients\\Queries\\GetClientsByTags\\GetClientsByTags.cs",
               "RelativeDocumentMoniker": "SportsCenter.Application\\Clients\\Queries\\GetClientsByTags\\GetClientsByTags.cs",
@@ -2568,7 +2568,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 137,
+              "DocumentIndex": 139,
               "Title": "ClientByTagsDto.cs",
               "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Application\\Clients\\Queries\\GetClientsByTags\\ClientByTagsDto.cs",
               "RelativeDocumentMoniker": "SportsCenter.Application\\Clients\\Queries\\GetClientsByTags\\ClientByTagsDto.cs",
@@ -2616,7 +2616,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 27,
+              "DocumentIndex": 29,
               "Title": "GetActivitySummaryHandler.cs",
               "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Infrastructure\\DAL\\Handlers\\SportActivitiesHandlers\\GetActivitySummaryHandler.cs",
               "RelativeDocumentMoniker": "SportsCenter.Infrastructure\\DAL\\Handlers\\SportActivitiesHandlers\\GetActivitySummaryHandler.cs",
@@ -2640,7 +2640,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 87,
+              "DocumentIndex": 89,
               "Title": "GetActivitySummary.cs",
               "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Application\\Activities\\Queries\\GetActivitySummary\\GetActivitySummary.cs",
               "RelativeDocumentMoniker": "SportsCenter.Application\\Activities\\Queries\\GetActivitySummary\\GetActivitySummary.cs",
@@ -2724,7 +2724,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 8,
               "Title": "SignUpForActivityValidator.cs",
               "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Application\\Activities\\Commands\\SignUpForActivity\\SignUpForActivityValidator.cs",
               "RelativeDocumentMoniker": "SportsCenter.Application\\Activities\\Commands\\SignUpForActivity\\SignUpForActivityValidator.cs",
@@ -2732,8 +2732,7 @@
               "RelativeToolTip": "SportsCenter.Application\\Activities\\Commands\\SignUpForActivity\\SignUpForActivityValidator.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABcAAAAQAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-11T14:29:49.515Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-03-11T14:29:49.515Z"
             },
             {
               "$type": "Document",
@@ -2749,7 +2748,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 6,
               "Title": "SignUpForActivityHandler.cs",
               "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Application\\Activities\\Commands\\SignUpForActivity\\SignUpForActivityHandler.cs",
               "RelativeDocumentMoniker": "SportsCenter.Application\\Activities\\Commands\\SignUpForActivity\\SignUpForActivityHandler.cs",
@@ -2757,12 +2756,11 @@
               "RelativeToolTip": "SportsCenter.Application\\Activities\\Commands\\SignUpForActivity\\SignUpForActivityHandler.cs",
               "ViewState": "AgIAAC8AAAAAAAAAAAAkwDoAAAALAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-10T22:16:43.481Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-03-10T22:16:43.481Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 7,
               "Title": "SignUpForActivity.cs",
               "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Application\\Activities\\Commands\\SignUpForActivity\\SignUpForActivity.cs",
               "RelativeDocumentMoniker": "SportsCenter.Application\\Activities\\Commands\\SignUpForActivity\\SignUpForActivity.cs",
@@ -2770,8 +2768,7 @@
               "RelativeToolTip": "SportsCenter.Application\\Activities\\Commands\\SignUpForActivity\\SignUpForActivity.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAA5AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-10T22:16:30.868Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-03-10T22:16:30.868Z"
             },
             {
               "$type": "Document",
@@ -2787,7 +2784,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 67,
+              "DocumentIndex": 69,
               "Title": "GetSportActivity.cs",
               "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Application\\Activities\\Queries\\GetSportActivity\\GetSportActivity.cs",
               "RelativeDocumentMoniker": "SportsCenter.Application\\Activities\\Queries\\GetSportActivity\\GetSportActivity.cs",
@@ -2967,7 +2964,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 75,
+              "DocumentIndex": 77,
               "Title": "GetFreeTrainersForSubstitutionHandler.cs",
               "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Infrastructure\\DAL\\Handlers\\SubstitutionsHandlers\\GetFreeTrainersForSubstitutionHandler.cs",
               "RelativeDocumentMoniker": "SportsCenter.Infrastructure\\DAL\\Handlers\\SubstitutionsHandlers\\GetFreeTrainersForSubstitutionHandler.cs",
@@ -2979,7 +2976,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 78,
+              "DocumentIndex": 80,
               "Title": "FreeTrainerForSubstitutionDto.cs",
               "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Application\\Substitutions\\Queries\\GetFreeTrainersForSubstitution\\FreeTrainerForSubstitutionDto.cs",
               "RelativeDocumentMoniker": "SportsCenter.Application\\Substitutions\\Queries\\GetFreeTrainersForSubstitution\\FreeTrainerForSubstitutionDto.cs",
@@ -2991,7 +2988,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 76,
+              "DocumentIndex": 78,
               "Title": "GetFreeTrainersForSubstitution.cs",
               "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Application\\Substitutions\\Queries\\GetFreeTrainersForSubstitution\\GetFreeTrainersForSubstitution.cs",
               "RelativeDocumentMoniker": "SportsCenter.Application\\Substitutions\\Queries\\GetFreeTrainersForSubstitution\\GetFreeTrainersForSubstitution.cs",
@@ -3003,7 +3000,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 74,
+              "DocumentIndex": 76,
               "Title": "GetSubstitutionRequestForActivitiesHandler.cs",
               "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Infrastructure\\DAL\\Handlers\\SubstitutionsHandlers\\GetSubstitutionRequestForActivitiesHandler.cs",
               "RelativeDocumentMoniker": "SportsCenter.Infrastructure\\DAL\\Handlers\\SubstitutionsHandlers\\GetSubstitutionRequestForActivitiesHandler.cs",
@@ -3015,7 +3012,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 79,
+              "DocumentIndex": 81,
               "Title": "SubstitutionRequestDto.cs",
               "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Application\\Substitutions\\Queries\\GetSubstitutionRequests\\SubstitutionRequestDto.cs",
               "RelativeDocumentMoniker": "SportsCenter.Application\\Substitutions\\Queries\\GetSubstitutionRequests\\SubstitutionRequestDto.cs",
@@ -3027,7 +3024,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 73,
+              "DocumentIndex": 75,
               "Title": "GetSubstitutionRequests.cs",
               "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Application\\Substitutions\\Queries\\GetSubstitutionRequests\\GetSubstitutionRequests.cs",
               "RelativeDocumentMoniker": "SportsCenter.Application\\Substitutions\\Queries\\GetSubstitutionRequests\\GetSubstitutionRequests.cs",
@@ -3063,7 +3060,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 32,
+              "DocumentIndex": 34,
               "Title": "SubstitutionController.cs",
               "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Api\\Controllers\\SubstitutionController.cs",
               "RelativeDocumentMoniker": "SportsCenter.Api\\Controllers\\SubstitutionController.cs",
@@ -3183,7 +3180,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 90,
+              "DocumentIndex": 92,
               "Title": "GetTrainerScheduleHandler.cs",
               "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Infrastructure\\DAL\\Handlers\\EmployeesHandlers\\GetTrainerScheduleHandler.cs",
               "RelativeDocumentMoniker": "SportsCenter.Infrastructure\\DAL\\Handlers\\EmployeesHandlers\\GetTrainerScheduleHandler.cs",
@@ -3195,7 +3192,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 110,
+              "DocumentIndex": 112,
               "Title": "GetTrainerSchedule.cs",
               "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Application\\Employees\\Queries\\GetTrainerSchedule\\GetTrainerSchedule.cs",
               "RelativeDocumentMoniker": "SportsCenter.Application\\Employees\\Queries\\GetTrainerSchedule\\GetTrainerSchedule.cs",
@@ -3207,7 +3204,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 111,
+              "DocumentIndex": 113,
               "Title": "TrainerScheduleDto.cs",
               "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Application\\Employees\\Queries\\GetTrainerSchedule\\TrainerScheduleDto.cs",
               "RelativeDocumentMoniker": "SportsCenter.Application\\Employees\\Queries\\GetTrainerSchedule\\TrainerScheduleDto.cs",
@@ -3219,7 +3216,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 113,
+              "DocumentIndex": 115,
               "Title": "GetYourAbsenceRequestHandler.cs",
               "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Infrastructure\\DAL\\Handlers\\EmployeesHandlers\\GetYourAbsenceRequestHandler.cs",
               "RelativeDocumentMoniker": "SportsCenter.Infrastructure\\DAL\\Handlers\\EmployeesHandlers\\GetYourAbsenceRequestHandler.cs",
@@ -3243,7 +3240,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 108,
+              "DocumentIndex": 110,
               "Title": "GetYourAbsenceRequests.cs",
               "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Application\\Employees\\Queries\\GetYourAbsenceRequests\\GetYourAbsenceRequests.cs",
               "RelativeDocumentMoniker": "SportsCenter.Application\\Employees\\Queries\\GetYourAbsenceRequests\\GetYourAbsenceRequests.cs",
@@ -3303,7 +3300,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 92,
+              "DocumentIndex": 94,
               "Title": "GetAbsenceRequestsHandler.cs",
               "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Infrastructure\\DAL\\Handlers\\EmployeesHandlers\\GetAbsenceRequestsHandler.cs",
               "RelativeDocumentMoniker": "SportsCenter.Infrastructure\\DAL\\Handlers\\EmployeesHandlers\\GetAbsenceRequestsHandler.cs",
@@ -3315,7 +3312,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 124,
+              "DocumentIndex": 126,
               "Title": "AbsenceRequestDto.cs",
               "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Application\\Employees\\Queries\\GetAbsenceRequests\\AbsenceRequestDto.cs",
               "RelativeDocumentMoniker": "SportsCenter.Application\\Employees\\Queries\\GetAbsenceRequests\\AbsenceRequestDto.cs",
@@ -3327,7 +3324,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 114,
+              "DocumentIndex": 116,
               "Title": "GetAbsenceRequests.cs",
               "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Application\\Employees\\Queries\\GetAbsenceRequests\\GetAbsenceRequests.cs",
               "RelativeDocumentMoniker": "SportsCenter.Application\\Employees\\Queries\\GetAbsenceRequests\\GetAbsenceRequests.cs",
@@ -3387,7 +3384,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 30,
+              "DocumentIndex": 32,
               "Title": "GetSportsCenterWorkingHoursHandler.cs",
               "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Infrastructure\\DAL\\Handlers\\SportsCenterInfoHandler\\GetSportsCenterWorkingHoursHandler.cs",
               "RelativeDocumentMoniker": "SportsCenter.Infrastructure\\DAL\\Handlers\\SportsCenterInfoHandler\\GetSportsCenterWorkingHoursHandler.cs",
@@ -3435,19 +3432,19 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 142,
+              "DocumentIndex": 2,
               "Title": "SetSpecialSportsCenterWorkingHoursHandler.cs",
               "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Application\\SportsCenterManagement\\Commands\\SetSpecialSportsCenterWorkingHours\\SetSpecialSportsCenterWorkingHoursHandler.cs",
               "RelativeDocumentMoniker": "SportsCenter.Application\\SportsCenterManagement\\Commands\\SetSpecialSportsCenterWorkingHours\\SetSpecialSportsCenterWorkingHoursHandler.cs",
               "ToolTip": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Application\\SportsCenterManagement\\Commands\\SetSpecialSportsCenterWorkingHours\\SetSpecialSportsCenterWorkingHoursHandler.cs",
               "RelativeToolTip": "SportsCenter.Application\\SportsCenterManagement\\Commands\\SetSpecialSportsCenterWorkingHours\\SetSpecialSportsCenterWorkingHoursHandler.cs",
-              "ViewState": "AgIAABUAAAAAAAAAAAA5wCkAAAA3AAAAAAAAAA==",
+              "ViewState": "AgIAACUAAAAAAAAAAAAgwCEAAAAvAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-03-04T12:46:39.46Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 143,
+              "DocumentIndex": 3,
               "Title": "SetSpecialSportsCenterWorkingHours.cs",
               "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Application\\SportsCenterManagement\\Commands\\SetSpecialSportsCenterWorkingHours\\SetSpecialSportsCenterWorkingHours.cs",
               "RelativeDocumentMoniker": "SportsCenter.Application\\SportsCenterManagement\\Commands\\SetSpecialSportsCenterWorkingHours\\SetSpecialSportsCenterWorkingHours.cs",
@@ -3519,7 +3516,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 10,
               "Title": "SportsCenterManagementController.cs",
               "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Api\\Controllers\\SportsCenterManagementController.cs",
               "RelativeDocumentMoniker": "SportsCenter.Api\\Controllers\\SportsCenterManagementController.cs",
@@ -3567,7 +3564,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 18,
+              "DocumentIndex": 20,
               "Title": "SportsCenterRepository.cs",
               "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Infrastructure\\DAL\\Repositories\\SportsCenterRepository.cs",
               "RelativeDocumentMoniker": "SportsCenter.Infrastructure\\DAL\\Repositories\\SportsCenterRepository.cs",
@@ -3579,7 +3576,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 19,
+              "DocumentIndex": 21,
               "Title": "ISportsCenterRepository.cs",
               "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Core\\Repositories\\ISportsCenterRepository.cs",
               "RelativeDocumentMoniker": "SportsCenter.Core\\Repositories\\ISportsCenterRepository.cs",
@@ -3591,7 +3588,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 141,
+              "DocumentIndex": 143,
               "Title": "SetSportsCenterWorkingHoursHandler.cs",
               "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Application\\SportsCenterManagement\\Commands\\SetSportsCenterWorkingHours\\SetSportsCenterWorkingHoursHandler.cs",
               "RelativeDocumentMoniker": "SportsCenter.Application\\SportsCenterManagement\\Commands\\SetSportsCenterWorkingHours\\SetSportsCenterWorkingHoursHandler.cs",
@@ -3615,7 +3612,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 112,
+              "DocumentIndex": 114,
               "Title": "GetYourCertificatesHandler.cs",
               "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Infrastructure\\DAL\\Handlers\\EmployeesHandlers\\GetYourCertificatesHandler.cs",
               "RelativeDocumentMoniker": "SportsCenter.Infrastructure\\DAL\\Handlers\\EmployeesHandlers\\GetYourCertificatesHandler.cs",
@@ -3639,7 +3636,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 109,
+              "DocumentIndex": 111,
               "Title": "GetYourCertificates.cs",
               "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Application\\Employees\\Queries\\GetYourCertificates\\GetYourCertificates.cs",
               "RelativeDocumentMoniker": "SportsCenter.Application\\Employees\\Queries\\GetYourCertificates\\GetYourCertificates.cs",
@@ -3651,7 +3648,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 91,
+              "DocumentIndex": 93,
               "Title": "GetTrainerCertificatesHandler.cs",
               "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Infrastructure\\DAL\\Handlers\\EmployeesHandlers\\GetTrainerCertificatesHandler.cs",
               "RelativeDocumentMoniker": "SportsCenter.Infrastructure\\DAL\\Handlers\\EmployeesHandlers\\GetTrainerCertificatesHandler.cs",
@@ -3663,7 +3660,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 120,
+              "DocumentIndex": 122,
               "Title": "TrainerCertificateDto.cs",
               "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Application\\Employees\\Queries\\GetTrainerCertificates\\TrainerCertificateDto.cs",
               "RelativeDocumentMoniker": "SportsCenter.Application\\Employees\\Queries\\GetTrainerCertificates\\TrainerCertificateDto.cs",
@@ -3675,7 +3672,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 119,
+              "DocumentIndex": 121,
               "Title": "GetTrainerCertificates.cs",
               "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Application\\Employees\\Queries\\GetTrainerCertificates\\GetTrainerCertificates.cs",
               "RelativeDocumentMoniker": "SportsCenter.Application\\Employees\\Queries\\GetTrainerCertificates\\GetTrainerCertificates.cs",
@@ -3819,7 +3816,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 99,
+              "DocumentIndex": 101,
               "Title": "GetClientOrdersHandler.cs",
               "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Infrastructure\\DAL\\Handlers\\OrdersHandler\\GetClientOrdersHandler.cs",
               "RelativeDocumentMoniker": "SportsCenter.Infrastructure\\DAL\\Handlers\\OrdersHandler\\GetClientOrdersHandler.cs",
@@ -3831,7 +3828,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 107,
+              "DocumentIndex": 109,
               "Title": "ClientOrdersDto.cs",
               "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Application\\Orders\\Queries\\GetClientOrders\\ClientOrdersDto.cs",
               "RelativeDocumentMoniker": "SportsCenter.Application\\Orders\\Queries\\GetClientOrders\\ClientOrdersDto.cs",
@@ -3843,7 +3840,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 106,
+              "DocumentIndex": 108,
               "Title": "GetClientOrders.cs",
               "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Application\\Orders\\Queries\\GetClientOrders\\GetClientOrders.cs",
               "RelativeDocumentMoniker": "SportsCenter.Application\\Orders\\Queries\\GetClientOrders\\GetClientOrders.cs",
@@ -3939,7 +3936,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 98,
+              "DocumentIndex": 100,
               "Title": "GetOrdersToProcessHandler.cs",
               "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Infrastructure\\DAL\\Handlers\\OrdersHandler\\GetOrdersToProcessHandler.cs",
               "RelativeDocumentMoniker": "SportsCenter.Infrastructure\\DAL\\Handlers\\OrdersHandler\\GetOrdersToProcessHandler.cs",
@@ -3951,7 +3948,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 81,
+              "DocumentIndex": 83,
               "Title": "OrdersController.cs",
               "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Api\\Controllers\\OrdersController.cs",
               "RelativeDocumentMoniker": "SportsCenter.Api\\Controllers\\OrdersController.cs",
@@ -3963,7 +3960,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 105,
+              "DocumentIndex": 107,
               "Title": "OrdersToProcessDto.cs",
               "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Application\\Orders\\Queries\\GetOrdersToProcess\\OrdersToProcessDto.cs",
               "RelativeDocumentMoniker": "SportsCenter.Application\\Orders\\Queries\\GetOrdersToProcess\\OrdersToProcessDto.cs",
@@ -3975,7 +3972,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 103,
+              "DocumentIndex": 105,
               "Title": "GetOrdersToProcess.cs",
               "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Application\\Orders\\Queries\\GetOrdersToProcess\\GetOrdersToProcess.cs",
               "RelativeDocumentMoniker": "SportsCenter.Application\\Orders\\Queries\\GetOrdersToProcess\\GetOrdersToProcess.cs",
@@ -4023,7 +4020,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 128,
+              "DocumentIndex": 130,
               "Title": "UpdateNewsValidator.cs",
               "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Application\\News\\Commands\\UpdateNews\\UpdateNewsValidator.cs",
               "RelativeDocumentMoniker": "SportsCenter.Application\\News\\Commands\\UpdateNews\\UpdateNewsValidator.cs",
@@ -4035,7 +4032,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 129,
+              "DocumentIndex": 131,
               "Title": "UpdateNewsHandler.cs",
               "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Application\\News\\Commands\\UpdateNews\\UpdateNewsHandler.cs",
               "RelativeDocumentMoniker": "SportsCenter.Application\\News\\Commands\\UpdateNews\\UpdateNewsHandler.cs",
@@ -4047,7 +4044,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 133,
+              "DocumentIndex": 135,
               "Title": "UpdateNews.cs",
               "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Application\\News\\Commands\\UpdateNews\\UpdateNews.cs",
               "RelativeDocumentMoniker": "SportsCenter.Application\\News\\Commands\\UpdateNews\\UpdateNews.cs",
@@ -4059,7 +4056,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 130,
+              "DocumentIndex": 132,
               "Title": "AddNewsValidator.cs",
               "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Application\\News\\Commands\\AddNews\\AddNewsValidator.cs",
               "RelativeDocumentMoniker": "SportsCenter.Application\\News\\Commands\\AddNews\\AddNewsValidator.cs",
@@ -4071,7 +4068,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 132,
+              "DocumentIndex": 134,
               "Title": "AddNewsHandler.cs",
               "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Application\\News\\Commands\\AddNews\\AddNewsHandler.cs",
               "RelativeDocumentMoniker": "SportsCenter.Application\\News\\Commands\\AddNews\\AddNewsHandler.cs",
@@ -4083,7 +4080,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 134,
+              "DocumentIndex": 136,
               "Title": "AddNews.cs",
               "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Application\\News\\Commands\\AddNews\\AddNews.cs",
               "RelativeDocumentMoniker": "SportsCenter.Application\\News\\Commands\\AddNews\\AddNews.cs",
@@ -4095,7 +4092,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 42,
+              "DocumentIndex": 44,
               "Title": "NewsController.cs",
               "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Api\\Controllers\\NewsController.cs",
               "RelativeDocumentMoniker": "SportsCenter.Api\\Controllers\\NewsController.cs",
@@ -4119,7 +4116,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 39,
+              "DocumentIndex": 41,
               "Title": "GetNewsHandler.cs",
               "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Infrastructure\\DAL\\Handlers\\NewsHandlers\\GetNewsHandler.cs",
               "RelativeDocumentMoniker": "SportsCenter.Infrastructure\\DAL\\Handlers\\NewsHandlers\\GetNewsHandler.cs",
@@ -4143,7 +4140,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 140,
+              "DocumentIndex": 142,
               "Title": "NewsDto.cs",
               "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Application\\News\\Queries\\GetNews\\NewsDto.cs",
               "RelativeDocumentMoniker": "SportsCenter.Application\\News\\Queries\\GetNews\\NewsDto.cs",
@@ -4155,7 +4152,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 138,
+              "DocumentIndex": 140,
               "Title": "GetNews.cs",
               "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Application\\News\\Queries\\GetNews\\GetNews.cs",
               "RelativeDocumentMoniker": "SportsCenter.Application\\News\\Queries\\GetNews\\GetNews.cs",
@@ -4239,7 +4236,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 64,
+              "DocumentIndex": 66,
               "Title": "RemoveClientTags.cs",
               "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Application\\Clients\\Commands\\RemoveClientTags\\RemoveClientTags.cs",
               "RelativeDocumentMoniker": "SportsCenter.Application\\Clients\\Commands\\RemoveClientTags\\RemoveClientTags.cs",
@@ -4251,7 +4248,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 29,
+              "DocumentIndex": 31,
               "Title": "SportActivityDto.cs",
               "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Application\\Activities\\Queries\\GetAllSportActivities\\SportActivityDto.cs",
               "RelativeDocumentMoniker": "SportsCenter.Application\\Activities\\Queries\\GetAllSportActivities\\SportActivityDto.cs",
@@ -4263,7 +4260,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 28,
+              "DocumentIndex": 30,
               "Title": "GetAllSportActivities.cs",
               "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Application\\Activities\\Queries\\GetAllSportActivities\\GetAllSportActivities.cs",
               "RelativeDocumentMoniker": "SportsCenter.Application\\Activities\\Queries\\GetAllSportActivities\\GetAllSportActivities.cs",
@@ -4275,7 +4272,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 13,
               "Title": "RemoveSportActivityValidator.cs",
               "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Application\\Activities\\Commands\\RemoveSportActivity\\RemoveSportActivityValidator.cs",
               "RelativeDocumentMoniker": "SportsCenter.Application\\Activities\\Commands\\RemoveSportActivity\\RemoveSportActivityValidator.cs",
@@ -4287,7 +4284,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 12,
               "Title": "RemoveSportActivityHandler.cs",
               "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Application\\Activities\\Commands\\RemoveSportActivity\\RemoveSportActivityHandler.cs",
               "RelativeDocumentMoniker": "SportsCenter.Application\\Activities\\Commands\\RemoveSportActivity\\RemoveSportActivityHandler.cs",
@@ -4311,7 +4308,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 40,
+              "DocumentIndex": 42,
               "Title": "GetSportActivityHandler.cs",
               "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Infrastructure\\DAL\\Handlers\\SportActivitiesHandlers\\GetSportActivityHandler.cs",
               "RelativeDocumentMoniker": "SportsCenter.Infrastructure\\DAL\\Handlers\\SportActivitiesHandlers\\GetSportActivityHandler.cs",
@@ -4323,7 +4320,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 38,
+              "DocumentIndex": 40,
               "Title": "GetAllSportActivitiesHandler.cs",
               "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Infrastructure\\DAL\\Handlers\\SportActivitiesHandlers\\GetAllSportActivitiesHandler.cs",
               "RelativeDocumentMoniker": "SportsCenter.Infrastructure\\DAL\\Handlers\\SportActivitiesHandlers\\GetAllSportActivitiesHandler.cs",
@@ -4335,7 +4332,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 34,
+              "DocumentIndex": 36,
               "Title": "GetEmployeesHandler.cs",
               "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Infrastructure\\DAL\\Handlers\\EmployeesHandlers\\GetEmployeesHandler.cs",
               "RelativeDocumentMoniker": "SportsCenter.Infrastructure\\DAL\\Handlers\\EmployeesHandlers\\GetEmployeesHandler.cs",
@@ -4647,7 +4644,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 5,
               "Title": "ScheduleInfoBaseDto.cs",
               "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Application\\Schedule\\Queries\\GetScheduleInfo\\ScheduleInfoBaseDto.cs",
               "RelativeDocumentMoniker": "SportsCenter.Application\\Schedule\\Queries\\GetScheduleInfo\\ScheduleInfoBaseDto.cs",
@@ -4655,8 +4652,7 @@
               "RelativeToolTip": "SportsCenter.Application\\Schedule\\Queries\\GetScheduleInfo\\ScheduleInfoBaseDto.cs",
               "ViewState": "AgIAAAYAAAAAAAAAAAAAAAsAAAASAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-16T22:21:36.146Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-02-16T22:21:36.146Z"
             },
             {
               "$type": "Document",
@@ -4720,7 +4716,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 14,
               "Title": "RemoveSportActivity.cs",
               "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Application\\Activities\\Commands\\RemoveSportActivity\\RemoveSportActivity.cs",
               "RelativeDocumentMoniker": "SportsCenter.Application\\Activities\\Commands\\RemoveSportActivity\\RemoveSportActivity.cs",
@@ -4780,7 +4776,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 46,
+              "DocumentIndex": 48,
               "Title": "AddSingleReservationYourselfValidator.cs",
               "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Application\\Reservations\\Commands\\AddSingleReservationYourself\\AddSingleReservationYourselfValidator.cs",
               "RelativeDocumentMoniker": "SportsCenter.Application\\Reservations\\Commands\\AddSingleReservationYourself\\AddSingleReservationYourselfValidator.cs",
@@ -4792,7 +4788,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 45,
+              "DocumentIndex": 47,
               "Title": "AddSingleReservationYourselfHandler.cs",
               "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Application\\Reservations\\Commands\\AddSingleReservationYourself\\AddSingleReservationYourselfHandler.cs",
               "RelativeDocumentMoniker": "SportsCenter.Application\\Reservations\\Commands\\AddSingleReservationYourself\\AddSingleReservationYourselfHandler.cs",
@@ -4960,7 +4956,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 35,
+              "DocumentIndex": 37,
               "Title": "GetEmployeesTasksHandler.cs",
               "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Infrastructure\\DAL\\Handlers\\EmployeesHandlers\\GetEmployeesTasksHandler.cs",
               "RelativeDocumentMoniker": "SportsCenter.Infrastructure\\DAL\\Handlers\\EmployeesHandlers\\GetEmployeesTasksHandler.cs",
@@ -4983,7 +4979,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 53,
+              "DocumentIndex": 55,
               "Title": "LoginRespone.cs",
               "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Application\\Users\\Commands\\Login\\LoginRespone.cs",
               "RelativeDocumentMoniker": "SportsCenter.Application\\Users\\Commands\\Login\\LoginRespone.cs",
@@ -5079,7 +5075,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 89,
+              "DocumentIndex": 91,
               "Title": "GetCartProductsHandler.cs",
               "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Infrastructure\\DAL\\Handlers\\ProductsHandlers\\GetCartProductsHandler.cs",
               "RelativeDocumentMoniker": "SportsCenter.Infrastructure\\DAL\\Handlers\\ProductsHandlers\\GetCartProductsHandler.cs",
@@ -5091,7 +5087,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 101,
+              "DocumentIndex": 103,
               "Title": "CartProductDto.cs",
               "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Application\\Products\\Queries\\GetCartProducts\\CartProductDto.cs",
               "RelativeDocumentMoniker": "SportsCenter.Application\\Products\\Queries\\GetCartProducts\\CartProductDto.cs",
@@ -5103,7 +5099,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 100,
+              "DocumentIndex": 102,
               "Title": "GetCartProducts.cs",
               "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Application\\Products\\Queries\\GetCartProducts\\GetCartProducts.cs",
               "RelativeDocumentMoniker": "SportsCenter.Application\\Products\\Queries\\GetCartProducts\\GetCartProducts.cs",
@@ -5139,7 +5135,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 104,
+              "DocumentIndex": 106,
               "Title": "OrderRepository.cs",
               "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Infrastructure\\DAL\\Repositories\\OrderRepository.cs",
               "RelativeDocumentMoniker": "SportsCenter.Infrastructure\\DAL\\Repositories\\OrderRepository.cs",
@@ -5211,7 +5207,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 102,
+              "DocumentIndex": 104,
               "Title": "ProductDto.cs",
               "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Application\\Products\\Queries\\GetProducts\\ProductDto.cs",
               "RelativeDocumentMoniker": "SportsCenter.Application\\Products\\Queries\\GetProducts\\ProductDto.cs",
@@ -5223,7 +5219,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 97,
+              "DocumentIndex": 99,
               "Title": "GetProducts.cs",
               "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Application\\Products\\Queries\\GetProducts\\GetProducts.cs",
               "RelativeDocumentMoniker": "SportsCenter.Application\\Products\\Queries\\GetProducts\\GetProducts.cs",
@@ -5235,7 +5231,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 83,
+              "DocumentIndex": 85,
               "Title": "GetProductsHandler.cs",
               "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Infrastructure\\DAL\\Handlers\\ProductsHandlers\\GetProductsHandler.cs",
               "RelativeDocumentMoniker": "SportsCenter.Infrastructure\\DAL\\Handlers\\ProductsHandlers\\GetProductsHandler.cs",
@@ -5319,7 +5315,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 33,
+              "DocumentIndex": 35,
               "Title": "ProductsController.cs",
               "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Api\\Controllers\\ProductsController.cs",
               "RelativeDocumentMoniker": "SportsCenter.Api\\Controllers\\ProductsController.cs",
@@ -5391,7 +5387,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 62,
+              "DocumentIndex": 64,
               "Title": "AddDiscountValidator.cs",
               "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Application\\Clients\\Commands\\AddDiscount\\AddDiscountValidator.cs",
               "RelativeDocumentMoniker": "SportsCenter.Application\\Clients\\Commands\\AddDiscount\\AddDiscountValidator.cs",
@@ -5487,7 +5483,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 63,
+              "DocumentIndex": 65,
               "Title": "DismissEmployee.cs",
               "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Application\\Employees\\Commands\\DismissEmployee\\DismissEmployee.cs",
               "RelativeDocumentMoniker": "SportsCenter.Application\\Employees\\Commands\\DismissEmployee\\DismissEmployee.cs",
@@ -5499,7 +5495,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 84,
+              "DocumentIndex": 86,
               "Title": "GetReviewsSummaryHandler.cs",
               "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Infrastructure\\DAL\\Handlers\\ReviewsHandlers\\GetReviewsSummaryHandler.cs",
               "RelativeDocumentMoniker": "SportsCenter.Infrastructure\\DAL\\Handlers\\ReviewsHandlers\\GetReviewsSummaryHandler.cs",
@@ -5523,7 +5519,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 94,
+              "DocumentIndex": 96,
               "Title": "GetReviewsSummary.cs",
               "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Application\\Reviews\\Queries\\GetReviewsSummary.cs",
               "RelativeDocumentMoniker": "SportsCenter.Application\\Reviews\\Queries\\GetReviewsSummary.cs",
@@ -5559,7 +5555,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 93,
+              "DocumentIndex": 95,
               "Title": "ReviewsController.cs",
               "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Api\\Controllers\\ReviewsController.cs",
               "RelativeDocumentMoniker": "SportsCenter.Api\\Controllers\\ReviewsController.cs",
@@ -5655,7 +5651,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 80,
+              "DocumentIndex": 82,
               "Title": "ScheduleController.cs",
               "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Api\\Controllers\\ScheduleController.cs",
               "RelativeDocumentMoniker": "SportsCenter.Api\\Controllers\\ScheduleController.cs",
@@ -5673,14 +5669,14 @@
               "RelativeDocumentMoniker": "SportsCenter.Infrastructure\\DAL\\Handlers\\ScheduleHandlers\\GetScheduleInfoHandler.cs",
               "ToolTip": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Infrastructure\\DAL\\Handlers\\ScheduleHandlers\\GetScheduleInfoHandler.cs",
               "RelativeToolTip": "SportsCenter.Infrastructure\\DAL\\Handlers\\ScheduleHandlers\\GetScheduleInfoHandler.cs",
-              "ViewState": "AgIAAJkAAAAAAAAAAAAkwLAAAAALAAAAAAAAAA==",
+              "ViewState": "AgIAAHsAAAAAAAAAAAAkwJMAAAARAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-02-04T20:41:48.302Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 4,
               "Title": "GetScheduleInfo.cs",
               "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Application\\Schedule\\Queries\\GetScheduleInfo\\GetScheduleInfo.cs",
               "RelativeDocumentMoniker": "SportsCenter.Application\\Schedule\\Queries\\GetScheduleInfo\\GetScheduleInfo.cs",
@@ -5688,12 +5684,11 @@
               "RelativeToolTip": "SportsCenter.Application\\Schedule\\Queries\\GetScheduleInfo\\GetScheduleInfo.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-04T20:26:36.683Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-02-04T20:26:36.683Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 139,
+              "DocumentIndex": 141,
               "Title": "ScheduleInfoAdminDto.cs",
               "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Application\\Schedule\\Queries\\GetScheduleInfo\\ScheduleInfoAdminDto.cs",
               "RelativeDocumentMoniker": "SportsCenter.Application\\Schedule\\Queries\\GetScheduleInfo\\ScheduleInfoAdminDto.cs",
@@ -5705,7 +5700,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 36,
+              "DocumentIndex": 38,
               "Title": "GetEmployees.cs",
               "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Application\\Employees\\Queries\\GetEmployees\\GetEmployees.cs",
               "RelativeDocumentMoniker": "SportsCenter.Application\\Employees\\Queries\\GetEmployees\\GetEmployees.cs",
@@ -5717,7 +5712,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 37,
+              "DocumentIndex": 39,
               "Title": "EmployeeDto.cs",
               "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Application\\Employees\\Queries\\GetEmployees\\EmployeeDto.cs",
               "RelativeDocumentMoniker": "SportsCenter.Application\\Employees\\Queries\\GetEmployees\\EmployeeDto.cs",
@@ -5729,7 +5724,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 121,
+              "DocumentIndex": 123,
               "Title": "GetTasks.cs",
               "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Application\\Employees\\Queries\\GetTasks\\GetTasks.cs",
               "RelativeDocumentMoniker": "SportsCenter.Application\\Employees\\Queries\\GetTasks\\GetTasks.cs",
@@ -5741,7 +5736,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 122,
+              "DocumentIndex": 124,
               "Title": "TaskDto.cs",
               "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Application\\Employees\\Queries\\GetTasks\\TaskDto.cs",
               "RelativeDocumentMoniker": "SportsCenter.Application\\Employees\\Queries\\GetTasks\\TaskDto.cs",
@@ -5753,7 +5748,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 57,
+              "DocumentIndex": 59,
               "Title": "GetClientsByAge.cs",
               "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Application\\Clients\\Queries\\GetClientsByAge\\GetClientsByAge.cs",
               "RelativeDocumentMoniker": "SportsCenter.Application\\Clients\\Queries\\GetClientsByAge\\GetClientsByAge.cs",
@@ -5765,7 +5760,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 48,
+              "DocumentIndex": 50,
               "Title": "ClientByAgeDto.cs",
               "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Application\\Clients\\Queries\\GetClientsByAge\\ClientByAgeDto.cs",
               "RelativeDocumentMoniker": "SportsCenter.Application\\Clients\\Queries\\GetClientsByAge\\ClientByAgeDto.cs",
@@ -5777,7 +5772,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 115,
+              "DocumentIndex": 117,
               "Title": "GetClientTagCountHandler.cs",
               "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Infrastructure\\DAL\\Handlers\\ClientsHandlers\\GetClientTagCountHandler.cs",
               "RelativeDocumentMoniker": "SportsCenter.Infrastructure\\DAL\\Handlers\\ClientsHandlers\\GetClientTagCountHandler.cs",
@@ -5789,7 +5784,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 116,
+              "DocumentIndex": 118,
               "Title": "GetClientsByTagsHandler.cs",
               "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Infrastructure\\DAL\\Handlers\\ClientsHandlers\\GetClientsByTagsHandler.cs",
               "RelativeDocumentMoniker": "SportsCenter.Infrastructure\\DAL\\Handlers\\ClientsHandlers\\GetClientsByTagsHandler.cs",
@@ -5801,7 +5796,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 49,
+              "DocumentIndex": 51,
               "Title": "GetClientsHandler.cs",
               "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Infrastructure\\DAL\\Handlers\\ClientsHandlers\\GetClientsHandler.cs",
               "RelativeDocumentMoniker": "SportsCenter.Infrastructure\\DAL\\Handlers\\ClientsHandlers\\GetClientsHandler.cs",
@@ -5813,7 +5808,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 47,
+              "DocumentIndex": 49,
               "Title": "GetClientsByAgeHandler.cs",
               "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Infrastructure\\DAL\\Handlers\\ClientsHandlers\\GetClientsByAgeHandler.cs",
               "RelativeDocumentMoniker": "SportsCenter.Infrastructure\\DAL\\Handlers\\ClientsHandlers\\GetClientsByAgeHandler.cs",
@@ -5825,7 +5820,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 86,
+              "DocumentIndex": 88,
               "Title": "GetReservationSummaryHandler.cs",
               "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Infrastructure\\DAL\\Handlers\\ReservationsHandlers\\GetReservationSummaryHandler.cs",
               "RelativeDocumentMoniker": "SportsCenter.Infrastructure\\DAL\\Handlers\\ReservationsHandlers\\GetReservationSummaryHandler.cs",
@@ -5837,7 +5832,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 95,
+              "DocumentIndex": 97,
               "Title": "GetReservationSummary.cs",
               "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Application\\Reservations\\Queries\\GetReservationSummary\\GetReservationSummary.cs",
               "RelativeDocumentMoniker": "SportsCenter.Application\\Reservations\\Queries\\GetReservationSummary\\GetReservationSummary.cs",
@@ -5849,7 +5844,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 123,
+              "DocumentIndex": 125,
               "Title": "GetClients.cs",
               "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Application\\Clients\\Queries\\GetClients\\GetClients.cs",
               "RelativeDocumentMoniker": "SportsCenter.Application\\Clients\\Queries\\GetClients\\GetClients.cs",
@@ -5861,7 +5856,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 50,
+              "DocumentIndex": 52,
               "Title": "ClientDto.cs",
               "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Application\\Clients\\Queries\\GetClients\\ClientDto.cs",
               "RelativeDocumentMoniker": "SportsCenter.Application\\Clients\\Queries\\GetClients\\ClientDto.cs",
@@ -6077,7 +6072,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 51,
+              "DocumentIndex": 53,
               "Title": "UsersController.cs",
               "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Api\\Controllers\\UsersController.cs",
               "RelativeDocumentMoniker": "SportsCenter.Api\\Controllers\\UsersController.cs",
@@ -6089,7 +6084,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
+              "DocumentIndex": 17,
               "Title": "SportActivitiesController.cs",
               "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Api\\Controllers\\SportActivitiesController.cs",
               "RelativeDocumentMoniker": "SportsCenter.Api\\Controllers\\SportActivitiesController.cs",
@@ -6101,7 +6096,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 9,
               "Title": "EmployeesController.cs",
               "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Api\\Controllers\\EmployeesController.cs",
               "RelativeDocumentMoniker": "SportsCenter.Api\\Controllers\\EmployeesController.cs",
@@ -6109,12 +6104,11 @@
               "RelativeToolTip": "SportsCenter.Api\\Controllers\\EmployeesController.cs",
               "ViewState": "AgIAACsAAAAAAAAAAAAowC0AAAAtAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-03T19:41:03.876Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-02-03T19:41:03.876Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 41,
+              "DocumentIndex": 43,
               "Title": "ClientsController.cs",
               "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Api\\Controllers\\ClientsController.cs",
               "RelativeDocumentMoniker": "SportsCenter.Api\\Controllers\\ClientsController.cs",
@@ -6126,7 +6120,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 131,
+              "DocumentIndex": 133,
               "Title": "BaseController.cs",
               "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Api\\Controllers\\BaseController.cs",
               "RelativeDocumentMoniker": "SportsCenter.Api\\Controllers\\BaseController.cs",
@@ -6138,7 +6132,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 15,
               "Title": "ReservationController.cs",
               "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Api\\Controllers\\ReservationController.cs",
               "RelativeDocumentMoniker": "SportsCenter.Api\\Controllers\\ReservationController.cs",
@@ -6186,7 +6180,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 11,
               "Title": "SportActivityRepository.cs",
               "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Infrastructure\\DAL\\Repositories\\SportActivityRepository.cs",
               "RelativeDocumentMoniker": "SportsCenter.Infrastructure\\DAL\\Repositories\\SportActivityRepository.cs",
@@ -6318,7 +6312,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 60,
+              "DocumentIndex": 62,
               "Title": "AddDepositToClientValidator.cs",
               "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Application\\Clients\\Commands\\AddDepositToClient\\AddDepositToClientValidator.cs",
               "RelativeDocumentMoniker": "SportsCenter.Application\\Clients\\Commands\\AddDepositToClient\\AddDepositToClientValidator.cs",
@@ -6402,7 +6396,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 61,
+              "DocumentIndex": 63,
               "Title": "AddDepositToClient.cs",
               "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Application\\Clients\\Commands\\AddDepositToClient\\AddDepositToClient.cs",
               "RelativeDocumentMoniker": "SportsCenter.Application\\Clients\\Commands\\AddDepositToClient\\AddDepositToClient.cs",
@@ -6426,7 +6420,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 16,
+              "DocumentIndex": 18,
               "Title": "AddSportActivityValidator.cs",
               "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Application\\Activities\\Commands\\AddSportActivity\\AddSportActivityValidator.cs",
               "RelativeDocumentMoniker": "SportsCenter.Application\\Activities\\Commands\\AddSportActivity\\AddSportActivityValidator.cs",
@@ -6438,19 +6432,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 1,
               "Title": "AddSportActivityHandler.cs",
               "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Application\\Activities\\Commands\\AddSportActivity\\AddSportActivityHandler.cs",
               "RelativeDocumentMoniker": "SportsCenter.Application\\Activities\\Commands\\AddSportActivity\\AddSportActivityHandler.cs",
               "ToolTip": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Application\\Activities\\Commands\\AddSportActivity\\AddSportActivityHandler.cs",
               "RelativeToolTip": "SportsCenter.Application\\Activities\\Commands\\AddSportActivity\\AddSportActivityHandler.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAACwAAAAKAAAAAAAAAA==",
+              "ViewState": "AgIAAB4AAAAAAAAAAAAowCwAAAAKAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-03T11:03:32.825Z"
+              "WhenOpened": "2025-02-03T11:03:32.825Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 17,
+              "DocumentIndex": 19,
               "Title": "AddSportActivity.cs",
               "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Application\\Activities\\Commands\\AddSportActivity\\AddSportActivity.cs",
               "RelativeDocumentMoniker": "SportsCenter.Application\\Activities\\Commands\\AddSportActivity\\AddSportActivity.cs",
@@ -6510,7 +6505,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 55,
+              "DocumentIndex": 57,
               "Title": "IJWTTokenGenerator.cs",
               "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Application\\Security\\IJWTTokenGenerator.cs",
               "RelativeDocumentMoniker": "SportsCenter.Application\\Security\\IJWTTokenGenerator.cs",
@@ -6522,7 +6517,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 65,
+              "DocumentIndex": 67,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Api\\Program.cs",
               "RelativeDocumentMoniker": "SportsCenter.Api\\Program.cs",
@@ -6618,7 +6613,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 52,
+              "DocumentIndex": 54,
               "Title": "JWTTokenGenerator.cs",
               "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Infrastructure\\Security\\JWTTokenGenerator.cs",
               "RelativeDocumentMoniker": "SportsCenter.Infrastructure\\Security\\JWTTokenGenerator.cs",
@@ -6630,7 +6625,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 54,
+              "DocumentIndex": 56,
               "Title": "LoginHandler.cs",
               "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Application\\Users\\Commands\\Login\\LoginHandler.cs",
               "RelativeDocumentMoniker": "SportsCenter.Application\\Users\\Commands\\Login\\LoginHandler.cs",
@@ -6642,7 +6637,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 56,
+              "DocumentIndex": 58,
               "Title": "Login.cs",
               "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Application\\Users\\Commands\\Login\\Login.cs",
               "RelativeDocumentMoniker": "SportsCenter.Application\\Users\\Commands\\Login\\Login.cs",

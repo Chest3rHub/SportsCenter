@@ -324,6 +324,8 @@ export default {
     participantsCountError: 'Liczba uczestników musi być od 1 do 8',
     isEquipmentReservedLabel: 'Czy rezerwujesz sprzęt',
     isEquipmentReservedError: 'Wybierz, czy chcesz zarezerwować sprzęt',
+    workingHoursMessage: 'W tym dniu klub działa od {{open}} do {{close}}',
+    invalidTimeStep: "Proszę wybrać pełną godzinę lub połowę (np. 10:00 lub 10:30)",
     confirmLabel: 'Potwierdź',
   },
   clientReservations: {
@@ -459,6 +461,7 @@ export default {
     levelNameLabel: 'Poziom zajęć',
     levelNameError: 'Poziom zajęć wymagany',
     noAvailableTrainers: 'Brak dostępnych trenerów',
+    workingHoursMessage: 'W tym dniu klub działa od {{open}} do {{close}}',
     confirmLabel: 'Potwierdź',
     returnLabel: 'Wróć',
     errors: {

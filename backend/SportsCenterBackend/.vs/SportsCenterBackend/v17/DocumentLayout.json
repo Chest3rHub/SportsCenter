@@ -3,20 +3,20 @@
   "WorkspaceRootPath": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{1C4DC8AC-CE62-490B-B5CE-1C974879A2BF}|SportsCenter.Application\\SportsCenter.Application.csproj|c:\\users\\48660\\sportscenter\\backend\\sportscenterbackend\\sportscenter.application\\sportscentermanagement\\queries\\getsportscenterworkinghours\\sportscenterworkinghoursdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{1C4DC8AC-CE62-490B-B5CE-1C974879A2BF}|SportsCenter.Application\\SportsCenter.Application.csproj|solutionrelative:sportscenter.application\\sportscentermanagement\\queries\\getsportscenterworkinghours\\sportscenterworkinghoursdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{C0CFB4B0-02D2-4257-A9B0-A5ADAF990E5D}|SportsCenter.Api\\SportsCenter.Api.csproj|c:\\users\\48660\\sportscenter\\backend\\sportscenterbackend\\sportscenter.api\\controllers\\sportscentermanagementcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C0CFB4B0-02D2-4257-A9B0-A5ADAF990E5D}|SportsCenter.Api\\SportsCenter.Api.csproj|solutionrelative:sportscenter.api\\controllers\\sportscentermanagementcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{1520B005-20E6-4F53-BFDB-456B93D4D37A}|SportsCenter.Infrastructure\\SportsCenter.Infrastructure.csproj|c:\\users\\48660\\sportscenter\\backend\\sportscenterbackend\\sportscenter.infrastructure\\dal\\handlers\\sportscenterinfohandler\\getsportscenterworkinghourshandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{1520B005-20E6-4F53-BFDB-456B93D4D37A}|SportsCenter.Infrastructure\\SportsCenter.Infrastructure.csproj|solutionrelative:sportscenter.infrastructure\\dal\\handlers\\sportscenterinfohandler\\getsportscenterworkinghourshandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{1C4DC8AC-CE62-490B-B5CE-1C974879A2BF}|SportsCenter.Application\\SportsCenter.Application.csproj|c:\\users\\48660\\sportscenter\\backend\\sportscenterbackend\\sportscenter.application\\sportscentermanagement\\queries\\getsportscenterworkinghours\\getsportscenterworkinghours.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{1C4DC8AC-CE62-490B-B5CE-1C974879A2BF}|SportsCenter.Application\\SportsCenter.Application.csproj|solutionrelative:sportscenter.application\\sportscentermanagement\\queries\\getsportscenterworkinghours\\getsportscenterworkinghours.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{1C4DC8AC-CE62-490B-B5CE-1C974879A2BF}|SportsCenter.Application\\SportsCenter.Application.csproj|c:\\users\\48660\\sportscenter\\backend\\sportscenterbackend\\sportscenter.application\\sportscentermanagement\\queries\\getsportscenterworkinghours\\sportscenterworkinghoursdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1C4DC8AC-CE62-490B-B5CE-1C974879A2BF}|SportsCenter.Application\\SportsCenter.Application.csproj|solutionrelative:sportscenter.application\\sportscentermanagement\\queries\\getsportscenterworkinghours\\sportscenterworkinghoursdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{C0CFB4B0-02D2-4257-A9B0-A5ADAF990E5D}|SportsCenter.Api\\SportsCenter.Api.csproj|c:\\users\\48660\\sportscenter\\backend\\sportscenterbackend\\sportscenter.api\\controllers\\sportscentermanagementcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C0CFB4B0-02D2-4257-A9B0-A5ADAF990E5D}|SportsCenter.Api\\SportsCenter.Api.csproj|solutionrelative:sportscenter.api\\controllers\\sportscentermanagementcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{1C4DC8AC-CE62-490B-B5CE-1C974879A2BF}|SportsCenter.Application\\SportsCenter.Application.csproj|c:\\users\\48660\\sportscenter\\backend\\sportscenterbackend\\sportscenter.application\\sportscentermanagement\\queries\\getsportscenterworkinghours\\getsportscenterworkinghours.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1C4DC8AC-CE62-490B-B5CE-1C974879A2BF}|SportsCenter.Application\\SportsCenter.Application.csproj|solutionrelative:sportscenter.application\\sportscentermanagement\\queries\\getsportscenterworkinghours\\getsportscenterworkinghours.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{1520B005-20E6-4F53-BFDB-456B93D4D37A}|SportsCenter.Infrastructure\\SportsCenter.Infrastructure.csproj|c:\\users\\48660\\sportscenter\\backend\\sportscenterbackend\\sportscenter.infrastructure\\behaviors\\unitofworkbehavior.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -1704,16 +1704,8 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 3,
+          "SelectedChildIndex": 162,
           "Children": [
-            {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{e5c86464-96be-4d7c-9a8b-abcb3bbf5f92}"
-            },
-            {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{cce594b6-0c39-4442-ba28-10c64ac7e89f}"
-            },
             {
               "$type": "Document",
               "DocumentIndex": 1,
@@ -1722,27 +1714,25 @@
               "RelativeDocumentMoniker": "SportsCenter.Infrastructure\\DAL\\Handlers\\SportsCenterInfoHandler\\GetSportsCenterWorkingHoursHandler.cs",
               "ToolTip": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Infrastructure\\DAL\\Handlers\\SportsCenterInfoHandler\\GetSportsCenterWorkingHoursHandler.cs",
               "RelativeToolTip": "SportsCenter.Infrastructure\\DAL\\Handlers\\SportsCenterInfoHandler\\GetSportsCenterWorkingHoursHandler.cs",
-              "ViewState": "AgIAAC4AAAAAAAAAAAAkwDMAAAA4AAAAAAAAAA==",
+              "ViewState": "AgIAABQAAAAAAAAAAAAAABQAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-07T12:15:34.03Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-07T12:15:34.03Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 2,
               "Title": "SportsCenterWorkingHoursDto.cs",
               "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Application\\SportsCenterManagement\\Queries\\GetSportsCenterWorkingHours\\SportsCenterWorkingHoursDto.cs",
               "RelativeDocumentMoniker": "SportsCenter.Application\\SportsCenterManagement\\Queries\\GetSportsCenterWorkingHours\\SportsCenterWorkingHoursDto.cs",
               "ToolTip": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Application\\SportsCenterManagement\\Queries\\GetSportsCenterWorkingHours\\SportsCenterWorkingHoursDto.cs",
               "RelativeToolTip": "SportsCenter.Application\\SportsCenterManagement\\Queries\\GetSportsCenterWorkingHours\\SportsCenterWorkingHoursDto.cs",
-              "ViewState": "AgIAAAMAAAAAAAAAAAAAAA0AAAAXAAAAAAAAAA==",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAAA0AAAAXAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-07T12:12:29.345Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-07T12:12:29.345Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "GetSportsCenterWorkingHours.cs",
               "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Application\\SportsCenterManagement\\Queries\\GetSportsCenterWorkingHours\\GetSportsCenterWorkingHours.cs",
               "RelativeDocumentMoniker": "SportsCenter.Application\\SportsCenterManagement\\Queries\\GetSportsCenterWorkingHours\\GetSportsCenterWorkingHours.cs",
@@ -1750,8 +1740,7 @@
               "RelativeToolTip": "SportsCenter.Application\\SportsCenterManagement\\Queries\\GetSportsCenterWorkingHours\\GetSportsCenterWorkingHours.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAABRAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-07T12:12:19.096Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-07T12:12:19.096Z"
             },
             {
               "$type": "Document",
@@ -3215,8 +3204,7 @@
               "RelativeToolTip": "SportsCenter.Api\\Controllers\\SubstitutionController.cs",
               "ViewState": "AgIAAFAAAAAAAAAAAAAswFYAAABMAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-06T10:24:39.369Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-03-06T10:24:39.369Z"
             },
             {
               "$type": "Document",
@@ -3540,8 +3528,7 @@
               "RelativeToolTip": "SportsCenter.Infrastructure\\DAL\\Handlers\\SportsCenterInfoHandler\\GetSportsCenterWorkingHoursForWeekHandler.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAAmAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-04T15:11:31.029Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-03-04T15:11:31.029Z"
             },
             {
               "$type": "Document",
@@ -3553,8 +3540,7 @@
               "RelativeToolTip": "SportsCenter.Application\\SportsCenterManagement\\Queries\\GetSportsCenterWorkingHoursForWeek\\SportsCenterWorkingHoursDto.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAABPAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-04T15:03:08.705Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-03-04T15:03:08.705Z"
             },
             {
               "$type": "Document",
@@ -3566,8 +3552,7 @@
               "RelativeToolTip": "SportsCenter.Application\\SportsCenterManagement\\Queries\\GetSportsCenterWorkingHoursForWeek\\GetSportsCenterWorkingHoursForWeek.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-04T15:02:38.914Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-03-04T15:02:38.914Z"
             },
             {
               "$type": "Document",
@@ -3667,13 +3652,13 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 0,
               "Title": "SportsCenterManagementController.cs",
               "DocumentMoniker": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Api\\Controllers\\SportsCenterManagementController.cs",
               "RelativeDocumentMoniker": "SportsCenter.Api\\Controllers\\SportsCenterManagementController.cs",
               "ToolTip": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Api\\Controllers\\SportsCenterManagementController.cs",
               "RelativeToolTip": "SportsCenter.Api\\Controllers\\SportsCenterManagementController.cs",
-              "ViewState": "AgIAADYAAAAAAAAAAAAjwEUAAAAMAAAAAAAAAA==",
+              "ViewState": "AgIAADYAAAAAAAAAAAAjwEIAAAAvAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-02-22T14:40:12.715Z",
               "EditorCaption": ""
@@ -3724,8 +3709,7 @@
               "RelativeToolTip": "SportsCenter.Infrastructure\\DAL\\Repositories\\SportsCenterRepository.cs",
               "ViewState": "AgIAABUAAAAAAAAAAAAowCsAAAA2AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-22T14:20:10.522Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-02-22T14:20:10.522Z"
             },
             {
               "$type": "Document",
@@ -6256,8 +6240,7 @@
               "RelativeToolTip": "SportsCenter.Api\\Controllers\\EmployeesController.cs",
               "ViewState": "AgIAABsAAAAAAAAAAAAIwC0AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-03T19:41:03.876Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-02-03T19:41:03.876Z"
             },
             {
               "$type": "Document",
@@ -6389,8 +6372,7 @@
               "RelativeToolTip": "SportsCenter.Infrastructure\\DAL\\Repositories\\ReservationRepository.cs",
               "ViewState": "AgIAAA4AAAAAAAAAAAAQwCoAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-03T18:26:06.429Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-02-03T18:26:06.429Z"
             },
             {
               "$type": "Document",
@@ -6618,8 +6600,7 @@
               "RelativeToolTip": "SportsCenter.Infrastructure\\Behaviors\\UnitOfWorkBehavior.cs",
               "ViewState": "AgIAAAQAAAAAAAAAAAArwA0AAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-03T10:33:07.636Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-02-03T10:33:07.636Z"
             },
             {
               "$type": "Document",
@@ -6679,8 +6660,7 @@
               "RelativeToolTip": "SportsCenter.Api\\Program.cs",
               "ViewState": "AgIAAIIAAAAAAAAAAAArwJMAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-03T10:11:27.383Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-02-03T10:11:27.383Z"
             },
             {
               "$type": "Document",
@@ -6813,6 +6793,14 @@
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAEAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
               "WhenOpened": "2024-12-06T21:12:51.439Z"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{e5c86464-96be-4d7c-9a8b-abcb3bbf5f92}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{cce594b6-0c39-4442-ba28-10c64ac7e89f}"
             }
           ]
         }

@@ -13,6 +13,7 @@ import getAvailableTrainers from '../api/getAvailableTrainers';
 import getAvailableCourts from '../api/getAvailableCourts';
 import getActivityLevelNames from '../api/getActivityLevelName';
 import ErrorModal from '../components/ErrorModal';
+import getSportsCenterWorkingHours from '../api/getSportsCenterWorkingHours';
 
 function AddSportActivity() {
 
@@ -59,6 +60,9 @@ function AddSportActivity() {
     const [availableCourts, setAvailableCourts] = useState([]);
     const [levels, setLevels] = useState([]);
 
+    const [workingHoursError, setWorkingHoursError] = useState(false);
+    const [clubHoursMessage, setClubHoursMessage] = useState('');
+
     function getStartAndEndTime(dateString, hourString, durationInMinutes) {
         const [hours, minutes] = hourString.split(':').map(Number);
         const date = new Date(dateString);
@@ -103,31 +107,63 @@ function AddSportActivity() {
     useEffect(() => {
         const fetchAvailability = async () => {
             if (!formData.startDate || !formData.startHour || !formData.durationInMinutes) return;
-        
+    
             const { startTimeUTC, endTimeUTC } = getStartAndEndTime(
                 formData.startDate,
                 formData.startHour,
                 formData.durationInMinutes
             );
-        
+    
             try {
+                const workingHours = await getSportsCenterWorkingHours(formData.startDate);
+    
+                const [startHourH, startHourM] = formData.startHour.split(":").map(Number);
+                const startLocal = new Date(formData.startDate);
+                startLocal.setHours(startHourH, startHourM, 0, 0);
+    
+                const endLocal = new Date(startLocal.getTime() + parseInt(formData.durationInMinutes) * 60000);
+    
+                const [openH, openM] = workingHours.openHour.split(":").map(Number);
+                const [closeH, closeM] = workingHours.closeHour.split(":").map(Number);
+    
+                const openTime = new Date(formData.startDate);
+                openTime.setHours(openH, openM, 0, 0);
+    
+                const closeTime = new Date(formData.startDate);
+                closeTime.setHours(closeH, closeM, 0, 0)
+        
+                if (startLocal < openTime || endLocal > closeTime) {
+                    setWorkingHoursError(true);
+                    const messageTemplate = dictionary.addActivityPage.workingHoursMessage;
+                    const translatedMessage = messageTemplate
+                    .replace('{{open}}', workingHours.openHour.slice(0, 5))
+                    .replace('{{close}}', workingHours.closeHour.slice(0, 5));
+                    setClubHoursMessage(translatedMessage);
+                } else {
+                    setWorkingHoursError(false);
+                    setClubHoursMessage('');
+                }
+    
                 const [trainersResponse, courtsResponse] = await Promise.all([
                     getAvailableTrainers(startTimeUTC, endTimeUTC),
                     getAvailableCourts(startTimeUTC, endTimeUTC),
                 ]);
-
-                setAvailableTrainers(trainersResponse.length ? trainersResponse : []);
-                setAvailableCourts(courtsResponse.length ? courtsResponse : []);
-
+    
+                setAvailableTrainers(trainersResponse || []);
+                setAvailableCourts(courtsResponse || []);
+    
             } catch (error) {
-                console.error('Error fetching availability:', error);
+                console.error('Error fetching availability or working hours:', error);
                 setAvailableTrainers([]);
                 setAvailableCourts([]);
+                setWorkingHoursError(false);
+                setClubHoursMessage('');
             }
         };
-        
+    
         fetchAvailability();
     }, [formData.startDate, formData.startHour, formData.durationInMinutes]);
+    
     
     const validateForm = () => {
         let isValid = true;
@@ -334,6 +370,11 @@ function AddSportActivity() {
                 size="small"
                 InputLabelProps={{ shrink: true }}
             />
+            {workingHoursError && (
+                <p style={{ color: 'red' }}>
+                    {clubHoursMessage}
+                </p>
+            )}
             <CustomInput
                 label={dictionary.addActivityPage.durationInMinutesLabel}
                 type="number"

@@ -12,6 +12,7 @@ import { Checkbox, FormControlLabel } from '@mui/material';
 import getAvailableTrainers from '../api/getAvailableTrainers';
 import getAvailableCourts from '../api/getAvailableCourts';
 import MenuItem from '@mui/material/MenuItem';
+import getSportsCenterWorkingHours from '../api/getSportsCenterWorkingHours';
 
 function AddReservationYourself() {
 
@@ -39,6 +40,12 @@ function AddReservationYourself() {
 
     const [availableTrainers, setAvailableTrainers] = useState([]);
     const [availableCourts, setAvailableCourts] = useState([]);
+
+    const [workingHours, setWorkingHours] = useState(null);
+    const [workingHoursError, setWorkingHoursError] = useState(false);
+    const [clubHoursMessage, setClubHoursMessage] = useState('');
+
+    const [invalidTimeStepError, setInvalidTimeStepError] = useState(false);
 
     const now = new Date();
     const localISOTime = new Date(now.getTime() - now.getTimezoneOffset() * 60000)
@@ -84,7 +91,14 @@ function AddReservationYourself() {
 
         const start = new Date(formData.startTime);
         const end = new Date(formData.endTime);
-    
+        const validMinutes = [0, 30];
+        if (!validMinutes.includes(start.getMinutes()) || !validMinutes.includes(end.getMinutes())) {
+          isValid = false;
+          setInvalidTimeStepError(true);
+        } else {
+          setInvalidTimeStepError(false);
+        }
+
         if (!formData.startTime) {
             isValid = false;
             setStartTimeError(true);
@@ -132,33 +146,63 @@ function AddReservationYourself() {
     };
 
  
-     useEffect(() => {
-         const fetchAvailability = async () => {
-             if (!formData.startTime || !formData.endTime) return;
-         
-             const { startTimeUTC, endTimeUTC } = getStartAndEndTime(
-                 formData.startTime,
-                 formData.endTime,
-             );
-         
-             try {
-                 const [trainersResponse, courtsResponse] = await Promise.all([
-                     getAvailableTrainers(startTimeUTC, endTimeUTC),
-                     getAvailableCourts(startTimeUTC, endTimeUTC),
-                 ]);
- 
-                 setAvailableTrainers(trainersResponse.length ? trainersResponse : []);
-                 setAvailableCourts(courtsResponse.length ? courtsResponse : []);
- 
-             } catch (error) {
-                 console.error('Error fetching availability:', error);
-                 setAvailableTrainers([]);
-                 setAvailableCourts([]);
-             }
-         };
-         
-         fetchAvailability();
-     }, [formData.startTime, formData.endTime]);
+    useEffect(() => {
+      const fetchAvailability = async () => {
+          if (!formData.startTime || !formData.endTime) return;
+  
+          const { startTimeUTC, endTimeUTC } = getStartAndEndTime(formData.startTime, formData.endTime);
+  
+          try {
+
+              const selectedDate = new Date(formData.startTime);
+              const dateOnly = selectedDate.toISOString().split('T')[0];
+            
+              const hoursResponse = await getSportsCenterWorkingHours(dateOnly);
+  
+              if (hoursResponse) {
+                  const { openHour, closeHour } = hoursResponse;
+                 
+                  const start = new Date(formData.startTime);
+                  const end = new Date(formData.endTime);
+
+                  const open = new Date(start);
+                  const close = new Date(start);
+
+                  const [openHourHours, openHourMinutes] = openHour.split(':');
+                  const [closeHourHours, closeHourMinutes] = closeHour.split(':');
+  
+                  open.setHours(+openHourHours, +openHourMinutes, 0, 0);
+                  close.setHours(+closeHourHours, +closeHourMinutes, 0, 0);
+                  
+                  if (start < open || end > close) {
+                    setWorkingHoursError(true);
+                    const messageTemplate = dictionary.addReservationYourselfPage.workingHoursMessage;
+                    const translatedMessage = messageTemplate
+                      .replace('{{open}}', openHour.slice(0, 5))
+                      .replace('{{close}}', closeHour.slice(0, 5));
+                    setClubHoursMessage(translatedMessage);
+                    return;
+                  }
+              }
+  
+              const [trainersResponse, courtsResponse] = await Promise.all([
+                  getAvailableTrainers(startTimeUTC, endTimeUTC),
+                  getAvailableCourts(startTimeUTC, endTimeUTC),
+              ]);
+  
+              setAvailableTrainers(trainersResponse.length ? trainersResponse : []);
+              setAvailableCourts(courtsResponse.length ? courtsResponse : []);
+  
+          } catch (error) {
+              console.error('Error fetching availability or working hours:', error);
+              setAvailableTrainers([]);
+              setAvailableCourts([]);
+          }
+      };
+  
+      fetchAvailability();
+  }, [formData.startTime, formData.endTime]);
+  
 
 
     function handleError(textToDisplay) {
@@ -227,7 +271,11 @@ function AddReservationYourself() {
               value={formData.startTime}
               onChange={handleChange}
               error={startTimeError}
-              helperText={startTimeError ? dictionary.addReservationYourselfPage.startTimeError : ""}
+              helperText={
+                startTimeError ? dictionary.addReservationYourselfPage.startTimeError :
+                invalidTimeStepError ? dictionary.addReservationYourselfPage.invalidTimeStep :
+                ""
+              }              
               required
               size="small"
               InputLabelProps={{
@@ -237,6 +285,11 @@ function AddReservationYourself() {
                 min: localISOTime
               }}
               />
+              {workingHours && (
+              <div style={{ fontSize: '0.9rem', color: '#888' }}>
+              {dictionary.addReservationYourselfPage.openingHoursLabel} {workingHours.openHour.slice(0,5)} - {workingHours.closeHour.slice(0,5)}
+              </div>
+              )}
               <CustomInput
                 label={dictionary.addReservationYourselfPage.endTimeLabel}
                 type="datetime-local"
@@ -246,7 +299,11 @@ function AddReservationYourself() {
                 value={formData.endTime}
                 onChange={handleChange}
                 error={endTimeE}
-                helperText={endTimeErrorMessage}
+                helperText={
+                  endTimeRequiredError ? dictionary.addReservationYourselfPage.endTimeError :
+                  invalidTimeStepError ? dictionary.addReservationYourselfPage.invalidTimeStep :
+                  ""
+                }
                 size="small"
                 required
                 InputLabelProps={{
@@ -256,6 +313,11 @@ function AddReservationYourself() {
                   min: localISOTime
                 }}
               />
+              {workingHoursError && (
+                <div style={{ color: 'red', fontSize: '0.85rem' }}>
+                  {clubHoursMessage}
+                </div>
+              )}
               <CustomInput
                 select
                 label={dictionary.addReservationYourselfPage.trainerNameLabel}

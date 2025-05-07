@@ -321,6 +321,8 @@ export default {
       participantsCountError: 'Number of participants must be between 1 and 8',
       isEquipmentReservedLabel: 'Do you want to reserve equipment',
       isEquipmentReservedError: 'Please choose whether to reserve equipment',
+      workingHoursMessage: 'On this day the club is open from {{open}} to {{close}}',
+      invalidTimeStep: "Please select a full or half hour (e.g. 10:00 or 10:30)",
       confirmLabel: 'Confirm',
   },
   clientReservations: {
@@ -454,6 +456,7 @@ addActivityPage:{
   levelNameLabel: 'Level Name',
   levelNameError: 'Level name required',
   noAvailableTrainers: 'No avaliable trainers',
+  workingHoursMessage: 'On this day the club is open from {{open}} to {{close}}',
   confirmLabel: 'Confirm',
   returnLabel: 'Back',
   errors: {

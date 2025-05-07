@@ -453,6 +453,7 @@ addActivityPage:{
   costWithEquipmentError: 'Cost with equipment must be greater than 0',
   levelNameLabel: 'Level Name',
   levelNameError: 'Level name required',
+  noAvailableTrainers: 'No avaliable trainers',
   confirmLabel: 'Confirm',
   returnLabel: 'Back',
   errors: {

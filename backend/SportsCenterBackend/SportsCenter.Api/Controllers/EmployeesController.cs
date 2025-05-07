@@ -25,6 +25,7 @@ using SportsCenter.Application.Employees.Commands.AcceptAbsenceRequest;
 using SportsCenter.Application.Employees.Queries.GetYourAbsenceRequests;
 using SportsCenter.Application.Employees.Queries.GetTrainerSchedule;
 using SportsCenter.Application.Employees.Queries.GetTrainers;
+using SportsCenter.Application.Employees.Queries.GetAvailableTrainers;
 
 
 namespace SportsCenter.Api.Controllers
@@ -48,6 +49,15 @@ namespace SportsCenter.Api.Controllers
         public async Task<IActionResult> GetTrainersAsync()
         {
             return Ok(await Mediator.Send(new GetTrainers()));
+        }
+
+
+        [Authorize(Roles = "Wlasciciel")]
+        [HttpGet("get-available-trainers")]
+        public async Task<IActionResult> GetAvailableTrainersAsync([FromQuery] DateTime startTime, [FromQuery] DateTime endTime)
+        {    
+            var availableTrainers = await Mediator.Send(new GetAvailableTrainers(startTime, endTime));
+            return Ok(availableTrainers);
         }
 
         [Authorize(Roles = "Wlasciciel")]

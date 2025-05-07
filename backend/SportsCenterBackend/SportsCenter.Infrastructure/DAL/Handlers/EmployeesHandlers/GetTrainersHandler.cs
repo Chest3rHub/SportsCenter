@@ -1,6 +1,5 @@
 ﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
-using SportsCenter.Application.Employees.Queries.GetEmployees;
 using SportsCenter.Application.Employees.Queries.GetTrainers;
 using System;
 using System.Collections.Generic;

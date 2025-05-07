@@ -458,6 +458,7 @@ export default {
     costWithEquipmentError: 'Koszt ze sprzętem musi być większy niż 0',
     levelNameLabel: 'Poziom zajęć',
     levelNameError: 'Poziom zajęć wymagany',
+    noAvailableTrainers: 'Brak dostępnych trenerów',
     confirmLabel: 'Potwierdź',
     returnLabel: 'Wróć',
     errors: {

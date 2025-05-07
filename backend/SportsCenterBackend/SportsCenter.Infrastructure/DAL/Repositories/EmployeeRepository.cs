@@ -201,6 +201,7 @@ namespace SportsCenter.Infrastructure.DAL.Repositories
 
             var trainers = await _dbContext.Pracowniks
                    .Where(p => p.IdTypPracownikaNavigation.Nazwa == "Trener")
+                   .Include(p => p.PracownikNavigation)
                    .ToListAsync(cancellationToken);
 
             var availableTrainers = new List<Pracownik>();

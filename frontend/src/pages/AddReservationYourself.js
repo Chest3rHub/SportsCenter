@@ -9,8 +9,8 @@ import addReservationYourself from '../api/addReservationYourself';
 import CustomInput from '../components/CustomInput';
 import { Box } from '@mui/material';
 import { Checkbox, FormControlLabel } from '@mui/material';
-import getTrainers from '../api/getTrainers';
-import getCourts from '../api/getCourts';
+import getAvailableTrainers from '../api/getAvailableTrainers';
+import getAvailableCourts from '../api/getAvailableCourts';
 import MenuItem from '@mui/material/MenuItem';
 
 function AddReservationYourself() {
@@ -37,9 +37,48 @@ function AddReservationYourself() {
       
     const [isEquipmentReservedError, setIsEquipmentReservedError] = useState(false);
 
-    const [trainers, setTrainers] = useState([]);
-    const [courts, setCourts] = useState([]);
-    
+    const [availableTrainers, setAvailableTrainers] = useState([]);
+    const [availableCourts, setAvailableCourts] = useState([]);
+
+    const now = new Date();
+    const localISOTime = new Date(now.getTime() - now.getTimezoneOffset() * 60000)
+        .toISOString()
+        .slice(0, 16);
+  
+  function getStartAndEndTime(startTime, endTime) {
+
+    const startDate = new Date(startTime);
+
+    const startHours = startDate.getHours();
+    const startMinutes = startDate.getMinutes();
+
+    startDate.setUTCHours(startHours, startMinutes, 0, 0);
+
+    const endDate = new Date(endTime);
+
+    const endHours = endDate.getHours(); 
+    const endMinutes = endDate.getMinutes(); 
+
+    endDate.setUTCHours(endHours, endMinutes, 0, 0);
+  
+    // Funkcja do konwersji daty do formatu UTC: "YYYY-MM-DDTHH:MM:SSZ"
+    const toUTCDateTimeString = (d) => {
+        const year = d.getUTCFullYear();
+        const month = String(d.getUTCMonth() + 1).padStart(2, '0');
+        const day = String(d.getUTCDate()).padStart(2, '0');
+        const hours = String(d.getUTCHours()).padStart(2, '0');
+        const minutes = String(d.getUTCMinutes()).padStart(2, '0');
+        const seconds = String(d.getUTCSeconds()).padStart(2, '0');
+        return `${year}-${month}-${day}T${hours}:${minutes}:${seconds}Z`; //dodanie "Z"
+    };
+
+    // Zwrócenie dat w formacie UTC
+    return {
+        startTimeUTC: toUTCDateTimeString(startDate),
+        endTimeUTC: toUTCDateTimeString(endDate)
+    };
+}
+
     const validateForm = () => {
         let isValid = true;
 
@@ -92,22 +131,34 @@ function AddReservationYourself() {
         return isValid;
     };
 
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        const [trainersData, courtsData] = await Promise.all([
-          getTrainers(),
-          getCourts()
-        ]);
-        setTrainers(trainersData);
-        setCourts(courtsData);
-      } catch (error) {
-        console.error('Błąd podczas pobierania trenerów lub kortów:', error);
-      }
-    }
-
-    fetchData();
-  }, []);
+ 
+     useEffect(() => {
+         const fetchAvailability = async () => {
+             if (!formData.startTime || !formData.endTime) return;
+         
+             const { startTimeUTC, endTimeUTC } = getStartAndEndTime(
+                 formData.startTime,
+                 formData.endTime,
+             );
+         
+             try {
+                 const [trainersResponse, courtsResponse] = await Promise.all([
+                     getAvailableTrainers(startTimeUTC, endTimeUTC),
+                     getAvailableCourts(startTimeUTC, endTimeUTC),
+                 ]);
+ 
+                 setAvailableTrainers(trainersResponse.length ? trainersResponse : []);
+                 setAvailableCourts(courtsResponse.length ? courtsResponse : []);
+ 
+             } catch (error) {
+                 console.error('Error fetching availability:', error);
+                 setAvailableTrainers([]);
+                 setAvailableCourts([]);
+             }
+         };
+         
+         fetchAvailability();
+     }, [formData.startTime, formData.endTime]);
 
 
     function handleError(textToDisplay) {
@@ -115,7 +166,6 @@ function AddReservationYourself() {
           state: { message: textToDisplay }
         });
     }
-    
     
     const navigate = useNavigate();
     
@@ -126,7 +176,6 @@ function AddReservationYourself() {
         [name]: type === "checkbox" ? checked : value,
       }));
     };
-    
     
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -169,43 +218,24 @@ function AddReservationYourself() {
         <OrangeBackground width="70%">
           <form onSubmit={handleSubmit}>
             <Box sx={{ display: "flex", flexDirection: "column", gap: "1rem", marginBottom: "2vh", }}>
-              <CustomInput
-                select
-                label={dictionary.addReservationYourselfPage.courtNameLabel}
-                id="courtName"
-                name="courtId"
-                value={formData.courtId}
-                fullWidth
-                onChange={handleChange}
-                required
-                size="small"
-                SelectProps={{
-                  sx: { textAlign: 'left' }
-                  }}
-                >
-                <MenuItem value="">
-                </MenuItem>
-                    {courts.map(court => (
-                <MenuItem key={court.id} value={court.id}>
-                    {court.name}
-                </MenuItem>
-                ))}
-              </CustomInput>
-              <CustomInput
-                label={dictionary.addReservationYourselfPage.startTimeLabel}
-                type="datetime-local"
-                id="startTime"
-                name="startTime"
-                fullWidth
-                value={formData.startTime}
-                onChange={handleChange}
-                error={startTimeError}
-                helperText={startTimeError ? dictionary.addReservationYourselfPage.startTimeError : ""}
-                required
-                size="small"
-                InputLabelProps={{
-                    shrink: true
-                }}
+            <CustomInput
+              label={dictionary.addReservationYourselfPage.startTimeLabel}
+              type="datetime-local"
+              id="startTime"
+              name="startTime"
+              fullWidth
+              value={formData.startTime}
+              onChange={handleChange}
+              error={startTimeError}
+              helperText={startTimeError ? dictionary.addReservationYourselfPage.startTimeError : ""}
+              required
+              size="small"
+              InputLabelProps={{
+                shrink: true
+              }}
+              inputProps={{
+                min: localISOTime
+              }}
               />
               <CustomInput
                 label={dictionary.addReservationYourselfPage.endTimeLabel}
@@ -221,6 +251,9 @@ function AddReservationYourself() {
                 required
                 InputLabelProps={{
                     shrink: true
+                }}
+                inputProps={{
+                  min: localISOTime
                 }}
               />
               <CustomInput
@@ -239,25 +272,57 @@ function AddReservationYourself() {
               >
               <MenuItem value="">
               </MenuItem>
-                  {trainers.map(trainer => (
+                  {availableTrainers.map(trainer => (
               <MenuItem key={trainer.id} value={trainer.id}>
                   {trainer.fullName}
               </MenuItem>
               ))}
               </CustomInput>
               <CustomInput
+                select
+                label={dictionary.addReservationYourselfPage.courtNameLabel}
+                id="courtName"
+                name="courtId"
+                value={formData.courtId}
+                fullWidth
+                onChange={handleChange}
+                required
+                size="small"
+                SelectProps={{
+                  sx: { textAlign: 'left' }
+                  }}
+                >
+                <MenuItem value="">
+                </MenuItem>
+                    {availableCourts.map(court => (
+                <MenuItem key={court.id} value={court.id}>
+                    {court.name}
+                </MenuItem>
+                ))}
+              </CustomInput>
+              <CustomInput
+                select
                 label={dictionary.addReservationYourselfPage.participantsCountLabel}
-                type="number"
                 id="participantsCount"
                 name="participantsCount"
-                fullWidth
                 value={formData.participantsCount}
+                fullWidth
                 onChange={handleChange}
                 error={participantsCountError}
                 helperText={participantsCountError ? dictionary.addReservationYourselfPage.participantsCountError : ""}
                 size="small"
                 required
-              />
+                SelectProps={{
+                  sx: { textAlign: 'left' }
+                }}
+              >
+              <MenuItem value=""></MenuItem>
+                {[...Array(8)].map((_, i) => (
+                  <MenuItem key={i + 1} value={i + 1}>
+                    {i + 1}
+                  </MenuItem>
+              ))}
+              </CustomInput>
               <FormControlLabel
                 control={
                 <Checkbox

@@ -13,7 +13,6 @@ import getAvailableTrainers from '../api/getAvailableTrainers';
 import getAvailableCourts from '../api/getAvailableCourts';
 import getActivityLevelNames from '../api/getActivityLevelName';
 import ErrorModal from '../components/ErrorModal';
-import CustomTimeInput from '../components/CustomTimeInput';
 
 function AddSportActivity() {
 

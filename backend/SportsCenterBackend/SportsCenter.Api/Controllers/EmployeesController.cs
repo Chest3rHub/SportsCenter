@@ -52,7 +52,7 @@ namespace SportsCenter.Api.Controllers
         }
 
 
-        [Authorize(Roles = "Wlasciciel")]
+        [Authorize(Roles = "Wlasciciel,Klient")]
         [HttpGet("get-available-trainers")]
         public async Task<IActionResult> GetAvailableTrainersAsync([FromQuery] DateTime startTime, [FromQuery] DateTime endTime)
         {    

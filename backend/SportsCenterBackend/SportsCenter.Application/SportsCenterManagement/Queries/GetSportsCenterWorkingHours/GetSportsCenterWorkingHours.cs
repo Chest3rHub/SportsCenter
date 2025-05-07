@@ -7,13 +7,13 @@ using System.Threading.Tasks;
 
 namespace SportsCenter.Application.SportsCenterManagement.Queries.GetSportsCenterWorkingHours
 {
-    public class GetSportsCenterWorkingHours : IQuery<IEnumerable<SportsCenterWorkingHoursDto>>
+    public class GetSportsCenterWorkingHours : IQuery<SportsCenterWorkingHoursDto>
     {
-        public int WeekOffset {  get; set; }
+        public DateTime TargetDate { get; set; }
 
-        public GetSportsCenterWorkingHours(int weekOffset)
+        public GetSportsCenterWorkingHours(DateTime targetDate)
         {
-           WeekOffset = weekOffset;
+            TargetDate = targetDate;
         }
     }
 }

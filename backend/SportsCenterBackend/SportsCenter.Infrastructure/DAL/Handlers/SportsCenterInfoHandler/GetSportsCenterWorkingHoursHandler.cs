@@ -1,79 +1,77 @@
 ﻿using MediatR;
-using Microsoft.EntityFrameworkCore;
 using SportsCenter.Application.SportsCenterManagement.Queries.GetSportsCenterWorkingHours;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using SportsCenter.Infrastructure.DAL;
+using System.Linq; 
+using Microsoft.EntityFrameworkCore; 
 
-namespace SportsCenter.Infrastructure.DAL.Handlers.SportsCenterInfoHandler
+
+internal sealed class GetSportsCenterWorkingHoursHandler : IRequestHandler<GetSportsCenterWorkingHours, SportsCenterWorkingHoursDto>
 {
-    internal sealed class GetSportsCenterWorkingHoursHandler : IRequestHandler<GetSportsCenterWorkingHours, IEnumerable<SportsCenterWorkingHoursDto>>
+    private readonly SportsCenterDbContext _dbContext;
+
+    public GetSportsCenterWorkingHoursHandler(SportsCenterDbContext dbContext)
     {
-        private readonly SportsCenterDbContext _dbContext;
+        _dbContext = dbContext;
+    }
 
-        public GetSportsCenterWorkingHoursHandler(SportsCenterDbContext dbContext)
+    public async Task<SportsCenterWorkingHoursDto> Handle(GetSportsCenterWorkingHours request, CancellationToken cancellationToken)
+    {
+        DateOnly targetDate = DateOnly.FromDateTime(request.TargetDate);
+        string dayOfWeekString = targetDate.DayOfWeek.ToString().ToLower().Trim();
+
+        var dniTygodniaMap = new Dictionary<string, string>
         {
-            _dbContext = dbContext;
-        }
+            { "monday", "poniedzialek" },
+            { "tuesday", "wtorek" },
+            { "wednesday", "sroda" },
+            { "thursday", "czwartek" },
+            { "friday", "piatek" },
+            { "saturday", "sobota" },
+            { "sunday", "niedziela" }
+        };
 
-        public async Task<IEnumerable<SportsCenterWorkingHoursDto>> Handle(GetSportsCenterWorkingHours request, CancellationToken cancellationToken)
+        string dzienPoPolsku = dniTygodniaMap.ContainsKey(dayOfWeekString)
+            ? dniTygodniaMap[dayOfWeekString]
+            : dayOfWeekString;
+
+        Console.WriteLine("AAAAAAA dzien po polsku: " + dzienPoPolsku);
+        Console.WriteLine("AAAAAA data po ktorej szukamy " + targetDate);
+
+        var specialHours = await _dbContext.WyjatkoweGodzinyPracies
+            .Where(w => w.Data == targetDate)
+            .FirstOrDefaultAsync();
+
+        if (specialHours != null)
         {
-            DateOnly startDate = DateOnly.FromDateTime(DateTime.UtcNow).AddDays(request.WeekOffset * 7);
-            DateOnly monday = startDate.AddDays(-(int)startDate.DayOfWeek + 1);
-            DateOnly sunday = monday.AddDays(6);
-
-            var dniTygodnia = new Dictionary<DayOfWeek, string>
+            return new SportsCenterWorkingHoursDto
             {
-                { DayOfWeek.Monday, "poniedzialek" },
-                { DayOfWeek.Tuesday, "wtorek" },
-                { DayOfWeek.Wednesday, "sroda" },
-                { DayOfWeek.Thursday, "czwartek" },
-                { DayOfWeek.Friday, "piatek" },
-                { DayOfWeek.Saturday, "sobota" },
-                { DayOfWeek.Sunday, "niedziela" }
+                Date = targetDate,
+                DayOfWeek = dzienPoPolsku,
+                OpenHour = specialHours.GodzinaOtwarcia.ToTimeSpan(),
+                CloseHour = specialHours.GodzinaZamkniecia.ToTimeSpan()
             };
-
-            var standardHours = await _dbContext.GodzinyPracyKlubus
-                .ToDictionaryAsync(h => h.DzienTygodnia.ToLower(), h => new { h.GodzinaOtwarcia, h.GodzinaZamkniecia });
-
-            var specialHours = await _dbContext.WyjatkoweGodzinyPracies
-                .Where(w => w.Data >= monday && w.Data <= sunday)
-                .ToDictionaryAsync(w => w.Data, w => new { w.GodzinaOtwarcia, w.GodzinaZamkniecia });
-
-            var workingHours = new List<SportsCenterWorkingHoursDto>();
-
-            for (int i = 0; i < 7; i++)
-            {
-                DateOnly date = monday.AddDays(i);
-                DayOfWeek dayOfWeekEnum = date.DayOfWeek;
-                string dayOfWeekString = dniTygodnia[dayOfWeekEnum];
-
-                if (specialHours.ContainsKey(date))
-                {
-                    var specialHour = specialHours[date];
-                    workingHours.Add(new SportsCenterWorkingHoursDto
-                    {
-                        Date = date,
-                        DayOfWeek = dayOfWeekString,
-                        OpenHour = specialHour.GodzinaOtwarcia.ToTimeSpan(),
-                        CloseHour = specialHour.GodzinaZamkniecia.ToTimeSpan(),
-                    });
-                }
-                else
-                {
-                    var standardHour = standardHours[dayOfWeekString];
-                    workingHours.Add(new SportsCenterWorkingHoursDto
-                    {
-                        Date = date,
-                        DayOfWeek = dayOfWeekString,
-                        OpenHour = standardHour.GodzinaOtwarcia.ToTimeSpan(),
-                        CloseHour = standardHour.GodzinaZamkniecia.ToTimeSpan(),
-                    });
-                }
-            }
-
-            return workingHours;
         }
+
+        var standardHours = await _dbContext.GodzinyPracyKlubus
+            .Where(h => h.DzienTygodnia == dzienPoPolsku)
+            .FirstOrDefaultAsync();
+
+        if (standardHours != null)
+        {
+            Console.WriteLine("AAAAAAA sa standard hours dla " + dzienPoPolsku);
+            Console.WriteLine("AAAAAAA Open hour: " + standardHours.GodzinaOtwarcia);
+            Console.WriteLine("AAAAAAA Close hour: " + standardHours.GodzinaZamkniecia);
+            return new SportsCenterWorkingHoursDto
+            {
+                Date = targetDate,
+                DayOfWeek = dzienPoPolsku,
+                OpenHour = standardHours.GodzinaOtwarcia.ToTimeSpan(),
+                CloseHour = standardHours.GodzinaZamkniecia.ToTimeSpan(),
+            };
+           
+        }
+
+        Console.WriteLine("Błąd: Nie znaleziono godzin dla podanej daty.");
+        return null;
     }
 }

@@ -66,7 +66,10 @@ namespace SportsCenter.Application.Reservations.Commands.AddSingleReservationYou
                 { DayOfWeek.Sunday, "niedziela" }
             };
 
-            var specialWorkingHours = await _sportsCenterRepository.GetSpecialWorkingHoursByDateAsync(request.StartTime.Date, cancellationToken);
+            var startTime = DateTime.Parse(request.StartTime);
+            var endTime = DateTime.Parse(request.EndTime);
+
+            var specialWorkingHours = await _sportsCenterRepository.GetSpecialWorkingHoursByDateAsync(startTime.Date, cancellationToken);
 
             if (specialWorkingHours != null)
             {
@@ -75,8 +78,8 @@ namespace SportsCenter.Application.Reservations.Commands.AddSingleReservationYou
                 int clubOpeningTimeInMinutes = workingHours.GodzinaOtwarcia.Hour * 60 + workingHours.GodzinaOtwarcia.Minute;
                 int clubClosingTimeInMinutes = workingHours.GodzinaZamkniecia.Hour * 60 + workingHours.GodzinaZamkniecia.Minute;
 
-                int reservationStartInMinutes = request.StartTime.Hour * 60 + request.StartTime.Minute;
-                int reservationEndInMinutes = request.EndTime.Hour * 60 + request.EndTime.Minute;
+                int reservationStartInMinutes = startTime.Hour * 60 + startTime.Minute;
+                int reservationEndInMinutes = endTime.Hour * 60 + endTime.Minute;
 
                 if (reservationStartInMinutes < clubOpeningTimeInMinutes || reservationEndInMinutes > clubClosingTimeInMinutes)
                 {
@@ -85,7 +88,7 @@ namespace SportsCenter.Application.Reservations.Commands.AddSingleReservationYou
             }
             else
             {
-                string dayOfWeek = dniTygodnia[request.StartTime.DayOfWeek];
+                string dayOfWeek = dniTygodnia[startTime.DayOfWeek];
                 var standardWorkingHours = await _sportsCenterRepository.GetWorkingHoursByDayAsync(dayOfWeek, cancellationToken);
 
                 if (standardWorkingHours == null)
@@ -102,8 +105,8 @@ namespace SportsCenter.Application.Reservations.Commands.AddSingleReservationYou
                 int clubOpeningTimeInMinutes = workingHours.GodzinaOtwarcia.Hour * 60 + workingHours.GodzinaOtwarcia.Minute;
                 int clubClosingTimeInMinutes = workingHours.GodzinaZamkniecia.Hour * 60 + workingHours.GodzinaZamkniecia.Minute;
 
-                int reservationStartInMinutes = request.StartTime.Hour * 60 + request.StartTime.Minute;
-                int reservationEndInMinutes = request.EndTime.Hour * 60 + request.EndTime.Minute;
+                int reservationStartInMinutes = startTime.Hour * 60 + startTime.Minute;
+                int reservationEndInMinutes = endTime.Hour * 60 + endTime.Minute;
 
                 if (reservationStartInMinutes < clubOpeningTimeInMinutes || reservationEndInMinutes > clubClosingTimeInMinutes)
                 {
@@ -114,7 +117,7 @@ namespace SportsCenter.Application.Reservations.Commands.AddSingleReservationYou
             if (request.ParticipantsCount > 8)
                 throw new TooManyParticipantsException();
 
-            bool isCourtAvailable = await _courtRepository.IsCourtAvailableAsync(request.CourtId, request.StartTime, request.EndTime, cancellationToken);
+            bool isCourtAvailable = await _courtRepository.IsCourtAvailableAsync(request.CourtId, startTime, endTime, cancellationToken);
             if (!isCourtAvailable)
                 throw new CourtNotAvaliableException(request.CourtId);
 
@@ -136,7 +139,7 @@ namespace SportsCenter.Application.Reservations.Commands.AddSingleReservationYou
                     throw new NotTrainerEmployeeException(request.TrainerId.Value);
                 }
 
-                var availabilityStatus = await _employeeRepository.IsTrainerAvailableAsync(request.TrainerId.Value, request.StartTime, request.StartTime.Hour * 60 + request.StartTime.Minute, request.EndTime.Hour * 60 + request.EndTime.Minute, cancellationToken);
+                var availabilityStatus = await _employeeRepository.IsTrainerAvailableAsync(request.TrainerId.Value, startTime, startTime.Hour * 60 + startTime.Minute, endTime.Hour * 60 + endTime.Minute, cancellationToken);
 
                 if (availabilityStatus == TrainerAvailabilityStatus.IsFired)
                 {
@@ -155,7 +158,7 @@ namespace SportsCenter.Application.Reservations.Commands.AddSingleReservationYou
             //za sprzet jednorazowo w ramach rezerwacji 10 zl (nie co godzine)
             decimal cost = 0;
 
-            var reservationDurationInHours = (request.EndTime - request.StartTime).TotalHours;
+            var reservationDurationInHours = (endTime - startTime).TotalHours;
 
             cost += (decimal)(reservationDurationInHours * 70);
 
@@ -179,8 +182,8 @@ namespace SportsCenter.Application.Reservations.Commands.AddSingleReservationYou
             {
                 KlientId = clientId,
                 KortId = request.CourtId,
-                DataOd = request.StartTime,
-                DataDo = request.EndTime,
+                DataOd = startTime,
+                DataDo = endTime,
                 DataStworzenia = DateOnly.FromDateTime(DateTime.UtcNow),
                 TrenerId = request.TrainerId,
                 CzyUwzglednicSprzet = request.IsEquipmentReserved,

@@ -8,6 +8,6 @@ namespace SportsCenter.Application.Activities.Queries.GetActivitySummary
 {
     public class ActivitySummaryDto
     {
-        public int TotalActivities { get; set; }
+        public List<ActivityGroupSummaryDto> SummariesByZajecia { get; set; } = new();
     }
 }

@@ -466,4 +466,20 @@ addActivityPage:{
     GENERIC_ERROR: 'An unexpected error occurred. Please try again later',
 },
 },
+activitiesSummaryPage: {
+  title: 'Activities Summary',
+  startDateLabel: 'Start Date',
+  endDateLabel: 'End Date',
+  searchLabel: 'Search',
+  clearLabel: 'Clear',
+  startDatePlaceholder: 'Select start date',
+  endDatePlaceholder: 'Select end date',
+  dateRequiredError: 'This field is required',
+  dateRangeError: 'Start date cannot be later than end date',
+  nameLabel: 'Activity Name',
+  completedLabel: 'Completed Activities',
+  cancelledLabel: 'Cancelled Activities',
+  totalRevenueLabel: 'Total Revenue',
+},
+
   };

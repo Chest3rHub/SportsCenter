@@ -5,6 +5,7 @@ export default async function getActivitySummary(token,startDate, endDate) {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json'
-        }
+        },
+    credentials: 'include',
     });
 }

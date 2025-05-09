@@ -324,6 +324,8 @@ export default {
       workingHoursMessage: 'On this day the club is open from {{open}} to {{close}}',
       invalidTimeStep: "Please select a full or half hour (e.g. 10:00 or 10:30)",
       confirmLabel: 'Confirm',
+      chooseStartTimeLabel: 'Choose start time',
+      chooseEndTimeLabel: 'Choose end time',
   },
   clientReservations: {
     title: 'My Reservations',

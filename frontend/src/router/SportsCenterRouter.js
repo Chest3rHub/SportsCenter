@@ -34,6 +34,7 @@ import ToDoPage from "../pages/ToDo";
 import SportActivities from "../pages/SportActivities";
 import GetActivityInfo from "../pages/GetActivityInfo";
 import AddSportActivity from "../pages/AddSportActivity";
+import ActivitiesSummary from "../pages/ActivitiesSummary";
 
 // pozmieniac dla klienta na komponenty trasy itd
 
@@ -175,7 +176,11 @@ const clientRouter = [
                 {
                     path: "/Add-activity",
                     element: <AddSportActivity />
-                },                     
+                },
+                {
+                    path: "/get-activity-summary",
+                    element: <ActivitiesSummary />
+                },                       
                 {
                     path: "*",
                     element: <NotFound />,

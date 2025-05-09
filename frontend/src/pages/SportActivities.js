@@ -55,6 +55,12 @@ export default function SportActivities() {
         });
     }
 
+    function handleShowActivitiesSummary() {
+        navigate(`/get-activity-summary`, {
+            //state: { id }
+        });
+    }
+
     const handleDeleteActivity = async () => {
         if (!selectedActivity) return;
       
@@ -140,7 +146,7 @@ export default function SportActivities() {
                         {dictionary.sportActivitiesPage.addActivityLabel}
                     </GreenButton>
                     <GreyButton
-                        //onClick={} //bedzie tu podsumowanie get-activity-summary
+                        onClick={() => handleShowActivitiesSummary()} 
                         style={{
                         minWidth: '7vw',
                         height: '2.8rem',

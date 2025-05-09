@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using SportsCenter.Application.Activities.Queries.GetActivitySummary;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,11 +20,37 @@ namespace SportsCenter.Infrastructure.DAL.Handlers.SportActivitiesHandlers
         }
         public async Task<ActivitySummaryDto> Handle(GetActivitySummary request, CancellationToken cancellationToken)
         {
+            var startDate = DateOnly.FromDateTime(request.StartDate);
+            var endDate = DateOnly.FromDateTime(request.EndDate);
 
-            int activityCount = await _dbContext.InstancjaZajecs
-                .CountAsync(r => r.Data >= DateOnly.FromDateTime(request.StartDate) && r.Data <= DateOnly.FromDateTime(request.EndDate), cancellationToken);
+            var summaryData = await (
+                from instancja in _dbContext.InstancjaZajecs
+                join grafik in _dbContext.GrafikZajecs on instancja.GrafikZajecId equals grafik.GrafikZajecId
+                join zajecia in _dbContext.Zajecia on grafik.ZajeciaId equals zajecia.ZajeciaId
+                where instancja.Data >= startDate && instancja.Data <= endDate
+                group instancja by new { zajecia.ZajeciaId, zajecia.Nazwa } into g
+                select new ActivityGroupSummaryDto
+                {
+                    ZajeciaNazwa = g.Key.Nazwa,
+                    CompletedActivities = g.Count(x => x.CzyOdwolane == false),
+                    CancelledActivities = g.Count(x => x.CzyOdwolane == true),
+                    TotalRevenue = (
+                        from klient in _dbContext.InstancjaZajecKlients
+                        join i in _dbContext.InstancjaZajecs on klient.InstancjaZajecId equals i.InstancjaZajecId
+                        join gr in _dbContext.GrafikZajecs on i.GrafikZajecId equals gr.GrafikZajecId
+                        where i.Data >= startDate && i.Data <= endDate
+                              && gr.ZajeciaId == g.Key.ZajeciaId
+                              && klient.CzyOplacone == true
+                              && klient.CzyZwroconoPieniadze == false
+                        select klient.CzyUwzglednicSprzet ? gr.KosztZeSprzetem : gr.KosztBezSprzetu
+                    ).Sum()
+                }
+            ).ToListAsync(cancellationToken);
 
-            return new ActivitySummaryDto { TotalActivities = activityCount };
+            return new ActivitySummaryDto
+            {
+                SummariesByZajecia = summaryData
+            };
         }
     }
 }

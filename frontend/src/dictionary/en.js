@@ -321,7 +321,11 @@ export default {
       participantsCountError: 'Number of participants must be between 1 and 8',
       isEquipmentReservedLabel: 'Do you want to reserve equipment',
       isEquipmentReservedError: 'Please choose whether to reserve equipment',
+      workingHoursMessage: 'On this day the club is open from {{open}} to {{close}}',
+      invalidTimeStep: "Please select a full or half hour (e.g. 10:00 or 10:30)",
       confirmLabel: 'Confirm',
+      chooseStartTimeLabel: 'Choose start time',
+      chooseEndTimeLabel: 'Choose end time',
   },
   clientReservations: {
     title: 'My Reservations',
@@ -453,6 +457,8 @@ addActivityPage:{
   costWithEquipmentError: 'Cost with equipment must be greater than 0',
   levelNameLabel: 'Level Name',
   levelNameError: 'Level name required',
+  noAvailableTrainers: 'No avaliable trainers',
+  workingHoursMessage: 'On this day the club is open from {{open}} to {{close}}',
   confirmLabel: 'Confirm',
   returnLabel: 'Back',
   errors: {
@@ -462,4 +468,20 @@ addActivityPage:{
     GENERIC_ERROR: 'An unexpected error occurred. Please try again later',
 },
 },
+activitiesSummaryPage: {
+  title: 'Activities Summary',
+  startDateLabel: 'Start Date',
+  endDateLabel: 'End Date',
+  searchLabel: 'Search',
+  clearLabel: 'Clear',
+  startDatePlaceholder: 'Select start date',
+  endDatePlaceholder: 'Select end date',
+  dateRequiredError: 'This field is required',
+  dateRangeError: 'Start date cannot be later than end date',
+  nameLabel: 'Activity Name',
+  completedLabel: 'Completed Activities',
+  cancelledLabel: 'Cancelled Activities',
+  totalRevenueLabel: 'Total Revenue',
+},
+
   };

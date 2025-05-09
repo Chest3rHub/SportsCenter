@@ -1,11 +1,12 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using SportsCenter.Application.Clients.Queries.GetClients;
 using SportsCenter.Application.Exceptions.SportsCenterExceptions;
 using SportsCenter.Application.SportsCenterManagement.Commands.SetSpecialSportsCenterWorkingHours;
+using SportsCenter.Application.SportsCenterManagement.Queries.GetAvailableCourts;
 using SportsCenter.Application.SportsCenterManagement.Queries.GetCourts;
 using SportsCenter.Application.SportsCenterManagement.Queries.GetSportsCenterWorkingHours;
+using SportsCenter.Application.SportsCenterManagement.Queries.GetSportsCenterWorkingHoursForWeek;
 using SportsCenter.Application.SportsClubManagement.Commands.AddSportsClubWorkingHours;
 
 namespace SportsCenter.Api.Controllers
@@ -64,9 +65,16 @@ namespace SportsCenter.Api.Controllers
         }
 
         [HttpGet("get-sports-club-working-hours")]
+        public async Task<IActionResult> GetWorkingHours([FromQuery] DateTime targetDate)
+        {
+            var workingHours = await Mediator.Send(new GetSportsCenterWorkingHours(targetDate));
+            return Ok(workingHours);
+        }
+
+        [HttpGet("get-sports-club-working-hours-for-week")]
         public async Task<IActionResult> GetWorkingHoursForWeek([FromQuery] int weekOffset)
         {
-            var workingHours = await Mediator.Send(new GetSportsCenterWorkingHours(weekOffset));
+            var workingHours = await Mediator.Send(new GetSportsCenterWorkingHoursForWeek(weekOffset));
             return Ok(workingHours);
         }
 
@@ -78,5 +86,11 @@ namespace SportsCenter.Api.Controllers
             return Ok(courts);
         }
 
+        [HttpGet("get-available-sports-club-courts")]
+        public async Task<IActionResult> GetAvailableCourts([FromQuery] DateTime startTime, [FromQuery] DateTime endTime)
+        {
+            var courts = await Mediator.Send(new GetAvailableCourts(startTime, endTime));
+            return Ok(courts);
+        }
     }
 }

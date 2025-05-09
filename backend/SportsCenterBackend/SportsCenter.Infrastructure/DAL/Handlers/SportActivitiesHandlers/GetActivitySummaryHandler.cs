@@ -20,6 +20,10 @@ namespace SportsCenter.Infrastructure.DAL.Handlers.SportActivitiesHandlers
         }
         public async Task<ActivitySummaryDto> Handle(GetActivitySummary request, CancellationToken cancellationToken)
         {
+
+            int pageSize = 5;
+            int numberPerPage = 6;
+
             var startDate = DateOnly.FromDateTime(request.StartDate);
             var endDate = DateOnly.FromDateTime(request.EndDate);
 
@@ -45,7 +49,9 @@ namespace SportsCenter.Infrastructure.DAL.Handlers.SportActivitiesHandlers
                         select klient.CzyUwzglednicSprzet ? gr.KosztZeSprzetem : gr.KosztBezSprzetu
                     ).Sum()
                 }
-            ).ToListAsync(cancellationToken);
+            ).Skip(request.Offset * pageSize)
+             .Take(numberPerPage)
+            .ToListAsync(cancellationToken);
 
             return new ActivitySummaryDto
             {

@@ -1,27 +1,47 @@
 import Header from "../components/Header";
 import { Box, Typography } from "@mui/material";
 import { SportsContext } from "../context/SportsContext";
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect, } from "react";
+import { useNavigate } from "react-router-dom";
 import GreenButton from "../components/buttons/GreenButton";
 import GreyButton from "../components/buttons/GreyButton";
 import getActivitySummary from "../api/getActivitySummary";
 import CustomInput from "../components/CustomInput";
 import SmallGreenHeader from "../components/SmallGreenHeader";
+import ChangePageButton from "../components/buttons/ChangePageButton";
 
 export default function SportActivities() {
-    const { dictionary, token } = useContext(SportsContext);
 
+    const { dictionary, token } = useContext(SportsContext);
+     const navigate = useNavigate();
+
+    const [activitiesSummary, setActivitiesSummary] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [offset, setOffset] = useState(0);
+
     const [startDate, setStartDate] = useState('');
     const [endDate, setEndDate] = useState('');
     const [dateError, setDateError] = useState({});
-    const [activitiesSummary, setActivitiesSummary] = useState([]);
+
+    //by pamietac filtr podczas przechodzenia na kolejne strony (paginacja)
+    const [isFilteringByDate, setIsFilteringByDate] = useState(false);
+    const [startDateValue, setstartDateValue] = useState(null);
+    const [endDateValue, setendDateValue] = useState(null);
+   
+    const [stateToTriggerUseEffectAfterDeleting, setStateToTriggerUseEffectAfterDeleting] = useState(false);
+
+    const maxActivitiesPerPage = 5;
+    const activitiesRequiredToEnablePagination = 6;
+
+    const limitedActivities = activitiesSummary.slice(0, maxActivitiesPerPage);
 
     function handleClearFilters() {
         setStartDate('');
         setEndDate('');
         setDateError({});
+        setOffset(0);
         setLoading(true);
+        setIsFilteringByDate(false);
         setActivitiesSummary([]);
     }
 
@@ -33,7 +53,7 @@ export default function SportActivities() {
             });
             return;
         }
-
+    
         if (new Date(startDate) > new Date(endDate)) {
             setDateError({
                 startDateError: dictionary.activitiesSummaryPage.dateRangeError,
@@ -41,22 +61,24 @@ export default function SportActivities() {
             });
             return;
         }
-
+    
         setDateError({});
-        setLoading(true);
-        fetchActivitiesSummary();
+        setIsFilteringByDate(true);
+        setOffset(0);
     }
+    
 
     const fetchActivitiesSummary = async () => {
         try {
-            const response = await getActivitySummary(token, startDate, endDate);
-
+            setLoading(true);
+            const response = await getActivitySummary(token, startDate, endDate, offset);
+    
             if (!response.ok) {
                 const errorText = await response.text();
                 console.error("API responded with error:", errorText);
                 throw new Error('Failed to fetch activities summary');
             }
-
+    
             const data = await response.json();
             setActivitiesSummary(data.summariesByZajecia || []);
         } catch (error) {
@@ -65,6 +87,27 @@ export default function SportActivities() {
             setLoading(false);
         }
     };
+    
+    
+    function handleNextPage() {
+        if (activitiesSummary.length < 4) {
+            return;
+        }
+        setOffset(prevOffset => prevOffset + 1);
+    };
+
+    function handlePreviousPage() {
+        if (offset === 0) {
+            return;
+        }
+        setOffset(prevOffset => prevOffset - 1);
+    };
+
+    useEffect(() => {
+        setLoading(true);
+        fetchActivitiesSummary();
+    }, [offset, isFilteringByDate, startDate, endDate]);
+    
 
     return (
         <Box
@@ -94,6 +137,7 @@ export default function SportActivities() {
                 }}
             >
                 <CustomInput
+                    InputLabelProps={{ shrink: true }}
                     label={dictionary.activitiesSummaryPage.startDateLabel}
                     type="date"
                     value={startDate}
@@ -104,6 +148,7 @@ export default function SportActivities() {
                     additionalStyles={{ marginLeft: '1vw', minWidth: '8vw', marginRight: '1.3rem' }}
                 />
                 <CustomInput
+                    InputLabelProps={{ shrink: true }}
                     label={dictionary.activitiesSummaryPage.endDateLabel}
                     type="date"
                     value={endDate}
@@ -167,9 +212,8 @@ export default function SportActivities() {
                     <SmallGreenHeader width={'20%'}>{dictionary.activitiesSummaryPage.totalRevenueLabel}</SmallGreenHeader>
                 </Box>
 
-                {activitiesSummary.map((summary) => (
+                {limitedActivities.map((summary) => (
                     <Box
-                        key={summary.zajeciaNazwa}
                         sx={{
                             marginTop: '1vh',
                             display: 'flex',
@@ -207,9 +251,34 @@ export default function SportActivities() {
                             <Typography>{summary.totalRevenue} zł</Typography>
                             </Box>
                         </Box>
-                    </Box>
-                ))}
+                    </Box>))}
             </Box>
+            <Box
+                    sx={{
+                        display: "flex",
+                        flexDirection: "row",
+                        justifyContent: 'center',
+                        columnGap: "4vw",
+                        marginTop: '5vh',
+                    }}
+                >
+                    <ChangePageButton
+                        disabled={offset === 0}
+                        onClick={handlePreviousPage}
+                        backgroundColor={"#F46C63"}
+                        minWidth={"10vw"}
+                    >
+                        {dictionary.clientsPage.previousLabel}
+                    </ChangePageButton>
+                    <ChangePageButton
+                        disabled={activitiesSummary.length < activitiesRequiredToEnablePagination}
+                        onClick={handleNextPage}
+                        backgroundColor={"#8edfb4"}
+                        minWidth={"10vw"}
+                    >
+                        {dictionary.clientsPage.nextLabel}
+                    </ChangePageButton>
+                </Box>
         </Box>
     );
 }

@@ -505,5 +505,25 @@ export default {
   logoutPage: {
     logoutTitle: 'Wylogowano z serwisu',
     logoutMessage: 'Zostałeś pomyślnie wylogowany. Do zobaczenia wkrótce!'
-},
+  },
+  activityDetailsPage: {
+    noDataAvailable: 'Brak danych o zajęciach.',
+    reservationLabel: 'Rezerwacja',
+    startTimeLabel: 'Godzina rozpoczęcia',
+    endTimeLabel: 'Godzina zakończenia',
+    dateLabel: 'Data',
+    groupLabel: 'Grupa',
+    skillLevelLabel: 'Poziom',
+    coachLabel: 'Trener',
+    courtLabel: 'Kort',
+    returnLabel: 'Wróć',
+    signUpLabel: 'Zapisz się',
+    participantsLabel: 'Uczestnicy',
+    successLabel: 'Sukces!',
+    savedSuccessLabel: 'Udało się zapisać uczestnictwo!',
+    clickAnywhereLabel: 'Kliknij w dowolne miejsce ekranu.',
+    failureLabel: 'Błąd!',
+    savedFailureLabel: 'Nie udało się zapisać uczestnictwa!',
+    clickAnywhereFailureLabel: 'Kliknij w dowolne miejsce ekranu.',
+  }
 };

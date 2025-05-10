@@ -74,7 +74,7 @@ export default function ActivityDetails() {
 
 
     if (!activityDetails) {
-        return <Typography variant="h6">Brak danych o zajęciach.</Typography>;
+        return <Typography variant="h6">{dictionary.activityDetailsPage.noDataAvailable}</Typography>;
     }
     return (
         <>
@@ -91,7 +91,7 @@ export default function ActivityDetails() {
                 }}
             >
                 <Box sx={{ maxWidth: '40vw', minWidth: '30vw' }}>
-                    <Header>{groupName ? groupName : 'Rezerwacja'}</Header>
+                    <Header>{groupName ? groupName : dictionary.activityDetailsPage.reservationLabel}</Header>
                 </Box>
                 <Box sx={{
                     height: '55vh',
@@ -107,7 +107,7 @@ export default function ActivityDetails() {
                 }}>
 
                     <CustomInput
-                        label={'Data'}
+                        label={dictionary.activityDetailsPage.dateLabel}
                         type="date"
                         id="date"
                         name="date"
@@ -127,7 +127,7 @@ export default function ActivityDetails() {
                         }}
                     />
                     <CustomInput
-                        label={'Godzina rozpoczęcia'}
+                        label={dictionary.activityDetailsPage.startTimeLabel}
                         type="startTime"
                         id="startTime"
                         name="startTime"
@@ -147,7 +147,7 @@ export default function ActivityDetails() {
                         }}
                     />
                     <CustomInput
-                        label={'Godzina zakończenia'}
+                        label={dictionary.activityDetailsPage.endTimeLabel}
                         type="endTime"
                         id="endTime"
                         name="endTime"
@@ -168,7 +168,7 @@ export default function ActivityDetails() {
                     />
 
                     <CustomInput
-                        label={'Group'}
+                        label={dictionary.activityDetailsPage.groupLabel}
                         type="text"
                         id="group"
                         name="group"
@@ -187,7 +187,7 @@ export default function ActivityDetails() {
                         }}
                     />
                     <CustomInput
-                        label={'Skill level'}
+                        label={dictionary.activityDetailsPage.skillLevelLabel}
                         type="text"
                         id="skillLevel"
                         name="skillLevel"
@@ -206,7 +206,7 @@ export default function ActivityDetails() {
                         }}
                     />
                     <CustomInput
-                        label={'Trainer name'}
+                        label={dictionary.activityDetailsPage.coachLabel}
                         type="text"
                         id="trainerName"
                         name="trainerName"
@@ -225,7 +225,7 @@ export default function ActivityDetails() {
                         }}
                     />
                     <CustomInput
-                        label={'Court'}
+                        label={dictionary.activityDetailsPage.courtLabel}
                         type="text"
                         id="court"
                         name="court"
@@ -249,8 +249,8 @@ export default function ActivityDetails() {
                         justifyContent: 'center',
                         columnGap: '5vw',
                     }}>
-                        <GreenButton onClick={handleCancel} style={{ maxWidth: "10vw", backgroundColor: "#F46C63" }} hoverBackgroundColor={'#c3564f'}>Wróć</GreenButton>
-                        {role === 'Klient' && <GreenButton type="submit" style={{ maxWidth: "10vw" }} onClick={() => signUpForActivityClient()}>Zapisz się</GreenButton>}
+                        <GreenButton onClick={handleCancel} style={{ maxWidth: "10vw", backgroundColor: "#F46C63" }} hoverBackgroundColor={'#c3564f'}>{dictionary.activityDetailsPage.returnLabel}</GreenButton>
+                        {role === 'Klient' && <GreenButton type="submit" style={{ maxWidth: "10vw" }} onClick={() => signUpForActivityClient()}>{dictionary.activityDetailsPage.signUpLabel}</GreenButton>}
                     </Box>
                 </Box>
 
@@ -264,13 +264,13 @@ export default function ActivityDetails() {
                     boxShadow: '0 10px 20px rgba(0, 0, 0, 0.2)',
                     backgroundColor: 'white',
                     padding: '1.35rem',
-
+                    minHeight:'10vh',
                     display: 'flex',
                     flexDirection: 'column',
 
                 }}>
                     <Typography sx={{ fontSize: '1.5rem', fontWeight: 'bold' }}>
-                        Uczestnicy:
+                        {dictionary.activityDetailsPage.participantsLabel}:
                     </Typography>
                     <List component="ol" sx={{ paddingLeft: '1.5rem', listStyleType: 'decimal' }}>
                         {participants.map((participant, index) => (
@@ -308,7 +308,7 @@ export default function ActivityDetails() {
                             marginTop: '2vh',
 
                         }}>
-                            {dictionary.editNewsPage.successLabel}
+                            {dictionary.activityDetailsPage.successLabel}
                         </Typography>
                     </Box>
                     <Box>
@@ -316,7 +316,7 @@ export default function ActivityDetails() {
                             color: 'black',
                             fontSize: '1.5rem',
                         }}>
-                            {dictionary.editNewsPage.savedSuccessLabel}
+                            {dictionary.activityDetailsPage.savedSuccessLabel}
                         </Typography>
                     </Box>
                     <Box>
@@ -324,7 +324,7 @@ export default function ActivityDetails() {
                             color: 'black',
                             fontSize: '1.5rem',
                         }}>
-                            {dictionary.editNewsPage.clickAnywhereLabel}
+                            {dictionary.activityDetailsPage.clickAnywhereLabel}
                         </Typography>
                     </Box>
                     <Box sx={{ textAlign: 'center', display: "flex", justifyContent: "center" }}>
@@ -356,7 +356,7 @@ export default function ActivityDetails() {
                             marginTop: '2vh',
 
                         }}>
-                            {dictionary.editNewsPage.failureLabel}
+                            {dictionary.activityDetailsPage.failureLabel}
                         </Typography>
                     </Box>
                     <Box>
@@ -364,7 +364,7 @@ export default function ActivityDetails() {
                             color: 'black',
                             fontSize: '1.5rem',
                         }}>
-                            {dictionary.editNewsPage.savedFailureLabel}
+                            {dictionary.activityDetailsPage.savedFailureLabel}
                         </Typography>
                     </Box>
                     <Box>
@@ -372,7 +372,7 @@ export default function ActivityDetails() {
                             color: 'black',
                             fontSize: '1.5rem',
                         }}>
-                            {dictionary.editNewsPage.clickAnywhereFailureLabel}
+                            {dictionary.activityDetailsPage.clickAnywhereFailureLabel}
                         </Typography>
                     </Box>
                     <Box sx={{ textAlign: 'center', display: "flex", justifyContent: "center" }}>

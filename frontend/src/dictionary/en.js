@@ -500,4 +500,24 @@ export default {
     logoutTitle: 'You have been logged out',
     logoutMessage: 'You have been successfully logged out. See you soon!'
 },
+  activityDetailsPage: {
+    noDataAvailable: 'No activity data available.',
+    reservationLabel: 'Reservation',
+    startTimeLabel: 'Start Time',
+    endTimeLabel: 'End Time',
+    dateLabel: 'Date',
+    groupLabel: 'Group',
+    skillLevelLabel: 'Skill Level',
+    coachLabel: 'Coach',
+    courtLabel: 'Court',
+    returnLabel: 'Back',
+    signUpLabel: 'Sign Up',
+    participantsLabel: 'Participants',
+    successLabel: 'Success!',
+    savedSuccessLabel: 'You have successfully signed up!',
+    clickAnywhereLabel: 'Click anywhere on the screen.',
+    failureLabel: 'Error!',
+    savedFailureLabel: 'Failed to sign up for the activity!',
+    clickAnywhereFailureLabel: 'Click anywhere on the screen.',
+  }
 };

@@ -12,7 +12,7 @@ export default function Sidebar({ menuItems }) {
         marginLeft: 0,
         paddingTop: '1rem',
         boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.2)',
-        position: 'absolute',
+        position: 'fixed',
         left: 0,
         display: 'flex',
         flexDirection: 'column',

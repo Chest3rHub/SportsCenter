@@ -39,11 +39,18 @@ export default function ToDoPage() {
     const fetchTasks = async () => {
         try {
             const response = await getYourTasks(offset);
-            if (!response.ok) throw new Error('Failed to fetch tasks');
+            if (!response.ok) {
+                if (response.status === 404) {
+                    setTasks([]);
+                    return;
+                }
+                throw new Error('Failed to fetch tasks');
+            }
             const data = await response.json();
             setTasks(data);
         } catch (error) {
             console.error('Error:', error);
+            setTasks([]);
         } finally {
             setLoading(false);
         }

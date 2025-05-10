@@ -19,7 +19,7 @@ public abstract class ScheduleInfoBaseDto
     [JsonProperty(Order = 5)]
     public TimeSpan EndTime { get; set; }
     [JsonProperty(Order = 6)]
-    public int CourtNumber { get; set; }
+    public string CourtName { get; set; }
     [JsonProperty(Order = 7)]
     public string TrainerName { get; set; }
     [JsonProperty(Order = 8)]

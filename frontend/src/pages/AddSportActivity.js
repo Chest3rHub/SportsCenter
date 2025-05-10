@@ -379,7 +379,7 @@ function AddSportActivity() {
                 label={dictionary.addActivityPage.durationInMinutesLabel}
                 type="number"
                 id="durationInMinutes"
-                name="durationInMinutes"
+                name="durationInMinutes" 
                 fullWidth
                 value={formData.durationInMinutes}
                 onChange={handleChange}
@@ -387,6 +387,7 @@ function AddSportActivity() {
                 helperText={durationInMinutesError ? dictionary.addActivityPage.durationInMinutesError : ""}
                 required
                 size="small"
+                inputProps={{ min: 1 }} 
             />
             <CustomInput
                 select
@@ -454,6 +455,7 @@ function AddSportActivity() {
                 helperText={participantsCountError ? dictionary.addActivityPage.participantLimitError : ""}
                 required
                 size="small"
+                inputProps={{ min: 1 }} 
             />
             <CustomInput
                 select
@@ -497,6 +499,7 @@ function AddSportActivity() {
                 helperText={costWithoutEquipmentError ? dictionary.addActivityPage.costWithoutEquipmentError : ""}
                 required
                 size="small"
+                inputProps={{ min: 1 }}
             />
             <CustomInput
                 label={dictionary.addActivityPage.costWithEquipmentLabel}
@@ -510,6 +513,7 @@ function AddSportActivity() {
                 helperText={costWithEquipmentError ? dictionary.addActivityPage.costWithEquipmentError : ""}
                 required
                 size="small"
+                inputProps={{ min: 1 }}
             />
             <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', gap: '1rem' }}>
                 <GreenButton

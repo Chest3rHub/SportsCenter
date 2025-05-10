@@ -458,6 +458,7 @@ addActivityPage:{
   levelNameLabel: 'Level Name',
   levelNameError: 'Level name required',
   noAvailableTrainers: 'No avaliable trainers',
+  noAvailableCourts: 'No avaliable courts',
   workingHoursMessage: 'On this day the club is open from {{open}} to {{close}}',
   confirmLabel: 'Confirm',
   returnLabel: 'Back',

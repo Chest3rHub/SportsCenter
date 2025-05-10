@@ -622,6 +622,7 @@ function AddReservationYourself() {
                             error={participantsCountError}
                             helperText={participantsCountError ? dictionary.addReservationYourselfPage.participantsCountError : ""}
                             size="small"
+                            inputProps={{ min: 1 }}
                             required
                         />
     

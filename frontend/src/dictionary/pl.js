@@ -463,6 +463,7 @@ export default {
     levelNameLabel: 'Poziom zajęć',
     levelNameError: 'Poziom zajęć wymagany',
     noAvailableTrainers: 'Brak dostępnych trenerów',
+    noAvailableCourts: 'Brak dostępnych kortów',
     workingHoursMessage: 'W tym dniu klub działa od {{open}} do {{close}}',
     confirmLabel: 'Potwierdź',
     returnLabel: 'Wróć',

@@ -1,10 +1,10 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import { Box, Typography, IconButton, Tooltip } from '@mui/material';
 import { ArrowBackIos, ArrowForwardIos } from '@mui/icons-material';
 import ArrowBackIosRoundedIcon from '@mui/icons-material/ArrowBackIosRounded';
 import ArrowForwardIosRoundedIcon from '@mui/icons-material/ArrowForwardIosRounded';
 import getSchedule from '../api/getSchedule';
-
+import { SportsContext } from '../context/SportsContext';
 
 // co 30 min od 10:00 do 22:00
 const HOURS = Array.from({ length: 24 }, (_, i) => 10 * 60 + i * 30); 
@@ -29,20 +29,7 @@ function addWeeks(date, weeks) {
     return addDays(date, weeks * 7);
 }
 
-function getDayOfTheWeekString(dayOfWeek) {
-    // to nazwa dnia tyg
-    // {date.toLocaleDateString('pl-PL', { weekday: 'long' })}
-    switch (dayOfWeek) {
-        case 0: return 'Nd';
-        case 1: return 'Pon';
-        case 2: return 'Wt';
-        case 3: return 'Śr';
-        case 4: return 'Czw';
-        case 5: return 'Pt';
-        case 6: return 'Sb';
-        default: return '';
-    }
-}
+
 function getActivityColor(activityName) {
     switch (activityName) {
         case 'Badminton': return '#F46C63';
@@ -53,6 +40,9 @@ function getActivityColor(activityName) {
 }
 
 export default function Timetable() {
+
+    const { dictionary } = useContext(SportsContext);
+
     const [currentWeekStart, setCurrentWeekStart] = useState(getStartOfWeek(new Date()));
     const [events, setEvents] = useState([]);
     //const [loading, setLoading] = useState(true);
@@ -67,6 +57,21 @@ export default function Timetable() {
     const handleNextWeek = () => {setCurrentWeekStart(addWeeks(currentWeekStart, 1));
         setOffset(prevOffset => prevOffset + 1);
     };
+
+    function getDayOfTheWeekString(dayOfWeek) {
+        // to nazwa dnia tyg
+        // {date.toLocaleDateString('pl-PL', { weekday: 'long' })}
+        switch (dayOfWeek) {
+            case 0: return dictionary.timetablePage.sundayShortLabel;
+            case 1: return dictionary.timetablePage.mondayShortLabel;
+            case 2: return dictionary.timetablePage.tuesdayShortLabel;
+            case 3: return dictionary.timetablePage.wednesdayShortLabel;
+            case 4: return dictionary.timetablePage.thursdayShortLabel;
+            case 5: return dictionary.timetablePage.fridayShortLabel;
+            case 6: return dictionary.timetablePage.saturdayShortLabel;
+            default: return '';
+        }
+    }
 
     const daysOfWeek = Array.from({ length: DAYS_IN_WEEK }, (_, i) => addDays(currentWeekStart, i));
 
@@ -149,7 +154,7 @@ export default function Timetable() {
 
                         }}
                     >
-                        Tydzień: {currentWeekStart.toLocaleDateString('pl-PL', { day: '2-digit', month: '2-digit' })} – {addDays(currentWeekStart, 6).toLocaleDateString('pl-PL', { day: '2-digit', month: '2-digit' })}
+                        {dictionary.timetablePage.weekLabel}: {currentWeekStart.toLocaleDateString('pl-PL', { day: '2-digit', month: '2-digit' })} – {addDays(currentWeekStart, 6).toLocaleDateString('pl-PL', { day: '2-digit', month: '2-digit' })}
                     </Box>
 
                 </Box>

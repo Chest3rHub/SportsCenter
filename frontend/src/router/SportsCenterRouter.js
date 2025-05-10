@@ -35,6 +35,7 @@ import SportActivities from "../pages/SportActivities";
 import GetActivityInfo from "../pages/GetActivityInfo";
 import AddSportActivity from "../pages/AddSportActivity";
 import ActivitiesSummary from "../pages/ActivitiesSummary";
+import Timetable from "../pages/Timetable";
 
 // pozmieniac dla klienta na komponenty trasy itd
 
@@ -86,7 +87,11 @@ const clientRouter = [
             {
                 path: '/my-reservations',
                 element: <ClientReservations />,
-            },                      
+            }, 
+            {
+                path: '/timetable',
+                element: <Timetable />,
+            },                       
             {
                 path: "*",
                 element: <NotFound />,
@@ -180,7 +185,11 @@ const clientRouter = [
                 {
                     path: "/get-activity-summary",
                     element: <ActivitiesSummary />
-                },                       
+                },
+                {
+                    path: '/timetable',
+                    element: <Timetable />,
+                },                        
                 {
                     path: "*",
                     element: <NotFound />,
@@ -228,6 +237,10 @@ const clientRouter = [
                     element: <MyAccount />,
                 },
                 {
+                    path: '/timetable',
+                    element: <Timetable />,
+                }, 
+                {
                     path: "*",
                     element: <NotFound />,
                 }
@@ -273,6 +286,10 @@ const clientRouter = [
                     path: '/account',
                     element: <MyAccount />,
                 },
+                {
+                    path: '/timetable',
+                    element: <Timetable />,
+                }, 
                 {
                     path: "*",
                     element: <NotFound />,
@@ -344,6 +361,10 @@ const clientRouter = [
                     element: <ToDoPage />
                 },     
                 {
+                    path: '/timetable',
+                    element: <Timetable />,
+                }, 
+                {
                     path: "*",
                     element: <NotFound />,
                 }
@@ -386,6 +407,10 @@ const clientRouter = [
                     path: "/logout",  
                     element: <Logout />,
                 },
+                {
+                    path: '/timetable',
+                    element: <Timetable />,
+                }, 
                 {
                     path: "*",
                     element: <NotFound />,

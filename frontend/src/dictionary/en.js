@@ -494,5 +494,10 @@ export default {
     fridayShortLabel: 'Fri',
     saturdayShortLabel: 'Sat',
     sundayShortLabel: 'Sun',
-  }
+  },
+
+  logoutPage: {
+    logoutTitle: 'You have been logged out',
+    logoutMessage: 'You have been successfully logged out. See you soon!'
+},
 };

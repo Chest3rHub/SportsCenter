@@ -502,4 +502,8 @@ export default {
     saturdayShortLabel: 'Sb',
     sundayShortLabel: 'Nd',
   },
+  logoutPage: {
+    logoutTitle: 'Wylogowano z serwisu',
+    logoutMessage: 'Zostałeś pomyślnie wylogowany. Do zobaczenia wkrótce!'
+},
 };

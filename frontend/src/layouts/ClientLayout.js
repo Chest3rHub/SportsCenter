@@ -17,7 +17,7 @@ export default function ClientLayout() {
     { label: dictionary.sidebar.clientSidebar.myTimetableLabel, navigate: '/my-timetable' },
     { label: dictionary.sidebar.clientSidebar.myReservationsLabel, navigate: '/my-reservations' },
     { label: dictionary.sidebar.clientSidebar.balanceLabel, navigate: '/wallet' },
-    { label: dictionary.sidebar.clientSidebar.shopLabel, navigate: '/shop' },
+    // { label: dictionary.sidebar.clientSidebar.shopLabel, navigate: '/shop' },
     { label: dictionary.sidebar.clientSidebar.accountLabel, navigate: '/account' },
   ];
 

@@ -36,6 +36,7 @@ import GetActivityInfo from "../pages/GetActivityInfo";
 import AddSportActivity from "../pages/AddSportActivity";
 import ActivitiesSummary from "../pages/ActivitiesSummary";
 import Timetable from "../pages/Timetable";
+import ActivityDetails from "../pages/ActivityDetails";
 
 // pozmieniac dla klienta na komponenty trasy itd
 
@@ -91,7 +92,15 @@ const clientRouter = [
             {
                 path: '/timetable',
                 element: <Timetable />,
-            },                       
+            },   
+            {
+                path: "/get-sport-activity-with-id",
+                element: <GetActivityInfo />
+            },
+            {
+                path: '/activity-details',
+                element: <ActivityDetails />,
+            },                      
             {
                 path: "*",
                 element: <NotFound />,
@@ -189,7 +198,11 @@ const clientRouter = [
                 {
                     path: '/timetable',
                     element: <Timetable />,
-                },                        
+                },   
+                {
+                    path: '/activity-details',
+                    element: <ActivityDetails />,
+                },                       
                 {
                     path: "*",
                     element: <NotFound />,
@@ -241,6 +254,14 @@ const clientRouter = [
                     element: <Timetable />,
                 }, 
                 {
+                    path: '/activity-details',
+                    element: <ActivityDetails />,
+                },  
+                {
+                    path: "/get-sport-activity-with-id",
+                    element: <GetActivityInfo />
+                },
+                {
                     path: "*",
                     element: <NotFound />,
                 }
@@ -290,6 +311,14 @@ const clientRouter = [
                     path: '/timetable',
                     element: <Timetable />,
                 }, 
+                {
+                    path: '/activity-details',
+                    element: <ActivityDetails />,
+                },  
+                {
+                    path: "/get-sport-activity-with-id",
+                    element: <GetActivityInfo />
+                },
                 {
                     path: "*",
                     element: <NotFound />,
@@ -365,6 +394,14 @@ const clientRouter = [
                     element: <Timetable />,
                 }, 
                 {
+                    path: '/activity-details',
+                    element: <ActivityDetails />,
+                },  
+                {
+                    path: "/get-sport-activity-with-id",
+                    element: <GetActivityInfo />
+                },
+                {
                     path: "*",
                     element: <NotFound />,
                 }
@@ -411,6 +448,14 @@ const clientRouter = [
                     path: '/timetable',
                     element: <Timetable />,
                 }, 
+                {
+                    path: '/activity-details',
+                    element: <ActivityDetails />,
+                },  
+                {
+                    path: "/get-sport-activity-with-id",
+                    element: <GetActivityInfo />
+                },
                 {
                     path: "*",
                     element: <NotFound />,

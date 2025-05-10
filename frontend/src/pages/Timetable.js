@@ -5,6 +5,7 @@ import ArrowBackIosRoundedIcon from '@mui/icons-material/ArrowBackIosRounded';
 import ArrowForwardIosRoundedIcon from '@mui/icons-material/ArrowForwardIosRounded';
 import getSchedule from '../api/getSchedule';
 import { SportsContext } from '../context/SportsContext';
+import { useNavigate } from 'react-router-dom';
 
 // co 30 min od 10:00 do 22:00
 const HOURS = Array.from({ length: 24 }, (_, i) => 10 * 60 + i * 30); 
@@ -41,10 +42,21 @@ function getActivityColor(activityName) {
 
 export default function Timetable() {
 
-    const { dictionary } = useContext(SportsContext);
+    const { dictionary, role } = useContext(SportsContext);
+    const navigate = useNavigate();
 
     const [currentWeekStart, setCurrentWeekStart] = useState(getStartOfWeek(new Date()));
     const [events, setEvents] = useState([]);
+
+    // to statyczne events do testow
+    // const events =[
+    //     {day:0, startTime:'14:00',end:'15:30',description:'Zajęcia', groupName:'Badminton'},
+    //     {day:0, startTime:'14:00',end:'16:30',description:'Zajęcia', groupName:'Squash'},
+    //     {day:0, startTime:'14:00',end:'15:30',description:'Zajęcia', groupName:'Tenis'},
+    //     {day:0, startTime:'14:00',end:'15:30',description:'Rezerwacja', groupName:'Inne'},
+    //     {day:0, startTime:'13:00',end:'14:30',description:'Zajęcia', groupName:'Badminton'},
+    //     {day:0, startTime:'14:00',end:'15:30',description:'Zajęcia', groupName:'Tenis'},
+    // ]
     //const [loading, setLoading] = useState(true);
 
     // to gdybym chcial offset ustawiac ten sam przy powrocie z zapisywania sie np na zajecia
@@ -70,6 +82,13 @@ export default function Timetable() {
             case 5: return dictionary.timetablePage.fridayShortLabel;
             case 6: return dictionary.timetablePage.saturdayShortLabel;
             default: return '';
+        }
+    }
+    function handleSingleEventClick(event){
+        if(event.description !=='Rezerwacja' || role==='Wlasciciel' || role==='Pracownik administracyjny'){
+            navigate('/activity-details', {
+                state: { activityDetails : event }  
+              });
         }
     }
 
@@ -200,14 +219,16 @@ export default function Timetable() {
                                 return (
                                     <Box
                                         key={dayIdx}
-                                        height={40}
+                                        height={43}
                                         borderTop="1px solid #eee"
                                         borderLeft="1px solid #ccc"
-                                        sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5, p: 0.5 }}
+                                        sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5, p: 0.5, }}
+                                        
                                     >
                                         {cellEvents.map((event, i) => (
-                                            <Tooltip key={i} title={`${event.groupName ? event.groupName + ': ' : ''} ${event.description}`}>
+                                            <Tooltip key={i} title={`${event.groupName ? event.groupName + ': ' : ''} ${event.description}`} >
                                                 <Box
+                                                
                                                     sx={{
 
                                                         color: 'white',
@@ -218,13 +239,16 @@ export default function Timetable() {
                                                         overflow: 'hidden',
                                                         textOverflow: 'ellipsis',
                                                         maxWidth: '100%',
-                                                        minWidth: '1.1rem',
-                                                        minHeight: '0.5rem',
+                                                        minWidth: '1.15rem',
+                                                        minHeight: '1.25rem',
                                                         maxHeight: '0.5rem',
                                                         backgroundColor: getActivityColor(event.groupName),
+                                                        '&:hover':{
+                                                            backgroundColor:'#B970F3'
+                                                        }
                                                     }}
+                                                    onClick={()=>handleSingleEventClick(event)}
                                                 >
-
                                                 </Box>
                                             </Tooltip>
                                         ))}

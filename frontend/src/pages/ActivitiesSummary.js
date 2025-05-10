@@ -201,15 +201,15 @@ export default function SportActivities() {
                         display: 'flex',
                         alignContent: 'start',
                         alignItems: 'center',
-                        width: '80%',
+                        width: '82%',
                         gap: '2%',
                         marginBottom: '3vh',
                     }}
                 >
-                    <SmallGreenHeader width={'20%'}>{dictionary.activitiesSummaryPage.nameLabel}</SmallGreenHeader>
-                    <SmallGreenHeader width={'20%'}>{dictionary.activitiesSummaryPage.completedLabel}</SmallGreenHeader>
-                    <SmallGreenHeader width={'20%'}>{dictionary.activitiesSummaryPage.cancelledLabel}</SmallGreenHeader>
-                    <SmallGreenHeader width={'20%'}>{dictionary.activitiesSummaryPage.totalRevenueLabel}</SmallGreenHeader>
+                    <SmallGreenHeader width={'40%'}>{dictionary.activitiesSummaryPage.nameLabel}</SmallGreenHeader>
+                    <SmallGreenHeader width={'22%'}>{dictionary.activitiesSummaryPage.completedLabel}</SmallGreenHeader>
+                    <SmallGreenHeader width={'22%'}>{dictionary.activitiesSummaryPage.cancelledLabel}</SmallGreenHeader>
+                    <SmallGreenHeader width={'22%'}>{dictionary.activitiesSummaryPage.totalRevenueLabel}</SmallGreenHeader>
                 </Box>
 
                 {limitedActivities.map((summary) => (
@@ -221,7 +221,7 @@ export default function SportActivities() {
                             alignItems: 'center',
                             width: '80%',
                             gap: '2%',
-                            padding: '0.6rem 0px',
+                            padding: '0.3rem 0px',
                         }}
                     >
                         <Box
@@ -235,13 +235,13 @@ export default function SportActivities() {
                                 alignItems: 'center',
                                 paddingTop: '0.6rem',
                                 paddingBottom: '0.4rem',
-                                maxWidth: '41.5vw'
+                                maxWidth: '60vw'
                             }}
                         >
-                            <Box sx={{ width: '20%', textAlign: 'center' }}>
+                            <Box sx={{ width: '40%', textAlign: 'center' }}>
                                 <Typography>{summary.zajeciaNazwa}</Typography>
                             </Box>
-                            <Box sx={{ width: '20%', textAlign: 'center' }}>
+                            <Box sx={{ width: '18%', textAlign: 'center' }}>
                                 <Typography>{summary.completedActivities}</Typography>
                             </Box>
                             <Box sx={{ width: '20%', textAlign: 'center'}}>

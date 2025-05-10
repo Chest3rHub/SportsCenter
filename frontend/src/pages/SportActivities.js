@@ -163,7 +163,7 @@ export default function SportActivities() {
                 </Box>
                 <Box
                     sx={{
-                        height: '60vh',
+                        height: '67vh',
                         borderRadius: '20px',
                         boxShadow: '0 10px 20px rgba(0, 0, 0, 0.2)',
                         backgroundColor: 'white',
@@ -175,30 +175,30 @@ export default function SportActivities() {
                             display: 'flex',
                             alignContent: 'start',
                             alignItems: 'center',
-                            width: '62%',
-                            gap: '2%',
+                            width: '77%',
+                            gap: '1%',
                             marginBottom: '3vh',
                         }}
                     >
-                        <SmallGreenHeader width={'16.6%'}>{dictionary.sportActivitiesPage.sportActivityId}</SmallGreenHeader>
-                        <SmallGreenHeader width={'16.6%'}>{dictionary.sportActivitiesPage.sportActivityName}</SmallGreenHeader>
-                        <SmallGreenHeader width={'16.6%'}>{dictionary.sportActivitiesPage.sportActivityLevelName}</SmallGreenHeader>                        <SmallGreenHeader width={'16.6%'}>{dictionary.sportActivitiesPage.dayOfWeek}</SmallGreenHeader>
-                        <SmallGreenHeader width={'16.6%'}>{dictionary.sportActivitiesPage.startHour}</SmallGreenHeader>
-                        <SmallGreenHeader width={'16.6%'}>{dictionary.sportActivitiesPage.courtName}</SmallGreenHeader>
+                        <SmallGreenHeader width={'22%'}>{dictionary.sportActivitiesPage.sportActivityId}</SmallGreenHeader>
+                        <SmallGreenHeader width={'22%'}>{dictionary.sportActivitiesPage.sportActivityName}</SmallGreenHeader>
+                        <SmallGreenHeader width={'24%'}>{dictionary.sportActivitiesPage.sportActivityLevelName}</SmallGreenHeader>                        <SmallGreenHeader width={'16.6%'}>{dictionary.sportActivitiesPage.dayOfWeek}</SmallGreenHeader>
+                        <SmallGreenHeader width={'22%'}>{dictionary.sportActivitiesPage.startHour}</SmallGreenHeader>
+                        <SmallGreenHeader width={'22%'}>{dictionary.sportActivitiesPage.courtName}</SmallGreenHeader>
                         </Box>
-                        {limitedActivities.map((activity) => (<Box key={activity.sportActivityId}
+                        {limitedActivities.map((activity) => (<Box
                             sx={{
                                 marginTop: '1vh',
                                 display: 'flex',
                                 alignContent: 'start',
                                 alignItems: 'center',
                                 width: '100%',
-                                padding: '0.6rem 0px',
+                                padding: '0.3rem 0px',
                             }}
                         >
                         <Box
                             sx={{
-                                width: '80%',
+                                width: '100%',
                                 borderRadius: '70px',
                                 backgroundColor: 'white',
                                 boxShadow: '0 5px 5px rgb(0, 0, 0, 0.6)',
@@ -206,12 +206,13 @@ export default function SportActivities() {
                                 justifyContent: 'space-between',
                                 alignItems: 'center',
                                 paddingTop: '0.6rem',
-                                paddingBottom: '0.4rem',                          
+                                paddingBottom: '0.4rem',
+                                gap: '2%',                         
                             }}
                         >
                             <Box
                                 sx={{
-                                    width: '16.6%',
+                                    width: '20%',
                                     textAlign: 'center',
                                 }}
                             >
@@ -221,7 +222,7 @@ export default function SportActivities() {
                             </Box>
                             <Box
                                 sx={{
-                                    width: '16.6%',
+                                    width: '20%',
                                     textAlign: 'center',
                                 }}
                             >
@@ -231,7 +232,7 @@ export default function SportActivities() {
                             </Box>
                             <Box
                                 sx={{
-                                    width: '16.6%',
+                                    width: '23%',
                                     textAlign: 'center',
                                 }}
                             >
@@ -241,7 +242,7 @@ export default function SportActivities() {
                             </Box>
                             <Box
                                 sx={{
-                                    width: '16.6%',
+                                    width: '20%',
                                     textAlign: 'center',
                                 }}
                             >
@@ -251,7 +252,7 @@ export default function SportActivities() {
                             </Box>
                             <Box
                                 sx={{
-                                    width: '16.6%',
+                                    width: '20%',
                                     textAlign: 'center',
                                 }}
                             >
@@ -261,7 +262,7 @@ export default function SportActivities() {
                             </Box>
                             <Box
                                 sx={{
-                                    width: '16.6%',
+                                    width: '20%',
                                     textAlign: 'center',
                                 }}
                             >
@@ -270,10 +271,10 @@ export default function SportActivities() {
                                 </Typography>
                             </Box>
                             </Box>
-                            <ActivitiesButton backgroundColor={"#f0aa4f"} onClick={() => handleShowMoreInfo(activity.sportActivityId)} minWidth={'11vw'}>
+                            <ActivitiesButton backgroundColor={"#f0aa4f"} onClick={() => handleShowMoreInfo(activity.sportActivityId)} minWidth={'6vw'}>
                                 {dictionary.sportActivitiesPage.moreInfoLabel}
                             </ActivitiesButton>
-                            <ActivitiesButton backgroundColor={"#F46C63"}onClick={() => handleOpenModal(activity)} minWidth={'11vw'}>
+                            <ActivitiesButton backgroundColor={"#F46C63"}onClick={() => handleOpenModal(activity)} minWidth={'6vw'}>
                                 {dictionary.sportActivitiesPage.deleteActivityLabel}
                             </ActivitiesButton>                    
                         </Box>))}

@@ -1,6 +1,6 @@
 import API_URL from "../appConfig";
 
-export default async function getCourtReservations(courtId, date) {
+export default async function getCourtEvents(courtId, date) {
     try {
         if (!(date instanceof Date) || isNaN(date)) {
             throw new Error('Invalid date');
@@ -10,7 +10,7 @@ export default async function getCourtReservations(courtId, date) {
         const month = String(date.getMonth() + 1).padStart(2, '0');
         const day = String(date.getDate()).padStart(2, '0');
         const formattedDate = `${year}-${month}-${day}`;
-        const response = await fetch(`${API_URL}/Reservation/get-court-reservations?courtId=${courtId}&date=${formattedDate}`, {
+        const response = await fetch(`${API_URL}/Reservation/get-court-events?courtId=${courtId}&date=${formattedDate}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'

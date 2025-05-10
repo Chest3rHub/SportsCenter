@@ -33,7 +33,7 @@ import {
   addMinutes,
 } from 'date-fns';
 import getClubWorkingHours from '../api/getClubWorkingHours';
-import getCourtReservations from '../api/getCourtReservations';
+import getCourtEvents from '../api/getCourtEvents';
 import { pl } from 'date-fns/locale';
 
 function AddReservationYourself() {
@@ -162,7 +162,7 @@ function AddReservationYourself() {
 
     const fetchReservations = async (courtId, date) => {
         try {
-            const response = await getCourtReservations(courtId, date);
+            const response = await getCourtEvents(courtId, date);
             if (response.ok) {
                 const data = await response.json();
                 setExistingReservations(data);

@@ -291,7 +291,7 @@ export default function ClientDashboard() {
                   {balance.toFixed(2)} zł
                 </Typography>
                 <Box sx={{ width: '50%', margin: '0 auto 32px' }}>
-                  <GreenButton 
+                  {/* <GreenButton 
                     fullWidth
                     onClick={handleAddBalance}
                     sx={{ 
@@ -300,7 +300,7 @@ export default function ClientDashboard() {
                     }}
                   >
                     {dictionary.mainPage.addBalanceLabel}
-                  </GreenButton>
+                  </GreenButton> */}
                 </Box>
               </>
             )}

@@ -82,7 +82,7 @@ internal class GetScheduleInfoHandler : IRequestHandler<GetScheduleInfo, List<Sc
                     Date = reservation.DataOd,
                     StartTime = reservation.DataOd.TimeOfDay,
                     EndTime = reservation.DataDo.TimeOfDay,
-                    CourtNumber = reservation.KortId,
+                    CourtName = reservation.Kort.Nazwa,
                     TrainerName = reservation.Trener?.PracownikNavigation != null
                         ? $"{reservation.Trener.PracownikNavigation.Imie} {reservation.Trener.PracownikNavigation.Nazwisko}"
                         : "Brak trenera",
@@ -101,7 +101,7 @@ internal class GetScheduleInfoHandler : IRequestHandler<GetScheduleInfo, List<Sc
                     Date = reservation.DataOd,
                     StartTime = reservation.DataOd.TimeOfDay,
                     EndTime = reservation.DataDo.TimeOfDay,
-                    CourtNumber = reservation.KortId,
+                    CourtName = reservation.Kort.Nazwa,
                     TrainerName = reservation.Trener?.PracownikNavigation != null
                         ? $"{reservation.Trener.PracownikNavigation.Imie} {reservation.Trener.PracownikNavigation.Nazwisko}"
                         : "Brak trenera",
@@ -118,7 +118,7 @@ internal class GetScheduleInfoHandler : IRequestHandler<GetScheduleInfo, List<Sc
                     Date = reservation.DataOd,
                     StartTime = reservation.DataOd.TimeOfDay,
                     EndTime = reservation.DataDo.TimeOfDay,
-                    CourtNumber = reservation.KortId,
+                    CourtName = reservation.Kort.Nazwa,
                 };
             }
 
@@ -160,7 +160,7 @@ internal class GetScheduleInfoHandler : IRequestHandler<GetScheduleInfo, List<Sc
                     Date = startDate,
                     StartTime = startTime.TimeOfDay,
                     EndTime = endTime.TimeOfDay,
-                    CourtNumber = scheduledClass.KortId,
+                    CourtName = scheduledClass.Kort.Nazwa,
                     TrainerName = scheduledClass.Pracownik?.PracownikNavigation != null
                             ? $"{scheduledClass.Pracownik.PracownikNavigation.Imie} {scheduledClass.Pracownik.PracownikNavigation.Nazwisko}"
                             : "Brak trenera",
@@ -198,7 +198,7 @@ internal class GetScheduleInfoHandler : IRequestHandler<GetScheduleInfo, List<Sc
                     Date = startDate,
                     StartTime = startTime.TimeOfDay,
                     EndTime = endTime.TimeOfDay,
-                    CourtNumber = scheduledClass.KortId,
+                    CourtName = scheduledClass.Kort.Nazwa,
                     TrainerName = scheduledClass.Pracownik?.PracownikNavigation != null
                             ? $"{scheduledClass.Pracownik.PracownikNavigation.Imie} {scheduledClass.Pracownik.PracownikNavigation.Nazwisko}"
                             : "Brak trenera",
@@ -232,7 +232,7 @@ internal class GetScheduleInfoHandler : IRequestHandler<GetScheduleInfo, List<Sc
                     Date = startDate,
                     StartTime = startTime.TimeOfDay,
                     EndTime = endTime.TimeOfDay,
-                    CourtNumber = scheduledClass.KortId,
+                    CourtName = scheduledClass.Kort.Nazwa,
                     TrainerName = scheduledClass.Pracownik?.PracownikNavigation != null
                         ? $"{scheduledClass.Pracownik.PracownikNavigation.Imie} {scheduledClass.Pracownik.PracownikNavigation.Nazwisko}"
                         : "Brak trenera",

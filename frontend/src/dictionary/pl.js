@@ -1,6 +1,7 @@
 import { duration } from "@mui/material";
 import SportActivities from "../pages/SportActivities";
 import getActivityInfo from "../api/getActivityInfo";
+import ChangeClientDeposit from "../pages/ChangeClientDeposit";
 
 export default {
     navbar: {

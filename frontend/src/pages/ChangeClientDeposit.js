@@ -5,14 +5,14 @@ import GreenButton from '../components/buttons/GreenButton';
 import GreenBackground from '../components/GreenBackground';
 import OrangeBackground from '../components/OrangeBackground';
 import { SportsContext } from '../context/SportsContext';
-import addDepositToClient from '../api/addDepositToClient';
+import updateClientDeposit from '../api/updateClientDeposit';
 import CustomInput from '../components/CustomInput';
 import { Box, Typography, Avatar } from '@mui/material';
 import Backdrop from '@mui/material/Backdrop';
 import SentimentSatisfiedIcon from '@mui/icons-material/SentimentSatisfied';
 import SentimentDissatisfiedIcon from '@mui/icons-material/SentimentDissatisfied';
 
-function AddDepositToClient() {
+function ChangeClientDeposit() {
     const navigate = useNavigate();
     const { dictionary, toggleLanguage, token } = useContext(SportsContext);
 
@@ -77,7 +77,7 @@ function AddDepositToClient() {
     if (!validateForm()) return;
 
     try {
-      const response = await addDepositToClient(formData, token);
+      const response = await updateClientDeposit(formData, token);
       if (!response.ok) {
         const errorData = await response.json();
         console.error('Błąd odpowiedzi z API:', errorData);
@@ -101,12 +101,12 @@ function AddDepositToClient() {
 
   return (
     <GreenBackground height="55vh" marginTop="2vh">
-      <Header>{dictionary.addDepositToClientPage.depositLabel}</Header>
+      <Header>{dictionary.updateClientDepositPage.depositLabel}</Header>
       <OrangeBackground width="70%">
         <form onSubmit={handleSubmit}>
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem', marginBottom: '2vh' }}>
             <CustomInput
-              label={dictionary.addDepositToClientPage.clientEmailLabel}
+              label={dictionary.updateClientDepositPage.clientEmailLabel}
               type="email"
               id="email"
               name="email"
@@ -116,7 +116,7 @@ function AddDepositToClient() {
               size="small"
             />
             <CustomInput
-              label={dictionary.addDepositToClientPage.depositValueLabel}
+              label={dictionary.updateClientDepositPage.depositValueLabel}
               type="number"
               id="deposit"
               name="deposit"
@@ -124,7 +124,7 @@ function AddDepositToClient() {
               value={formData.deposit}
               onChange={handleChange}
               error={depositError}
-              helperText={depositError ? dictionary.addDepositToClientPage.depositError : ''}
+              helperText={depositError ? dictionary.updateClientDepositPage.depositError : ''}
               required
               size="small"
               inputProps={{ min: 1 }}
@@ -134,8 +134,8 @@ function AddDepositToClient() {
                 justifyContent: 'center', 
                 columnGap: '4vw' 
             }}>
-              <GreenButton onClick={handleCancel} style={{ maxWidth: '10vw', backgroundColor: '#F46C63' }} hoverBackgroundColor="#c3564f">{dictionary.addDepositToClientPage.returnLabel}</GreenButton>
-              <GreenButton type="submit" style={{ maxWidth: '10vw' }}>{dictionary.addDepositToClientPage.saveLabel}</GreenButton>
+              <GreenButton onClick={handleCancel} style={{ maxWidth: '10vw', backgroundColor: '#F46C63' }} hoverBackgroundColor="#c3564f">{dictionary.updateClientDepositPage.returnLabel}</GreenButton>
+              <GreenButton type="submit" style={{ maxWidth: '10vw' }}>{dictionary.updateClientDepositPage.saveLabel}</GreenButton>
             </Box>
           </Box>
           <Backdrop 
@@ -158,7 +158,7 @@ function AddDepositToClient() {
                         fontSize: '3rem', 
                         mt: '2vh' 
                     }}>
-                        {dictionary.addDepositToClientPage.successLabel}
+                        {dictionary.updateClientDepositPage.successLabel}
                     </Typography>
               </Box>
               <Box>
@@ -166,7 +166,7 @@ function AddDepositToClient() {
                     color: 'black', 
                     fontSize: '1.5rem' 
                     }}>
-                        {dictionary.addDepositToClientPage.savedSuccessLabel}
+                        {dictionary.updateClientDepositPage.savedSuccessLabel}
                 </Typography>
               </Box>
               <Box>
@@ -174,7 +174,7 @@ function AddDepositToClient() {
                     color: 'black', 
                     fontSize: '1.5rem' 
                     }}>
-                        {dictionary.addDepositToClientPage.clickAnywhereLabel}
+                        {dictionary.updateClientDepositPage.clickAnywhereLabel}
                 </Typography>
               </Box>
               <Box sx={{textAlign: 'center', display: 'flex', justifyContent: 'center'  }}>
@@ -204,7 +204,7 @@ function AddDepositToClient() {
                     fontSize: '3rem', 
                     mt: '2vh' 
                     }}>
-                        {dictionary.addDepositToClientPage.failureLabel}
+                        {dictionary.updateClientDepositPage.failureLabel}
                 </Typography>
               </Box>
               <Box>
@@ -212,7 +212,7 @@ function AddDepositToClient() {
                     color: 'black', 
                     fontSize: '1.5rem' 
                     }}>
-                        {dictionary.addDepositToClientPage.savedFailureLabel}
+                        {dictionary.updateClientDepositPage.savedFailureLabel}
                 </Typography>
               </Box>
               <Box>
@@ -220,7 +220,7 @@ function AddDepositToClient() {
                     color: 'black', 
                     fontSize: '1.5rem' 
                     }}>
-                        {dictionary.addDepositToClientPage.clickAnywhereFailureLabel}
+                        {dictionary.updateClientDepositPage.clickAnywhereFailureLabel}
                 </Typography>
               </Box>
               <Box sx={{  textAlign: 'center', display: 'flex', justifyContent: 'center' }}>
@@ -236,4 +236,4 @@ function AddDepositToClient() {
   );
 
 }
-export default AddDepositToClient;
+export default ChangeClientDeposit;

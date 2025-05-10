@@ -26,7 +26,7 @@ import EmployeeDashboard from "../pages/EmployeeDashboard";
 import Clients from "../pages/Clients"
 import AddClientDiscount from "../pages/AddClientDiscount"
 import AddDepositToClient from "../pages/AddDepositToClient";
-import updateClientDeposit from "../pages/UpdateClientDeposit";
+import ChangeClientDeposit from "../pages/ChangeClientDeposit";
 import AddReservationYourself from "../pages/AddReservationYourself";
 import ClientReservations from "../pages/ClientReservations";
 import MoveReservation from "../pages/MoveReservation";
@@ -159,7 +159,7 @@ const clientRouter = [
                 },  
                 {
                     path: "/update-client-deposit",
-                    element: <updateClientDeposit />
+                    element: <ChangeClientDeposit />
                 },
                 {
                     path: "/todo",

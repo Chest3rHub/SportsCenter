@@ -148,6 +148,7 @@ function AddClientDiscount() {
                   helperText={activityDiscountError ? dictionary.addClientDiscountPage.activityDiscountError : ''}
                   required
                   size="small"
+                  inputProps={{ min: 1 }}
                 />
                 <CustomInput
                   label={dictionary.addClientDiscountPage.productDiscountLabel}
@@ -161,6 +162,7 @@ function AddClientDiscount() {
                   helperText={productDiscountError ? dictionary.addClientDiscountPage.productDiscountError : ''}
                   required
                   size="small"
+                  inputProps={{ min: 1 }}
                 />
                 <Box sx={{ 
                   display: 'flex', 

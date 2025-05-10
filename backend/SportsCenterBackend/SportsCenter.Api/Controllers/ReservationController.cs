@@ -18,7 +18,7 @@ using SportsCenter.Application.Reservations.Commands.PayForReservation;
 using SportsCenter.Application.Reservations.Commands.PayForClientReservation;
 using SportsCenter.Application.Reservations.Commands.CancelReservation;
 using SportsCenter.Application.Reservations.Commands.CancelClientReservation;
-using SportsCenter.Application.Reservations.Queries.GetCourtReservations;
+using SportsCenter.Application.Reservations.Queries.getCourtEvents;
 
 namespace SportsCenter.Api.Controllers;
 
@@ -424,9 +424,9 @@ public class ReservationController : BaseController
             return StatusCode(500, new { message = "An error occurred while sending the request", details = ex.Message });
         }
     }
-    [HttpGet("get-court-reservations")]
-    public async Task<IActionResult> GetCourtReservations([FromQuery] int courtId, [FromQuery] DateTime date)
+    [HttpGet("get-court-events")]
+    public async Task<IActionResult> getCourtEvents([FromQuery] int courtId, [FromQuery] DateTime date)
     {
-        return Ok(await Mediator.Send(new GetCourtReservations(courtId, date)));
+        return Ok(await Mediator.Send(new getCourtEvents(courtId, date)));
     }
 }

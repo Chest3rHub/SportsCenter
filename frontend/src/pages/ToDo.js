@@ -177,17 +177,26 @@ export default function ToDoPage() {
     };
 
     const handleDeleteTask = async (taskIndex) => {
-        try {
-            const taskToDelete = tasks[taskIndex];
-            if (!taskToDelete) throw new Error('Task not found');
-            const response = await deleteTask(taskToDelete.taskId);
-            if (!response.ok) throw new Error('Failed to delete task');
-            setOffset(0);
+    try {
+        const taskToDelete = tasks[taskIndex];
+        if (!taskToDelete) throw new Error('Task not found');
+        const response = await deleteTask(taskToDelete.taskId);
+        if (!response.ok) throw new Error('Failed to delete task');
+        
+        const isLastTaskOnPage = tasks.length === 1;
+        if (isLastTaskOnPage) {
+            if (offset > 0) {
+                setOffset(prev => prev - 1);
+            } else {
+                await fetchTasks();
+            }
+        } else {
             await fetchTasks();
-        } catch (error) {
-            console.error('Error deleting task:', error);
         }
-    };
+    } catch (error) {
+        console.error('Error deleting task:', error);
+    }
+};
 
     const handleNextPage = () => {
         setOffset(prev => prev + 1);

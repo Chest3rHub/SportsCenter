@@ -154,9 +154,10 @@ function AddReservationYourself() {
     };
 
     const fetchWorkingHoursForDate = async (date) => {
-        const today = startOfWeek(new Date(), { weekStartsOn: 1 });
-        const selected = startOfWeek(date, { weekStartsOn: 1 });
-        const weekOffset = differenceInWeeks(selected, today);
+        const today = new Date();
+        const selected = new Date(date);
+        const diff = Math.floor((selected - today) / (1000 * 60 * 60 * 24));
+        const weekOffset = Math.floor(diff / 7);
         await fetchWorkingHours(weekOffset);
     };
 

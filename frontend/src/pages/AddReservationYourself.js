@@ -31,6 +31,7 @@ import {
   setHours,
   setMinutes,
   addMinutes,
+  addDays
 } from 'date-fns';
 import getClubWorkingHours from '../api/getClubWorkingHours';
 import getCourtEvents from '../api/getCourtEvents';
@@ -156,8 +157,22 @@ function AddReservationYourself() {
     const fetchWorkingHoursForDate = async (date) => {
         const today = new Date();
         const selected = new Date(date);
-        const diff = Math.floor((selected - today) / (1000 * 60 * 60 * 24));
-        const weekOffset = Math.floor(diff / 7);
+        const todayCorrect = startOfDay(today);
+        const selectedCorrect = startOfDay(selected);
+        const todayDayOfWeek = todayCorrect.getDay();
+        const selectedDayOfWeek = selectedCorrect.getDay();
+        let weekOffset;
+        if (todayDayOfWeek === 0) {
+            const todayAdjusted = addDays(todayCorrect, 1);
+            const startOfCurrentWeek = startOfWeek(todayAdjusted, { weekStartsOn: 1 });
+            const startOfSelectedWeek = startOfWeek(selectedCorrect, { weekStartsOn: 1 });
+            weekOffset = differenceInWeeks(startOfSelectedWeek, startOfCurrentWeek);
+        } else {
+            const startOfCurrentWeek = startOfWeek(todayCorrect, { weekStartsOn: 1 });
+            const startOfSelectedWeek = startOfWeek(selectedCorrect, { weekStartsOn: 1 });
+            weekOffset = differenceInWeeks(startOfSelectedWeek, startOfCurrentWeek);
+        }
+         
         await fetchWorkingHours(weekOffset);
     };
 

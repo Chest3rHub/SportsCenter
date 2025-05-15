@@ -26,6 +26,7 @@ using SportsCenter.Application.Employees.Queries.GetYourAbsenceRequests;
 using SportsCenter.Application.Employees.Queries.GetTrainerSchedule;
 using SportsCenter.Application.Employees.Queries.GetTrainers;
 using SportsCenter.Application.Employees.Queries.GetAvailableTrainers;
+using SportsCenter.Application.Employees.Queries.GetEmployeeTasksByOwner;
 
 
 namespace SportsCenter.Api.Controllers
@@ -392,6 +393,26 @@ namespace SportsCenter.Api.Controllers
         public async Task<IActionResult> GetYourSchedule([FromQuery] int offset = 0)
         {
             return Ok(await Mediator.Send(new GetTrainerSchedule(offset)));
+        }
+
+        [Authorize(Roles = "Wlasciciel")]
+        [HttpGet("get-employee-tasks-by-owner")]
+        public async Task<IActionResult> GetEmployeeTasksByOwner([FromQuery] int employeeId)
+        {
+            try
+            {
+                var tasks = await Mediator.Send(new GetEmployeeTasksByOwner(employeeId));
+
+                if (tasks == null || !tasks.Any())
+                {
+                    return NotFound("No tasks found assigned by owner for the given emp");
+                }
+                return Ok(tasks);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "An error occurred while sending the request", details = ex.Message });
+            }
         }
     }
 }

@@ -479,7 +479,9 @@ reservationsSummaryPage: {
     addEmployeeTaskLabel: "Add task for employee",
     selectEmployeeLabel: "Choose an employee",
     selectEmployeeError: "Error while chosing an employee",
-    invalidDateError: "Selected date is invalid"
+    invalidDateError: "Selected date is invalid",
+    employeeTasksLabel: "Tasks assigned to employees"
+    
   },
   sportActivitiesPage: {
     sportActivitiesLabel: 'Sport Activities',

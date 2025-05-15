@@ -484,7 +484,8 @@ export default {
     addEmployeeTaskLabel: "Dodaj zadanie pracownikowi",
     selectEmployeeLabel: "Wybierz pracownika",
     selectEmployeeError: "Wystąpił błąd podczas wyboru pracownika",
-    invalidDateError: "Wybrana data jest nieprawidłowa"
+    invalidDateError: "Wybrana data jest nieprawidłowa",
+    employeeTasksLabel: "Zadania przypisane pracownikom"
   },
   sportActivitiesPage: {
     sportActivitiesLabel: 'Zajęcia sportowe',

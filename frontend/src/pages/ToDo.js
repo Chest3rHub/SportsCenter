@@ -13,6 +13,7 @@ import editTask from "../api/editTask";
 import deleteTask from "../api/deleteTask";
 import getEmployees from "../api/getEmployees";
 import addTask from "../api/addTask";
+import getEmployeeTasksByOwner from "../api/getEmployeeTasksByOwner";
 
 export default function ToDoPage() {
     const { dictionary, role } = useContext(SportsContext);
@@ -25,6 +26,9 @@ export default function ToDoPage() {
     const [editMode, setEditMode] = useState(false);
     const [employees, setEmployees] = useState([]);
     const [selectedEmployee, setSelectedEmployee] = useState('');
+    const [employeeTasks, setEmployeeTasks] = useState([]);
+    const [loadingEmployeeTasks, setLoadingEmployeeTasks] = useState(false);
+    const [openEmployeeTasksModal, setOpenEmployeeTasksModal] = useState(false);
     const [newTask, setNewTask] = useState({
         description: "",
         dateTo: ""
@@ -68,6 +72,26 @@ export default function ToDoPage() {
         }
     };
 
+    const fetchEmployeeTasks = async (employeeId) => {
+        if (!employeeId) {
+            setEmployeeTasks([]);
+            return;
+        }
+        
+        setLoadingEmployeeTasks(true);
+        try {
+            const response = await getEmployeeTasksByOwner(employeeId);
+            if (!response.ok) throw new Error('Failed to fetch tasks');
+            const data = await response.json();
+            setEmployeeTasks(data);
+        } catch (error) {
+            console.error('Error:', error);
+            setEmployeeTasks([]);
+        } finally {
+            setLoadingEmployeeTasks(false);
+        }
+    };
+
     useEffect(() => {
         setLoading(true);
         fetchTasks();
@@ -88,6 +112,12 @@ export default function ToDoPage() {
         setOpenEmployeeModal(true);
     };
 
+    const handleOpenEmployeeTasksModal = () => {
+        setSelectedEmployee('');
+        setEmployeeTasks([]);
+        setOpenEmployeeTasksModal(true);
+    };
+
     const handleOpenEditModal = (task) => {
         setCurrentTask(task);
         setNewTask({ description: task.description, dateTo: task.dateTo });
@@ -98,6 +128,7 @@ export default function ToDoPage() {
     const handleCloseModal = () => {
         setOpenModal(false);
         setOpenEmployeeModal(false);
+        setOpenEmployeeTasksModal(false);
     };
 
     const handleInputChange = (e) => {
@@ -106,7 +137,11 @@ export default function ToDoPage() {
     };
 
     const handleEmployeeChange = (e) => {
-        setSelectedEmployee(e.target.value);
+        const employeeId = e.target.value;
+        setSelectedEmployee(employeeId);
+        if (openEmployeeTasksModal) {
+            fetchEmployeeTasks(employeeId);
+        }
     };
 
     const validateDate = (dateString) => {
@@ -352,13 +387,16 @@ export default function ToDoPage() {
                         )}
                     </Box>
 
-
+                    
 
                     {isOwner && (<Box sx={{
                         position: "fixed",
                         top: "12vh",
                         right: "3vw",
-                        minWidth: "17vw"
+                        minWidth: "17vw",
+                        display: "flex",
+                        flexDirection: "column",
+                        gap: "10px"
                     }}>
 
                         <GreenButton
@@ -377,8 +415,18 @@ export default function ToDoPage() {
                             {dictionary.toDoPage.addEmployeeTaskLabel}
                         </GreenButton>
 
-
-
+                        <GreenButton
+                            onClick={handleOpenEmployeeTasksModal}
+                            style={{
+                                fontSize: '0.8rem',
+                                padding: "3px 8px",
+                                backgroundColor: '#8edfb4',
+                                color: 'black',
+                                fontWeight: 'bold',
+                            }}
+                        >
+                            {dictionary.toDoPage.employeeTasksLabel}
+                        </GreenButton>
                     </Box>)}
 
                     <Box sx={{
@@ -638,6 +686,130 @@ export default function ToDoPage() {
                             onClick={handleAddEmployeeTask}
                         >
                             {dictionary.toDoPage.saveLabel}
+                        </Button>
+                    </Box>
+                </Box>
+            </Modal>
+
+            <Modal
+                open={openEmployeeTasksModal}
+                onClose={handleCloseModal}
+                aria-labelledby="employee-tasks-modal-title"
+                sx={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                }}
+            >
+
+                <Box sx={{
+                    backgroundColor: 'white',
+                    borderRadius: '20px',
+                    boxShadow: '0 10px 20px rgba(0, 0, 0, 0.2)',
+                    padding: '3rem',
+                    width: '500px',
+                    maxWidth: '90%',
+                }}>
+                    <Typography variant="h5" component="h2" sx={{
+                        marginBottom: '2.5rem',
+                        fontWeight: 'bold',
+                        color: 'black'
+                    }}>
+                        {dictionary.toDoPage.employeeTasksLabel }
+                    </Typography>
+
+                    <FormControl fullWidth sx={{ mb: 4 }}>
+                        <InputLabel sx={{ color: 'black' }}>
+                            {dictionary.toDoPage.selectEmployeeLabel}
+                        </InputLabel>
+                        <Select
+                            value={selectedEmployee}
+                            onChange={handleEmployeeChange}
+                            label={dictionary.toDoPage.selectEmployeeLabel}
+                            sx={{
+                                color: 'black',
+                                borderRadius: '40px',
+                                '& .MuiOutlinedInput-root': {
+                                  borderRadius: '40px',
+                                },
+                                '& fieldset': {
+                                  borderRadius: '40px',
+                                },
+                            }}
+                        >
+                            {employees.map((employee) => (
+                                <MenuItem key={employee.id} value={employee.id}>
+                                    {employee.fullName }
+                                </MenuItem>
+                            ))}
+                        </Select>
+                    </FormControl>
+
+                    <Box sx={{ 
+                        maxHeight: '300px', 
+                        overflowY: 'auto',
+                        mb: 4,
+                        border: '1px solid #e0e0e0',
+                        borderRadius: '10px',
+                        padding: '10px'
+                    }}>
+                        {loadingEmployeeTasks ? (
+                            <Typography sx={{ color: 'black', textAlign: 'center' }}>
+                                {dictionary.toDoPage.loadingLabel}
+                            </Typography>
+                        ) : !selectedEmployee ? (
+                            <Typography sx={{ color: 'black', textAlign: 'center' }}>
+                                {dictionary.toDoPage.selectEmployeeLabel}
+                            </Typography>
+                        ) : employeeTasks.length === 0 ? (
+                            <Typography sx={{ color: 'black', textAlign: 'center' }}>
+                                {dictionary.toDoPage.noTasksLabel}
+                            </Typography>
+                        ) : (
+                            employeeTasks.map((task) => (
+                                <Box key={task.taskId} sx={{
+                                    display: 'flex',
+                                    justifyContent: 'space-between',
+                                    alignItems: 'center',
+                                    padding: '10px',
+                                    borderBottom: '1px solid #f0f0f0',
+                                    '&:last-child': {
+                                        borderBottom: 'none'
+                                    }
+                                }}>
+                                    <Box sx={{ flex: 1 }}>
+                                        <Typography sx={{ color: 'black', fontWeight: 'bold' }}>
+                                            {task.description}
+                                        </Typography>
+                                        <Typography sx={{ color: 'gray', fontSize: '0.9rem' }}>
+                                            {dictionary.toDoPage.dueDateLabel}: {task.dateTo}
+                                        </Typography>
+                                    </Box>
+                                </Box>
+                            ))
+                        )}
+                    </Box>
+
+                    <Box sx={{
+                        display: 'flex',
+                        justifyContent: 'center',
+                        marginTop: '1.5rem'
+                    }}>
+                        <Button
+                            variant="contained"
+                            sx={{
+                                backgroundColor: '#FFE3B3',
+                                '&:hover': { backgroundColor: '#e8d2a1' },
+                                minWidth: '120px',
+                                height: '42px',
+                                fontSize: '1rem',
+                                color: 'black',
+                                fontWeight: 'bold',
+                                borderRadius: '20px',
+                            }}
+                            onClick={handleCloseModal}
+                        >
+                            {dictionary.toDoPage.backLabel}
                         </Button>
                     </Box>
                 </Box>

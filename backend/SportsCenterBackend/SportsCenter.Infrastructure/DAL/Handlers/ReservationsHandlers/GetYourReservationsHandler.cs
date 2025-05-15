@@ -41,6 +41,7 @@ namespace SportsCenter.Infrastructure.DAL.Handlers.ReservationsHandlers
                   {
                       ReservationId = r.RezerwacjaId,
                       CourtId = r.KortId,
+                      CourtName = r.Kort.Nazwa,
                       StartTime = r.DataOd,
                       EndTime = r.DataDo,
                       TrainerId = r.TrenerId,

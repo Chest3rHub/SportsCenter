@@ -10,6 +10,7 @@ namespace SportsCenter.Application.Reservations.Queries.GetYourReservations
     {
         public int ReservationId { get; set; }
         public int CourtId { get; set; }
+        public string CourtName { get; set; }
         public DateTime StartTime { get; set; }
         public DateTime EndTime { get; set; }
         public int? TrainerId { get; set; }

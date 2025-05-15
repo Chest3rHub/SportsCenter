@@ -19,6 +19,7 @@ using SportsCenter.Application.Reservations.Commands.PayForClientReservation;
 using SportsCenter.Application.Reservations.Commands.CancelReservation;
 using SportsCenter.Application.Reservations.Commands.CancelClientReservation;
 using SportsCenter.Application.Reservations.Queries.getCourtEvents;
+using SportsCenter.Application.Reservations.Queries.GetReservation;
 
 namespace SportsCenter.Api.Controllers;
 
@@ -284,14 +285,14 @@ public class ReservationController : BaseController
 
     [Authorize(Roles = "Wlasciciel")]
     [HttpGet("Reservation-summary")]
-    public async Task<IActionResult> GetReservationSummary([FromQuery] DateTime startDate, [FromQuery] DateTime endDate)
+    public async Task<IActionResult> GetReservationSummary([FromQuery] DateTime startDate, [FromQuery] DateTime endDate, [FromQuery] int offset = 0)
     {
         if (startDate > endDate) //nie jestem pewna gdzie ten warunek umiescic
         {
             return BadRequest("StartDate cannot be greater than EndDate.");
         }
 
-        var query = new GetReservationSummary(startDate, endDate);
+        var query = new GetReservationSummary(offset, startDate, endDate);
         var result = await Mediator.Send(query);
 
         return Ok(result);
@@ -302,6 +303,13 @@ public class ReservationController : BaseController
     public async Task<IActionResult> GetYourReservations([FromQuery] int offset = 0)
     {
         return Ok(await Mediator.Send(new GetYourReservations(offset)));
+    }
+
+    [Authorize(Roles = "Wlasciciel,Pracownik administracyjny")]
+    [HttpGet("get-all-reservations")]
+    public async Task<IActionResult> GetAllReservations([FromQuery] int offset = 0)
+    {
+        return Ok(await Mediator.Send(new GetAllReservations(offset)));
     }
 
     [Authorize(Roles = "Klient")]
@@ -428,5 +436,13 @@ public class ReservationController : BaseController
     public async Task<IActionResult> getCourtEvents([FromQuery] int courtId, [FromQuery] DateTime date)
     {
         return Ok(await Mediator.Send(new getCourtEvents(courtId, date)));
+    }
+
+    [Authorize(Roles = "Pracownik administracyjny, Wlasciciel")]
+    [HttpGet("get-reservation-with-id-{reservationId}")]
+    public async Task<IActionResult> GetReservationByIdAsync(int reservationId)
+    {
+        var reservation = await Mediator.Send(new GetReservation(reservationId));
+        return Ok(reservation);
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SportsCenter.Application.Activities.Queries.GetActivitySummary;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +9,6 @@ namespace SportsCenter.Application.Reservations.Queries.GetReservationSummary
 {
     public class ReservationSummaryDto
     {
-        public int TotalReservations { get; set; }
+        public List<ReservationGroupSummaryDto> SummariesByRezerwacja { get; set; } = new();
     }
 }

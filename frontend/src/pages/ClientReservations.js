@@ -162,9 +162,10 @@ export default function ClientReservations() {
                             marginBottom: '3vh',
                         }}
                     >
-                        <SmallGreenHeader width={'33%'}>{dictionary.clientReservations.startOfReservationLabel}</SmallGreenHeader>
-                        <SmallGreenHeader width={'33%'}>{dictionary.clientReservations.endOfReservationLabel}</SmallGreenHeader>
-                        <SmallGreenHeader width={'33%'}>{dictionary.clientReservations.statusLabel}</SmallGreenHeader>
+                        <SmallGreenHeader width={'25%'}>{dictionary.clientReservations.dateLabel}</SmallGreenHeader>
+                        <SmallGreenHeader width={'25%'}>{dictionary.clientReservations.timeLabel}</SmallGreenHeader>
+                        <SmallGreenHeader width={'25%'}>{dictionary.clientReservations.courtLabel}</SmallGreenHeader>
+                        <SmallGreenHeader width={'25%'}>{dictionary.clientReservations.statusLabel}</SmallGreenHeader>
                     </Box>
                     {limitedReservations.map((reservation) => (<Box
                         sx={{
@@ -191,41 +192,41 @@ export default function ClientReservations() {
                         >
                             <Box
                                 sx={{
-                                    width: '33%',
+                                    width: '25%',
                                     textAlign: 'center',
                                 }}
                             >
                                 <Typography>
-                                    {new Date(reservation.startTime).toLocaleString('pl-PL', {
-                                    day: '2-digit',
-                                    month: '2-digit',
-                                    year: 'numeric',
-                                    hour: '2-digit',
-                                    minute: '2-digit'
-                                    })}
+                                    {new Date(reservation.startTime).toLocaleDateString('pl-PL')}
                                 </Typography>
 
                             </Box>
                             <Box
                                 sx={{
-                                    width: '33%',
+                                    width: '25%',
                                     textAlign: 'center',
                                 }}
                             >
                                 <Typography>
-                                    {new Date(reservation.endTime).toLocaleString('pl-PL', {
-                                    day: '2-digit',
-                                    month: '2-digit',
-                                    year: 'numeric',
-                                    hour: '2-digit',
-                                    minute: '2-digit'
-                                    })}
+                                    {`${new Date(reservation.startTime).toLocaleTimeString('pl-PL', { hour: '2-digit', minute: '2-digit' })} - ${new Date(reservation.endTime).toLocaleTimeString('pl-PL', { hour: '2-digit', minute: '2-digit' })}`}
                                 </Typography>
 
                             </Box>
                             <Box
                                 sx={{
-                                    width: '33%',
+                                    width: '25%',
+                                    textAlign: 'center',
+
+
+                                }}
+                            >
+                                <Typography>
+                                    {reservation.courtName}
+                                </Typography>
+                            </Box>
+                            <Box
+                                sx={{
+                                    width: '25%',
                                     textAlign: 'center',
 
 
@@ -295,8 +296,8 @@ export default function ClientReservations() {
                     columnGap: "4vw",
                     marginTop: '5vh',
                 }}>
-                    <ChangePageButton disabled={offset === 0} onClick={handlePreviousPage} backgroundColor={"#F46C63"} minWidth={"10vw"}>{dictionary.newsPage.previousLabel}</ChangePageButton>
-                    <ChangePageButton disabled={reservations.length < reservationsRequiredToEnablePagination} onClick={handleNextPage} backgroundColor={"#8edfb4"} minWidth={"10vw"}>{dictionary.newsPage.nextLabel}</ChangePageButton>
+                    <ChangePageButton disabled={offset === 0} onClick={handlePreviousPage} backgroundColor={"#F46C63"} minWidth={"10vw"}>{dictionary.clientReservations.previousLabel}</ChangePageButton>
+                    <ChangePageButton disabled={reservations.length < reservationsRequiredToEnablePagination} onClick={handleNextPage} backgroundColor={"#8edfb4"} minWidth={"10vw"}>{dictionary.clientReservations.nextLabel}</ChangePageButton>
                 </Box>}
 
                 <Box sx={{

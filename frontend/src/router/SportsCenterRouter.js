@@ -37,6 +37,10 @@ import AddSportActivity from "../pages/AddSportActivity";
 import ActivitiesSummary from "../pages/ActivitiesSummary";
 import Timetable from "../pages/Timetable";
 import ActivityDetails from "../pages/ActivityDetails";
+import Reservations from "../pages/Reservations";
+import AddReservationForClient from "../pages/AddReservationForClient";
+import GetReservationInfo from "../pages/GetReservationInfo";
+import ReservationsSummary from "../pages/ReservationsSummary";
 
 // pozmieniac dla klienta na komponenty trasy itd
 
@@ -202,7 +206,23 @@ const clientRouter = [
                 {
                     path: '/activity-details',
                     element: <ActivityDetails />,
-                },                       
+                },              
+                {
+                    path: '/reservations',
+                    element: <Reservations />,
+                },
+                {
+                    path: '/create-single-reservation-for-client',
+                    element: <AddReservationForClient />
+                },
+                {
+                    path: '/get-reservation-with-id',
+                    element: <GetReservationInfo />
+                },
+                {
+                    path: "/reservation-summary",
+                    element: <ReservationsSummary />
+                },
                 {
                     path: "*",
                     element: <NotFound />,
@@ -400,6 +420,22 @@ const clientRouter = [
                 {
                     path: "/get-sport-activity-with-id",
                     element: <GetActivityInfo />
+                },
+                {
+                    path: '/reservations',
+                    element: <Reservations />,
+                },
+                {
+                    path: '/create-single-reservation-for-client',
+                    element: <AddReservationForClient />
+                },
+                {
+                    path: '/get-reservation-with-id',
+                    element: <GetReservationInfo />
+                },
+                {
+                    path: "/reservation-summary",
+                    element: <ReservationsSummary />
                 },
                 {
                     path: "*",

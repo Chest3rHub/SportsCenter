@@ -626,7 +626,11 @@ export default {
     savedSuccessLabel: 'Udało się zapisać uczestnictwo!',
     clickAnywhereLabel: 'Kliknij w dowolne miejsce ekranu.',
     failureLabel: 'Błąd!',
-    savedFailureLabel: 'Nie udało się zapisać uczestnictwa!',
     clickAnywhereFailureLabel: 'Kliknij w dowolne miejsce ekranu.',
+    isEquipmentIncludedLabel:'Czy potrzebujesz sprzętu do gry?',
+    savedFailureLabel: 'Nie udało się zapisać uczestnictwa!',
+    alreadySignedUpLabel:'Już zapisałeś/aś się na tę aktywność!',
+    tooLongLabel:'Do aktywności pozostało więcej niż 48 godzin!',
+    canceledLabel:'Zajęcia zostały odwołane!',
   }
 };

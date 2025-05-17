@@ -1,5 +1,5 @@
 import { useLocation, useNavigate } from "react-router-dom";
-import { Typography, Box, List, ListItem, ListItemText, Avatar } from "@mui/material";
+import { Typography, Box, List, ListItem, ListItemText, Avatar, FormControlLabel, Checkbox } from "@mui/material";
 import Header from "../components/Header";
 import GreenButton from "../components/buttons/GreenButton";
 import CustomInput from "../components/CustomInput";
@@ -21,7 +21,7 @@ export default function ActivityDetails() {
 
     console.log(activityDetails)
     const [isEquipmentIncluded, setIsEquipmentIncluded] = useState(false);
-    
+    const [failedSignUpLabel, setFailedSignUpLabel] = useState('')
 
     const [openSuccessBackdrop, setOpenSuccessBackdrop] = useState(false);
     const [openFailureBackdrop, setOpenFailureBackdrop] = useState(false);
@@ -56,13 +56,28 @@ export default function ActivityDetails() {
     const formattedStartTime = startTime.slice(0, 5);
     const formattedEndTime = endTime.slice(0, 5);
 
-    console.log(participants)
+
+    function determineFailTextByResponseCode(responseCode) {
+        switch (responseCode) {
+          case 409:
+            return dictionary.activityDetailsPage.alreadySignedUpLabel;
+          case 418:
+            return dictionary.activityDetailsPage.tooLongLabel;
+          case 420:
+            return dictionary.activityDetailsPage.canceledLabel;
+          default:
+            return dictionary.activityDetailsPage.savedFailureLabel;
+        }
+      }
+      
     async function signUpForActivityClient() {
 
         try {
             const response = await signUpForActivity({ activityId: activityDetails.id, selectedDate: formattedDate, isEquipmentIncluded: isEquipmentIncluded });
             if (!response.ok) {
                 const errorData = await response.json();
+                let failText = determineFailTextByResponseCode(response.status);
+                setFailedSignUpLabel(failText);
                 handleOpenFailure();
             } else {
                 handleOpenSuccess();
@@ -94,7 +109,7 @@ export default function ActivityDetails() {
                     <Header>{groupName ? groupName : dictionary.activityDetailsPage.reservationLabel}</Header>
                 </Box>
                 <Box sx={{
-                    height: '55vh',
+                    minHeight:'55vh',
                     borderRadius: '20px',
                     boxShadow: '0 10px 20px rgba(0, 0, 0, 0.2)',
                     backgroundColor: 'white',
@@ -244,6 +259,24 @@ export default function ActivityDetails() {
                         }}
                     />
 
+                    {role==='Klient' && <FormControlLabel
+                        control={
+                            <Checkbox
+                                id="isEquipmentReserved"
+                                name="isEquipmentReserved"
+                                checked={isEquipmentIncluded}
+                                onChange={()=>{setIsEquipmentIncluded((prev)=>!prev)}}
+                                sx={{
+                                    color: "#8edfb4",
+                                    '&.Mui-checked': {
+                                        color: "#8edfb4",
+                                    },
+                                }}
+                            />
+                        }
+                        label={dictionary.activityDetailsPage.isEquipmentIncludedLabel}
+                    />}
+
                     <Box sx={{
                         display: 'flex',
                         justifyContent: 'center',
@@ -342,7 +375,7 @@ export default function ActivityDetails() {
                 <Box sx={{
                     backgroundColor: "white",
                     margin: 'auto',
-                    minWidth: '30vw',
+                    minWidth: '40vw',
                     minHeight: '30vh',
                     borderRadius: '20px',
                     boxShadow: '0 10px 20px rgba(0, 0, 0, 0.2)',
@@ -364,7 +397,7 @@ export default function ActivityDetails() {
                             color: 'black',
                             fontSize: '1.5rem',
                         }}>
-                            {dictionary.activityDetailsPage.savedFailureLabel}
+                            {failedSignUpLabel}
                         </Typography>
                     </Box>
                     <Box>

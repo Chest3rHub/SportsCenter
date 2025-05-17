@@ -622,7 +622,11 @@ reservationsSummaryPage: {
     savedSuccessLabel: 'You have successfully signed up!',
     clickAnywhereLabel: 'Click anywhere on the screen.',
     failureLabel: 'Error!',
-    savedFailureLabel: 'Failed to sign up for the activity!',
     clickAnywhereFailureLabel: 'Click anywhere on the screen.',
+    isEquipmentIncludedLabel: 'Do you need equipment for the game?',
+    savedFailureLabel: 'Failed to sign up for the activity!',
+    alreadySignedUpLabel:'You already signed up to this activity!',
+    tooLongLabel:'The activity is more than 48 hours away from now!',
+    canceledLabel:'Zajęcia zostały odwołane!',
   }
 };

@@ -154,11 +154,11 @@ namespace SportsCenter.Api.Controllers;
         }
         catch (ActivityCanceledException ex)
         {
-            return Conflict(new { message = ex.Message });
+            return StatusCode(420, new { message = ex.Message });
         }
         catch (ActivityTimeTooFarException ex)
         {
-            return Conflict(new { message = ex.Message });
+            return StatusCode(418, new { message = ex.Message });
         }
         catch (ClientAlreadySignedUpException ex)
         {

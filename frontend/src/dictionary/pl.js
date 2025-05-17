@@ -600,6 +600,10 @@ export default {
     fridayShortLabel: 'Pt',
     saturdayShortLabel: 'Sb',
     sundayShortLabel: 'Nd',
+    badmintonLabel:'Badminton',
+    tennisLabel:'Tenis',
+    squashLabel:'Squash',
+    privateLabel:'Prywatne',
   },
   logoutPage: {
     logoutTitle: 'Wylogowano z serwisu',

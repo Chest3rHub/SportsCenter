@@ -595,6 +595,10 @@ reservationsSummaryPage: {
     fridayShortLabel: 'Fri',
     saturdayShortLabel: 'Sat',
     sundayShortLabel: 'Sun',
+    badmintonLabel:'Badminton',
+    tennisLabel:'Tennis',
+    squashLabel:'Squash',
+    privateLabel:'Private',
   },
 
   logoutPage: {

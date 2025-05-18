@@ -12,6 +12,7 @@ using SportsCenter.Application.Activities.Queries.GetActivitySummary;
 using SportsCenter.Application.Activities.Queries.GetAllSportActivities;
 using SportsCenter.Application.Activities.Queries.GetSportActivity;
 using SportsCenter.Application.Activities.Queries.GetYourSportActivities;
+using SportsCenter.Application.Activities.Queries.GetYourSportActivitiesByWeeks;
 using SportsCenter.Application.Exceptions.ClientsExceptions;
 using SportsCenter.Application.Exceptions.CourtsExceptions;
 using SportsCenter.Application.Exceptions.EmployeesException;
@@ -230,6 +231,13 @@ namespace SportsCenter.Api.Controllers;
     public async Task<IActionResult> GetYourSportActivities([FromQuery] int offset = 0)
     {
         return Ok(await Mediator.Send(new GetYourSportActivities(offset)));
+    }
+
+    [Authorize(Roles = "Klient")]
+    [HttpGet("get-your-activities-by-weeks")]
+    public async Task<IActionResult> GetYourSportActivitiesByWeeks([FromQuery] int weekOffset = 0)
+    {
+        return Ok(await Mediator.Send(new GetYourSportActivitiesByWeeks(weekOffset)));
     }
 
     [Authorize(Roles = "Klient")]

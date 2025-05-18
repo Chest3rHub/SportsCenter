@@ -61,8 +61,9 @@ namespace SportsCenter.Infrastructure.DAL.Handlers.SportActivitiesHandlers
                         SportActivityName = g.Zajecia.Nazwa,
                         DateOfActivity = combined.iz.Data,
                         DayOfWeek = combined.iz.Data.DayOfWeek.ToString(),
-                        StartHour = g.GodzinaOd,
+                        StartTime = g.GodzinaOd,
                         DurationInMinutes = g.CzasTrwania,
+                        EndTime = g.GodzinaOd.Add(TimeSpan.FromMinutes(g.CzasTrwania)),
                         LevelName = g.Zajecia.IdPoziomZajecNavigation.Nazwa,
                         EmployeeId = g.PracownikId,
                         CourtName = g.Kort.Nazwa,
@@ -77,7 +78,7 @@ namespace SportsCenter.Infrastructure.DAL.Handlers.SportActivitiesHandlers
                             : "Nie"
                     })
                 .OrderBy(activity => activity.DateOfActivity)
-                .ThenBy(activity => activity.StartHour)
+                .ThenBy(activity => activity.StartTime)
                 .ToListAsync(cancellationToken);
 
             return sportActivities;

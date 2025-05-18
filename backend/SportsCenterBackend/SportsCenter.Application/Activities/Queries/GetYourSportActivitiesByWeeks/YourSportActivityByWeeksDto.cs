@@ -12,8 +12,9 @@ namespace SportsCenter.Application.Activities.Queries.GetYourSportActivitiesByWe
         public string SportActivityName { get; set; }
         public DateOnly DateOfActivity { get; set; }
         public string DayOfWeek { get; set; }
-        public TimeSpan StartHour { get; set; }
+        public TimeSpan StartTime { get; set; }
         public int DurationInMinutes { get; set; }
+        public TimeSpan EndTime { get; set; }
         public string LevelName { get; set; }
         public int EmployeeId { get; set; }
         public string CourtName { get; set; }

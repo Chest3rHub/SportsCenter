@@ -132,9 +132,9 @@ export default function MyAccount() {
                       <Typography variant="h6" align="left" sx={{ marginBottom: "20px" }}>
                         {dictionary.accountPage.balance}: {userData.balance} zł
                       </Typography>
-                      <Box sx={{ display: "flex", flexDirection: "column", marginBottom: "20px" }}>
+                      {/* <Box sx={{ display: "flex", flexDirection: "column", marginBottom: "20px" }}>
                         <GreenButton onClick={handleAddBalance}>{dictionary.accountPage.addBalance}</GreenButton>
-                      </Box>
+                      </Box> */}
                     </>
                   )}
               <Box sx={{ display: "flex", flexDirection: "column"}}>

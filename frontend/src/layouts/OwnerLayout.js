@@ -20,8 +20,8 @@ export default function OwnerLayout() {
     { label: dictionary.sidebar.ownerSidebar.changePasswordLabel, navigate: '/change-password' },
     { label: dictionary.sidebar.ownerSidebar.trainingsLabel, navigate: '/trainings' },
     { label: dictionary.sidebar.ownerSidebar.reservationsLabel, navigate: '/reservations' },
-    { label: dictionary.sidebar.ownerSidebar.opinionsLabel, navigate: '/opinions' },
-    { label: dictionary.sidebar.ownerSidebar.productsLabel, navigate: '/products' },
+    //{ label: dictionary.sidebar.ownerSidebar.opinionsLabel, navigate: '/opinions' },
+    //{ label: dictionary.sidebar.ownerSidebar.productsLabel, navigate: '/products' },
     // { label: dictionary.sidebar.ownerSidebar.gearLabel, navigate: '/gear' },
     { label: dictionary.sidebar.ownerSidebar.newsLabel, navigate: '/news' },
   ];

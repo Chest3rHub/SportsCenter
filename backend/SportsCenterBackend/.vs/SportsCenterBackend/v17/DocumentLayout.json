@@ -1724,16 +1724,8 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 4,
+          "SelectedChildIndex": 2,
           "Children": [
-            {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{e5c86464-96be-4d7c-9a8b-abcb3bbf5f92}"
-            },
-            {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{cce594b6-0c39-4442-ba28-10c64ac7e89f}"
-            },
             {
               "$type": "Document",
               "DocumentIndex": 1,
@@ -1744,8 +1736,7 @@
               "RelativeToolTip": "SportsCenter.Application\\Activities\\Queries\\GetYourSportActivitiesByWeeks\\YourSportActivityByWeeksDto.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAyAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-18T13:41:36.966Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-18T13:41:36.966Z"
             },
             {
               "$type": "Document",
@@ -1757,8 +1748,7 @@
               "RelativeToolTip": "SportsCenter.Application\\Activities\\Queries\\GetYourSportActivitiesByWeeks\\GetYourSportActivitiesByWeeks.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAA2AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-18T13:41:22.946Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-18T13:41:22.946Z"
             },
             {
               "$type": "Document",
@@ -1768,7 +1758,7 @@
               "RelativeDocumentMoniker": "SportsCenter.Infrastructure\\DAL\\Handlers\\SportActivitiesHandlers\\GetYourSportActivitiesByWeeksHandler.cs",
               "ToolTip": "C:\\Users\\48660\\SportsCenter\\backend\\SportsCenterBackend\\SportsCenter.Infrastructure\\DAL\\Handlers\\SportActivitiesHandlers\\GetYourSportActivitiesByWeeksHandler.cs",
               "RelativeToolTip": "SportsCenter.Infrastructure\\DAL\\Handlers\\SportActivitiesHandlers\\GetYourSportActivitiesByWeeksHandler.cs",
-              "ViewState": "AgIAABIAAAAAAAAAAAAAAFAAAAA2AAAAAAAAAA==",
+              "ViewState": "AgIAABIAAAAAAAAAAAAqwFAAAAA2AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-05-18T13:39:41.29Z",
               "EditorCaption": ""
@@ -2023,8 +2013,7 @@
               "RelativeToolTip": "SportsCenter.Infrastructure\\DAL\\Handlers\\SportActivitiesHandlers\\GetYourUpcomingActivitiesHandler.cs",
               "ViewState": "AgIAADkAAAAAAAAAAAAowAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-09T10:22:42.383Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-09T10:22:42.383Z"
             },
             {
               "$type": "Document",
@@ -2540,8 +2529,7 @@
               "RelativeToolTip": "SportsCenter.Infrastructure\\DAL\\Handlers\\SportActivitiesHandlers\\GetYourSportActivitiesHandler.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAABZAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-13T11:55:49.038Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-03-13T11:55:49.038Z"
             },
             {
               "$type": "Document",
@@ -2553,8 +2541,7 @@
               "RelativeToolTip": "SportsCenter.Application\\Activities\\Queries\\GetYourSportActivities\\YourSportActivityDto.cs",
               "ViewState": "AgIAAAYAAAAAAAAAAADwvwgAAAADAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-13T11:50:24.475Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-03-13T11:50:24.475Z"
             },
             {
               "$type": "Document",
@@ -2566,8 +2553,7 @@
               "RelativeToolTip": "SportsCenter.Application\\Activities\\Queries\\GetYourSportActivities\\GetYourSportActivities.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-13T11:50:15.671Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-03-13T11:50:15.671Z"
             },
             {
               "$type": "Document",
@@ -4547,8 +4533,7 @@
               "RelativeToolTip": "SportsCenter.Infrastructure\\DAL\\Handlers\\SportActivitiesHandlers\\GetSportActivityHandler.cs",
               "ViewState": "AgIAABUAAAAAAAAAAAAiwBQAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-18T11:18:34.509Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-02-18T11:18:34.509Z"
             },
             {
               "$type": "Document",
@@ -4884,8 +4869,7 @@
               "RelativeToolTip": "SportsCenter.Application\\Schedule\\Queries\\GetScheduleInfo\\ScheduleInfoBaseDto.cs",
               "ViewState": "AgIAAAYAAAAAAAAAAAAAABMAAAAXAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-16T22:21:36.146Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-02-16T22:21:36.146Z"
             },
             {
               "$type": "Document",
@@ -4897,8 +4881,7 @@
               "RelativeToolTip": "SportsCenter.Application\\Schedule\\Queries\\GetScheduleInfo\\ScheduleInfoBasicDto.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-16T21:23:59.007Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-02-16T21:23:59.007Z"
             },
             {
               "$type": "Document",
@@ -5893,8 +5876,7 @@
               "RelativeToolTip": "SportsCenter.Api\\Controllers\\ScheduleController.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAA5AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-04T21:47:00.16Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-02-04T21:47:00.16Z"
             },
             {
               "$type": "Document",
@@ -5906,8 +5888,7 @@
               "RelativeToolTip": "SportsCenter.Infrastructure\\DAL\\Handlers\\ScheduleHandlers\\GetScheduleInfoHandler.cs",
               "ViewState": "AgIAALoAAAAAAAAAAAAAAB8AAAAlAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-04T20:41:48.302Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-02-04T20:41:48.302Z"
             },
             {
               "$type": "Document",
@@ -5919,8 +5900,7 @@
               "RelativeToolTip": "SportsCenter.Application\\Schedule\\Queries\\GetScheduleInfo\\GetScheduleInfo.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAwAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-04T20:26:36.683Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-02-04T20:26:36.683Z"
             },
             {
               "$type": "Document",
@@ -5932,8 +5912,7 @@
               "RelativeToolTip": "SportsCenter.Application\\Schedule\\Queries\\GetScheduleInfo\\ScheduleInfoAdminDto.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAgAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-04T20:25:04.945Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-02-04T20:25:04.945Z"
             },
             {
               "$type": "Document",
@@ -6329,8 +6308,7 @@
               "RelativeToolTip": "SportsCenter.Api\\Controllers\\SportActivitiesController.cs",
               "ViewState": "AgIAANsAAAAAAAAAAAAAAO0AAAA2AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-03T19:41:44.48Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-02-03T19:41:44.48Z"
             },
             {
               "$type": "Document",
@@ -6450,8 +6428,7 @@
               "RelativeToolTip": "SportsCenter.Infrastructure\\DAL\\Repositories\\EmployeeRepository.cs",
               "ViewState": "AgIAAPEAAAAAAAAAAAAuwMQAAAA/AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-03T18:26:30.507Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-02-03T18:26:30.507Z"
             },
             {
               "$type": "Document",
@@ -6896,6 +6873,14 @@
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAEAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
               "WhenOpened": "2024-12-06T21:12:51.439Z"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{e5c86464-96be-4d7c-9a8b-abcb3bbf5f92}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{cce594b6-0c39-4442-ba28-10c64ac7e89f}"
             }
           ]
         }

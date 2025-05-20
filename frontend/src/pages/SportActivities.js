@@ -119,6 +119,7 @@ export default function SportActivities() {
                 }}
             >
                 <Header>{dictionary.sportActivitiesPage.sportActivitiesLabel}</Header>
+                {role === 'Wlascicel' && (
                 <Box
                     sx={{
                         backgroundColor: '#eafaf1',
@@ -131,36 +132,39 @@ export default function SportActivities() {
                         gap: '1.2rem',
                         boxShadow: '0 6px 12px rgba(0, 0, 0, 0.1)',
                         }}
-                >                   
-                    <GreenButton
-                        onClick={() => handleAddActivity()}
-                        style={{
-                        minWidth: '7vw',
-                        height: '2.8rem',
-                        paddingLeft: '1rem',
-                        paddingRight: '1rem',
-                        fontSize: '0.9rem',
-                        whiteSpace: 'nowrap',
+                >       
+                    <>
+                        <GreenButton
+                            onClick={handleAddActivity}
+                            style={{
+                            minWidth: '7vw',
+                            height: '2.8rem',
+                            paddingLeft: '1rem',
+                            paddingRight: '1rem',
+                            fontSize: '0.9rem',
+                            whiteSpace: 'nowrap',
                         }}
                     >
-                        {dictionary.sportActivitiesPage.addActivityLabel}
-                    </GreenButton>
-                    <GreyButton
-                        onClick={() => handleShowActivitiesSummary()} 
-                        style={{
-                        minWidth: '7vw',
-                        height: '2.8rem',
-                        paddingLeft: '1rem',
-                        paddingRight: '1rem',
-                        fontSize: '0.9rem',
-                        whiteSpace: 'nowrap',
-                        backgroundColor: '#ccc',
-                        color: 'black'
+                            {dictionary.sportActivitiesPage.addActivityLabel}
+                        </GreenButton>
+                        <GreyButton
+                            onClick={handleShowActivitiesSummary}
+                            style={{
+                            minWidth: '7vw',
+                            height: '2.8rem',
+                            paddingLeft: '1rem',
+                            paddingRight: '1rem',
+                            fontSize: '0.9rem',
+                            whiteSpace: 'nowrap',
+                            backgroundColor: '#ccc',
+                            color: 'black',
                         }}
                     >
-                        {dictionary.sportActivitiesPage.showSummaryLabel}
-                    </GreyButton>
+                            {dictionary.sportActivitiesPage.showSummaryLabel}
+                        </GreyButton>
+                    </>
                 </Box>
+            )}
                 <Box
                     sx={{
                         height: '67vh',
@@ -274,9 +278,11 @@ export default function SportActivities() {
                             <ActivitiesButton backgroundColor={"#f0aa4f"} onClick={() => handleShowMoreInfo(activity.sportActivityId)} minWidth={'6vw'}>
                                 {dictionary.sportActivitiesPage.moreInfoLabel}
                             </ActivitiesButton>
+                             {role === 'Wlascicel' && (
                             <ActivitiesButton backgroundColor={"#F46C63"}onClick={() => handleOpenModal(activity)} minWidth={'6vw'}>
                                 {dictionary.sportActivitiesPage.deleteActivityLabel}
-                            </ActivitiesButton>                    
+                            </ActivitiesButton>    
+                             )}                
                         </Box>))}
                     </Box>
                     <Modal 

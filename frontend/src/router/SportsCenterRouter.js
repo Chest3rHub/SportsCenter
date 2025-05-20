@@ -413,6 +413,14 @@ const clientRouter = [
                     path: '/timetable',
                     element: <Timetable />,
                 }, 
+                 {
+                    path: "/trainings",
+                    element: <SportActivities />
+                },
+                 {
+                    path: "/Add-activity",
+                    element: <AddSportActivity />
+                },
                 {
                     path: '/activity-details',
                     element: <ActivityDetails />,

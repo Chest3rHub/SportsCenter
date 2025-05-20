@@ -172,8 +172,8 @@ export default function AddReservationForClient() {
     };
 
     const fetchWorkingHoursForDate = async (date) => {
-        const today = startOfWeek(new Date(), { weekStartsOn: 1 });
-        const selected = startOfWeek(date, { weekStartsOn: 1 });
+        const today = new Date();
+        const selected = new Date(date);
         const todayCorrect = startOfDay(today);
         const selectedCorrect = startOfDay(selected);
         const todayDayOfWeek = todayCorrect.getDay();

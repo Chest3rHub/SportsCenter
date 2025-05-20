@@ -41,6 +41,7 @@ import Reservations from "../pages/Reservations";
 import AddReservationForClient from "../pages/AddReservationForClient";
 import GetReservationInfo from "../pages/GetReservationInfo";
 import ReservationsSummary from "../pages/ReservationsSummary";
+import MyTimetable from "../pages/MyTimetable";
 
 // pozmieniac dla klienta na komponenty trasy itd
 
@@ -96,6 +97,10 @@ const clientRouter = [
             {
                 path: '/timetable',
                 element: <Timetable />,
+            }, 
+            {
+                path: '/my-timetable',
+                element: <MyTimetable />,
             },   
             {
                 path: "/get-sport-activity-with-id",

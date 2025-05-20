@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect   } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
 import GreenButton from '../components/buttons/GreenButton';
@@ -15,35 +15,37 @@ import getCourts from '../api/getCourts';
 import MenuItem from '@mui/material/MenuItem';
 import { Autocomplete, TextField } from '@mui/material';
 import DatePicker, { registerLocale } from "react-datepicker"; // npm install react-datepicker date-fns
-import 'react-datepicker/dist/react-datepicker.css';   
-import { 
-  format, 
-  startOfDay, 
-  endOfDay, 
-  addHours, 
-  isBefore, 
-  isAfter, 
-  eachHourOfInterval, 
-  differenceInWeeks, 
-  startOfWeek, 
-  isSameDay,
-  isSameMinute,
-  setHours,
-  setMinutes,
-  addMinutes,
-  addDays
+import 'react-datepicker/dist/react-datepicker.css';
+import {
+    format,
+    startOfDay,
+    endOfDay,
+    addHours,
+    isBefore,
+    isAfter,
+    eachHourOfInterval,
+    differenceInWeeks,
+    startOfWeek,
+    isSameDay,
+    isSameMinute,
+    setHours,
+    setMinutes,
+    addMinutes,
+    addDays
 } from 'date-fns';
 import getClubWorkingHours from '../api/getClubWorkingHours';
 import getCourtEvents from '../api/getCourtEvents';
 import { pl } from 'date-fns/locale';
 import getClients from '../api/getClients';
+import searchClientsTopTen from '../api/searchClientsTopTen';
 import addRecurringReservationForClient from '../api/addRecurringReservationForClient';
 import addReservationForClient from '../api/addReservationForClient';
+import { useDebounce } from '../hooks/useDebounce';
 
 export default function AddReservationForClient() {
 
     const { dictionary, toggleLanguage } = useContext(SportsContext);
-    
+
     const [formData, setFormData] = useState({
         clientId: '',
         courtId: '',
@@ -56,8 +58,8 @@ export default function AddReservationForClient() {
         recurrence: '',
         recurrenceEndDate: ''
     });
-  
-    const [startTimeError, setStartTimeError] = useState(false); 
+
+    const [startTimeError, setStartTimeError] = useState(false);
     const [endTimeRequiredError, setEndTimeRequiredError] = useState(false);
     const [endTimeBeforeStartError, setEndTimeBeforeStartError] = useState(false);
     const [endTimeDurationError, setEndTimeDurationError] = useState(false);
@@ -76,6 +78,20 @@ export default function AddReservationForClient() {
     const [workingHoursError, setWorkingHoursError] = useState(false);
     const [clubHoursMessage, setClubHoursMessage] = useState('');
 
+    const [searchClientText, setSearchClientText] = useState('');
+    const debouncedSearchText = useDebounce(searchClientText, 300);
+    const [selectedClient, setSelectedClient] = useState(null);
+
+
+    useEffect(() => {
+        const client = clients.find(c => c.id === formData.clientId);
+        if (client) {
+            setSelectedClient(client);
+        }
+    }, [clients, formData.clientId]);
+    
+
+
     useEffect(() => {
         registerLocale('pl', pl);
     }, []);
@@ -87,11 +103,11 @@ export default function AddReservationForClient() {
                 const [trainersData, courtsData, clientsResponse] = await Promise.all([
                     getTrainers(),
                     getCourts(),
-                    getClients()
+                    searchClientsTopTen(debouncedSearchText)
                 ]);
-    
+
                 const clientsData = await clientsResponse.json();
-    
+
                 setTrainers(trainersData);
                 setAvailableTrainers(trainersData);
                 setCourts(courtsData);
@@ -104,9 +120,9 @@ export default function AddReservationForClient() {
                 setIsLoading(false);
             }
         }
-    
+
         fetchData();
-    }, []);    
+    }, [debouncedSearchText]);
 
     useEffect(() => {
         if (formData.courtId && formData.startTime) {
@@ -158,12 +174,12 @@ export default function AddReservationForClient() {
             const response = await getClubWorkingHours(weekOffset);
             if (response.ok) {
                 const data = await response.json();
-                
+
                 const enhancedData = data.map(day => ({
                     ...day,
                     dayOfWeek: format(new Date(day.date), 'EEEE', { locale: pl }).toLowerCase()
                 }));
-                
+
                 setWorkingHours(enhancedData);
             }
         } catch (error) {
@@ -191,7 +207,7 @@ export default function AddReservationForClient() {
             const startOfSelectedWeek = startOfWeek(selectedCorrect, { weekStartsOn: 1 });
             weekOffset = differenceInWeeks(startOfSelectedWeek, startOfCurrentWeek);
         }
-        
+
         await fetchWorkingHours(weekOffset);
     };
 
@@ -209,36 +225,36 @@ export default function AddReservationForClient() {
 
     const calculateExcludedTimes = () => {
         if (!formData.startTime || !workingHours.length) return;
-    
+
         const selectedDate = new Date(formData.startTime);
         const dateStr = format(selectedDate, 'yyyy-MM-dd');
         const dayWorkingHours = workingHours.find(day => day.date === dateStr);
-    
+
         if (!dayWorkingHours) {
             setExcludedTimes([]);
             return;
         }
-    
+
         const [openHour, openMinute] = dayWorkingHours.openHour.split(':').map(Number);
         const [closeHour, closeMinute] = dayWorkingHours.closeHour.split(':').map(Number);
         const openTime = setMinutes(setHours(startOfDay(selectedDate), openHour), openMinute);
         const closeTime = setMinutes(setHours(startOfDay(selectedDate), closeHour), closeMinute);
-    
+
         const allSlots = [];
         let currentTime = startOfDay(selectedDate);
         while (currentTime <= endOfDay(selectedDate)) {
             allSlots.push(new Date(currentTime));
             currentTime = addMinutes(currentTime, 30);
         }
-    
-        const excludedWorkingHours = allSlots.filter(slot => 
+
+        const excludedWorkingHours = allSlots.filter(slot =>
             isBefore(slot, openTime) || isAfter(slot, closeTime)
         );
-    
+
         const excludedReservationTimes = existingReservations.flatMap(reservation => {
             const start = new Date(reservation.startTime);
             const end = new Date(reservation.endTime);
-            
+
             const slots = [];
             let time = start;
             while (time < end) {
@@ -247,17 +263,17 @@ export default function AddReservationForClient() {
             }
             return slots;
         });
-    
+
         setExcludedTimes([...new Set([...excludedWorkingHours, ...excludedReservationTimes])]);
     };
 
     const getValidEndTimes = () => {
         if (!formData.startTime) return [];
-      
+
         const start = new Date(formData.startTime);
         const dateStr = format(start, 'yyyy-MM-dd');
         const dayWorkingHours = workingHours.find(day => day.date === dateStr);
-        
+
         if (!dayWorkingHours) return [];
 
         const [openHour, openMinute] = dayWorkingHours.openHour.split(':').map(Number);
@@ -266,45 +282,45 @@ export default function AddReservationForClient() {
         const closeTime = setMinutes(setHours(startOfDay(start), closeHour), closeMinute);
 
         const nextReservation = existingReservations
-          .filter(res => {
-            const resStart = new Date(res.startTime);
-            return format(resStart, 'yyyy-MM-dd') === dateStr && 
-                   isAfter(resStart, start);
-          })
-          .sort((a, b) => new Date(a.startTime) - new Date(b.startTime))[0];
-      
-        const maxEndTime = nextReservation 
-          ? new Date(nextReservation.startTime)
-          : closeTime;
+            .filter(res => {
+                const resStart = new Date(res.startTime);
+                return format(resStart, 'yyyy-MM-dd') === dateStr &&
+                    isAfter(resStart, start);
+            })
+            .sort((a, b) => new Date(a.startTime) - new Date(b.startTime))[0];
+
+        const maxEndTime = nextReservation
+            ? new Date(nextReservation.startTime)
+            : closeTime;
 
         const validTimes = [];
         let currentTime = addMinutes(start, 30);
         const endTime = isBefore(maxEndTime, closeTime) ? maxEndTime : closeTime;
-      
+
         while (isBefore(currentTime, endTime)) {
-          validTimes.push(new Date(currentTime));
-          currentTime = addMinutes(currentTime, 30);
+            validTimes.push(new Date(currentTime));
+            currentTime = addMinutes(currentTime, 30);
         }
-      
+
         return validTimes;
     };
 
     const filterPassedTime = (time) => {
         const currentDate = new Date();
-        
+
         if (isSameDay(time, currentDate)) {
             if (isBefore(time, currentDate)) return false;
         }
-    
+
         const dateStr = format(time, 'yyyy-MM-dd');
         const dayWorkingHours = workingHours.find(day => day.date === dateStr);
-        
+
         if (dayWorkingHours) {
             const [openHour, openMinute] = dayWorkingHours.openHour.split(':').map(Number);
             const [closeHour, closeMinute] = dayWorkingHours.closeHour.split(':').map(Number);
             const openTime = setMinutes(setHours(startOfDay(time), openHour), openMinute);
             const closeTime = setMinutes(setHours(startOfDay(time), closeHour), closeMinute);
-            
+
             if (isBefore(time, openTime) || isAfter(time, closeTime)) {
                 return false;
             }
@@ -316,13 +332,13 @@ export default function AddReservationForClient() {
         if (!date) return;
         const dateStr = format(date, 'yyyy-MM-dd');
         const dayWorkingHours = workingHours.find(day => day.date === dateStr);
-        
+
         if (dayWorkingHours) {
             const [openHour, openMinute] = dayWorkingHours.openHour.split(':').map(Number);
             const [closeHour, closeMinute] = dayWorkingHours.closeHour.split(':').map(Number);
             const openTime = setMinutes(setHours(startOfDay(date), openHour), openMinute);
             const closeTime = setMinutes(setHours(startOfDay(date), closeHour), closeMinute);
-            
+
             if (isBefore(date, openTime) || isAfter(date, closeTime)) {
                 if (isBefore(date, openTime)) {
                     date = new Date(openTime);
@@ -331,7 +347,7 @@ export default function AddReservationForClient() {
                 }
             }
         }
-        
+
         setFormData(prev => ({
             ...prev,
             startTime: date,
@@ -346,11 +362,11 @@ export default function AddReservationForClient() {
         const roundedDate = new Date(date);
         roundedDate.setMinutes(minutes < 30 ? 0 : 30, 0, 0);
         setFormData(prev => ({
-          ...prev,
-          endTime: roundedDate,
-          trainerId: ''
+            ...prev,
+            endTime: roundedDate,
+            trainerId: ''
         }));
-      };
+    };
 
     const handleChange = (e) => {
         const { name, value, type, checked } = e.target;
@@ -361,11 +377,11 @@ export default function AddReservationForClient() {
     };
 
     const navigate = useNavigate();
-    
+
     function handleError(textToDisplay) {
-      navigate('/error', {
-        state: { message: textToDisplay }
-      });
+        navigate('/error', {
+            state: { message: textToDisplay }
+        });
     }
 
     const validateForm = () => {
@@ -373,7 +389,7 @@ export default function AddReservationForClient() {
         const start = new Date(formData.startTime);
         const end = new Date(formData.endTime);
         const recurrenceEnd = formData.recurrenceEndDate ? new Date(formData.recurrenceEndDate) : null;
-    
+
         if (!formData.startTime) {
             isValid = false;
             setStartTimeError(true);
@@ -387,7 +403,7 @@ export default function AddReservationForClient() {
         } else {
             setEndTimeRequiredError(false);
         }
-    
+
         if (formData.endTime && end <= start) {
             isValid = false;
             setEndTimeBeforeStartError(true);
@@ -404,7 +420,7 @@ export default function AddReservationForClient() {
                 setEndTimeDurationError(false);
             }
         }
-    
+
         //ilosc uczestnikow od 1 do 8
         const participants = parseInt(formData.participantsCount);
         if (!participants || participants < 1 || participants > 8) {
@@ -428,7 +444,7 @@ export default function AddReservationForClient() {
                 setRecurrenceEndDateError(true);
             } else {
                 setRecurrenceEndDateError(false);
-            }   
+            }
         }
 
         return isValid;
@@ -481,10 +497,10 @@ export default function AddReservationForClient() {
         endTimeErrorMessage = dictionary.addReservationForClientPage.endTimeDurationError;
     }
 
-    return  (
-    <>
-        <style>
-            {`
+    return (
+        <>
+            <style>
+                {`
                 .custom-datepicker-input {
                     width: 100%;
                     padding: 10px 14px;
@@ -538,248 +554,253 @@ export default function AddReservationForClient() {
                     color: #000 !important;
                 }
             `}
-        </style>
+            </style>
 
-        <GreenBackground height={"80vh"} marginTop={"2vh"}>
-            <Header>{dictionary.addReservationForClientPage.title}</Header>
-            <OrangeBackground width="70%">
-                <form onSubmit={handleSubmit}>
-                    <Box sx={{ display: "flex", flexDirection: "column", gap: "1.5rem", marginBottom: "2vh" }}>
-                        <Autocomplete
-                            id="client"
-                            options={clients}
-                            getOptionLabel={(option) => option.email}
-                            value={clients.find(c => c.id === formData.clientId) || null}
-                            onChange={(event, newValue) => {
-                                handleChange({
-                                target: {
-                                    name: "clientId",
-                                    value: newValue?.id || ""
-                                }
-                                });
-                            }}
-                            isOptionEqualToValue={(option, value) => option.id === value.id}
-                            renderInput={(params) => (
+            <GreenBackground height={"80vh"} marginTop={"2vh"}>
+                <Header>{dictionary.addReservationForClientPage.title}</Header>
+                <OrangeBackground width="70%">
+                    <form onSubmit={handleSubmit}>
+                        <Box sx={{ display: "flex", flexDirection: "column", gap: "1.5rem", marginBottom: "2vh" }}>
+                            <Autocomplete
+                                id="client"
+                                options={clients}
+                                getOptionLabel={(option) => option.email}
+                                value={selectedClient}
+                                onChange={(event, newValue) => {
+                                    handleChange({
+                                        target: {
+                                            name: "clientId",
+                                            value: newValue?.clientId || ""
+                                        }
+                                    });
+                                    setSelectedClient(newValue);
+                                }}
+                                onInputChange={(event, newInputValue) => {
+                                    setSearchClientText(newInputValue);
+                                }}
+                                isOptionEqualToValue={(option, value) => option.id === value.id}
+                                renderInput={(params) => (
+                                    <CustomInput
+                                        {...params}
+                                        label={dictionary.addReservationForClientPage.clientLabel}
+                                        name="clientId"
+                                        required
+                                        size="small"
+                                    />
+                                )}
+                            />
+
+
                             <CustomInput
-                                {...params}
-                                label={dictionary.addReservationForClientPage.clientLabel}
-                                name="clientId"
+                                select
+                                label={dictionary.addReservationForClientPage.courtNameLabel}
+                                id="courtName"
+                                name="courtId"
+                                value={formData.courtId}
+                                fullWidth
+                                onChange={handleChange}
                                 required
                                 size="small"
-                            />
-                            )}
-                        />
+                                SelectProps={{
+                                    sx: {
+                                        textAlign: 'left',
+                                        borderRadius: '8px'
+                                    }
+                                }}
+                            >
+                                <MenuItem value=""></MenuItem>
+                                {courts.map(court => (
+                                    <MenuItem key={court.id} value={court.id}>
+                                        {court.name}
+                                    </MenuItem>
+                                ))}
+                            </CustomInput>
 
-                        <CustomInput
-                            select
-                            label={dictionary.addReservationForClientPage.courtNameLabel}
-                            id="courtName"
-                            name="courtId"
-                            value={formData.courtId}
-                            fullWidth
-                            onChange={handleChange}
-                            required
-                            size="small"
-                            SelectProps={{
-                                sx: { 
-                                    textAlign: 'left',
-                                    borderRadius: '8px'
-                                }
-                            }}
-                        >
-                            <MenuItem value=""></MenuItem>
-                            {courts.map(court => (
-                                <MenuItem key={court.id} value={court.id}>
-                                    {court.name}
-                                </MenuItem>
-                            ))}
-                        </CustomInput>
-
-                        <div style={{
-                            width: '100%',
-                            marginBottom: '8px'
-                        }}>
-                            <label style={{
-                                display: 'block',
-                                marginBottom: '8px',
-                                fontSize: '16px',
-                                color: 'rgba(0, 0, 0, 0.87)'
+                            <div style={{
+                                width: '100%',
+                                marginBottom: '8px'
                             }}>
-                                {dictionary.addReservationForClientPage.startTimeLabel}
-                            </label>
-                            <DatePicker
-                                selected={formData.startTime}
-                                onChange={handleStartTimeChange}
-                                showTimeSelect
-                                timeFormat="HH:mm"
-                                timeIntervals={30}
-                                dateFormat="Pp"
-                                minDate={new Date()}
-                                locale="pl"
-                                filterTime={filterPassedTime}
-                                excludeTimes={excludedTimes}
-                                placeholderText={dictionary.addReservationForClientPage.chooseStartTimeLabel}
-                                disabled={!formData.courtId}
-                                className="custom-datepicker-input"
-                                calendarClassName="custom-datepicker-calendar"
-                                timeClassName={() => "custom-time-slot"}
-                                required
-                            />
-                            {startTimeError && (
-                                <div style={{ color: 'red', fontSize: '0.8rem', marginTop: '4px' }}>
-                                    {dictionary.addReservationForClientPage.startTimeError}
-                                </div>
-                            )}
-                        </div>
-
-                        <div style={{
-                            width: '100%',
-                            marginBottom: '8px'
-                        }}>
-                            <label style={{
-                                display: 'block',
-                                marginBottom: '8px',
-                                fontSize: '16px',
-                                color: 'rgba(0, 0, 0, 0.87)'
-                            }}>
-                                {dictionary.addReservationForClientPage.endTimeLabel}
-                            </label>
-                            <DatePicker
-                                selected={formData.endTime}
-                                onChange={handleEndTimeChange}
-                                showTimeSelect
-                                timeFormat="HH:mm"
-                                timeIntervals={30}
-                                dateFormat="Pp"
-                                minDate={formData.startTime || new Date()}
-                                locale="pl"
-                                filterTime={(time) => {
-                                    if (!formData.startTime) return false;
-                                    const minEndTime = addMinutes(new Date(formData.startTime), 30);
-                                    if (isBefore(time, minEndTime)) return false;
-                                    const validTimes = getValidEndTimes();
-                                    return validTimes.some(validTime => isSameMinute(validTime, time));
-                                  }}
-                                excludeTimes={excludedTimes}
-                                placeholderText={dictionary.addReservationForClientPage.chooseEndTimeLabel}
-                                disabled={!formData.courtId}
-                                className="custom-datepicker-input"
-                                calendarClassName="custom-datepicker-calendar"
-                                timeClassName={() => "custom-time-slot"}
-                                required
-                            />
-                            {endTimeE && (
-                                <div style={{ color: 'red', fontSize: '0.8rem', marginTop: '4px' }}>
-                                    {endTimeErrorMessage}
-                                </div>
-                            )}
-                        </div>
-
-                        <CustomInput
-                            select
-                            label={dictionary.addReservationForClientPage.trainerNameLabel}
-                            id="trainerName"
-                            name="trainerId"
-                            value={formData.trainerId}
-                            fullWidth
-                            onChange={handleChange}
-                            required
-                            size="small"
-                            SelectProps={{
-                                sx: { textAlign: 'left' }
-                            }}
-                            disabled={!formData.startTime || !formData.endTime}
-                        >
-                            <MenuItem value=""></MenuItem>
-                            {availableTrainers.map(trainer => (
-                                <MenuItem key={trainer.id} value={trainer.id}>
-                                    {trainer.fullName}
-                                </MenuItem>
-                            ))}
-                        </CustomInput>
-
-                        <CustomInput
-                            label={dictionary.addReservationForClientPage.participantsCountLabel}
-                            type="number"
-                            id="participantsCount"
-                            name="participantsCount"
-                            fullWidth
-                            value={formData.participantsCount}
-                            onChange={handleChange}
-                            error={participantsCountError}
-                            helperText={participantsCountError ? dictionary.addReservationForClientPage.participantsCountError : ""}
-                            size="small"
-                            required
-                        />
-
-                        <FormControlLabel
-                            control={
-                                <Checkbox
-                                    id="isEquipmentReserved"
-                                    name="isEquipmentReserved"
-                                    checked={formData.isEquipmentReserved}
-                                    onChange={handleChange}
-                                    sx={{
-                                        color: "#8edfb4",
-                                        '&.Mui-checked': {
-                                            color: "#8edfb4",
-                                        },
-                                    }}
+                                <label style={{
+                                    display: 'block',
+                                    marginBottom: '8px',
+                                    fontSize: '16px',
+                                    color: 'rgba(0, 0, 0, 0.87)'
+                                }}>
+                                    {dictionary.addReservationForClientPage.startTimeLabel}
+                                </label>
+                                <DatePicker
+                                    selected={formData.startTime}
+                                    onChange={handleStartTimeChange}
+                                    showTimeSelect
+                                    timeFormat="HH:mm"
+                                    timeIntervals={30}
+                                    dateFormat="Pp"
+                                    minDate={new Date()}
+                                    locale="pl"
+                                    filterTime={filterPassedTime}
+                                    excludeTimes={excludedTimes}
+                                    placeholderText={dictionary.addReservationForClientPage.chooseStartTimeLabel}
+                                    disabled={!formData.courtId}
+                                    className="custom-datepicker-input"
+                                    calendarClassName="custom-datepicker-calendar"
+                                    timeClassName={() => "custom-time-slot"}
+                                    required
                                 />
-                            }
-                            label={dictionary.addReservationForClientPage.isEquipmentReservedLabel}
-                        />
-                        {isEquipmentReservedError && (
-                            <div style={{ color: 'red', fontSize: '0.8rem', marginTop: '4px' }}>
-                                {dictionary.addReservationForClientfPage.isEquipmentReservedError}
+                                {startTimeError && (
+                                    <div style={{ color: 'red', fontSize: '0.8rem', marginTop: '4px' }}>
+                                        {dictionary.addReservationForClientPage.startTimeError}
+                                    </div>
+                                )}
                             </div>
-                        )}
 
-                        <CustomInput
-                            select
-                            label={dictionary.addReservationForClientPage.recurrenceLabel}
-                            id="recurrence"
-                            name="recurrence"
-                            value={formData.recurrence}
-                            fullWidth
-                            onChange={handleChange}
-                            size="small"
-                            SelectProps={{
-                                sx: { 
-                                    textAlign: 'left',
-                                    borderRadius: '8px'
+                            <div style={{
+                                width: '100%',
+                                marginBottom: '8px'
+                            }}>
+                                <label style={{
+                                    display: 'block',
+                                    marginBottom: '8px',
+                                    fontSize: '16px',
+                                    color: 'rgba(0, 0, 0, 0.87)'
+                                }}>
+                                    {dictionary.addReservationForClientPage.endTimeLabel}
+                                </label>
+                                <DatePicker
+                                    selected={formData.endTime}
+                                    onChange={handleEndTimeChange}
+                                    showTimeSelect
+                                    timeFormat="HH:mm"
+                                    timeIntervals={30}
+                                    dateFormat="Pp"
+                                    minDate={formData.startTime || new Date()}
+                                    locale="pl"
+                                    filterTime={(time) => {
+                                        if (!formData.startTime) return false;
+                                        const minEndTime = addMinutes(new Date(formData.startTime), 30);
+                                        if (isBefore(time, minEndTime)) return false;
+                                        const validTimes = getValidEndTimes();
+                                        return validTimes.some(validTime => isSameMinute(validTime, time));
+                                    }}
+                                    excludeTimes={excludedTimes}
+                                    placeholderText={dictionary.addReservationForClientPage.chooseEndTimeLabel}
+                                    disabled={!formData.courtId}
+                                    className="custom-datepicker-input"
+                                    calendarClassName="custom-datepicker-calendar"
+                                    timeClassName={() => "custom-time-slot"}
+                                    required
+                                />
+                                {endTimeE && (
+                                    <div style={{ color: 'red', fontSize: '0.8rem', marginTop: '4px' }}>
+                                        {endTimeErrorMessage}
+                                    </div>
+                                )}
+                            </div>
+
+                            <CustomInput
+                                select
+                                label={dictionary.addReservationForClientPage.trainerNameLabel}
+                                id="trainerName"
+                                name="trainerId"
+                                value={formData.trainerId}
+                                fullWidth
+                                onChange={handleChange}
+                                required
+                                size="small"
+                                SelectProps={{
+                                    sx: { textAlign: 'left' }
+                                }}
+                                disabled={!formData.startTime || !formData.endTime}
+                            >
+                                <MenuItem value=""></MenuItem>
+                                {availableTrainers.map(trainer => (
+                                    <MenuItem key={trainer.id} value={trainer.id}>
+                                        {trainer.fullName}
+                                    </MenuItem>
+                                ))}
+                            </CustomInput>
+
+                            <CustomInput
+                                label={dictionary.addReservationForClientPage.participantsCountLabel}
+                                type="number"
+                                id="participantsCount"
+                                name="participantsCount"
+                                fullWidth
+                                value={formData.participantsCount}
+                                onChange={handleChange}
+                                error={participantsCountError}
+                                helperText={participantsCountError ? dictionary.addReservationForClientPage.participantsCountError : ""}
+                                size="small"
+                                required
+                            />
+
+                            <FormControlLabel
+                                control={
+                                    <Checkbox
+                                        id="isEquipmentReserved"
+                                        name="isEquipmentReserved"
+                                        checked={formData.isEquipmentReserved}
+                                        onChange={handleChange}
+                                        sx={{
+                                            color: "#8edfb4",
+                                            '&.Mui-checked': {
+                                                color: "#8edfb4",
+                                            },
+                                        }}
+                                    />
                                 }
-                            }}
-                        >
-                            <MenuItem value="">{dictionary.addReservationForClientPage.recurrenceOptions?.None || 'Brak'}</MenuItem>
-                            <MenuItem value="Daily">{dictionary.addReservationForClientPage.recurrenceOptions.Daily}</MenuItem>
-                            <MenuItem value="Weekly">{dictionary.addReservationForClientPage.recurrenceOptions.Weekly}</MenuItem>
-                            <MenuItem value="BiWeekly">{dictionary.addReservationForClientPage.recurrenceOptions.BiWeekly}</MenuItem>
-                            <MenuItem value="Monthly">{dictionary.addReservationForClientPage.recurrenceOptions.Monthly}</MenuItem>
-                        </CustomInput>
+                                label={dictionary.addReservationForClientPage.isEquipmentReservedLabel}
+                            />
+                            {isEquipmentReservedError && (
+                                <div style={{ color: 'red', fontSize: '0.8rem', marginTop: '4px' }}>
+                                    {dictionary.addReservationForClientfPage.isEquipmentReservedError}
+                                </div>
+                            )}
 
-                        <CustomInput
-                            label={dictionary.addReservationForClientPage.recurrenceEndDateLabel}
-                            type="date"
-                            id="recurrenceEndDate"
-                            name="recurrenceEndDate"
-                            fullWidth
-                            value={formData.recurrenceEndDate}
-                            onChange={handleChange}
-                            error={recurrenceEndDateError}
-                            helperText={recurrenceEndDateError ? dictionary.addReservationForClientPage.recurrenceEndDateError : ""}
-                            size="small"
-                            InputLabelProps={{
-                                shrink: true
-                            }}
-                        />
+                            <CustomInput
+                                select
+                                label={dictionary.addReservationForClientPage.recurrenceLabel}
+                                id="recurrence"
+                                name="recurrence"
+                                value={formData.recurrence}
+                                fullWidth
+                                onChange={handleChange}
+                                size="small"
+                                SelectProps={{
+                                    sx: {
+                                        textAlign: 'left',
+                                        borderRadius: '8px'
+                                    }
+                                }}
+                            >
+                                <MenuItem value="">{dictionary.addReservationForClientPage.recurrenceOptions?.None || 'Brak'}</MenuItem>
+                                <MenuItem value="Daily">{dictionary.addReservationForClientPage.recurrenceOptions.Daily}</MenuItem>
+                                <MenuItem value="Weekly">{dictionary.addReservationForClientPage.recurrenceOptions.Weekly}</MenuItem>
+                                <MenuItem value="BiWeekly">{dictionary.addReservationForClientPage.recurrenceOptions.BiWeekly}</MenuItem>
+                                <MenuItem value="Monthly">{dictionary.addReservationForClientPage.recurrenceOptions.Monthly}</MenuItem>
+                            </CustomInput>
 
-                        <GreenButton type="submit">{dictionary.addReservationForClientPage.confirmLabel}</GreenButton>
-                    </Box>
-                </form>
-            </OrangeBackground>
-        </GreenBackground>
-        
-    </>
+                            <CustomInput
+                                label={dictionary.addReservationForClientPage.recurrenceEndDateLabel}
+                                type="date"
+                                id="recurrenceEndDate"
+                                name="recurrenceEndDate"
+                                fullWidth
+                                value={formData.recurrenceEndDate}
+                                onChange={handleChange}
+                                error={recurrenceEndDateError}
+                                helperText={recurrenceEndDateError ? dictionary.addReservationForClientPage.recurrenceEndDateError : ""}
+                                size="small"
+                                InputLabelProps={{
+                                    shrink: true
+                                }}
+                            />
+
+                            <GreenButton type="submit">{dictionary.addReservationForClientPage.confirmLabel}</GreenButton>
+                        </Box>
+                    </form>
+                </OrangeBackground>
+            </GreenBackground>
+
+        </>
     )
-  }
+}

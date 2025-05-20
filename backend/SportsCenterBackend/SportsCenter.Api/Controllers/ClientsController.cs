@@ -16,6 +16,7 @@ using SportsCenter.Application.Clients.Commands.AddDepositYourself;
 using SportsCenter.Application.Clients.Commands.UpdateClientDeposit;
 using SportsCenter.Application.Clients.Commands.UpdateDiscount;
 using SportsCenter.Application.Clients.Queries.GetClientBalance;
+using SportsCenter.Application.Clients.Queries.GetTop10Clients;
 using static System.Net.Mime.MediaTypeNames;
 using SportsCenter.Application.Clients.Queries.GetClientByEmail;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
@@ -280,6 +281,16 @@ public class ClientsController : BaseController
     
         var balance = await Mediator.Send(new GetClientBalance(clientId));
         return Ok(balance);
+    }
+
+    [Authorize(Roles = "Pracownik administracyjny,Wlasciciel")]
+    [HttpGet("top10")]
+    public async Task<IActionResult> GetTop10ClientsAsync([FromQuery] string? text = null)
+    {
+        var query = new GetTop10Clients(text);
+
+        var clients = await Mediator.Send(query);
+        return Ok(clients);
     }
 }
 

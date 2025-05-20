@@ -119,7 +119,7 @@ export default function SportActivities() {
                 }}
             >
                 <Header>{dictionary.sportActivitiesPage.sportActivitiesLabel}</Header>
-                {role === 'Wlascicel' && (
+                {role === 'Wlasciciel' && (
                 <Box
                     sx={{
                         backgroundColor: '#eafaf1',
@@ -278,7 +278,7 @@ export default function SportActivities() {
                             <ActivitiesButton backgroundColor={"#f0aa4f"} onClick={() => handleShowMoreInfo(activity.sportActivityId)} minWidth={'6vw'}>
                                 {dictionary.sportActivitiesPage.moreInfoLabel}
                             </ActivitiesButton>
-                             {role === 'Wlascicel' && (
+                             {role === 'Wlasciciel' && (
                             <ActivitiesButton backgroundColor={"#F46C63"}onClick={() => handleOpenModal(activity)} minWidth={'6vw'}>
                                 {dictionary.sportActivitiesPage.deleteActivityLabel}
                             </ActivitiesButton>    

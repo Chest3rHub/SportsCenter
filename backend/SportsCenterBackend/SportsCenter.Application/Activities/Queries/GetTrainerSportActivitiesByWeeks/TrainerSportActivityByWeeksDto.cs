@@ -1,12 +1,13 @@
-﻿using System;
+﻿using MediatR.NotificationPublishers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SportsCenter.Application.Activities.Queries.GetYourSportActivitiesByWeeks
+namespace SportsCenter.Application.Activities.Queries.GetTrainerSportActivitiesByWeeks
 {
-    public class YourSportActivityByWeeksDto
+    public class TrainerSportActivityByWeeksDto
     {
         public int? InstanceOfActivityId { get; set; }
         public int? ReservationId { get; set; }
@@ -18,12 +19,10 @@ namespace SportsCenter.Application.Activities.Queries.GetYourSportActivitiesByWe
         public TimeSpan EndTime { get; set; }
         public string LevelName { get; set; }
         public int EmployeeId { get; set; }
+        public string ClientName { get; set; }
+        public string ClientSurame { get; set; }
         public string CourtName { get; set; }
-        public decimal? CostWithoutEquipment { get; set; }
-        public decimal? CostWithEquipment { get; set; }
-        public decimal reservationCost { get; set; }
         public string IsEquipmentReserved { get; set; }
-        public string IsActivityPaid { get; set; }
         public string IsActivityCanceled { get; set; }
         public string Type { get; set; }
     }

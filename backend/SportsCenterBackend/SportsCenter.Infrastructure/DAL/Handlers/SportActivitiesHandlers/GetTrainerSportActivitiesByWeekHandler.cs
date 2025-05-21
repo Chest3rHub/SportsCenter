@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
+using SportsCenter.Application.Activities.Queries.GetTrainerSportActivitiesByWeeks;
 using SportsCenter.Application.Activities.Queries.GetYourSportActivitiesByWeeks;
 using System;
 using System.Collections.Generic;
@@ -10,19 +11,19 @@ using System.Threading.Tasks;
 
 namespace SportsCenter.Infrastructure.DAL.Handlers.SportActivitiesHandlers
 {
-    internal class GetYourSportActivitiesByWeeksHandler : IRequestHandler<GetYourSportActivitiesByWeeks, IEnumerable<YourSportActivityByWeeksDto>>
+    internal class GetTrainerSportActivitiesByWeekHandler : IRequestHandler<GetTrainerSportActivitiesByWeek, IEnumerable<TrainerSportActivityByWeeksDto>>
     {
 
         private readonly SportsCenterDbContext _dbContext;
         private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public GetYourSportActivitiesByWeeksHandler(SportsCenterDbContext dbContext, IHttpContextAccessor httpContextAccessor)
+        public GetTrainerSportActivitiesByWeekHandler(SportsCenterDbContext dbContext, IHttpContextAccessor httpContextAccessor)
         {
             _dbContext = dbContext;
             _httpContextAccessor = httpContextAccessor;
         }
 
-        public async Task<IEnumerable<YourSportActivityByWeeksDto>> Handle(GetYourSportActivitiesByWeeks request, CancellationToken cancellationToken)
+        public async Task<IEnumerable<TrainerSportActivityByWeeksDto>> Handle(GetTrainerSportActivitiesByWeek request, CancellationToken cancellationToken)
         {
             var userIdClaim = _httpContextAccessor.HttpContext?.User?.FindFirst("userId")?.Value;
 
@@ -43,7 +44,7 @@ namespace SportsCenter.Infrastructure.DAL.Handlers.SportActivitiesHandlers
             DateOnly endDate = DateOnly.FromDateTime(endDateTime);
 
             var sportActivities = await _dbContext.InstancjaZajecKlients
-                .Where(ik => ik.KlientId == userId)
+                .Where(ik => ik.InstancjaZajec.GrafikZajec.PracownikId == userId)
                 .Join(
                     _dbContext.InstancjaZajecs,
                     ik => ik.InstancjaZajecId,
@@ -55,7 +56,7 @@ namespace SportsCenter.Infrastructure.DAL.Handlers.SportActivitiesHandlers
                     _dbContext.GrafikZajecs,
                     combined => combined.iz.GrafikZajecId,
                     g => g.GrafikZajecId,
-                    (combined, g) => new YourSportActivityByWeeksDto
+                    (combined, g) => new TrainerSportActivityByWeeksDto
                     {
                         InstanceOfActivityId = combined.iz.InstancjaZajecId,
                         SportActivityName = g.Zajecia.Nazwa,
@@ -67,12 +68,6 @@ namespace SportsCenter.Infrastructure.DAL.Handlers.SportActivitiesHandlers
                         LevelName = g.Zajecia.IdPoziomZajecNavigation.Nazwa,
                         EmployeeId = g.PracownikId,
                         CourtName = g.Kort.Nazwa,
-                        CostWithoutEquipment = g.KosztBezSprzetu,
-                        CostWithEquipment = g.KosztZeSprzetem,
-                        IsEquipmentReserved = combined.ik.CzyUwzglednicSprzet ? "Tak" : "Nie",
-                        IsActivityPaid = combined.ik.CzyOplacone.HasValue
-                            ? (combined.ik.CzyOplacone.Value ? "Tak" : "Nie")
-                            : "Nie",
                         IsActivityCanceled = combined.iz.CzyOdwolane.HasValue
                             ? (combined.iz.CzyOdwolane.Value ? "Tak" : "Nie")
                             : "Nie"
@@ -83,11 +78,11 @@ namespace SportsCenter.Infrastructure.DAL.Handlers.SportActivitiesHandlers
 
             var reservations = await _dbContext.Rezerwacjas
                 .Include(r => r.Kort)
-                .Where(r => r.KlientId == userId &&
+                .Where(r => r.TrenerId == userId &&
                         r.DataOd >= startDateTime &&
                         r.DataDo <= endDateTime)
-                .Select(r => new YourSportActivityByWeeksDto
-                { 
+                .Select(r => new TrainerSportActivityByWeeksDto
+                {
                     ReservationId = r.RezerwacjaId,
                     Type = "Rezerwacja",
                     SportActivityName = "Rezerwacja",
@@ -96,11 +91,11 @@ namespace SportsCenter.Infrastructure.DAL.Handlers.SportActivitiesHandlers
                     StartTime = r.DataOd.TimeOfDay,
                     DurationInMinutes = (int)(r.DataDo - r.DataOd).TotalMinutes,
                     EndTime = r.DataDo.TimeOfDay,
-                    EmployeeId = (int)r.TrenerId,
-                    CourtName = r.Kort.Nazwa,
-                    reservationCost = r.Koszt,
-                    IsEquipmentReserved = r.CzyUwzglednicSprzet == true ? "Tak" : "Nie",
-                    IsActivityPaid = r.CzyOplacona == true ? "Tak" : "Nie",
+                    EmployeeId = userId,
+                    ClientName = r.Klient.KlientNavigation.Imie,
+                    ClientSurame = r.Klient.KlientNavigation.Nazwisko,
+                    CourtName = r.Kort.Nazwa,                    
+                    IsEquipmentReserved = r.CzyUwzglednicSprzet == true ? "Tak" : "Nie",                 
                     IsActivityCanceled = r.CzyOdwolana == true ? "Tak" : "Nie"
 
                 })
@@ -115,8 +110,6 @@ namespace SportsCenter.Infrastructure.DAL.Handlers.SportActivitiesHandlers
                 .OrderBy(a => a.DateOfActivity)
                 .ThenBy(a => a.StartTime)
                 .ToList();
-
         }
-
     }
 }

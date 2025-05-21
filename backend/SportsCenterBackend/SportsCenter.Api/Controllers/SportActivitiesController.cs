@@ -23,6 +23,7 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 using System.Security.Cryptography;
 using SportsCenter.Application.Activities.Queries.GetYourUpcomingActivities;
 using SportsCenter.Application.Activities.Queries.GetActivitiesLevelNames;
+using SportsCenter.Application.Activities.Queries.GetTrainerSportActivitiesByWeeks;
 
 namespace SportsCenter.Api.Controllers;
 
@@ -238,6 +239,13 @@ namespace SportsCenter.Api.Controllers;
     public async Task<IActionResult> GetYourSportActivitiesByWeeks([FromQuery] int weekOffset = 0)
     {
         return Ok(await Mediator.Send(new GetYourSportActivitiesByWeeks(weekOffset)));
+    }
+
+    [Authorize(Roles = "Trener")]
+    [HttpGet("get-trainer-activities-by-weeks")]
+    public async Task<IActionResult> GetTrainerSportActivitiesByWeeks([FromQuery] int weekOffset = 0)
+    {
+        return Ok(await Mediator.Send(new GetTrainerSportActivitiesByWeek(weekOffset)));
     }
 
     [Authorize(Roles = "Klient")]

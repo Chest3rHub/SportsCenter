@@ -27,6 +27,7 @@ using SportsCenter.Application.Employees.Queries.GetTrainerSchedule;
 using SportsCenter.Application.Employees.Queries.GetTrainers;
 using SportsCenter.Application.Employees.Queries.GetAvailableTrainers;
 using SportsCenter.Application.Employees.Queries.GetEmployeeTasksByOwner;
+using SportsCenter.Application.Employees.Queries.GetTrainerBusyTimes;
 
 
 namespace SportsCenter.Api.Controllers
@@ -413,6 +414,13 @@ namespace SportsCenter.Api.Controllers
             {
                 return StatusCode(500, new { message = "An error occurred while sending the request", details = ex.Message });
             }
+        }
+
+        [Authorize(Roles = "Wlasciciel,Pracownik administracyjny,Klient")]
+        [HttpGet("{trainerId}/busy-times")]
+        public async Task<IActionResult> GetTrainerBusyTimes(int trainerId, [FromQuery] DateTime date, CancellationToken cancellationToken)
+        {
+            return Ok(await Mediator.Send(new GetTrainerBusySlots(trainerId, date)));
         }
     }
 }

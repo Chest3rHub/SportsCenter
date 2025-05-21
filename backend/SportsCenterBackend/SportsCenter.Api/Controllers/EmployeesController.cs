@@ -45,7 +45,7 @@ namespace SportsCenter.Api.Controllers
             return Ok(await Mediator.Send(new GetEmployees(offset)));
         }
 
-        [Authorize(Roles = "Wlasciciel,Klient")]
+        [Authorize(Roles = "Wlasciciel,Klient,Pracownik administracyjny")]
         [HttpGet("get-trainers")]
         public async Task<IActionResult> GetTrainersAsync()
         {
@@ -53,7 +53,7 @@ namespace SportsCenter.Api.Controllers
         }
 
 
-        [Authorize(Roles = "Wlasciciel,Klient")]
+        [Authorize(Roles = "Wlasciciel,Klient,Pracownik administracyjny")]
         [HttpGet("get-available-trainers")]
         public async Task<IActionResult> GetAvailableTrainersAsync([FromQuery] DateTime startTime, [FromQuery] DateTime endTime)
         {    

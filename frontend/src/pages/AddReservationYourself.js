@@ -233,42 +233,42 @@ function AddReservationYourself() {
     };
 
     const getValidEndTimes = () => {
-        if (!formData.startTime) return [];
-      
-        const start = new Date(formData.startTime);
-        const dateStr = format(start, 'yyyy-MM-dd');
-        const dayWorkingHours = workingHours.find(day => day.date === dateStr);
-        
-        if (!dayWorkingHours) return [];
+    if (!formData.startTime) return [];
+  
+    const start = new Date(formData.startTime);
+    const dateStr = format(start, 'yyyy-MM-dd');
+    const dayWorkingHours = workingHours.find(day => day.date === dateStr);
+    
+    if (!dayWorkingHours) return [];
 
-        const [openHour, openMinute] = dayWorkingHours.openHour.split(':').map(Number);
-        const [closeHour, closeMinute] = dayWorkingHours.closeHour.split(':').map(Number);
-        const openTime = setMinutes(setHours(startOfDay(start), openHour), openMinute);
-        const closeTime = setMinutes(setHours(startOfDay(start), closeHour), closeMinute);
+    const [openHour, openMinute] = dayWorkingHours.openHour.split(':').map(Number);
+    const [closeHour, closeMinute] = dayWorkingHours.closeHour.split(':').map(Number);
+    const openTime = setMinutes(setHours(startOfDay(start), openHour), openMinute);
+    const closeTime = setMinutes(setHours(startOfDay(start), closeHour), closeMinute);
 
-        const nextReservation = existingReservations
-          .filter(res => {
-            const resStart = new Date(res.startTime);
-            return format(resStart, 'yyyy-MM-dd') === dateStr && 
-                   isAfter(resStart, start);
-          })
-          .sort((a, b) => new Date(a.startTime) - new Date(b.startTime))[0];
-      
-        const maxEndTime = nextReservation 
-          ? new Date(nextReservation.startTime)
-          : closeTime;
+    const nextReservation = existingReservations
+      .filter(res => {
+        const resStart = new Date(res.startTime);
+        return format(resStart, 'yyyy-MM-dd') === dateStr && 
+               isAfter(resStart, start);
+      })
+      .sort((a, b) => new Date(a.startTime) - new Date(b.startTime))[0];
+  
+    const maxEndTime = nextReservation 
+      ? new Date(nextReservation.startTime)
+      : closeTime;
 
-        const validTimes = [];
-        let currentTime = addMinutes(start, 30);
-        const endTime = isBefore(maxEndTime, closeTime) ? maxEndTime : closeTime;
-      
-        while (isBefore(currentTime, endTime)) {
-          validTimes.push(new Date(currentTime));
-          currentTime = addMinutes(currentTime, 30);
-        }
-      
-        return validTimes;
-      };
+    const validTimes = [];
+    let currentTime = addMinutes(start, 30);
+    const endTime = isBefore(maxEndTime, closeTime) ? maxEndTime : closeTime;
+  
+    while (isBefore(currentTime, endTime) || isSameMinute(currentTime, endTime)) {
+      validTimes.push(new Date(currentTime));
+      currentTime = addMinutes(currentTime, 30);
+    }
+  
+    return validTimes;
+};
 
 
     const filterPassedTime = (time) => {

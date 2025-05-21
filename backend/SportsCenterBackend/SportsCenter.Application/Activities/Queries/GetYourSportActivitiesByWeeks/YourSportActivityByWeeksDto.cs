@@ -8,7 +8,8 @@ namespace SportsCenter.Application.Activities.Queries.GetYourSportActivitiesByWe
 {
     public class YourSportActivityByWeeksDto
     {
-        public int InstanceOfActivityId { get; set; }
+        public int? InstanceOfActivityId { get; set; }
+        public int? ReservationId { get; set; }
         public string SportActivityName { get; set; }
         public DateOnly DateOfActivity { get; set; }
         public string DayOfWeek { get; set; }
@@ -18,10 +19,12 @@ namespace SportsCenter.Application.Activities.Queries.GetYourSportActivitiesByWe
         public string LevelName { get; set; }
         public int EmployeeId { get; set; }
         public string CourtName { get; set; }
-        public decimal CostWithoutEquipment { get; set; }
-        public decimal CostWithEquipment { get; set; }
+        public decimal? CostWithoutEquipment { get; set; }
+        public decimal? CostWithEquipment { get; set; }
+        public decimal reservationCost { get; set; }
         public string IsEquipmentReserved { get; set; }
         public string IsActivityPaid { get; set; }
         public string IsActivityCanceled { get; set; }
+        public string Type { get; set; }
     }
 }

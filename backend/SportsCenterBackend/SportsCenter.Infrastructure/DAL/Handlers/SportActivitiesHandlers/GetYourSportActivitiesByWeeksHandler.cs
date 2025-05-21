@@ -81,7 +81,41 @@ namespace SportsCenter.Infrastructure.DAL.Handlers.SportActivitiesHandlers
                 .ThenBy(activity => activity.StartTime)
                 .ToListAsync(cancellationToken);
 
-            return sportActivities;
+            var reservations = await _dbContext.Rezerwacjas
+                .Include(r => r.Kort)
+                .Where(r => r.KlientId == userId &&
+                        r.DataOd >= startDateTime &&
+                        r.DataDo <= endDateTime)
+                .Select(r => new YourSportActivityByWeeksDto
+                { 
+                    ReservationId = r.RezerwacjaId,
+                    Type = "Rezerwacja",
+                    SportActivityName = "Rezerwacja",
+                    DateOfActivity = DateOnly.FromDateTime(r.DataOd),
+                    DayOfWeek = r.DataOd.DayOfWeek.ToString(),
+                    StartTime = r.DataOd.TimeOfDay,
+                    DurationInMinutes = (int)(r.DataDo - r.DataOd).TotalMinutes,
+                    EndTime = r.DataDo.TimeOfDay,
+                    EmployeeId = (int)r.TrenerId,
+                    CourtName = r.Kort.Nazwa,
+                    reservationCost = r.Koszt,
+                    IsEquipmentReserved = r.CzyUwzglednicSprzet == true ? "Tak" : "Nie",
+                    IsActivityPaid = r.CzyOplacona == true ? "Tak" : "Nie",
+                    IsActivityCanceled = r.CzyOdwolana == true ? "Tak" : "Nie"
+
+                })
+                .OrderBy(reservation => reservation.DateOfActivity)
+                .ThenBy(reservation => reservation.StartTime)
+                .ToListAsync(cancellationToken);
+
+            var allActivities = sportActivities.ToList();
+            allActivities.AddRange(reservations);
+
+            return allActivities
+                .OrderBy(a => a.DateOfActivity)
+                .ThenBy(a => a.StartTime)
+                .ToList();
+
         }
 
     }

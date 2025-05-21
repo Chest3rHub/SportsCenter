@@ -42,6 +42,7 @@ import AddReservationForClient from "../pages/AddReservationForClient";
 import GetReservationInfo from "../pages/GetReservationInfo";
 import ReservationsSummary from "../pages/ReservationsSummary";
 import MyTimetable from "../pages/MyTimetable";
+import RegisterEmployee from "../pages/RegisterEmployee";
 
 // pozmieniac dla klienta na komponenty trasy itd
 
@@ -227,6 +228,10 @@ const clientRouter = [
                 {
                     path: "/reservation-summary",
                     element: <ReservationsSummary />
+                },
+                {
+                    path: "/register-employee",
+                    element: <RegisterEmployee />
                 },
                 {
                     path: "*",

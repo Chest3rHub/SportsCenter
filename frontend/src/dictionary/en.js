@@ -58,6 +58,10 @@ export default {
     birthDateError: 'You must be at least 18 years old.',
     phoneNumberError: 'Phone number must be in a valid format (e.g. 123456789)',
     emailTakenError: "Email is already in use.",
+    positionLabel: 'Position',
+    positionError: 'Please choose the position',
+    registerEmpTitle: 'Register Employee',
+    registerEmpConfirmLabel: 'Confirm registration',
   },
   loginPage: {
     title: 'Login',
@@ -183,6 +187,7 @@ export default {
     confirmLabel: 'Confirm fire:',
     noLabel: 'No',
     yesLabel: 'Yes',
+    registerEmployeeLabel: 'Register employee',
   },
   accountPage: {
     title: 'My account',

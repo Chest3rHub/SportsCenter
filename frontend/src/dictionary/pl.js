@@ -64,6 +64,10 @@ export default {
     birthDateError: 'Musisz mieć co najmniej 18 lat.',
     phoneNumberError: 'Numer telefonu musi być w poprawnym formacie (np. 123456789).',
     emailTakenError: 'Podany adres e-mail jest już zajęty.',
+    positionLabel: 'Stanowisko',
+    positionError: 'Proszę wybrać stanowisko',
+    registerEmpTitle: 'Rejestracja pracownika',
+    registerEmpConfirmLabel: 'Zarejestruj'
   },
   loginPage: {
     title: 'Logowanie',
@@ -191,6 +195,7 @@ export default {
     confirmLabel: 'Potwierdź zwolnienie:',
     noLabel: 'Nie',
     yesLabel: 'Tak',
+    registerEmployeeLabel: 'Dodaj pracownika',
   },
   accountPage: {
     title: 'Moje konto',

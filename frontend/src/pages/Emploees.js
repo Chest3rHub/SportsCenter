@@ -79,154 +79,175 @@ export default function Employees() {
         setOffset(prevOffset => prevOffset - 1);
     };
 
+    function handleRegisterEmployee() {
+        navigate('/register-employee');
+    }
+
     const limitedEmployees = employees.slice(0, maxEmployeesPerPage);
 
     return (
-        <>
+    <>
+        <Box
+            sx={{
+                width: '64%',
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'center',
+                flexGrow: 1,
+                marginLeft: 'auto',
+                marginRight: 'auto',
+                position: 'relative'
+            }}
+        >
+            <Header>{dictionary.employeesPage.employeesLabel}</Header>
             <Box
                 sx={{
-                    width: '64%',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    justifyContent: 'center',
-                    flexGrow: 1,
-                    marginLeft: 'auto',
-                    marginRight: 'auto',
+                    position: 'absolute',
+                    top: '0px',
+                    right: '-200px',
                 }}
             >
-                <Header>{dictionary.employeesPage.employeesLabel}</Header>
+                <GreenButton 
+                    onClick={handleRegisterEmployee} 
+                    style={{ minWidth: '12vw' }}
+                >
+                    {dictionary.employeesPage.registerEmployeeLabel}
+                </GreenButton>
+            </Box>
+
+            <Box
+                sx={{
+                    position: 'relative',
+                    height: '55vh',
+                    borderRadius: '20px',
+                    boxShadow: '0 10px 20px rgba(0, 0, 0, 0.2)',
+                    backgroundColor: 'white',
+                    padding: '1.35rem',
+                }}
+            >
                 <Box
                     sx={{
-                        height: '55vh',
-                        borderRadius: '20px',
-                        boxShadow: '0 10px 20px rgba(0, 0, 0, 0.2)',
-                        backgroundColor: 'white',
-                        padding: '1.35rem',
+                        display: 'flex',
+                        alignContent: 'start',
+                        alignItems: 'center',
+                        width: '80%',
+                        gap: '2%',
+                        marginBottom: '3vh',
+                    }}
+                >
+                    <SmallGreenHeader width={'37%'}>{dictionary.employeesPage.employeeLabel}</SmallGreenHeader>
+                    <SmallGreenHeader width={'37%'}>{dictionary.employeesPage.positionLabel}</SmallGreenHeader>
+                </Box>
+                {limitedEmployees.map((employee) => (<Box
+                    sx={{
+                        marginTop: '1vh',
+                        display: 'flex',
+                        alignContent: 'start',
+                        alignItems: 'center',
+                        width: '100%',
+                        padding: '0.6rem 0px',
+                        // tutaj pracownik juz tzn imie nazwisko stanowisko
                     }}
                 >
                     <Box
                         sx={{
+                            width: '60.8%',
+                            borderRadius: '70px',
+                            backgroundColor: employee.fireDate ? '#ffe6e6' : 'white',
+                            boxShadow: '0 5px 5px rgb(0, 0, 0, 0.6)',
                             display: 'flex',
-                            alignContent: 'start',
+                            justifyContent: 'space-between',
                             alignItems: 'center',
-                            width: '80%',
-                            gap: '2%',
-                            marginBottom: '3vh',
-                        }}
-                    >
-                        <SmallGreenHeader width={'37%'}>{dictionary.employeesPage.employeeLabel}</SmallGreenHeader>
-                        <SmallGreenHeader width={'37%'}>{dictionary.employeesPage.positionLabel}</SmallGreenHeader>
-                    </Box>
-                    {limitedEmployees.map((employee) => (<Box
-                        sx={{
-                            marginTop: '1vh',
-                            display: 'flex',
-                            alignContent: 'start',
-                            alignItems: 'center',
-                            width: '100%',
-                            padding: '0.6rem 0px',
-                            // tutaj pracownik juz tzn imie nazwisko stanowisko
+                            paddingTop: '0.6rem',
+                            paddingBottom: '0.4rem',
                         }}
                     >
                         <Box
                             sx={{
-                                width: '60.8%',
-                                borderRadius: '70px',
-                                backgroundColor: employee.fireDate ? '#ffe6e6' : 'white',
-                                boxShadow: '0 5px 5px rgb(0, 0, 0, 0.6)',
-                                display: 'flex',
-                                justifyContent: 'space-between',
-                                alignItems: 'center',
-                                paddingTop: '0.6rem',
-                                paddingBottom: '0.4rem',
+                                width: '50%',
+                                textAlign: 'center',
                             }}
                         >
-                            <Box
-                                sx={{
-                                    width: '50%',
-                                    textAlign: 'center',
-                                }}
-                            >
-                                <Typography>
-                                    {employee.fullName}
-                                </Typography>
-                            </Box>
-                            <Box
-                                sx={{
-                                    width: '50%',
-                                    textAlign: 'center',
-
-
-                                }}
-                            >
-                                <Typography>
-                                    {employee.role}
-                                </Typography>
-                            </Box>
+                            <Typography>
+                                {employee.fullName}
+                            </Typography>
                         </Box>
-                        <EmployeesButton backgroundColor={"#f0aa4f"} onClick={() => handleChangeEmployeePassword(employee.id)} minWidth={'11vw'}>
-                            {dictionary.employeesPage.changePasswordLabel}
-                        </EmployeesButton>
-                        {!employee.fireDate ? <EmployeesButton backgroundColor={"#F46C63"} onClick={() => handleOpen(employee)} minWidth={'11vw'}>
-                            {dictionary.employeesPage.fireLabel}
-                        </EmployeesButton> : <EmployeesButton backgroundColor={"#F46C63"} onClick={() => { }} minWidth={'11vw'} disabled={employee.fireDate}>
-                            {employee.fireDate}
-                        </EmployeesButton>}
+                        <Box
+                            sx={{
+                                width: '50%',
+                                textAlign: 'center',
 
-                    </Box>))}
-                </Box>
-                <Modal
-                    open={selectedEmployee}
-                    onClose={handleClose}
-                >
-                    <Box
-                        sx={{
-                            width: '30vw',
-                            height: '30vh',
-                            position: 'absolute',
-                            top: '50vh',
-                            left: '50vw',
-                            transform: 'translate(-50%, -50%)',
-                            backgroundColor: 'white',
-                            borderRadius: '10px',
-                            boxShadow: 24,
-                            display: 'flex',
-                            flexDirection: 'column',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                        }}
-                    >
-                        <Typography sx={{
-                            fontWeight: 'Bold',
-                            fontSize: '2.2rem',
-                            marginTop: '1vh',
-                        }} >
-                            {dictionary.employeesPage.confirmLabel}
-                        </Typography>
-                        <Typography sx={{
-                            color: 'black',
-                            fontSize: '1.5rem',
-                        }}>{selectedEmployee ? selectedEmployee.fullName : ''}</Typography>
-                        <Box sx={{ display: 'flex', gap: '3rem', marginTop: '1rem' }}>
-                            <GreenButton onClick={() => { handleClose() }} style={{ maxWidth: "10vw", backgroundColor: "#F46C63", minWidth: '7vw' }} hoverBackgroundColor={'#c3564f'}>{dictionary.employeesPage.noLabel}</GreenButton>
-                            <GreenButton onClick={() => { handleFireEmployee(selectedEmployee.id) }} style={{ maxWidth: "10vw", minWidth: '7vw' }}>{dictionary.employeesPage.yesLabel}</GreenButton>
+
+                            }}
+                        >
+                            <Typography>
+                                {employee.role}
+                            </Typography>
                         </Box>
                     </Box>
-                </Modal>
-                {<Box sx={{
-                    display: "flex",
-                    flexDirection: "row",
-                    justifyContent: 'center',
-                    columnGap: "4vw",
-                    marginTop: '5vh',
+                    <EmployeesButton backgroundColor={"#f0aa4f"} onClick={() => handleChangeEmployeePassword(employee.id)} minWidth={'11vw'}>
+                        {dictionary.employeesPage.changePasswordLabel}
+                    </EmployeesButton>
+                    {!employee.fireDate ? <EmployeesButton backgroundColor={"#F46C63"} onClick={() => handleOpen(employee)} minWidth={'11vw'}>
+                        {dictionary.employeesPage.fireLabel}
+                    </EmployeesButton> : <EmployeesButton backgroundColor={"#F46C63"} onClick={() => { }} minWidth={'11vw'} disabled={employee.fireDate}>
+                        {employee.fireDate}
+                    </EmployeesButton>}
 
-
-                }}>
-                    <ChangePageButton disabled={offset === 0} onClick={handlePreviousPage} backgroundColor={"#F46C63"} minWidth={"10vw"}>{dictionary.newsPage.previousLabel}</ChangePageButton>
-                    <ChangePageButton disabled={employees.length < employeesRequiredToEnablePagination} onClick={handleNextPage} backgroundColor={"#8edfb4"} minWidth={"10vw"}>{dictionary.newsPage.nextLabel}</ChangePageButton>
-                </Box>}
+                </Box>))}
             </Box>
-        </>
+            <Modal
+                open={selectedEmployee}
+                onClose={handleClose}
+            >
+                <Box
+                    sx={{
+                        width: '30vw',
+                        height: '30vh',
+                        position: 'absolute',
+                        top: '50vh',
+                        left: '50vw',
+                        transform: 'translate(-50%, -50%)',
+                        backgroundColor: 'white',
+                        borderRadius: '10px',
+                        boxShadow: 24,
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                    }}
+                >
+                    <Typography sx={{
+                        fontWeight: 'Bold',
+                        fontSize: '2.2rem',
+                        marginTop: '1vh',
+                    }} >
+                        {dictionary.employeesPage.confirmLabel}
+                    </Typography>
+                    <Typography sx={{
+                        color: 'black',
+                        fontSize: '1.5rem',
+                    }}>{selectedEmployee ? selectedEmployee.fullName : ''}</Typography>
+                    <Box sx={{ display: 'flex', gap: '3rem', marginTop: '1rem' }}>
+                        <GreenButton onClick={() => { handleClose() }} style={{ maxWidth: "10vw", backgroundColor: "#F46C63", minWidth: '7vw' }} hoverBackgroundColor={'#c3564f'}>{dictionary.employeesPage.noLabel}</GreenButton>
+                        <GreenButton onClick={() => { handleFireEmployee(selectedEmployee.id) }} style={{ maxWidth: "10vw", minWidth: '7vw' }}>{dictionary.employeesPage.yesLabel}</GreenButton>
+                    </Box>
+                </Box>
+            </Modal>
+            {<Box sx={{
+                display: "flex",
+                flexDirection: "row",
+                justifyContent: 'center',
+                columnGap: "4vw",
+                marginTop: '5vh',
+
+
+            }}>
+                <ChangePageButton disabled={offset === 0} onClick={handlePreviousPage} backgroundColor={"#F46C63"} minWidth={"10vw"}>{dictionary.newsPage.previousLabel}</ChangePageButton>
+                <ChangePageButton disabled={employees.length < employeesRequiredToEnablePagination} onClick={handleNextPage} backgroundColor={"#8edfb4"} minWidth={"10vw"}>{dictionary.newsPage.nextLabel}</ChangePageButton>
+            </Box>}
+        </Box>
+    </>
     );
 
 }

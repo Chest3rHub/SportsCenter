@@ -17,7 +17,7 @@ namespace SportsCenter.Infrastructure.DAL.Repositories
         {
             _dbContext = dbContext;
         }
-        public async Task<bool> IsCourtAvailableAsync(int courtId, DateTime startTime, DateTime endTime, CancellationToken cancellationToken)
+        public async Task<bool> IsCourtAvailableAsync(int courtId, DateTime startTime, DateTime endTime, CancellationToken cancellationToken, int? reservationIdToExclude = null)
         {
             var dniTygodnia = new Dictionary<DayOfWeek, string>
             {
@@ -29,22 +29,35 @@ namespace SportsCenter.Infrastructure.DAL.Repositories
                 { DayOfWeek.Saturday, "sobota" },
                 { DayOfWeek.Sunday, "niedziela" }
             };
-         
+
             string dayOfWeek = dniTygodnia[startTime.DayOfWeek];
 
             double startHourInMinutes = startTime.TimeOfDay.TotalMinutes;
             double endHourInMinutes = endTime.TimeOfDay.TotalMinutes;
 
-            bool isReserved = await _dbContext.Rezerwacjas
+            bool isReserved;
+
+            if (reservationIdToExclude is null)
+            {
+                isReserved = await _dbContext.Rezerwacjas
                 .AnyAsync(r => r.KortId == courtId &&
                                r.DataOd < endTime &&
                                r.DataDo > startTime &&
                                r.CzyOdwolana == false, cancellationToken);
+            }
+            else
+            {
+                isReserved = await _dbContext.Rezerwacjas
+                .Where(r => r.KortId == courtId && r.CzyOdwolana == false)
+                .Where(r => !reservationIdToExclude.HasValue || r.RezerwacjaId != reservationIdToExclude.Value)
+                .AnyAsync(r => r.DataOd < endTime &&
+                               r.DataDo > startTime, cancellationToken);
+            }
 
             var activity = await _dbContext.GrafikZajecs
                 .Where(gz => gz.KortId == courtId && gz.DzienTygodnia == dayOfWeek)
                 .ToListAsync(cancellationToken);
-     
+
             bool hasOverlappingClasses = activity.Any(gz =>
             {
                 double zajeciaEndMinutes = gz.GodzinaOd.TotalMinutes + gz.CzasTrwania; // czas zakończenia zajęć

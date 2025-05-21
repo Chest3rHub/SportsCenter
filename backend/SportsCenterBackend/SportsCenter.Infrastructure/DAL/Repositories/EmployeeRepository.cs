@@ -133,7 +133,7 @@ namespace SportsCenter.Infrastructure.DAL.Repositories
 
             var certificat = await _dbContext.Certyfikats
                 .FirstAsync(c => c.CertyfikatId == certificate.CertyfikatId, cancellationToken);
-           
+
             _dbContext.Certyfikats.Remove(certificat);
             await _dbContext.SaveChangesAsync(cancellationToken);
         }
@@ -219,7 +219,7 @@ namespace SportsCenter.Infrastructure.DAL.Repositories
             return availableTrainers;
         }
 
-        public async Task<TrainerAvailabilityStatus> IsTrainerAvailableAsync(int trainerId, DateTime requestedStart, int startHourInMinutes, int endHourInMinutes, CancellationToken cancellationToken)
+        public async Task<TrainerAvailabilityStatus> IsTrainerAvailableAsync(int trainerId, DateTime requestedStart, int startHourInMinutes, int endHourInMinutes, CancellationToken cancellationToken, int? reservationIdToExclude = null)
         {
             DateTime requestedStartTime = requestedStart.Date.AddMinutes(startHourInMinutes);
             DateTime requestedEndTime = requestedStart.Date.AddMinutes(endHourInMinutes);
@@ -231,14 +231,29 @@ namespace SportsCenter.Infrastructure.DAL.Repositories
 
             if (isFired != null) return TrainerAvailabilityStatus.IsFired;
 
-            var hasReservations = await _dbContext.Rezerwacjas
-                .AnyAsync(r =>
-                    r.TrenerId == trainerId &&
-                    r.CzyOdwolana == false &&
-                    ((requestedStartTime >= r.DataOd && requestedStartTime < r.DataDo) ||
-                     (requestedEndTime > r.DataOd && requestedEndTime <= r.DataDo) ||
-                     (requestedStartTime <= r.DataOd && requestedEndTime >= r.DataDo)),
-                    cancellationToken);
+            bool hasReservations;
+
+            if (reservationIdToExclude is null)
+            {
+                hasReservations = await _dbContext.Rezerwacjas
+                    .AnyAsync(r =>
+                        r.TrenerId == trainerId &&
+                        r.CzyOdwolana == false &&
+                        r.DataOd < requestedEndTime &&
+                        r.DataDo > requestedStartTime,
+                        cancellationToken);
+            }
+            else
+            {
+                hasReservations = await _dbContext.Rezerwacjas
+                    .AnyAsync(r =>
+                        r.TrenerId == trainerId &&
+                        r.CzyOdwolana == false &&
+                        r.RezerwacjaId != reservationIdToExclude &&
+                        r.DataOd < requestedEndTime &&
+                        r.DataDo > requestedStartTime,
+                        cancellationToken);
+            }
 
             if (hasReservations) return TrainerAvailabilityStatus.HasReservations;
 
@@ -263,7 +278,7 @@ namespace SportsCenter.Infrastructure.DAL.Repositories
             {
                 int godzinaOdInMinutes = (int)grafik.GodzinaOd.TotalMinutes;
                 int godzinaDoInMinutes = godzinaOdInMinutes + grafik.CzasTrwania;
-              
+
                 if ((startHourInMinutes < godzinaDoInMinutes && endHourInMinutes > godzinaOdInMinutes))
                 {
                     return TrainerAvailabilityStatus.HasActivities;

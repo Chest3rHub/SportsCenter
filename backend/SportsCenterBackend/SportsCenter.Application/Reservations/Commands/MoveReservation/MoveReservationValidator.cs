@@ -11,18 +11,18 @@ namespace SportsCenter.Application.Reservations.Commands.MoveReservation
     {
         public MoveReservationValidator()
         {
-            RuleFor(x => x.NewStartTime)
+            RuleFor(x => DateTime.Parse(x.NewStartTime))
                 .GreaterThanOrEqualTo(DateTime.UtcNow.AddDays(1))
                 .WithMessage("Reservation can only be moved if the remaining time is greater than or equal to 24 hours.");
 
-            RuleFor(x => x.NewEndTime)
-                .GreaterThan(x => x.NewStartTime)
+            RuleFor(x => DateTime.Parse(x.NewEndTime))
+                .GreaterThan(x => DateTime.Parse(x.NewStartTime))
                 .WithMessage("End time must be later than start time.");
 
             RuleFor(x => x)
-               .Must(x => (x.NewEndTime - x.NewStartTime).TotalHours >= 1)
+               .Must(x => (DateTime.Parse(x.NewEndTime) - DateTime.Parse(x.NewStartTime)).TotalHours >= 1)
                .WithMessage("Reservation must be at least 1 hour long.")
-               .Must(x => (x.NewEndTime - x.NewStartTime).TotalHours <= 5)
+               .Must(x => (DateTime.Parse(x.NewEndTime) - DateTime.Parse(x.NewStartTime)).TotalHours <= 5)
                .WithMessage("Reservation cannot be longer than 5 hours.");
         }
     }

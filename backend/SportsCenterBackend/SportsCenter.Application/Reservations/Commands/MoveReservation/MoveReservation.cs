@@ -13,10 +13,9 @@ namespace SportsCenter.Application.Reservations.Commands.MoveReservation
     public sealed record MoveReservation : ICommand<Unit>
     {
         public int ReservationId { get; set; }
-        public DateTime NewStartTime { get; set; }
-        public DateTime NewEndTime { get; set; }
-
-        public MoveReservation(int reservationId, DateTime newStartTime, DateTime newEndTime)
+        public string NewStartTime { get; set; }
+        public string NewEndTime { get; set; }
+        public MoveReservation(int reservationId, string newStartTime, string newEndTime)
         {
             ReservationId = reservationId;
             NewStartTime = newStartTime;

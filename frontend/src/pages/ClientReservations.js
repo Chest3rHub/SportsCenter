@@ -54,6 +54,10 @@ export default function ClientReservations() {
         navigate('/move-reservation', {
             state: {
                 id: reservation.reservationId,
+                courtId: reservation.courtId,
+                startTime: reservation.startTime,
+                endTime: reservation.endTime,
+                trainerId: reservation.trainerId,
                 offsetFromLocation: offset
             }
         });

@@ -391,6 +391,7 @@ export default {
     newStartTimeLabel: 'Data od:',
     newEndTimeLabel: 'Data do:',
     newStartTimeError: 'Data nie może być z przeszłości',
+    newStartTimeTooSoonError: "Rezerwację można przenieść tylko z minimum 24-godzinnym wyprzedzeniem",
     newEndTimeError: 'Czas zakończenia musi byc późniejszy niż rozpoczęcia',
     newTimeDurationError: 'Czas rezerwacji musi wynosić min. 1h i max. 5h',
     saveLabel: 'Zapisz',

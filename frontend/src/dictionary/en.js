@@ -386,6 +386,7 @@ export default {
   newStartTimeLabel: 'Start Date:',
   newEndTimeLabel: 'End Date:',
   newStartTimeError: 'Date cannot be in the past',
+  newStartTimeTooSoonError: "The reservation can only be moved if there are at least 24 hours left before it starts",
   newEndTimeError: 'End time must be later than start time',
   newTimeDurationError: 'Reservation must last at least 1 hour and at most 5 hours',
   saveLabel: 'Save',

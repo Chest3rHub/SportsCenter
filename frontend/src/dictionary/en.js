@@ -469,7 +469,7 @@ reservationsSummaryPage: {
   toDoPage: {
     toDoLabel: "To-Do List",
     taskLabel: "Task",
-    dueDateLabel: "Due Date",
+    dueDateLabel: "Due by",
     editLabel: "Edit",
     deleteLabel: "Delete",
     addTaskLabel: "Add Task",

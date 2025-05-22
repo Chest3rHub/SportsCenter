@@ -35,6 +35,20 @@ namespace SportsCenter.Application.Reservations.Commands.MoveReservation
 
         public async Task<Unit> Handle(MoveReservation request, CancellationToken cancellationToken)
         {
+
+            DateTime newStartTime;
+            DateTime newEndTime;
+
+            try
+            {
+                newStartTime = DateTime.Parse(request.NewStartTime, null, System.Globalization.DateTimeStyles.AdjustToUniversal);
+                newEndTime = DateTime.Parse(request.NewEndTime, null, System.Globalization.DateTimeStyles.AdjustToUniversal);
+            }
+            catch (FormatException)
+            {
+                throw new ArgumentException("Invalid date format for NewStartTime or NewEndTime.");
+            }
+
             var reservation = await _reservationRepository.GetReservationByIdAsync(request.ReservationId, cancellationToken);
 
             if (reservation == null)
@@ -63,12 +77,9 @@ namespace SportsCenter.Application.Reservations.Commands.MoveReservation
                 { DayOfWeek.Friday, "piatek" },
                 { DayOfWeek.Saturday, "sobota" },
                 { DayOfWeek.Sunday, "niedziela" }
-             };
+            };
 
-            var startTime = DateTime.Parse(request.NewStartTime);
-            var endTime = DateTime.Parse(request.NewEndTime);
-
-            var specialWorkingHours = await _sportsCenterRepository.GetSpecialWorkingHoursByDateAsync(startTime.Date, cancellationToken);
+            var specialWorkingHours = await _sportsCenterRepository.GetSpecialWorkingHoursByDateAsync(newStartTime.Date, cancellationToken);
 
             if (specialWorkingHours != null)
             {
@@ -77,8 +88,8 @@ namespace SportsCenter.Application.Reservations.Commands.MoveReservation
                 int clubOpeningTimeInMinutes = workingHours.GodzinaOtwarcia.Hour * 60 + workingHours.GodzinaOtwarcia.Minute;
                 int clubClosingTimeInMinutes = workingHours.GodzinaZamkniecia.Hour * 60 + workingHours.GodzinaZamkniecia.Minute;
 
-                int reservationStartInMinutes = startTime.Hour * 60 + startTime.Minute;
-                int reservationEndInMinutes = endTime.Hour * 60 + endTime.Minute;
+                int reservationStartInMinutes = newStartTime.Hour * 60 + newStartTime.Minute;
+                int reservationEndInMinutes = newEndTime.Hour * 60 + newEndTime.Minute;
 
                 if (reservationStartInMinutes < clubOpeningTimeInMinutes || reservationEndInMinutes > clubClosingTimeInMinutes)
                 {
@@ -87,7 +98,7 @@ namespace SportsCenter.Application.Reservations.Commands.MoveReservation
             }
             else
             {
-                string dayOfWeek = dniTygodnia[startTime.DayOfWeek];
+                string dayOfWeek = dniTygodnia[newStartTime.DayOfWeek];
                 var standardWorkingHours = await _sportsCenterRepository.GetWorkingHoursByDayAsync(dayOfWeek, cancellationToken);
 
                 if (standardWorkingHours == null)
@@ -104,8 +115,8 @@ namespace SportsCenter.Application.Reservations.Commands.MoveReservation
                 int clubOpeningTimeInMinutes = workingHours.GodzinaOtwarcia.Hour * 60 + workingHours.GodzinaOtwarcia.Minute;
                 int clubClosingTimeInMinutes = workingHours.GodzinaZamkniecia.Hour * 60 + workingHours.GodzinaZamkniecia.Minute;
 
-                int reservationStartInMinutes = startTime.Hour * 60 + startTime.Minute;
-                int reservationEndInMinutes = endTime.Hour * 60 + endTime.Minute;
+                int reservationStartInMinutes = newStartTime.Hour * 60 + newStartTime.Minute;
+                int reservationEndInMinutes = newEndTime.Hour * 60 + newEndTime.Minute;
 
                 if (reservationStartInMinutes < clubOpeningTimeInMinutes || reservationEndInMinutes > clubClosingTimeInMinutes)
                 {
@@ -118,7 +129,7 @@ namespace SportsCenter.Application.Reservations.Commands.MoveReservation
                 throw new PostponeReservationNotAllowedException();
             }
 
-            bool isCourtAvailable = await _courtRepository.IsCourtAvailableAsync(reservation.KortId, startTime, endTime, cancellationToken, reservation.RezerwacjaId);
+            bool isCourtAvailable = await _courtRepository.IsCourtAvailableAsync(reservation.KortId, newStartTime, newEndTime, cancellationToken);
             if (!isCourtAvailable)
                 throw new CourtNotAvaliableException(reservation.KortId);
 
@@ -130,12 +141,17 @@ namespace SportsCenter.Application.Reservations.Commands.MoveReservation
                     throw new EmployeeNotFoundException(reservation.TrenerId.Value);
                 }
 
-                if (trainerPosition != "Trener")//musi byc Trener w bazie w tabeli TypPracownika
+                if (trainerPosition != "Trener")
                 {
                     throw new NotTrainerEmployeeException(reservation.TrenerId.Value);
                 }
 
-                var availabilityStatus = await _employeeRepository.IsTrainerAvailableAsync(reservation.TrenerId.Value, startTime, startTime.Hour * 60 + startTime.Minute, endTime.Hour * 60 + endTime.Minute, cancellationToken, reservation.RezerwacjaId);
+                var availabilityStatus = await _employeeRepository.IsTrainerAvailableAsync(
+                    reservation.TrenerId.Value,
+                    newStartTime,
+                    newStartTime.Hour * 60 + newStartTime.Minute,
+                    newEndTime.Hour * 60 + newEndTime.Minute,
+                    cancellationToken);
 
                 if (availabilityStatus == TrainerAvailabilityStatus.IsFired)
                 {
@@ -148,13 +164,14 @@ namespace SportsCenter.Application.Reservations.Commands.MoveReservation
                 }
             }
 
-            reservation.DataOd = startTime;
-            reservation.DataDo = endTime;
+            reservation.DataOd = newStartTime;
+            reservation.DataDo = newEndTime;
 
             await _reservationRepository.UpdateReservationAsync(reservation, cancellationToken);
 
             return Unit.Value;
         }
+
     }
 
 }

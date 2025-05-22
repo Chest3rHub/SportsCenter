@@ -474,7 +474,7 @@ export default {
   toDoPage: {
     toDoLabel: "Lista zadań",
     taskLabel: "Zadanie",
-    dueDateLabel: "Data wykonania",
+    dueDateLabel: "Wykonać do dnia",
     editLabel: "Edytuj",
     deleteLabel: "Usuń",
     addTaskLabel: "Dodaj zadanie",

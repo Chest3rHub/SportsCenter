@@ -15,6 +15,7 @@ namespace SportsCenter.Application.Reservations.Commands.MoveReservation
         public int ReservationId { get; set; }
         public string NewStartTime { get; set; }
         public string NewEndTime { get; set; }
+
         public MoveReservation(int reservationId, string newStartTime, string newEndTime)
         {
             ReservationId = reservationId;

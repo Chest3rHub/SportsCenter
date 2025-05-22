@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
 import GreenButton from '../components/buttons/GreenButton';
@@ -8,6 +8,8 @@ import { SportsContext } from '../context/SportsContext';
 import registerEmployeeRequest from '../api/registerEmployeeRequest';
 import CustomInput from '../components/CustomInput';
 import { Box, MenuItem } from '@mui/material';
+import getEmployeesPositions from '../api/getEmployeesPositions';
+
 
 function RegisterEmployee() {
   const { dictionary } = useContext(SportsContext);
@@ -25,7 +27,9 @@ function RegisterEmployee() {
   });
 
   const [firstNameError, setFirstNameError] = useState(false);
+  const [firstNameRegexError, setFirstNameRegexError] = useState(false);
   const [lastNameError, setLastNameError] = useState(false);
+  const [lastNameRegexError, setLastNameRegexError] = useState(false);
   const [addressError, setAddressError] = useState(false);
   const [birthDateError, setBirthDateError] = useState(false);
   const [phoneNumberError, setPhoneNumberError] = useState(false);
@@ -35,29 +39,54 @@ function RegisterEmployee() {
   const [confirmPasswordError, setConfirmPasswordError] = useState(false);
   const [positionError, setPositionError] = useState(false);
 
-  const positions = [
-    "Pracownik administracyjny",
-    "Trener",
-    "Pomoc sprzatajaca"
-    
-  ];
+  const [positions, setPositions] = useState([]);
+
+  useEffect(() => {
+  const fetchPositions = async () => {
+    try {
+      const data = await getEmployeesPositions(); 
+      setPositions(data);
+      return data;
+    } catch (error) {
+      console.error('Błąd pobierania pozycji pracowników:', error);
+      handleError('Nie udało się pobrać pozycji pracowników');
+    }
+  };
+
+  fetchPositions();
+}, []);
+
 
   const validateForm = () => {
     let isValid = true;
 
-    if (formData.firstName.length < 2 || formData.firstName.length > 50) {
-      isValid = false;
-      setFirstNameError(true);
-    } else {
-      setFirstNameError(false);
-    }
+   const nameRegex = /^[A-Za-zĄĆĘŁŃÓŚŹŻąćęłńóśźż]+$/; //polskie znaki tylko
 
-    if (formData.lastName.length < 2 || formData.lastName.length > 50) {
-      isValid = false;
-      setLastNameError(true);
-    } else {
-      setLastNameError(false);
-    }
+  if (formData.firstName.length < 2 || formData.firstName.length > 50) {
+    isValid = false;
+    setFirstNameError(true);
+    setFirstNameRegexError(false);
+  } else if (!nameRegex.test(formData.firstName)) {
+    isValid = false;
+    setFirstNameError(false);
+    setFirstNameRegexError(true);
+  } else {
+    setFirstNameError(false);
+    setFirstNameRegexError(false);
+  }
+
+  if (formData.lastName.length < 2 || formData.lastName.length > 50) {
+    isValid = false;
+    setLastNameError(true);
+    setLastNameRegexError(false);
+  } else if (!nameRegex.test(formData.lastName)) {
+    isValid = false;
+    setLastNameError(false);
+    setLastNameRegexError(true);
+  } else {
+    setLastNameError(false);
+    setLastNameRegexError(false);
+  }
 
     if (formData.address.length < 5 || formData.address.length > 100) {
       isValid = false;
@@ -176,8 +205,14 @@ function RegisterEmployee() {
                 fullWidth
                 value={formData.firstName}
                 onChange={handleChange}
-                error={firstNameError}
-                helperText={firstNameError ? dictionary.registerPage.firstNameError : ""}
+                error={firstNameError || firstNameRegexError}
+                helperText={
+                  firstNameError
+                  ? dictionary.registerPage.firstNameError
+                  : firstNameRegexError
+                  ? dictionary.registerPage.firstNameRegexError
+                  : ""
+                }
                 required
                 size="small"
               />
@@ -189,8 +224,14 @@ function RegisterEmployee() {
                 fullWidth
                 value={formData.lastName}
                 onChange={handleChange}
-                error={lastNameError}
-                helperText={lastNameError ? dictionary.registerPage.lastNameError : ""}
+                error={lastNameError || lastNameRegexError}
+                helperText={
+                  lastNameError
+                  ? dictionary.registerPage.lastNameError
+                  : lastNameRegexError
+                  ? dictionary.registerPage.lastNameRegexError
+                  : ""
+                }
                 required
                 size="small"
               />
@@ -273,7 +314,6 @@ function RegisterEmployee() {
                 required
                 size="small"
               />
-              
               <CustomInput
                 label={dictionary.registerPage.positionLabel || "Position"}
                 select
@@ -287,13 +327,12 @@ function RegisterEmployee() {
                 required
                 size="small"
               >
-                {positions.map((position) => (
-                  <MenuItem key={position} value={position}>
-                    {position}
-                  </MenuItem>
-                ))}
+              {positions.map((position) => (
+                <MenuItem key={position.id} value={position.positionName}>
+                  {position.positionName}
+                </MenuItem>
+              ))}
               </CustomInput>
-              
               <GreenButton type="submit">
                 {dictionary.registerPage.registerEmpConfirmLabel}
               </GreenButton>

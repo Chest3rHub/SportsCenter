@@ -28,6 +28,7 @@ using SportsCenter.Application.Employees.Queries.GetTrainers;
 using SportsCenter.Application.Employees.Queries.GetAvailableTrainers;
 using SportsCenter.Application.Employees.Queries.GetEmployeeTasksByOwner;
 using SportsCenter.Application.Employees.Queries.GetTrainerBusyTimes;
+using SportsCenter.Application.Employees.Queries.GetEmployeesPositions;
 
 
 namespace SportsCenter.Api.Controllers
@@ -44,6 +45,13 @@ namespace SportsCenter.Api.Controllers
         public async Task<IActionResult> ShowEmployeeAsync([FromQuery] int offset = 0)
         {
             return Ok(await Mediator.Send(new GetEmployees(offset)));
+        }
+
+        [Authorize(Roles = "Wlasciciel")]
+        [HttpGet("get-employees-positions")]
+        public async Task<IActionResult> GetEmployeesPositionsAsync()
+        {
+            return Ok(await Mediator.Send(new GetEmployeesPositions()));
         }
 
         [Authorize(Roles = "Wlasciciel,Klient,Pracownik administracyjny")]

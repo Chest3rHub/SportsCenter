@@ -102,14 +102,27 @@ export default function Employees() {
             <Header>{dictionary.employeesPage.employeesLabel}</Header>
             <Box
                 sx={{
-                    position: 'absolute',
-                    top: '0px',
-                    right: '-200px',
+                     position: "fixed",
+                        top: "12vh",
+                        right: "3vw",
+                        minWidth: "17vw",
+                        display: "flex",
+                        flexDirection: "column",
+                        gap: "10px"
                 }}
             >
                 <GreenButton 
                     onClick={handleRegisterEmployee} 
-                    style={{ minWidth: '12vw' }}
+                    style={{
+
+
+                                fontSize: '0.8rem',
+                                padding: "3px 8px",
+                                backgroundColor: '#8edfb4',
+                                color: 'black',
+                                fontWeight: 'bold',
+
+                            }}
                 >
                     {dictionary.employeesPage.registerEmployeeLabel}
                 </GreenButton>

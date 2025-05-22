@@ -212,6 +212,7 @@ export default function Clients() {
                         helperText={ageError.minAgeError}
                         placeholder={dictionary.clientsPage.minAgePlaceholder}
                         additionalStyles={{ marginLeft:'1vw',minWidth: '8vw', marginRight:'1.3rem' }}
+                        inputProps={{ min: 0 }} 
                     />
                     <CustomInput
                         label={dictionary.clientsPage.ageToLabel}
@@ -223,6 +224,7 @@ export default function Clients() {
                         placeholder={dictionary.clientsPage.maxAgePlaceholder}
                         sx={{ width: '12vw' }}
                         additionalStyles={{ minWidth: '8vw',marginRight:'1.5rem' }}
+                        inputProps={{ min: 0 }} 
                     />
                     <GreenButton
                         onClick={handleSearchByAge}

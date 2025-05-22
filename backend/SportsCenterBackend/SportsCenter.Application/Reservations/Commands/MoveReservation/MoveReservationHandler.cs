@@ -88,8 +88,15 @@ namespace SportsCenter.Application.Reservations.Commands.MoveReservation
                 int clubOpeningTimeInMinutes = workingHours.GodzinaOtwarcia.Hour * 60 + workingHours.GodzinaOtwarcia.Minute;
                 int clubClosingTimeInMinutes = workingHours.GodzinaZamkniecia.Hour * 60 + workingHours.GodzinaZamkniecia.Minute;
 
+                Console.WriteLine("AAAAAAAAAAAAAA godzina otwarcia klubu: " + clubOpeningTimeInMinutes);
+                Console.WriteLine("AAAAAAAAAAAAAA godzina zamkniecia klubu: " + clubClosingTimeInMinutes);
+
                 int reservationStartInMinutes = newStartTime.Hour * 60 + newStartTime.Minute;
                 int reservationEndInMinutes = newEndTime.Hour * 60 + newEndTime.Minute;
+
+                Console.WriteLine("AAAAAAAAAAAAAA czas w min rozpoczecia rezerwacji: " + reservationStartInMinutes);
+                Console.WriteLine("AAAAAAAAAAAAAA czas w min zakonczenia rezerwacji: " + reservationEndInMinutes);
+
 
                 if (reservationStartInMinutes < clubOpeningTimeInMinutes || reservationEndInMinutes > clubClosingTimeInMinutes)
                 {
@@ -99,6 +106,8 @@ namespace SportsCenter.Application.Reservations.Commands.MoveReservation
             else
             {
                 string dayOfWeek = dniTygodnia[newStartTime.DayOfWeek];
+                Console.WriteLine("AAAAAAAAAAAAAA dzien tygodnia: " + dayOfWeek);
+
                 var standardWorkingHours = await _sportsCenterRepository.GetWorkingHoursByDayAsync(dayOfWeek, cancellationToken);
 
                 if (standardWorkingHours == null)
@@ -115,14 +124,22 @@ namespace SportsCenter.Application.Reservations.Commands.MoveReservation
                 int clubOpeningTimeInMinutes = workingHours.GodzinaOtwarcia.Hour * 60 + workingHours.GodzinaOtwarcia.Minute;
                 int clubClosingTimeInMinutes = workingHours.GodzinaZamkniecia.Hour * 60 + workingHours.GodzinaZamkniecia.Minute;
 
+                Console.WriteLine("AAAAAAAAAAAAAA godzina otwarcia klubu: " + clubOpeningTimeInMinutes);
+                Console.WriteLine("AAAAAAAAAAAAAA godzina zamkniecia klubu: " + clubClosingTimeInMinutes);
+
                 int reservationStartInMinutes = newStartTime.Hour * 60 + newStartTime.Minute;
                 int reservationEndInMinutes = newEndTime.Hour * 60 + newEndTime.Minute;
+
+                Console.WriteLine("AAAAAAAAAAAAAA czas w min rozpoczecia rezerwacji: " + reservationStartInMinutes);
+                Console.WriteLine("AAAAAAAAAAAAAA czas w min zakonczenia rezerwacji: " + reservationEndInMinutes);
 
                 if (reservationStartInMinutes < clubOpeningTimeInMinutes || reservationEndInMinutes > clubClosingTimeInMinutes)
                 {
                     throw new ReservationOutsideWorkingHoursException();
                 }
             }
+
+            Console.WriteLine("AAAAAAAAAAAAAA roznica DataOd rezerwacji - obecna data: " + (reservation.DataOd - DateTime.UtcNow).TotalHours);
 
             if ((reservation.DataOd - DateTime.UtcNow).TotalHours < 24)
             {

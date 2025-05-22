@@ -74,6 +74,31 @@ function MoveReservation() {
         setOpenFailureBackdrop(true);
     };
 
+    function getStartAndEndTime(dateString, hourString, durationInMinutes) {
+    const [hours, minutes] = hourString.split(':').map(Number);
+    const date = new Date(dateString);
+    
+    date.setUTCHours(hours, minutes, 0, 0);
+
+    const startTime = new Date(date);
+    const endTime = new Date(startTime.getTime() + durationInMinutes * 60000);
+
+    const toUTCDateTimeString = (d) => {
+        const year = d.getUTCFullYear();
+        const month = String(d.getUTCMonth() + 1).padStart(2, '0');
+        const day = String(d.getUTCDate()).padStart(2, '0');
+        const hours = String(d.getUTCHours()).padStart(2, '0');
+        const minutes = String(d.getUTCMinutes()).padStart(2, '0');
+        const seconds = String(d.getUTCSeconds()).padStart(2, '0');
+        return `${year}-${month}-${day}T${hours}:${minutes}:${seconds}Z`;
+    };
+
+    return {
+        startTimeUTC: toUTCDateTimeString(startTime),
+        endTimeUTC: toUTCDateTimeString(endTime)
+    };
+}
+
     const validateForm = () => {
         let isValid = true;
 
@@ -114,29 +139,49 @@ function MoveReservation() {
     }
 
     const handleSubmit = async (e) => {
-        e.preventDefault();
-    
-        if (!validateForm()) {
-          return;
-        }
-    
-    
-        try {
-          let response;
-          response = await moveReservation(formData, id);
-    
-          if (!response.ok) {
+    e.preventDefault();
+
+    if (!validateForm()) {
+        return;
+    }
+
+    const startDate = new Date(formData.newStartTime);
+    const endDate = new Date(formData.newEndTime);
+
+    const dateStr = startDate.toISOString().split('T')[0];
+    const hourStr = startDate.toTimeString().slice(0, 5); // format "HH:mm"
+    const duration = Math.floor((endDate - startDate) / 60000);
+
+    const { startTimeUTC, endTimeUTC } = getStartAndEndTime(dateStr, hourStr, duration);
+
+    const payload = {
+        reservationId: id,
+        newStartTime: startTimeUTC,
+        newEndTime: endTimeUTC
+    };
+
+    //dziala bo juz nie cofa czasu o -2h wzgledem backendu
+    //to format backendowy:
+    console.log("AAAAAAAAAAAAAA startTimeUTC: " + startTimeUTC)
+    console.log("AAAAAAAAAAAAAA endTimeUTC: " + endTimeUTC)
+
+    try {
+        const response = await moveReservation(payload, id);
+
+        if (!response.ok) {
             const errorData = await response.json();
             console.log(errorData);
-            handleError('Blad przeniesienia rezerwacji... sprawdz konsole');
-          } else {
+            handleError('Błąd przeniesienia rezerwacji... sprawdź konsolę');
+        } else {
             handleOpenSuccess();
-          }
-    
-        } catch (error) {
-            handleError('Blad przeniesienia rezerwacji... sprawdz konsole');
         }
-    };
+
+    } catch (error) {
+        console.error(error);
+        handleError('Błąd przeniesienia rezerwacji... sprawdź konsolę');
+    }
+};
+
 
     function handleCancel() {
         navigate('/my-reservations', {

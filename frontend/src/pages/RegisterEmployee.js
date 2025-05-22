@@ -105,12 +105,14 @@ function RegisterEmployee() {
       setEmailIsTakenError(false);
     }
 
-    if (formData.password.length < 6) {
-      isValid = false;
-      setPasswordError(true);
-    } else {
-      setPasswordError(false);
-    }
+  const passwordRegex = /^(?=.*[A-Z])(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]).{6,}$/;
+
+  if (!passwordRegex.test(formData.password)) {
+    isValid = false;
+    setPasswordError(true);
+  } else {
+    setPasswordError(false);
+  }
 
     if (formData.password !== formData.confirmPassword) {
       isValid = false;

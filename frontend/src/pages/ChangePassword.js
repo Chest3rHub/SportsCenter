@@ -49,13 +49,14 @@ function ChangePassword() {
   const validateForm = () => {
     let isValid = true;
 
-    if (formData.newPassword.length < 6) {
+    const passwordRegex = /^(?=.*[A-Z])(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]).{6,}$/;
+
+    if (!passwordRegex.test(formData.newPassword)) {
       isValid = false;
       setNewPasswordError(true);
     } else {
       setNewPasswordError(false);
     }
-
 
     if (formData.newPassword !== formData.confirmNewPassword) {
       isValid = false;

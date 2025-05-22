@@ -25,7 +25,10 @@ function Register() {
 
 
   const [firstNameError, setFirstNameError] = useState(false);
+  const [firstNameRegexError, setFirstNameRegexError] = useState(false);
+
   const [lastNameError, setLastNameError] = useState(false);
+   const [lastNameRegexError, setLastNameRegexError] = useState(false);
 
   const [addressError, setAddressError] = useState(false);
 
@@ -44,22 +47,33 @@ function Register() {
   const validateForm = () => {
     let isValid = true;
 
+  const nameRegex = /^[A-Za-zĄĆĘŁŃÓŚŹŻąćęłńóśźż]+$/; //polskie znaki tylko
 
-    if (formData.firstName.length < 2 || formData.firstName.length > 50) {
-      isValid = false;
-      setFirstNameError(true);
-    } else {
-      setFirstNameError(false);
-    }
+  if (formData.firstName.length < 2 || formData.firstName.length > 50) {
+    isValid = false;
+    setFirstNameError(true);
+    setFirstNameRegexError(false);
+  } else if (!nameRegex.test(formData.firstName)) {
+    isValid = false;
+    setFirstNameError(false);
+    setFirstNameRegexError(true);
+  } else {
+    setFirstNameError(false);
+    setFirstNameRegexError(false);
+  }
 
-
-    if (formData.lastName.length < 2 || formData.lastName.length > 50) {
-      isValid = false;
-      setLastNameError(true);
-    } else {
-      setLastNameError(false);
-    }
-
+  if (formData.lastName.length < 2 || formData.lastName.length > 50) {
+    isValid = false;
+    setLastNameError(true);
+    setLastNameRegexError(false);
+  } else if (!nameRegex.test(formData.lastName)) {
+    isValid = false;
+    setLastNameError(false);
+    setLastNameRegexError(true);
+  } else {
+    setLastNameError(false);
+    setLastNameRegexError(false);
+  }
 
     if (formData.address.length < 5 || formData.address.length > 100) {
       isValid = false;
@@ -80,13 +94,14 @@ function Register() {
     }
 
 
-    if (formData.password.length < 6) {
-      isValid = false;
-      setPasswordError(true);
-    } else {
-      setPasswordError(false);
-    }
+  const passwordRegex = /^(?=.*[A-Z])(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]).{6,}$/;
 
+  if (!passwordRegex.test(formData.password)) {
+    isValid = false;
+    setPasswordError(true);
+  } else {
+    setPasswordError(false);
+  }
 
     if (formData.password !== formData.confirmPassword) {
       isValid = false;
@@ -94,7 +109,6 @@ function Register() {
     } else {
       setConfirmPasswordError(false);
     }
-
 
     const birthDate = new Date(formData.birthDate);
     const age = new Date().getFullYear() - birthDate.getFullYear();
@@ -182,8 +196,14 @@ function Register() {
                 fullWidth
                 value={formData.firstName}
                 onChange={handleChange}
-                error={firstNameError}
-                helperText={firstNameError ? dictionary.registerPage.firstNameError : ""}
+                error={firstNameError || firstNameRegexError}
+                helperText={
+                  firstNameError
+                  ? dictionary.registerPage.firstNameError
+                  : firstNameRegexError
+                  ? dictionary.registerPage.firstNameRegexError
+                  : ""
+                }
                 required
                 size="small"
               />
@@ -195,8 +215,14 @@ function Register() {
                 fullWidth
                 value={formData.lastName}
                 onChange={handleChange}
-                error={lastNameError}
-                helperText={lastNameError ? dictionary.registerPage.lastNameError : ""}
+                error={lastNameError || lastNameRegexError}
+                helperText={
+                  lastNameError
+                  ? dictionary.registerPage.lastNameError
+                  : lastNameRegexError
+                  ? dictionary.registerPage.lastNameRegexError
+                  : ""
+                }
                 required
                 size="small"
               />

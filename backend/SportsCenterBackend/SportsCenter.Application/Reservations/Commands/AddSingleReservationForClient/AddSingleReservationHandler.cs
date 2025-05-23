@@ -5,10 +5,12 @@ using SportsCenter.Application.Exceptions.CourtsExceptions;
 using SportsCenter.Application.Exceptions.EmployeesException;
 using SportsCenter.Application.Exceptions.EmployeesExceptions;
 using SportsCenter.Application.Exceptions.ReservationExceptions;
+using SportsCenter.Application.Exceptions.SportActivitiesExceptions;
 using SportsCenter.Core.Entities;
 using SportsCenter.Core.Repositories;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Security.Claims;
 using System.Text;
@@ -57,6 +59,16 @@ namespace SportsCenter.Application.Reservations.Commands.AddReservation
                 { DayOfWeek.Saturday, "sobota" },
                 { DayOfWeek.Sunday, "niedziela" }
              };
+
+
+            //czy w tym czasie klient jest zapisany na inne zaj lub ma zlozona rezerwacje
+            var isAvailable = await _reservationRepository.IsClientAvailableForPeriodAsync(request.ClientId, request.StartTime, request.EndTime, cancellationToken);
+
+            if (!isAvailable)
+            {
+                throw new ClientAlreadyHasActivityOrReservationException();
+            }
+
 
             var specialWorkingHours = await _sportsCenterRepository.GetSpecialWorkingHoursByDateAsync(request.StartTime.Date, cancellationToken);
 

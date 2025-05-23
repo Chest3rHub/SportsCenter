@@ -295,10 +295,10 @@ public class SportActivityRepository : ISportActivityRepository
         var startDateTime = selectedDate.ToDateTime(TimeOnly.FromTimeSpan(schedule.GodzinaOd));
         var endDateTime = startDateTime.AddMinutes(schedule.CzasTrwania);
 
-        //Czy w tym czasie jest kolizja z innymi zaj
+        //Czy w tym czasie jest kolizja z innymi zaj (tylko nieodwolane zaj liczy)
         var conflictList = _dbContext.InstancjaZajecKlients
-            .Where(ik => ik.KlientId == clientId)
-            .Join(_dbContext.InstancjaZajecs,
+            .Where(ik => ik.KlientId == clientId && ik.DataWypisu == null) // tylko aktywne zapisy       
+            .Join(_dbContext.InstancjaZajecs.Where(iz => !iz.CzyOdwolane.HasValue || iz.CzyOdwolane == false),
                 ik => ik.InstancjaZajecId,
                 iz => iz.InstancjaZajecId,
                 (ik, iz) => new { iz.Data, iz.GrafikZajecId })
@@ -323,7 +323,8 @@ public class SportActivityRepository : ISportActivityRepository
             .AnyAsync(r =>
                 r.KlientId == clientId &&
                 r.DataOd < endDateTime &&
-                r.DataDo > startDateTime,
+                r.DataDo > startDateTime &&
+                r.CzyOdwolana == false, ///tylko nieodwolane zlicza
                 cancellationToken);
 
         return !hasReservationConflict;

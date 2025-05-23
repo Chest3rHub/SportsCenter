@@ -107,5 +107,43 @@ namespace SportsCenter.Infrastructure.DAL.Repositories
             return await _dbContext.Rezerwacjas
                 .FirstOrDefaultAsync(r => r.RezerwacjaId == reservationId && r.KlientId == clientId, cancellationToken);
         }
+        public async Task<bool> IsClientAvailableForPeriodAsync(int clientId, DateTime startDateTime, DateTime endDateTime, CancellationToken cancellationToken)
+        {
+            //Sprawdzenie kolizji z zaj klienta tymi ktore NIE są odwołane
+            var conflictList = _dbContext.InstancjaZajecKlients
+                .Where(ik => ik.KlientId == clientId && ik.DataWypisu == null) // tylko aktywne zapisy
+                .Join(_dbContext.InstancjaZajecs,
+                    ik => ik.InstancjaZajecId,
+                    iz => iz.InstancjaZajecId,
+                    (ik, iz) => iz)
+                .Where(iz => !iz.CzyOdwolane.HasValue || iz.CzyOdwolane == false)
+                .Join(_dbContext.GrafikZajecs,
+                    iz => iz.GrafikZajecId,
+                    g => g.GrafikZajecId,
+                    (iz, g) => new { iz.Data, g.GodzinaOd, g.CzasTrwania })
+                .ToList();
+
+            var hasActivityConflict = conflictList.Any(x =>
+            {
+                var start = x.Data.ToDateTime(TimeOnly.FromTimeSpan(x.GodzinaOd));
+                var end = start.AddMinutes(x.CzasTrwania);
+                return start < endDateTime && end > startDateTime;
+            });
+
+            if (hasActivityConflict)
+                return false;
+
+            //Sprawdzenie kolizji z aktywnymi rezerwacjami
+            var hasReservationConflict = await _dbContext.Rezerwacjas
+                .AnyAsync(r =>
+                    r.KlientId == clientId &&
+                    r.DataOd < endDateTime &&
+                    r.DataDo > startDateTime &&
+                    r.CzyOdwolana == false,
+                    cancellationToken);
+
+            return !hasReservationConflict;
+        }
+
     }
 }

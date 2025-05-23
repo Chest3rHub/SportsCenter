@@ -20,5 +20,6 @@ namespace SportsCenter.Core.Repositories
         Task<bool> HasClientReservation(int reservationId, int clientId, CancellationToken cancellationToken);
         Task CancelReservationAsync(int reservationId, CancellationToken cancellationToken);
         Task<Rezerwacja> GetReservationByClientIdAsync(int reservationId, int clientId, CancellationToken cancellationToken);
+        Task<bool> IsClientAvailableForPeriodAsync(int clientId, DateTime startDateTime, DateTime endDateTime, CancellationToken cancellationToken);
     }
 }

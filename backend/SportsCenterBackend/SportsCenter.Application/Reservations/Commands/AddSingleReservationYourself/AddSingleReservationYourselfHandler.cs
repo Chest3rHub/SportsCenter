@@ -4,11 +4,13 @@ using SportsCenter.Application.Exceptions.CourtsExceptions;
 using SportsCenter.Application.Exceptions.EmployeesException;
 using SportsCenter.Application.Exceptions.EmployeesExceptions;
 using SportsCenter.Application.Exceptions.ReservationExceptions;
+using SportsCenter.Application.Exceptions.SportActivitiesExceptions;
 using SportsCenter.Application.Reservations.Commands.AddReservation;
 using SportsCenter.Core.Entities;
 using SportsCenter.Core.Repositories;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Security.Claims;
 using System.Text;
@@ -20,15 +22,17 @@ namespace SportsCenter.Application.Reservations.Commands.AddSingleReservationYou
     internal sealed class AddSingleReservationYourselfHandler : IRequestHandler<AddSingleReservationYourself, Unit>
     {
         private readonly IReservationRepository _reservationRepository;
+        private readonly ISportActivityRepository _sportActivityRepository;
         private readonly ICourtRepository _courtRepository;
         private readonly IEmployeeRepository _employeeRepository;
         private readonly ISportsCenterRepository _sportsCenterRepository;
         private readonly IClientRepository _clientRepository;
         private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public AddSingleReservationYourselfHandler(IReservationRepository reservationRepository, ICourtRepository courtRepository, IClientRepository clientRepository, ISportsCenterRepository sportsCenterRepository, IEmployeeRepository employeeRepository, IHttpContextAccessor httpContextAccessor)
+        public AddSingleReservationYourselfHandler(IReservationRepository reservationRepository, ISportActivityRepository sportActivityRepository, ICourtRepository courtRepository, IClientRepository clientRepository, ISportsCenterRepository sportsCenterRepository, IEmployeeRepository employeeRepository, IHttpContextAccessor httpContextAccessor)
         {
             _reservationRepository = reservationRepository;
+            _sportActivityRepository = sportActivityRepository;
             _courtRepository = courtRepository;
             _clientRepository = clientRepository;
             _employeeRepository = employeeRepository;
@@ -53,6 +57,21 @@ namespace SportsCenter.Application.Reservations.Commands.AddSingleReservationYou
             if (!user.Claims.Any(c => c.Type == ClaimTypes.Role && c.Value == "Klient"))
             {
                 throw new UnauthorizedAccessException("Only customers can make reservations.");
+            }
+
+            var format = "yyyy-MM-ddTHH:mm:ss";
+            if (!DateTime.TryParseExact(request.StartTime, format, CultureInfo.InvariantCulture, DateTimeStyles.None, out var startDateTime))
+                throw new FormatException("Start time format is invalid.");
+
+            if (!DateTime.TryParseExact(request.EndTime, format, CultureInfo.InvariantCulture, DateTimeStyles.None, out var endDateTime))
+                throw new FormatException("End time format is invalid.");
+
+            //czy w tym czasie klient jest zapisany na inne zaj lub ma zlozona rezerwacje
+            var isAvailable = await _reservationRepository.IsClientAvailableForPeriodAsync(clientId, startDateTime, endDateTime, cancellationToken);
+
+            if (!isAvailable)
+            {
+                throw new ClientAlreadyHasActivityOrReservationException();
             }
 
             var dniTygodnia = new Dictionary<DayOfWeek, string>

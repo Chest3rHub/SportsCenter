@@ -20,6 +20,7 @@ using SportsCenter.Application.Reservations.Commands.CancelReservation;
 using SportsCenter.Application.Reservations.Commands.CancelClientReservation;
 using SportsCenter.Application.Reservations.Queries.getCourtEvents;
 using SportsCenter.Application.Reservations.Queries.GetReservation;
+using SportsCenter.Application.Exceptions.SportActivitiesExceptions;
 
 namespace SportsCenter.Api.Controllers;
 
@@ -57,6 +58,10 @@ public class ReservationController : BaseController
         catch (TrainerNotAvaliableException)
         {               
             return Conflict(new { Message = "The selected trainer is not available for the requested time." });
+        }
+        catch (ClientAlreadyHasActivityOrReservationException ex)
+        {
+            return Conflict(new { message = ex.Message });
         }
         catch (Exception ex)
         {
@@ -108,6 +113,10 @@ public class ReservationController : BaseController
         {
             return Conflict(new { message = ex.Message });
         }
+        catch (ClientAlreadyHasActivityOrReservationException ex)
+        {
+            return Conflict(new { message = ex.Message });
+        }
         catch (Exception ex)
         {
             return StatusCode(500, new { message = "An error occurred while sending the request", details = ex.Message });
@@ -146,6 +155,10 @@ public class ReservationController : BaseController
             return Conflict(new { message = ex.Message });
         }
         catch (EmployeeAlreadyDismissedException ex)
+        {
+            return Conflict(new { message = ex.Message });
+        }
+        catch (ClientAlreadyHasActivityOrReservationException ex)
         {
             return Conflict(new { message = ex.Message });
         }
@@ -209,6 +222,10 @@ public class ReservationController : BaseController
         catch (InvalidOperationException ex)
         {
             return BadRequest(new { Message = ex.Message });
+        }
+        catch (ClientAlreadyHasActivityOrReservationException ex)
+        {
+            return Conflict(new { message = ex.Message });
         }
         catch (Exception ex)
         {

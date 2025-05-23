@@ -4,10 +4,12 @@ using SportsCenter.Application.Exceptions.CourtsExceptions;
 using SportsCenter.Application.Exceptions.EmployeesException;
 using SportsCenter.Application.Exceptions.EmployeesExceptions;
 using SportsCenter.Application.Exceptions.ReservationExceptions;
+using SportsCenter.Application.Exceptions.SportActivitiesExceptions;
 using SportsCenter.Core.Entities;
 using SportsCenter.Core.Repositories;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Security.Claims;
 using System.Text;
@@ -78,6 +80,21 @@ namespace SportsCenter.Application.Reservations.Commands.MoveReservation
                 { DayOfWeek.Saturday, "sobota" },
                 { DayOfWeek.Sunday, "niedziela" }
             };
+
+            var format = "yyyy-MM-ddTHH:mm:ss";
+            if (!DateTime.TryParseExact(request.NewStartTime, format, CultureInfo.InvariantCulture, DateTimeStyles.None, out var startDateTime))
+                throw new FormatException("Start time format is invalid.");
+
+            if (!DateTime.TryParseExact(request.NewStartTime, format, CultureInfo.InvariantCulture, DateTimeStyles.None, out var endDateTime))
+                throw new FormatException("End time format is invalid.");
+
+            //czy w tym czasie klient jest zapisany na inne zaj lub ma zlozona rezerwacje
+            var isAvailable = await _reservationRepository.IsClientAvailableForPeriodAsync(userId, startDateTime, endDateTime, cancellationToken);
+
+            if (!isAvailable)
+            {
+                throw new ClientAlreadyHasActivityOrReservationException();
+            }
 
             var specialWorkingHours = await _sportsCenterRepository.GetSpecialWorkingHoursByDateAsync(newStartTime.Date, cancellationToken);
 

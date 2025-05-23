@@ -8,8 +8,8 @@ namespace SportsCenter.Application.Exceptions.SportActivitiesExceptions
 {
     public class ClientAlreadyHasActivityOrReservationException : Exception
     {
-        public ClientAlreadyHasActivityOrReservationException(DateOnly conflictTime)
-            : base($"Client already has another activity or reservation around {conflictTime}.") { }
+        public ClientAlreadyHasActivityOrReservationException()
+            : base($"Client already has another activity or reservation that time") { }
     }
 
 }

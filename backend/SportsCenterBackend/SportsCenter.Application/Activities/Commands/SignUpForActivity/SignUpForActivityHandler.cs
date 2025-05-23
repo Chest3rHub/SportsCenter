@@ -66,11 +66,15 @@ namespace SportsCenter.Application.Activities.Commands.SignUpForActivity
             }
 
             var activityHour = scheduleActivity.GodzinaOd;
-            var currentTime = DateTime.UtcNow;
-
+         
             var activityDate = new DateTime(request.SelectedDate.Year, request.SelectedDate.Month, request.SelectedDate.Day, activityHour.Hours, activityHour.Minutes, 0);
+            Console.WriteLine("AAAAAAAAAAAA activity date: " + activityDate);
 
-            var timeDifference = activityDate - currentTime;
+            var localNow = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, TimeZoneInfo.Local);
+
+            var timeDifference = activityDate - localNow;
+            Console.WriteLine("AAAAAAAAAAAA localNow: " + localNow);
+            Console.WriteLine("AAAAAAAAAAAA time diff: " + timeDifference);
 
             if (timeDifference.TotalHours > 48)
             {
@@ -124,7 +128,7 @@ namespace SportsCenter.Application.Activities.Commands.SignUpForActivity
 
             if (!isAvailable)
             {
-                throw new ClientAlreadyHasActivityOrReservationException(request.SelectedDate);
+                throw new ClientAlreadyHasActivityOrReservationException();
             }
 
             var zapis = new InstancjaZajecKlient

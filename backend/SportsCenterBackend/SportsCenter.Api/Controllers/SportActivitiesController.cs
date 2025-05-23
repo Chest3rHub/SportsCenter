@@ -166,6 +166,14 @@ namespace SportsCenter.Api.Controllers;
         {
             return Conflict(new { message = ex.Message });
         }
+        catch (LimitOfPlacesReachedException ex)
+        {
+            return Conflict(new { message = ex.Message });
+        }
+        catch (ClientAlreadyHasActivityOrReservationException ex)
+        {
+            return Conflict(new { message = ex.Message });
+        }
         catch (Exception ex)
         {
             return StatusCode(500, new { message = "An error occurred while sending the request", details = ex.Message });

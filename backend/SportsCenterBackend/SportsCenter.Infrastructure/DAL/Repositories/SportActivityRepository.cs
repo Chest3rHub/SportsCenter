@@ -215,11 +215,19 @@ public class SportActivityRepository : ISportActivityRepository
             .Where(g => g.ZajeciaId == activityId)
             .FirstOrDefaultAsync(cancellationToken);
     }
-    public async Task<bool> IsClientSignedUpAsync(int clientId, int instantionOfActivity, CancellationToken cancellationToken)
+    public async Task<bool> IsClientSignedUpAsync(int clientId, int instancjaZajecId, CancellationToken cancellationToken)
     {
         return await _dbContext.InstancjaZajecKlients
-            .AnyAsync(i => i.KlientId == clientId && i.InstancjaZajecId == instantionOfActivity);
+            .Where(ik => ik.KlientId == clientId
+                         && ik.InstancjaZajecId == instancjaZajecId
+                         && ik.DataWypisu == null) //klient jest zapisany jak data wypisu jest null
+            .Join(_dbContext.InstancjaZajecs.Where(iz => iz.CzyOdwolane == false),
+                  ik => ik.InstancjaZajecId,
+                  iz => iz.InstancjaZajecId,
+                  (ik, iz) => ik)
+            .AnyAsync(cancellationToken);
     }
+
     public async Task AddClientToInstanceAsync(InstancjaZajecKlient signUp, CancellationToken cancellationToken)
     {
         await _dbContext.InstancjaZajecKlients.AddAsync(signUp, cancellationToken);

@@ -43,9 +43,9 @@ namespace SportsCenter.Infrastructure.DAL.Handlers.SportActivitiesHandlers
             DateOnly endDate = DateOnly.FromDateTime(endDateTime);
 
             var sportActivities = await _dbContext.InstancjaZajecKlients
-                .Where(ik => ik.KlientId == userId)
+                .Where(ik => ik.KlientId == userId && ik.DataWypisu == null)
                 .Join(
-                    _dbContext.InstancjaZajecs,
+                    _dbContext.InstancjaZajecs.Where(iz => iz.CzyOdwolane == false),
                     ik => ik.InstancjaZajecId,
                     iz => iz.InstancjaZajecId,
                     (ik, iz) => new { ik, iz }
@@ -85,7 +85,8 @@ namespace SportsCenter.Infrastructure.DAL.Handlers.SportActivitiesHandlers
                 .Include(r => r.Kort)
                 .Where(r => r.KlientId == userId &&
                         r.DataOd >= startDateTime &&
-                        r.DataDo <= endDateTime)
+                        r.DataDo <= endDateTime &&
+                        r.CzyOdwolana == false)
                 .Select(r => new YourSportActivityByWeeksDto
                 { 
                     ReservationId = r.RezerwacjaId,

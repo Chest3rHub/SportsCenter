@@ -16,11 +16,13 @@ namespace SportsCenter.Application.Activities.Commands.SignUpForActivity
     internal class SignUpForActivityHandler : IRequestHandler<SignUpForActivity, Unit>
     {
         private readonly ISportActivityRepository _sportActivityRepository;
+        private readonly IReservationRepository _reservationRepository;
         private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public SignUpForActivityHandler(ISportActivityRepository SportActivityRepository, IHttpContextAccessor httpContextAccessor)
+        public SignUpForActivityHandler(ISportActivityRepository SportActivityRepository, IReservationRepository reservationRepository, IHttpContextAccessor httpContextAccessor)
         {
             _sportActivityRepository = SportActivityRepository;
+            _reservationRepository = reservationRepository;
             _httpContextAccessor = httpContextAccessor;
         }
 
@@ -94,7 +96,7 @@ namespace SportsCenter.Application.Activities.Commands.SignUpForActivity
                 {
                     Data = request.SelectedDate,
                     CzyOdwolane = false,
-                    GrafikZajecId = scheduleActivity.GrafikZajecId       
+                    GrafikZajecId = scheduleActivity.GrafikZajecId
                 };
                 await _sportActivityRepository.AddInstanceAsync(instanceOfActivity, cancellationToken);
             }
@@ -108,6 +110,14 @@ namespace SportsCenter.Application.Activities.Commands.SignUpForActivity
             if (iaAlreagdySignedUp)
             {
                 throw new ClientAlreadySignedUpException(clientId);
+            }
+
+            //czy w tym czasie klient jest zapisany na inne zaj lub ma zlozona rezerwacje
+            var isAvailable = await _sportActivityRepository.IsClientAvailableForActivityAsync(clientId, request.ActivityId, request.SelectedDate, cancellationToken);
+
+            if (!isAvailable)
+            {
+                throw new ClientAlreadyHasActivityOrReservationException(request.SelectedDate);
             }
 
             var zapis = new InstancjaZajecKlient
@@ -125,5 +135,6 @@ namespace SportsCenter.Application.Activities.Commands.SignUpForActivity
 
             return Unit.Value;
         }
+
     }
 }

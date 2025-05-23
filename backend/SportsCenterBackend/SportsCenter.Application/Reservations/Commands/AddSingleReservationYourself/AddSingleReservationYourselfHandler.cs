@@ -69,6 +69,9 @@ namespace SportsCenter.Application.Reservations.Commands.AddSingleReservationYou
             var startTime = DateTime.Parse(request.StartTime);
             var endTime = DateTime.Parse(request.EndTime);
 
+            Console.WriteLine("AAAAAAAAAAAAAAAAAA request start time: " + startTime);
+            Console.WriteLine("AAAAAAAAAAAAAAAAAA request end time: " + endTime);
+
             var specialWorkingHours = await _sportsCenterRepository.GetSpecialWorkingHoursByDateAsync(startTime.Date, cancellationToken);
 
             if (specialWorkingHours != null)
@@ -78,8 +81,14 @@ namespace SportsCenter.Application.Reservations.Commands.AddSingleReservationYou
                 int clubOpeningTimeInMinutes = workingHours.GodzinaOtwarcia.Hour * 60 + workingHours.GodzinaOtwarcia.Minute;
                 int clubClosingTimeInMinutes = workingHours.GodzinaZamkniecia.Hour * 60 + workingHours.GodzinaZamkniecia.Minute;
 
+                Console.WriteLine("AAAAAAAAAAAAAAAAAA club open time in min: " + clubOpeningTimeInMinutes);
+                Console.WriteLine("AAAAAAAAAAAAAAAAAA club close time in min: " + clubClosingTimeInMinutes);
+
                 int reservationStartInMinutes = startTime.Hour * 60 + startTime.Minute;
                 int reservationEndInMinutes = endTime.Hour * 60 + endTime.Minute;
+
+                Console.WriteLine("AAAAAAAAAAAAAAAAAA reservation start time in min: " + reservationStartInMinutes);
+                Console.WriteLine("AAAAAAAAAAAAAAAAAA reservation end time in min: " + reservationEndInMinutes);
 
                 if (reservationStartInMinutes < clubOpeningTimeInMinutes || reservationEndInMinutes > clubClosingTimeInMinutes)
                 {
@@ -105,8 +114,14 @@ namespace SportsCenter.Application.Reservations.Commands.AddSingleReservationYou
                 int clubOpeningTimeInMinutes = workingHours.GodzinaOtwarcia.Hour * 60 + workingHours.GodzinaOtwarcia.Minute;
                 int clubClosingTimeInMinutes = workingHours.GodzinaZamkniecia.Hour * 60 + workingHours.GodzinaZamkniecia.Minute;
 
+                Console.WriteLine("AAAAAAAAAAAAAAAAAA club open time in min: " + clubOpeningTimeInMinutes);
+                Console.WriteLine("AAAAAAAAAAAAAAAAAA club close time in min: " + clubClosingTimeInMinutes);
+
                 int reservationStartInMinutes = startTime.Hour * 60 + startTime.Minute;
                 int reservationEndInMinutes = endTime.Hour * 60 + endTime.Minute;
+
+                Console.WriteLine("AAAAAAAAAAAAAAAAAA reservation start time in min: " + reservationStartInMinutes);
+                Console.WriteLine("AAAAAAAAAAAAAAAAAA reservation end time in min: " + reservationEndInMinutes);
 
                 if (reservationStartInMinutes < clubOpeningTimeInMinutes || reservationEndInMinutes > clubClosingTimeInMinutes)
                 {

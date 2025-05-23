@@ -1,5 +1,6 @@
 using System.Diagnostics;
 using Microsoft.EntityFrameworkCore;
+using SportsCenter.Application.Exceptions.SportActivitiesException;
 using SportsCenter.Core.Entities;
 using SportsCenter.Core.Repositories;
 
@@ -279,5 +280,54 @@ public class SportActivityRepository : ISportActivityRepository
             .Where(i => i.GrafikZajec.ZajeciaId == activityId && i.Data == date)
             .FirstOrDefaultAsync(cancellationToken);
     }
+
+    public async Task<bool> IsClientAvailableForActivityAsync(int clientId, int activityId, DateOnly selectedDate, CancellationToken cancellationToken)
+    {
+        //grafik zajec na podstawie przekazanego id zajec 
+        var schedule = await _dbContext.GrafikZajecs
+            .Where(g => g.ZajeciaId == activityId)
+            .FirstOrDefaultAsync(cancellationToken);
+
+        if (schedule == null)
+            throw new SportActivityNotFoundException(activityId);
+
+        //Obliczenie czasu godzina od i do
+        var startDateTime = selectedDate.ToDateTime(TimeOnly.FromTimeSpan(schedule.GodzinaOd));
+        var endDateTime = startDateTime.AddMinutes(schedule.CzasTrwania);
+
+        //Czy w tym czasie jest kolizja z innymi zaj
+        var conflictList = _dbContext.InstancjaZajecKlients
+            .Where(ik => ik.KlientId == clientId)
+            .Join(_dbContext.InstancjaZajecs,
+                ik => ik.InstancjaZajecId,
+                iz => iz.InstancjaZajecId,
+                (ik, iz) => new { iz.Data, iz.GrafikZajecId })
+            .Join(_dbContext.GrafikZajecs,
+                joined => joined.GrafikZajecId,
+                g => g.GrafikZajecId,
+                (joined, g) => new { joined.Data, g.GodzinaOd, g.CzasTrwania })
+            .ToList();
+
+        var hasActivityConflict = conflictList.Any(x =>
+        {
+            var start = x.Data.ToDateTime(TimeOnly.FromTimeSpan(x.GodzinaOd));
+            var end = start.AddMinutes(x.CzasTrwania);
+            return start < endDateTime && end > startDateTime;
+        });
+
+        if (hasActivityConflict)
+            return false;
+
+        //Czy jest kolizja w tym czasie z jakas rezerwacja
+        var hasReservationConflict = await _dbContext.Rezerwacjas
+            .AnyAsync(r =>
+                r.KlientId == clientId &&
+                r.DataOd < endDateTime &&
+                r.DataDo > startDateTime,
+                cancellationToken);
+
+        return !hasReservationConflict;
+    }
+
 
 }

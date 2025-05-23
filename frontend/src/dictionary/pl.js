@@ -630,6 +630,7 @@ export default {
     returnLabel: 'Wróć',
     signUpLabel: 'Zapisz się',
     participantsLabel: 'Uczestnicy',
+    costLabel: 'Koszt',
     successLabel: 'Sukces!',
     savedSuccessLabel: 'Udało się zapisać uczestnictwo!',
     clickAnywhereLabel: 'Kliknij w dowolne miejsce ekranu.',

@@ -49,7 +49,8 @@ export default function ActivityDetails() {
         groupName,
         skillLevel,
         trainerName,
-        participants
+        participants,
+        cost,
     } = activityDetails;
 
     const formattedDate = new Date(date + 'Z').toISOString().split("T")[0];
@@ -258,6 +259,25 @@ export default function ActivityDetails() {
                             },
                         }}
                     />
+                    {cost && <CustomInput
+                        label={dictionary.activityDetailsPage.costLabel}
+                        type="text"
+                        id="cost"
+                        name="cost"
+                        fullWidth
+                        value={cost + ' PLN'}
+                        size="small"
+                        InputProps={{ readOnly: true }}
+                        readonlyStyle
+                        additionalStyles={{
+                            "& .MuiOutlinedInput-root": {
+                                borderRadius: "12px",
+                                "& fieldset": {
+                                    borderColor: "#d3d3d3",
+                                },
+                            },
+                        }}
+                    />}
 
                     {role==='Klient' && <FormControlLabel
                         control={

@@ -626,6 +626,7 @@ reservationsSummaryPage: {
     returnLabel: 'Back',
     signUpLabel: 'Sign Up',
     participantsLabel: 'Participants',
+    costLabel: 'Cost',
     successLabel: 'Success!',
     savedSuccessLabel: 'You have successfully signed up!',
     clickAnywhereLabel: 'Click anywhere on the screen.',

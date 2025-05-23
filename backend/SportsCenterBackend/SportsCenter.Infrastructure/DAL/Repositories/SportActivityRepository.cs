@@ -337,7 +337,9 @@ public class SportActivityRepository : ISportActivityRepository
          .FirstOrDefaultAsync(g => g.ZajeciaId == zajeciaId, cancellationToken);
 
         var instancja = grafikZajec?.InstancjaZajec.FirstOrDefault(i => i.Data == selectedDate);
-        var signedCount = instancja?.InstancjaZajecKlients.Count ?? 0;
+        //zliczaja sie tylko te rekordy dla ktorych nie ma daty wypisania klienta
+        var signedCount = instancja?.InstancjaZajecKlients
+            .Count(k => k.DataWypisu == null) ?? 0;
         var limit = grafikZajec?.LimitOsob;
 
         return (signedCount, limit);

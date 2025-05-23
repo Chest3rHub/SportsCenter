@@ -58,6 +58,13 @@ namespace SportsCenter.Application.Activities.Commands.SignUpForActivity
                 throw new SportActivityNotFoundException(request.ActivityId);
             }
 
+            var (signedCount, limit) = await _sportActivityRepository.GetSignedUpClientCountAsync(request.ActivityId, request.SelectedDate, cancellationToken);
+
+            if (limit.HasValue && signedCount >= limit.Value)
+            {
+                throw new LimitOfPlacesReachedException();
+            }
+
             var activityHour = scheduleActivity.GodzinaOd;
             var currentTime = DateTime.UtcNow;
 

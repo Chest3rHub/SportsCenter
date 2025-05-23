@@ -329,5 +329,18 @@ public class SportActivityRepository : ISportActivityRepository
         return !hasReservationConflict;
     }
 
+    public async Task<(int signedUpCount, int? limit)> GetSignedUpClientCountAsync(int zajeciaId, DateOnly selectedDate, CancellationToken cancellationToken)
+    {
+        var grafikZajec = await _dbContext.GrafikZajecs
+         .Include(g => g.InstancjaZajec.Where(i => i.Data == selectedDate))
+         .ThenInclude(i => i.InstancjaZajecKlients)
+         .FirstOrDefaultAsync(g => g.ZajeciaId == zajeciaId, cancellationToken);
+
+        var instancja = grafikZajec?.InstancjaZajec.FirstOrDefault(i => i.Data == selectedDate);
+        var signedCount = instancja?.InstancjaZajecKlients.Count ?? 0;
+        var limit = grafikZajec?.LimitOsob;
+
+        return (signedCount, limit);
+    }
 
 }

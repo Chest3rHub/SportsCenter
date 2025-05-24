@@ -642,8 +642,11 @@ reservationsSummaryPage: {
     savedFailureLabel: 'Failed to sign up for the activity!',
     alreadySignedUpLabel:'You already signed up to this activity!',
     tooLongLabel:'The activity is more than 48 hours away from now!',
-    canceledLabel:'Zajęcia zostały odwołane!',
-    shortCanceledLabel:'Odwołane',
+    canceledLabel:'Activity has been canceled!',
+    shortCanceledLabel:'Canceled',
+    cancelLabel:'Cancel',
+    canceledSuccessLabel: 'Participation was successfully canceled!',
+    canceledFailureLabel: 'Failed to cancel participation!',
   },
   days:{
     monday: 'Monday',
@@ -654,4 +657,5 @@ reservationsSummaryPage: {
     saturday: 'Saturday',
     sunday: 'Sunday'
   },
+  
 };

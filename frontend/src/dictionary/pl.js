@@ -647,7 +647,10 @@ export default {
     alreadySignedUpLabel:'Już zapisałeś/aś się na tę aktywność!',
     tooLongLabel:'Do aktywności pozostało więcej niż 48 godzin!',
     canceledLabel:'Zajęcia zostały odwołane!',
-    shortCanceledLabel:'Canceled',
+    shortCanceledLabel:'Odwołane',
+    cancelLabel:'Odwołaj',
+    canceledSuccessLabel: 'Udało się odwołać uczestnictwo!',
+    canceledFailureLabel: 'Nie udało się odwołać uczestnictwa!',
   },
   days:{
     monday: 'Poniedziałek',

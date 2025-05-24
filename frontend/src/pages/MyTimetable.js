@@ -92,6 +92,10 @@ export default function MyTimetable() {
         //         state: { activityDetails: event }
         //     });
         // }
+        console.log(event);
+        navigate('/my-activity-details', {
+            state: { activityDetails: event }
+        });
     }
 
     const daysOfWeek = Array.from({ length: DAYS_IN_WEEK }, (_, i) => addDays(currentWeekStart, i));

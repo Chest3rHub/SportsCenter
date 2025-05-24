@@ -24,6 +24,7 @@ using System.Security.Cryptography;
 using SportsCenter.Application.Activities.Queries.GetYourUpcomingActivities;
 using SportsCenter.Application.Activities.Queries.GetActivitiesLevelNames;
 using SportsCenter.Application.Activities.Queries.GetTrainerSportActivitiesByWeeks;
+using SportsCenter.Application.Activities.Commands.CancelActvitySignUp;
 
 namespace SportsCenter.Api.Controllers;
 
@@ -180,7 +181,30 @@ namespace SportsCenter.Api.Controllers;
         }
     }
 
-    // dziala dopiro jak zrobimy get schedule activities bo 
+    [Authorize(Roles = "Klient")]
+    [HttpPost("cancel-sign-up-for-activity")]
+    public async Task<IActionResult> CancelSignUpForActivityAsync([FromBody] CancelActivitySignUp cancelActivitySignUp)
+    {
+        try
+        {
+            await Mediator.Send(cancelActivitySignUp);
+            return Ok(new { Message = "Successfully cancel sign up for the activity." });
+        }
+        catch (ClientIsNotSignedUpException ex)
+        {
+            return NotFound(new { message = ex.Message });
+        }
+        catch (CannotUnsubscribeFromPastEventException ex)
+        {
+            return NotFound(new { message = ex.Message });
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, new { message = "An error occurred while sending the request", details = ex.Message });
+        }
+    }
+
+    // dziala dopiero jak zrobimy get schedule activities bo 
     //po wywolaniu tego uzupelniaja sie rekordy w tabeli InstancjaZajec i mozna
     //dla danej daty wybrac zajecia(na frontendzie to bedzie mialo wiekszy sens
     //niz sie teraz wydaje ze ma)

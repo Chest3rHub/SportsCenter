@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using SportsCenter.Core.Entities;
 using Stripe.Forwarding;
+using static SportsCenter.Core.Enums.ClientEntryStatus;
 namespace SportsCenter.Core.Repositories;
 
 public interface ISportActivityRepository
@@ -27,4 +28,5 @@ public interface ISportActivityRepository
     Task<Zajecium> GetActivityByInstanceOfActivityIdAsync(int instanceOfActivityId, CancellationToken cancellationToken);
     Task<bool> IsClientAvailableForActivityAsync(int clientId, int activityId, DateOnly selectedDate, CancellationToken cancellationToken);
     Task<(int signedUpCount, int? limit)> GetSignedUpClientCountAsync(int zajeciaId, DateOnly selectedDate, CancellationToken cancellationToken);
+    Task<EntryStatus> GetInstanceClientEntryAsync(int instancjaZajecId, int clientId, CancellationToken cancellationToken);
 }

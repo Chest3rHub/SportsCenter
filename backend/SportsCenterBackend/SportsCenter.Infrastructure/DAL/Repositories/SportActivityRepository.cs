@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using SportsCenter.Application.Exceptions.SportActivitiesException;
 using SportsCenter.Core.Entities;
 using SportsCenter.Core.Repositories;
+using static SportsCenter.Core.Enums.ClientEntryStatus;
 
 namespace SportsCenter.Infrastructure.DAL.Repositories;
 
@@ -230,9 +231,27 @@ public class SportActivityRepository : ISportActivityRepository
 
     public async Task AddClientToInstanceAsync(InstancjaZajecKlient signUp, CancellationToken cancellationToken)
     {
-        await _dbContext.InstancjaZajecKlients.AddAsync(signUp, cancellationToken);
+        //najpierw sprawdzam czy jest dla tego klienta i instancji zajec wpis
+        //jak tak to zmieniam dateWypisu na null by nie dublowac informacji
+        //i by wypis z zajec dzialal
+        var existingEntry = await _dbContext.InstancjaZajecKlients
+            .FirstOrDefaultAsync(x =>
+                x.InstancjaZajecId == signUp.InstancjaZajecId &&
+                x.KlientId == signUp.KlientId,
+                cancellationToken);
+
+        if (existingEntry != null)
+        {
+            existingEntry.DataWypisu = null;
+        }
+        else
+        {
+            await _dbContext.InstancjaZajecKlients.AddAsync(signUp, cancellationToken);
+        }
+
         await _dbContext.SaveChangesAsync(cancellationToken);
     }
+
 
     public async Task<int> CancelInstanceOfActivityAsync(int instantionOfActivityId, CancellationToken cancellationToken)
     {
@@ -352,6 +371,30 @@ public class SportActivityRepository : ISportActivityRepository
         var limit = grafikZajec?.LimitOsob;
 
         return (signedCount, limit);
+    }
+
+    public async Task<EntryStatus> GetInstanceClientEntryAsync(int instancjaZajecId, int clientId, CancellationToken cancellationToken)
+    {
+
+        var instancja = await _dbContext.InstancjaZajecs
+            .FirstOrDefaultAsync(x => x.InstancjaZajecId == instancjaZajecId, cancellationToken);
+
+        //nie mozna sie wypisac z zajec ktore juz minely
+        if (instancja.Data < DateOnly.FromDateTime(DateTime.UtcNow.Date))
+            return EntryStatus.PastEvent;
+
+        //pobranie zapisu klienta
+        var record = await _dbContext.InstancjaZajecKlients
+            .FirstOrDefaultAsync(x => x.InstancjaZajecId == instancjaZajecId && x.KlientId == clientId, cancellationToken);
+
+        //Console.WriteLine("AAAAAAAAAAAAAAAAA record data wypisu: " + record.DataWypisu);
+        if (record.DataWypisu != null)
+            return EntryStatus.AlreadyUnsubscribed; //klient sie juz wypisal
+
+        record.DataWypisu = DateOnly.FromDateTime(DateTime.UtcNow);
+        await _dbContext.SaveChangesAsync(cancellationToken);
+
+        return EntryStatus.Success; //udalo sie wypisac z zajec
     }
 
 }

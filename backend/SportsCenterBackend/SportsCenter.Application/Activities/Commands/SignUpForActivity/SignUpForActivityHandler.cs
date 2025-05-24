@@ -81,6 +81,14 @@ namespace SportsCenter.Application.Activities.Commands.SignUpForActivity
                 throw new ActivityTimeTooFarException();
             }
 
+            //aby nie mozna sie bylo zapisac na zajecia tego samego dnia ale z godzin co minely
+            Console.WriteLine("AAAAAAAAAAAAAAAAA activity date time: " + activityDate);
+            Console.WriteLine("AAAAAAAAAAAAAAAAA localNow: " + localNow);
+            if (activityDate < localNow)
+            {
+                throw new CannotSignUpForPastEventException();
+            }
+
             var daysOfWeekTranslation = new Dictionary<DayOfWeek, string>
             {
                 { DayOfWeek.Monday, "poniedzialek" },

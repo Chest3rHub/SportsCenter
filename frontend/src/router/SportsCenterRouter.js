@@ -43,6 +43,7 @@ import GetReservationInfo from "../pages/GetReservationInfo";
 import ReservationsSummary from "../pages/ReservationsSummary";
 import MyTimetable from "../pages/MyTimetable";
 import RegisterEmployee from "../pages/RegisterEmployee";
+import MyActivityDetails from "../pages/MyActivityDetails";
 
 // pozmieniac dla klienta na komponenty trasy itd
 
@@ -110,7 +111,11 @@ const clientRouter = [
             {
                 path: '/activity-details',
                 element: <ActivityDetails />,
-            },                      
+            },    
+            {
+                path: '/my-activity-details',
+                element: <MyActivityDetails />,
+            },                   
             {
                 path: "*",
                 element: <NotFound />,
@@ -287,6 +292,10 @@ const clientRouter = [
                     path: '/activity-details',
                     element: <ActivityDetails />,
                 },  
+                {
+                    path: '/my-activity-details',
+                    element: <MyActivityDetails />,
+                }, 
                 {
                     path: "/get-sport-activity-with-id",
                     element: <GetActivityInfo />

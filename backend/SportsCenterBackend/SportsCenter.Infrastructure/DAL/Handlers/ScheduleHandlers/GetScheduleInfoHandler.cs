@@ -88,7 +88,9 @@ internal class GetScheduleInfoHandler : IRequestHandler<GetScheduleInfo, List<Sc
                         : "Brak trenera",
                     Cost = reservation.Koszt,
                     Discount = reservation.Klient?.ZnizkaNaZajecia ?? 0,
-                    Participants = new List<string> { $"{reservation.Klient.KlientNavigation.Imie} {reservation.Klient.KlientNavigation.Nazwisko}" }
+                    Participants = new List<string> { $"{reservation.Klient.KlientNavigation.Imie} {reservation.Klient.KlientNavigation.Nazwisko}" },
+                    IsEquipmentReserved = reservation.CzyUwzglednicSprzet,
+                    IsCanceled = (bool)reservation.CzyOdwolana
                 };
             }
             else if (isTrainerRole)

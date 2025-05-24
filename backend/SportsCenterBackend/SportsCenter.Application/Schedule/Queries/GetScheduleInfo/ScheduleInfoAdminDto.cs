@@ -17,5 +17,9 @@ namespace SportsCenter.Application.Schedule.Queries.GetScheduleInfo
         public bool? IsRecurring { get; set; }
         [JsonProperty(Order = 12)]
         public List<string> Participants { get; set; } = new List<string>();
+        [JsonProperty(Order = 13)]
+        public bool IsEquipmentReserved { get; set; }
+        [JsonProperty(Order = 14)]
+        public bool IsCanceled { get; set; }
     }
 }

@@ -43,6 +43,8 @@ import GetReservationInfo from "../pages/GetReservationInfo";
 import ReservationsSummary from "../pages/ReservationsSummary";
 import MyTimetable from "../pages/MyTimetable";
 import RegisterEmployee from "../pages/RegisterEmployee";
+import OwnerDashboard from "../pages/OwnerDashboard";
+//import ClubWorkingHoursPage from "../pages/ClubWorkingHoursPage";
 
 // pozmieniac dla klienta na komponenty trasy itd
 
@@ -127,7 +129,7 @@ const clientRouter = [
             children: [
                 {
                     path: "/",
-                    element: <Home />,
+                    element: <OwnerDashboard />,
                 },
                 {
                     path: "/dashboard",  
@@ -233,10 +235,14 @@ const clientRouter = [
                     path: "/register-employee",
                     element: <RegisterEmployee />
                 },
+                // {
+                //     path: "/working-hours",
+                //     element: <ClubWorkingHoursPage />
+                // },
                 {
                     path: "*",
                     element: <NotFound />,
-                }
+                },
             ]
         }
     ];

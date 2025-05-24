@@ -253,6 +253,11 @@ export default {
     noOrdersLabel: "Nie masz przypisanych zamówień do realizacji",
     moreOrdersLabel: "Reszta zamówień",
   },
+  ownerMainPage: {
+    openingHoursLabel: "Godziny otwarcia",
+    thisWeekLabel: "w tym tygodniu",
+    modifyHoursButtonLabel: "Modyfikuj godziny otwarcia"
+  },
   clientsPage: {
     clientsLabel: 'Klienci',
     clientLabel: 'Klient',
@@ -643,5 +648,14 @@ export default {
     tooLongLabel:'Do aktywności pozostało więcej niż 48 godzin!',
     canceledLabel:'Zajęcia zostały odwołane!',
     shortCanceledLabel:'Canceled',
-  }
+  },
+  days:{
+    monday: 'Poniedziałek',
+    tuesday: 'Wtorek',
+    wednesday: 'Środa',
+    thursday: 'Czwartek',
+    friday: 'Piątek',
+    saturday: 'Sobota',
+    sunday: 'Niedziela'
+  },
 };

@@ -245,6 +245,11 @@ export default {
     noOrdersLabel: "You have no assigned orders",
     moreOrdersLabel: "More orders",
   },
+  ownerMainPage: {
+    openingHoursLabel: "Working hours",
+    thisWeekLabel: "this week",
+    modifyHoursButtonLabel: "Modify working hours"
+  },
   clientsPage: {
     clientsLabel: 'Clients',
     clientLabel: 'Client',
@@ -639,5 +644,14 @@ reservationsSummaryPage: {
     tooLongLabel:'The activity is more than 48 hours away from now!',
     canceledLabel:'Zajęcia zostały odwołane!',
     shortCanceledLabel:'Odwołane',
-  }
+  },
+  days:{
+    monday: 'Monday',
+    tuesday: 'Tuesday',
+    wednesday: 'Wednesday',
+    thursday: 'Thursday',
+    friday: 'Friday',
+    saturday: 'Saturday',
+    sunday: 'Sunday'
+  },
 };

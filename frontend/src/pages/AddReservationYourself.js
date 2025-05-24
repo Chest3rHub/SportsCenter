@@ -16,6 +16,7 @@ import getCourts from '../api/getCourts';
 import MenuItem from '@mui/material/MenuItem';
 import DatePicker, { registerLocale } from "react-datepicker"; // npm install react-datepicker date-fns
 import 'react-datepicker/dist/react-datepicker.css';   
+import toUTCTimeStringSameHours from '../utils/toUTCTimeStringSameHours';
 import { 
   format, 
   startOfDay, 
@@ -399,23 +400,26 @@ function AddReservationYourself() {
     };
 
     const handleSubmit = async (e) => {
-        e.preventDefault();
+    e.preventDefault();
         if (!validateForm()) return;
-    
+
+        const formatDateForSerwer = (date) => {
+            return toUTCTimeStringSameHours(date).slice(0, -1);
+        };
+
         const dataToSend = {
             ...formData,
-            startTime: format(formData.startTime, "yyyy-MM-dd'T'HH:mm:ss"),
-            endTime: format(formData.endTime, "yyyy-MM-dd'T'HH:mm:ss"),
-            creationDate: format(new Date(), "yyyy-MM-dd'T'HH:mm:ss")
+            startTime: formatDateForSerwer(new Date(formData.startTime)),
+            endTime: formatDateForSerwer(new Date(formData.endTime)),
+            creationDate: formatDateForSerwer(new Date())
         };
-    
-    
+
         try {
-            const response = await addReservationYourself(formData);
-      
+            const response = await addReservationYourself(dataToSend);
+
             if (!response.ok) {
-              const errorData = await response.json();
-              console.log(errorData);        
+                const errorData = await response.json();
+                console.log(errorData);        
                 handleError('Blad rezerwacji... sprawdz konsole');
             } else {
                 navigate('/my-reservations');

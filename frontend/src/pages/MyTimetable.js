@@ -229,7 +229,7 @@ export default function MyTimetable() {
 
                                         >
                                             {cellEvents.map((event, i) => (
-                                                <Tooltip key={i} title={`${event.sportActivityName ? event.sportActivityName + ': ' : ''} ${event.levelName}`} >
+                                                <Tooltip key={i} title={`${event.sportActivityName ? event.sportActivityName : ''}${event.levelName ? ': ' + event.levelName : ''}`} >
                                                     <Box
                                                         sx={{
                                                             color: 'white',

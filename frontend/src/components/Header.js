@@ -1,10 +1,10 @@
 import { Box } from '@mui/material';
 
-export default function Header({ children, marginTop }) {
+export default function Header({ children, marginTop, backgroundColor }) {
   return (
     <Box
       sx={{
-        backgroundColor: '#AFEBBC',
+        backgroundColor: backgroundColor || '#AFEBBC',
         boxShadow: '0 5px 5px rgb(0, 0, 0, 0.6)',
         width: '75%',
         borderRadius: '100px',

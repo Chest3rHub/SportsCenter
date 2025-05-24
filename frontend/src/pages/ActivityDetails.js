@@ -51,6 +51,8 @@ export default function ActivityDetails() {
         trainerName,
         participants,
         cost,
+        isEquipmentReserved,
+        isCanceled
     } = activityDetails;
 
     const formattedDate = new Date(date + 'Z').toISOString().split("T")[0];
@@ -107,7 +109,7 @@ export default function ActivityDetails() {
                 }}
             >
                 <Box sx={{ maxWidth: '40vw', minWidth: '30vw' }}>
-                    <Header>{groupName ? groupName : dictionary.activityDetailsPage.reservationLabel}</Header>
+                    <Header backgroundColor={isCanceled ? '#F46C63' : undefined}>{isCanceled ? dictionary.activityDetailsPage.shortCanceledLabel : (groupName ? groupName : dictionary.activityDetailsPage.reservationLabel)}</Header>
                 </Box>
                 <Box sx={{
                     minHeight:'55vh',
@@ -279,6 +281,23 @@ export default function ActivityDetails() {
                         }}
                     />}
 
+                    {(role === 'Wlasciciel' || role === 'Pracownik administracyjny') && <FormControlLabel
+                        control={
+                            <Checkbox
+                                id="isEquipmentReserved"
+                                name="isEquipmentReserved"
+                                checked={isEquipmentReserved}
+                                onChange={() => { }}
+                                sx={{
+                                    color: "#8edfb4",
+                                    '&.Mui-checked': {
+                                        color: "#8edfb4",
+                                    },
+                                }}
+                            />
+                        }
+                        label={dictionary.activityDetailsPage.isEquipmentReservedLabel}
+                    />}
                     {role==='Klient' && <FormControlLabel
                         control={
                             <Checkbox

@@ -637,9 +637,11 @@ export default {
     failureLabel: 'Błąd!',
     clickAnywhereFailureLabel: 'Kliknij w dowolne miejsce ekranu.',
     isEquipmentIncludedLabel:'Czy potrzebujesz sprzętu do gry?',
+    isEquipmentReservedLabel:'Czy zarezerwowano sprzęt?',
     savedFailureLabel: 'Nie udało się zapisać uczestnictwa!',
     alreadySignedUpLabel:'Już zapisałeś/aś się na tę aktywność!',
     tooLongLabel:'Do aktywności pozostało więcej niż 48 godzin!',
     canceledLabel:'Zajęcia zostały odwołane!',
+    shortCanceledLabel:'Canceled',
   }
 };

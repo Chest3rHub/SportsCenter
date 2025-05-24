@@ -633,9 +633,11 @@ reservationsSummaryPage: {
     failureLabel: 'Error!',
     clickAnywhereFailureLabel: 'Click anywhere on the screen.',
     isEquipmentIncludedLabel: 'Do you need equipment for the game?',
+    isEquipmentReservedLabel:'Is equipment included?',
     savedFailureLabel: 'Failed to sign up for the activity!',
     alreadySignedUpLabel:'You already signed up to this activity!',
     tooLongLabel:'The activity is more than 48 hours away from now!',
     canceledLabel:'Zajęcia zostały odwołane!',
+    shortCanceledLabel:'Odwołane',
   }
 };

@@ -41,6 +41,7 @@ import searchClientsTopTen from '../api/searchClientsTopTen';
 import addRecurringReservationForClient from '../api/addRecurringReservationForClient';
 import addReservationForClient from '../api/addReservationForClient';
 import { useDebounce } from '../hooks/useDebounce';
+import toUTCTimeStringSameHours from '../utils/toUTCTimeStringSameHours';
 
 export default function AddReservationForClient() {
 
@@ -147,15 +148,7 @@ export default function AddReservationForClient() {
             try {
                 const localStart = new Date(formData.startTime);
                 const localEnd = new Date(formData.endTime);
-                const toUTCTimeStringSameHours = (date) => {
-                    const year = date.getFullYear();
-                    const month = String(date.getMonth() + 1).padStart(2, '0');
-                    const day = String(date.getDate()).padStart(2, '0');
-                    const hours = String(date.getHours()).padStart(2, '0');
-                    const minutes = String(date.getMinutes()).padStart(2, '0');
-                    const seconds = String(date.getSeconds()).padStart(2, '0');
-                    return `${year}-${month}-${day}T${hours}:${minutes}:${seconds}Z`;
-                };
+                
                 const startUTC = toUTCTimeStringSameHours(localStart);
                 const endUTC = toUTCTimeStringSameHours(localEnd);
                 const trainersResponse = await getAvailableTrainers(startUTC, endUTC);

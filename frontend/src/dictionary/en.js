@@ -661,5 +661,23 @@ reservationsSummaryPage: {
     saturday: 'Saturday',
     sunday: 'Sunday'
   },
+  clubHoursPage: {
+    workingHoursLabel: 'Club Working Hours',
+    noDataLabel: 'No data available!',
+    setSpecialHoursButton: 'Set Special Hours',
+    setRegularHoursButton: 'Set Regular Hours',
+    setSpecialHoursTitle: 'Set Special Club Working Hours',
+    setRegularHoursTitle: 'Set Regular Club Working Hours',
+    selectDateLabel: 'Select Date',
+    selectDayLabel: 'Select Day of Week',
+    openHourLabel: 'Opening Hour',
+    closeHourLabel: 'Closing Hour',
+    cancelButton: 'Cancel',
+    saveButton: 'Save',
+    fillAllFieldsError: 'Please fill all fields',
+    errorSettingHours: 'Error while setting hours',
+    pastDateError: 'Cannot select dates in the past',
+    invalidHoursError: 'Closing time must be after opening time'
+  },
   
 };

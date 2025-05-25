@@ -665,4 +665,22 @@ export default {
     saturday: 'Sobota',
     sunday: 'Niedziela'
   },
+  clubHoursPage: {
+    workingHoursLabel: 'Godziny otwarcia klubu',
+    noDataLabel: 'Brak danych!',
+    setSpecialHoursButton: 'Ustaw wyjątkowe godziny pracy',
+    setRegularHoursButton: 'Ustaw godziny pracy',
+    setSpecialHoursTitle: 'Ustaw wyjątkowe godziny pracy klubu',
+    setRegularHoursTitle: 'Ustaw standardowe godziny pracy klubu',
+    selectDateLabel: 'Wybierz datę',
+    selectDayLabel: 'Wybierz dzień tygodnia',
+    openHourLabel: 'Godzina otwarcia',
+    closeHourLabel: 'Godzina zamknięcia',
+    cancelButton: 'Anuluj',
+    saveButton: 'Zapisz',
+    fillAllFieldsError: 'Proszę wypełnić wszystkie pola!',
+    errorSettingHours: 'Błąd podczas ustawiania godzin',
+    pastDateError: 'Nie można wybrac dat z przeszłości',
+    invalidHoursError: 'Godzina zamknięcia musi być późniejsza niż otwarcia!'
+  },
 };

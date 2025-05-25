@@ -44,7 +44,7 @@ import ReservationsSummary from "../pages/ReservationsSummary";
 import MyTimetable from "../pages/MyTimetable";
 import RegisterEmployee from "../pages/RegisterEmployee";
 import OwnerDashboard from "../pages/OwnerDashboard";
-//import ClubWorkingHoursPage from "../pages/ClubWorkingHoursPage";
+import ClubWorkingHoursPage from "../pages/ClubWorkingHoursPage";
 import MyActivityDetails from "../pages/MyActivityDetails";
 import NewClientReservation from "../pages/NewClientReservation";
 
@@ -241,10 +241,10 @@ const clientRouter = [
                     path: "/register-employee",
                     element: <RegisterEmployee />
                 },
-                // {
-                //     path: "/working-hours",
-                //     element: <ClubWorkingHoursPage />
-                // },
+                 {
+                     path: "/working-hours",
+                     element: <ClubWorkingHoursPage />
+                 },
                 {
                     path: "*",
                     element: <NotFound />,

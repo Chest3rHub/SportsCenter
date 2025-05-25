@@ -16,7 +16,7 @@ namespace SportsCenter.Application.Schedule.Queries.GetScheduleInfo
         public decimal? Discount { get; set; }
         public bool? IsRecurring { get; set; }
         [JsonProperty(Order = 12)]
-        public List<string> Participants { get; set; } = new List<string>();
+        public List<ParticipantDto> Participants { get; set; } = new();
         [JsonProperty(Order = 13)]
         public bool IsEquipmentReserved { get; set; }
         [JsonProperty(Order = 14)]

@@ -88,7 +88,15 @@ internal class GetScheduleInfoHandler : IRequestHandler<GetScheduleInfo, List<Sc
                         : "Brak trenera",
                     Cost = reservation.Koszt,
                     Discount = reservation.Klient?.ZnizkaNaZajecia ?? 0,
-                    Participants = new List<string> { $"{reservation.Klient.KlientNavigation.Imie} {reservation.Klient.KlientNavigation.Nazwisko}" },
+                    Participants = new List<ParticipantDto>
+                    {
+                        new ParticipantDto
+                        {
+                        FirstName = reservation.Klient?.KlientNavigation?.Imie,
+                        LastName = reservation.Klient?.KlientNavigation?.Nazwisko,
+                        IsPaid = reservation.CzyOplacona
+                        }
+                    },
                     IsEquipmentReserved = reservation.CzyUwzglednicSprzet,
                     IsCanceled = (bool)reservation.CzyOdwolana
                 };
@@ -107,7 +115,15 @@ internal class GetScheduleInfoHandler : IRequestHandler<GetScheduleInfo, List<Sc
                     TrainerName = reservation.Trener?.PracownikNavigation != null
                         ? $"{reservation.Trener.PracownikNavigation.Imie} {reservation.Trener.PracownikNavigation.Nazwisko}"
                         : "Brak trenera",
-                    Participants = new List<string> { $"{reservation.Klient.KlientNavigation.Imie} {reservation.Klient.KlientNavigation.Nazwisko}" }
+                    Participants = new List<ParticipantDto>
+                    {
+                        new ParticipantDto
+                        {
+                        FirstName = reservation.Klient?.KlientNavigation?.Imie,
+                        LastName = reservation.Klient?.KlientNavigation?.Nazwisko,
+                        IsPaid = null //trener nie powinien widziec tej informacji
+                        }
+                    },
                 };
             }
             else
@@ -185,7 +201,12 @@ internal class GetScheduleInfoHandler : IRequestHandler<GetScheduleInfo, List<Sc
                             //Console.WriteLine($"AAAAAAAAAAAAsignUpdate{signUpDateTime}ActivityDate{activityDateTime}odstep{diff}");
                             return diff.TotalHours <= 48 && diff.TotalHours >= 0;
                         }))
-                        .Select(ik => $"{ik.Klient.KlientNavigation.Imie} {ik.Klient.KlientNavigation.Nazwisko}")
+                         .Select(ik => new ParticipantDto
+                         {
+                            FirstName = ik.Klient.KlientNavigation.Imie,
+                            LastName = ik.Klient.KlientNavigation.Nazwisko,
+                            IsPaid = ik.CzyOplacone
+                         })
                         .ToList()
                 };
 
@@ -220,7 +241,12 @@ internal class GetScheduleInfoHandler : IRequestHandler<GetScheduleInfo, List<Sc
                             //Console.WriteLine($"AAAAAAAAAAAAsignUpdate{signUpDateTime}ActivityDate{activityDateTime}odstep{diff}");
                             return diff.TotalHours <= 48 && diff.TotalHours >= 0;
                         }))
-                        .Select(ik => $"{ik.Klient.KlientNavigation.Imie} {ik.Klient.KlientNavigation.Nazwisko}")
+                        .Select(ik => new ParticipantDto
+                        {
+                            FirstName = ik.Klient.KlientNavigation.Imie,
+                            LastName = ik.Klient.KlientNavigation.Nazwisko,
+                            IsPaid = null //trener tego nie powinien widziec
+                        })
                         .ToList()
                 };
             }

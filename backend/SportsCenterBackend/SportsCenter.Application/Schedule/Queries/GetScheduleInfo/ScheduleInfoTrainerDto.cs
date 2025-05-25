@@ -11,6 +11,7 @@ namespace SportsCenter.Application.Schedule.Queries.GetScheduleInfo
     {
         public ScheduleInfoTrainerDto() => Type = "Trainer";
         [JsonProperty(Order = 10)]
-        public List<string> Participants { get; set; } = new List<string>();   
+        public List<ParticipantDto> Participants { get; set; } = new();
+
     }
 }

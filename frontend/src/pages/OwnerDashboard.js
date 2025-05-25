@@ -121,7 +121,11 @@ export default function OwnerDashboard() {
         display: 'flex',
         width: '100%',
         height: 'calc(100% - 60px)',
-        gap: '50px'
+        gap: '50px',
+        '@media (max-width: 1200px)': {
+          flexDirection: 'column',
+          gap: '30px'
+        }
       }}>
         <GreenBackground sx={{
           flex: '0 0 55%',
@@ -130,7 +134,12 @@ export default function OwnerDashboard() {
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'flex-start',
-          gap: '32px'
+          gap: '32px',
+          '@media (max-width: 1200px)': {
+            flex: '1',
+            height: 'auto',
+            minHeight: '400px'
+          }
         }}>
           <Box>
             <Typography sx={{ 
@@ -243,21 +252,6 @@ export default function OwnerDashboard() {
                         </Typography>
                       </Box>
                     ))}
-
-                    {tasks.length > 3 && (
-                      <Typography
-                        sx={{
-                          color: '#0AB68B',
-                          textAlign: 'center',
-                          cursor: 'pointer',
-                          mt: '8px',
-                          '&:hover': { textDecoration: 'underline' }
-                        }}
-                        onClick={handleTodoListClick}
-                      >
-                        (...)
-                      </Typography>
-                    )}
                   </Box>
                 ) : (
                   <Typography sx={{ 
@@ -282,7 +276,12 @@ export default function OwnerDashboard() {
           padding: '24px',
           display: 'flex',
           flexDirection: 'column',
-          gap: '16px'
+          gap: '16px',
+          '@media (max-width: 1200px)': {
+            flex: '1',
+            height: 'auto',
+            minHeight: '350px'
+          }
         }}>
           <Box sx={{ textAlign: 'center', marginBottom: '16px' }}>
             <Typography sx={{ 
@@ -315,15 +314,15 @@ export default function OwnerDashboard() {
                 padding: '0 4px'
               }}>
                 <OrangeBackground sx={{ 
-                  padding: '16px',
+                  padding: '12px',
                   borderRadius: '8px',
                   width: '100%',
-                  minHeight: '450px'
+                  minHeight: '300px'
                 }}>
                   <Box sx={{ 
                     display: 'flex', 
                     flexDirection: 'column', 
-                    gap: '12px'
+                    gap: '8px'
                   }}>
                     {workingHours.map((day, index) => (
                       <Box 
@@ -332,26 +331,26 @@ export default function OwnerDashboard() {
                             display: 'flex', 
                             justifyContent: 'space-between',
                             alignItems: 'center',
-                            paddingY: '12px',
-                            paddingX: '16px',
+                            paddingY: '8px',
+                            paddingX: '12px',
                             borderBottom: index < workingHours.length - 1 ? '1px solid rgba(0,0,0,0.1)' : 'none',
                         }}
                         >
                         <Typography sx={{ 
                             color: 'black', 
                             fontWeight: 'bold',
-                            fontSize: '1.1rem',
-                            flex: '0 0 150px',
+                            fontSize: '1rem',
+                            flex: '0 0 120px',
                             textAlign: 'left'
                         }}>
                             {getDayName(day.dayOfWeek)}
                         </Typography>
                         <Typography sx={{ 
                             color: 'black',
-                            fontSize: '1.1rem',
+                            fontSize: '1rem',
                             flex: '1',
                             textAlign: 'right',
-                            paddingRight: '20px'
+                            paddingRight: '12px'
                         }}>
                             {formatTime(day.openHour)} - {formatTime(day.closeHour)}
                         </Typography>
@@ -361,7 +360,7 @@ export default function OwnerDashboard() {
                 </OrangeBackground>
                </Box>
 
-              <Box sx={{ marginTop: '24px', display: 'flex', justifyContent: 'center' }}>
+              <Box sx={{ marginTop: '20px', display: 'flex', justifyContent: 'center' }}>
                 <GreenButton 
                   onClick={handleModifyHoursClick}
                   style={{ width: 'auto', paddingX: '24px' }}
@@ -379,10 +378,10 @@ export default function OwnerDashboard() {
                 padding: '0 4px'
               }}>
                 <OrangeBackground sx={{ 
-                  padding: '16px',
+                  padding: '12px',
                   borderRadius: '8px',
                   width: '100%',
-                  minHeight: '450px',
+                  minHeight: '300px',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center'
@@ -397,7 +396,7 @@ export default function OwnerDashboard() {
                 </OrangeBackground>
               </Box>
               
-              <Box sx={{ marginTop: '24px', display: 'flex', justifyContent: 'center' }}>
+              <Box sx={{ marginTop: '20px', display: 'flex', justifyContent: 'center' }}>
                 <GreenButton 
                   onClick={handleModifyHoursClick}
                   style={{ width: 'auto', paddingX: '24px' }}

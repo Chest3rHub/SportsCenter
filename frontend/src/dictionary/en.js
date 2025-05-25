@@ -338,6 +338,10 @@ export default {
     confirmLabel: 'Confirm',
     chooseStartTimeLabel: 'Choose start time',
     chooseEndTimeLabel: 'Choose end time',
+    dateLabel:'Date',
+    startTimeLabel:'Start time',
+    endTimeLabel:'End time',
+    chooseTimeLabel:'-- Choose time --'
   },
   addReservationForClientPage: {
   title: 'Reservation',

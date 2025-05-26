@@ -21,7 +21,6 @@ export default function MyActivityDetails() {
         navigate(-1);
     }
 
-    console.log(activityDetails)
     const [isEquipmentIncluded, setIsEquipmentIncluded] = useState(false);
     const [failedSignUpLabel, setFailedSignUpLabel] = useState('')
 

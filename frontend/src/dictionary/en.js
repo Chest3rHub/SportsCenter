@@ -344,6 +344,9 @@ export default {
     chooseTimeLabel:'-- Choose time --',
     dateErrorLabel: 'Please select a current or future date',
     startTimeErrorLabel:'Start time must be in the future',
+    alreadyHasActivityLabel: 'You already have another activity at this time!',
+    savedFailureLabel: 'Failed to create the reservation!',
+    reservationCreatedLabel: 'Reservation created successfully!',
   },
   addReservationForClientPage: {
   title: 'Reservation',

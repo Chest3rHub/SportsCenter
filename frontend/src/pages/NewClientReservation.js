@@ -1,4 +1,4 @@
-import { Box, MenuItem, Checkbox, FormControlLabel } from "@mui/material";
+import { Box, MenuItem, Checkbox, FormControlLabel, Typography, Avatar } from "@mui/material";
 import React, { useState, useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
@@ -17,6 +17,9 @@ import getEndTimeOptions from "../utils/getEndTimeOptions";
 import getAvailableCourts from "../api/getAvailableCourts";
 import getAvailableTrainers from "../api/getAvailableTrainers";
 import addReservationYourself from "../api/addReservationYourself";
+import Backdrop from '@mui/material/Backdrop';
+import SentimentSatisfiedIcon from '@mui/icons-material/SentimentSatisfied';
+import SentimentDissatisfiedIcon from '@mui/icons-material/SentimentDissatisfied';
 
 export default function NewClientReservation() {
     const { dictionary, toggleLanguage } = useContext(SportsContext);
@@ -38,7 +41,7 @@ export default function NewClientReservation() {
     const MAX_PARTICIPANTS_AMOUNT=8;
 
 
-    // moze zmienic zeby trener nie byl required?
+    
     const [formData, setFormData] = useState({
         date: '',
         startTime: '',
@@ -49,6 +52,25 @@ export default function NewClientReservation() {
         participantsCount: '',
         isEquipmentReserved: false,
     });
+
+    // backdropy
+    const [failedSignUpLabel, setFailedSignUpLabel] = useState('');
+
+    const [openSuccessBackdrop, setOpenSuccessBackdrop] = useState(false);
+    const [openFailureBackdrop, setOpenFailureBackdrop] = useState(false);
+
+    const handleCloseSuccess = () => {
+        setOpenSuccessBackdrop(false);
+    };
+    const handleCloseFailure = () => {
+        setOpenFailureBackdrop(false);
+    };
+    const handleOpenSuccess = () => {
+        setOpenSuccessBackdrop(true);
+    };
+    const handleOpenFailure = () => {
+        setOpenFailureBackdrop(true);
+    };
 
     function removeCourtErrorsAfterChange(){
         setCourtsError('');
@@ -210,7 +232,6 @@ export default function NewClientReservation() {
     }, [formData.participantsCount]);
 
     // jesli zmieni sie wybrana data to wyliczany jest dla niej offset i pobierane dane o godzinach pracy 
-    // dla tygodnia o podanym offsecie - 1 bo backend zle przesuwa
     useEffect(() => {
         if (formData.date) {
 
@@ -272,6 +293,14 @@ export default function NewClientReservation() {
         navigate(-1);
     }
 
+    function determineFailTextByResponseCode(responseCode) {
+        switch (responseCode) {
+          case 420:
+            return dictionary.addReservationYourselfPage.alreadyHasActivityLabel;
+          default:
+            return dictionary.addReservationYourselfPage.savedFailureLabel;
+        }
+      }
 
     // ustawienie dni i godzin pracy na takie jak w zaznaczonym dniu
     const selectedDayWorkingHours = workingDaysAndHours.find(day => day.date === formData.date);
@@ -282,46 +311,60 @@ export default function NewClientReservation() {
 
     function isFormValid() {
         const { date, startTime, courtId, participantsCount } = formData;
-    
+
+        let participantsNumber = Number(participantsCount);
         return (
             Boolean(date) &&
             Boolean(startTime) &&
             Boolean(courtId) &&
-            Number(participantsCount) > 0 && 
-            Number(participantsCount) <= MAX_PARTICIPANTS_AMOUNT
+            Number(participantsCount) > 0 &&
+            Number(participantsCount) <= MAX_PARTICIPANTS_AMOUNT &&
+            !isNaN(participantsNumber)
         );
     }
-    
-    
+
+
     async function handleSubmit() {
         if (!isFormValid()) {
-            alert("Brakuje któregoś z pól: data, godzina rozpoczęcia, kort, liczba uczestników...");
             return;
         }
-    
+
         const makeIsoDateTime = (date, time) => `${date}T${time}:00`;
-    
+
         const payload = {
             CourtId: Number(formData.courtId),
             StartTime: makeIsoDateTime(formData.date, formData.startTime),
             EndTime: makeIsoDateTime(formData.date, formData.endTime),
-            CreationDate: new Date().toISOString().slice(0,19),
+            CreationDate: new Date().toISOString().slice(0, 19),
             TrainerId: formData.trainerId ? Number(formData.trainerId) : 0,
             ParticipantsCount: formData.participantsCount.toString(),
             IsEquipmentReserved: formData.isEquipmentReserved ? "true" : "",
         };
-    
+
         try {
             const response = await addReservationYourself(payload);
-    
-            if (response.ok) {
-                alert("Rezerwacja została dodana pomyślnie.");
+
+            if (!response.ok) {
+                const errorData = await response.json();
+                let failText = determineFailTextByResponseCode(response.status);
+                setFailedSignUpLabel(failText);
+                handleOpenFailure();
             } else {
-                alert("Nie udało się dodać rezerwacji. Spróbuj ponownie później.");
+                handleOpenSuccess();
+                setFormData(prev => ({
+                    date: '',
+                    startTime: '',
+                    endTime: '',
+                    creationDate: '',
+                    courtId: '',
+                    trainerId: '',
+                    participantsCount: '',
+                    isEquipmentReserved: false,
+                }));
             }
         } catch (error) {
             console.error('Błąd podczas rezerwacji:', error);
-            alert("Wystąpił błąd podczas rezerwacji. Spróbuj ponownie później.");
+            handleOpenFailure();
         }
     }
     
@@ -525,5 +568,101 @@ export default function NewClientReservation() {
                 </Box>
             </OrangeBackground>
         </GreenBackground>
+        <Backdrop
+            sx={(theme) => ({ color: '#fff', zIndex: theme.zIndex.drawer + 1 })}
+            open={openSuccessBackdrop}
+            onClick={handleCloseSuccess}
+        >
+            <Box sx={{
+                backgroundColor: "white",
+                margin: 'auto',
+                minWidth: '30vw',
+                minHeight: '30vh',
+                borderRadius: '20px',
+                boxShadow: '0 10px 20px rgba(0, 0, 0, 0.2)',
+
+            }}>
+                <Box>
+                    <Typography sx={{
+                        color: 'green',
+                        fontWeight: 'Bold',
+                        fontSize: '3rem',
+                        marginTop: '2vh',
+
+                    }}>
+                        {dictionary.activityDetailsPage.successLabel}
+                    </Typography>
+                </Box>
+                <Box>
+                    <Typography sx={{
+                        color: 'black',
+                        fontSize: '1.5rem',
+                    }}>
+                        {dictionary.addReservationYourselfPage.reservationCreatedLabel}
+                    </Typography>
+                </Box>
+                <Box>
+                    <Typography sx={{
+                        color: 'black',
+                        fontSize: '1.5rem',
+                    }}>
+                        {dictionary.activityDetailsPage.clickAnywhereLabel}
+                    </Typography>
+                </Box>
+                <Box sx={{ textAlign: 'center', display: "flex", justifyContent: "center" }}>
+                    <Avatar sx={{ width: "7rem", height: "7rem" }}>
+                        <SentimentSatisfiedIcon sx={{ fontSize: "7rem", color: 'green', stroke: "white", strokeWidth: 1.1, backgroundColor: "white" }} />
+                    </Avatar>
+                </Box>
+            </Box>
+        </Backdrop>
+        <Backdrop
+            sx={(theme) => ({ color: '#fff', zIndex: theme.zIndex.drawer + 1 })}
+            open={openFailureBackdrop}
+            onClick={handleCloseFailure}
+        >
+            <Box sx={{
+                backgroundColor: "white",
+                margin: 'auto',
+                minWidth: '40vw',
+                minHeight: '30vh',
+                borderRadius: '20px',
+                boxShadow: '0 10px 20px rgba(0, 0, 0, 0.2)',
+
+            }}>
+                <Box>
+                    <Typography sx={{
+                        color: 'red',
+                        fontWeight: 'Bold',
+                        fontSize: '3rem',
+                        marginTop: '2vh',
+
+                    }}>
+                        {dictionary.activityDetailsPage.failureLabel}
+                    </Typography>
+                </Box>
+                <Box>
+                    <Typography sx={{
+                        color: 'black',
+                        fontSize: '1.5rem',
+                    }}>
+                        {failedSignUpLabel}
+                    </Typography>
+                </Box>
+                <Box>
+                    <Typography sx={{
+                        color: 'black',
+                        fontSize: '1.5rem',
+                    }}>
+                        {dictionary.activityDetailsPage.clickAnywhereFailureLabel}
+                    </Typography>
+                </Box>
+                <Box sx={{ textAlign: 'center', display: "flex", justifyContent: "center" }}>
+                    <Avatar sx={{ width: "7rem", height: "7rem" }}>
+                        <SentimentDissatisfiedIcon sx={{ fontSize: "7rem", color: 'red', stroke: "white", strokeWidth: 1.1, backgroundColor: "white" }} />
+                    </Avatar>
+                </Box>
+            </Box>
+        </Backdrop>
     </>);
 }

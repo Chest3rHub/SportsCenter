@@ -349,6 +349,9 @@ export default {
     chooseTimeLabel:'-- Wybierz godzinę --',
     dateErrorLabel:'Data nie może być z przeszłości',
     startTimeErrorLabel:'Godzina nie może być z przeszłosci',
+    alreadyHasActivityLabel:'W tym czasie masz już inne zajęcia!',
+    savedFailureLabel: 'Nie udało się utworzyć rezerwacji!',
+    reservationCreatedLabel:'Utworzono rezerwację!',
   },
   addReservationForClientPage:{
     title: 'Rezerwacja',

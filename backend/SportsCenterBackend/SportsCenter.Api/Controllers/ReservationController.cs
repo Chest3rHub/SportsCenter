@@ -115,7 +115,7 @@ public class ReservationController : BaseController
         }
         catch (ClientAlreadyHasActivityOrReservationException ex)
         {
-            return Conflict(new { message = ex.Message });
+            return StatusCode(420, new { message = ex.Message });
         }
         catch (Exception ex)
         {

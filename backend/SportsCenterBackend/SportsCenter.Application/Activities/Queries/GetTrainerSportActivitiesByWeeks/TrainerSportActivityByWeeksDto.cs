@@ -20,7 +20,7 @@ namespace SportsCenter.Application.Activities.Queries.GetTrainerSportActivitiesB
         public string LevelName { get; set; }
         public int EmployeeId { get; set; }
         public string ClientName { get; set; }
-        public string ClientSurame { get; set; }
+        public string ClientSurname { get; set; }
         public string CourtName { get; set; }
         public string IsEquipmentReserved { get; set; }
         public string IsActivityCanceled { get; set; }

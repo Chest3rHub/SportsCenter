@@ -93,7 +93,7 @@ namespace SportsCenter.Infrastructure.DAL.Handlers.SportActivitiesHandlers
                     EndTime = r.DataDo.TimeOfDay,
                     EmployeeId = userId,
                     ClientName = r.Klient.KlientNavigation.Imie,
-                    ClientSurame = r.Klient.KlientNavigation.Nazwisko,
+                    ClientSurname = r.Klient.KlientNavigation.Nazwisko,
                     CourtName = r.Kort.Nazwa,                    
                     IsEquipmentReserved = r.CzyUwzglednicSprzet == true ? "Tak" : "Nie",                 
                     IsActivityCanceled = r.CzyOdwolana == true ? "Tak" : "Nie"

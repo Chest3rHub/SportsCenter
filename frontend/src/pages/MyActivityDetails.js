@@ -252,7 +252,7 @@ export default function MyActivityDetails() {
                             },
                         }}
                     />}
-                    {role==='Trener' && !trainerName && <CustomInput
+                    {role==='Trener' && !trainerName && clientName && <CustomInput
                         label={dictionary.activityDetailsPage.reservationMadeByLabel}
                         type="text"
                         id="reservationMadeBy"

@@ -28,7 +28,11 @@ export default function NewClientReservation() {
     const [isEquipmentIncluded, setIsEquipmentIncluded] = useState(false);
     const [workingDaysAndHours, setWorkingDaysAndHours] = useState([]);
     const [offset, setOffset] = useState(-1);
+
+    // errory
     const [courtsError, setCourtsError] = useState('');
+    const [dateError, setDateError] = useState(false);
+    const [startTimeError, setStartTimeError] = useState(false);
 
 
     // moze zmienic zeby trener nie byl required?
@@ -82,8 +86,19 @@ export default function NewClientReservation() {
     }, []);
 
 
-    // jak sie ustawi date zerujemy wszystko poza data
+    // jak sie ustawi date zerujemy wszystko poza data i walidacja czy nie jest z przeszlosci
     useEffect(() => {
+
+        const today = new Date();
+        const selectedDate = new Date(formData.date);
+        today.setHours(0, 0, 0, 0);
+        selectedDate.setHours(0, 0, 0, 0);
+
+        if (selectedDate < today) {
+            setDateError(true);
+        } else {
+            setDateError(false);
+        }
         setFormData(prev => ({
             date: prev.date,
             startTime: '',
@@ -96,8 +111,26 @@ export default function NewClientReservation() {
         }));
         removeCourtErrorsAfterChange();
     }, [formData.date]);
-    // jak sie zmieni czas rozpoczecia usuwamy wszystko poza data i czasem rozpoczecia
+    // jak sie zmieni czas rozpoczecia usuwamy wszystko poza data i czasem rozpoczecia i wybrany czas nie moze byc z przeszlosci dla dzisiejszego dnia
+
     useEffect(() => {
+        const [startHour, startMinute] = formData.startTime.split(':').map(Number);
+        const selectedStart = new Date();
+        selectedStart.setHours(startHour, startMinute, 0, 0);
+
+        const now = new Date();
+
+        const selectedDate = new Date(formData.date);
+        const today = new Date();
+        selectedDate.setHours(0, 0, 0, 0);
+        today.setHours(0, 0, 0, 0);
+
+        if (selectedDate.getTime() === today.getTime() && selectedStart < now) {
+            setStartTimeError(true); 
+        } else {
+            setStartTimeError(false);
+        }
+
         setFormData(prev => ({
             date: prev.date,
             startTime: prev.startTime,
@@ -301,8 +334,8 @@ export default function NewClientReservation() {
                             fullWidth
                             value={formData.date}
                             onChange={handleChange}
-                            error={false}
-                            helperText={false ? dictionary.addReservationYourselfPage.startTimeError : ""}
+                            error={dateError}
+                            helperText={dateError ? dictionary.addReservationYourselfPage.dateErrorLabel : ""}
                             required
                             size="small"
                             InputLabelProps={{
@@ -324,6 +357,8 @@ export default function NewClientReservation() {
                             name="startTime"
                             value={formData.startTime}
                             onChange={handleChange}
+                            error={startTimeError}
+                            helperText={startTimeError ? dictionary.addReservationYourselfPage.startTimeErrorLabel : ""}
                             required
                             size="small"
                             fullWidth
@@ -333,7 +368,7 @@ export default function NewClientReservation() {
                                     borderRadius: '8px'
                                 }
                             }}
-                            disabled={!formData.date}
+                            disabled={!formData.date || dateError}
                         >
                             <MenuItem value="">{dictionary.addReservationYourselfPage.chooseTimeLabel}</MenuItem>
                             {generateTime(openHour, closeHour, 30).map((time) => (
@@ -358,7 +393,7 @@ export default function NewClientReservation() {
                                     borderRadius: '8px'
                                 }
                             }}
-                            disabled={!formData.date || !formData.startTime}
+                            disabled={!formData.date || !formData.startTime || startTimeError}
                         >
                             <MenuItem value="">{dictionary.addReservationYourselfPage.chooseTimeLabel}</MenuItem>
                             {getEndTimeOptions(formData,closeHour).map((time) => (

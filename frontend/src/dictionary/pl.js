@@ -347,6 +347,8 @@ export default {
     startTimeLabel:'Godzina rozpoczęcia',
     endTimeLabel:'Godzina zakończenia',
     chooseTimeLabel:'-- Wybierz godzinę --',
+    dateErrorLabel:'Data nie może być z przeszłości',
+    startTimeErrorLabel:'Godzina nie może być z przeszłosci',
   },
   addReservationForClientPage:{
     title: 'Rezerwacja',

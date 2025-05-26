@@ -341,7 +341,9 @@ export default {
     dateLabel:'Date',
     startTimeLabel:'Start time',
     endTimeLabel:'End time',
-    chooseTimeLabel:'-- Choose time --'
+    chooseTimeLabel:'-- Choose time --',
+    dateErrorLabel: 'Please select a current or future date',
+    startTimeErrorLabel:'Start time must be in the future',
   },
   addReservationForClientPage: {
   title: 'Reservation',

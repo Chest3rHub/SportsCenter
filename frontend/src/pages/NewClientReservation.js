@@ -70,7 +70,7 @@ export default function NewClientReservation() {
             });
     }, []);
     useEffect(() => {
-        getClubWorkingHours(-1)
+        getClubWorkingHours(0)
             .then(response => response.json())
             .then(data => {
                 setWorkingDaysAndHours(data);
@@ -162,7 +162,7 @@ export default function NewClientReservation() {
             const startDate = new Date(formData.date);
             getWorkingHoursForSingleDay(startDate).then(weekOffset => {
                 console.log(weekOffset)
-                getClubWorkingHours(weekOffset - 1)
+                getClubWorkingHours(weekOffset)
                     .then(response => response.json())
                     .then(data => {
                         setWorkingDaysAndHours(data);

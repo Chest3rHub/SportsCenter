@@ -1,6 +1,6 @@
 import { Button } from '@mui/material';
 
-export default function GreenButton({ type, children, onClick, style, hoverBackgroundColor }) {
+export default function GreenButton({ type, children, onClick, style, hoverBackgroundColor, disabled }) {
     return (
         <Button 
             type={type} 
@@ -24,6 +24,7 @@ export default function GreenButton({ type, children, onClick, style, hoverBackg
                 },
                 ...style 
             }}
+            disabled={disabled}
         >
             {children}
         </Button>

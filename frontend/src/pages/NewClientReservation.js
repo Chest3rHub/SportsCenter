@@ -33,6 +33,9 @@ export default function NewClientReservation() {
     const [courtsError, setCourtsError] = useState('');
     const [dateError, setDateError] = useState(false);
     const [startTimeError, setStartTimeError] = useState(false);
+    const [participantsError, setParticipantsError] = useState(false);
+    const [isSubmitDisabled, setIsSubmitDisabled] = useState(true);
+    const MAX_PARTICIPANTS_AMOUNT=8;
 
 
     // moze zmienic zeby trener nie byl required?
@@ -188,6 +191,24 @@ export default function NewClientReservation() {
     }, [formData.trainerId]);
     // jak sie zmieni liczba uczestnikow czy informacja o rezerwacji sprzetu to nic nie usuwamy
 
+    // walidacja liczby uczestnikow, max 8
+    // jak sie zmieni trener usuwamy wszystko poza data, czasami kortem i trenerem
+    useEffect(() => {
+        if(formData.participantsCount > MAX_PARTICIPANTS_AMOUNT || (formData.participantsCount && formData.participantsCount < 1 )){
+            setParticipantsError(true);
+            setIsSubmitDisabled(true);
+        } else {
+            setParticipantsError(false);
+        }
+
+        if(!formData.participantsCount){
+            setIsSubmitDisabled(true);
+        }
+        if(formData.participantsCount <= MAX_PARTICIPANTS_AMOUNT && formData.participantsCount > 0){
+            setIsSubmitDisabled(false);
+        }
+    }, [formData.participantsCount]);
+
     // jesli zmieni sie wybrana data to wyliczany jest dla niej offset i pobierane dane o godzinach pracy 
     // dla tygodnia o podanym offsecie - 1 bo backend zle przesuwa
     useEffect(() => {
@@ -266,7 +287,8 @@ export default function NewClientReservation() {
             Boolean(date) &&
             Boolean(startTime) &&
             Boolean(courtId) &&
-            Number(participantsCount) > 0
+            Number(participantsCount) > 0 && 
+            Number(participantsCount) <= MAX_PARTICIPANTS_AMOUNT
         );
     }
     
@@ -460,8 +482,8 @@ export default function NewClientReservation() {
                         fullWidth
                         value={formData.participantsCount}
                         onChange={handleChange}
-                        error={false}
-                        helperText={false ? dictionary.addReservationYourselfPage.participantsCountError : ""}
+                        error={participantsError}
+                        helperText={participantsError ? dictionary.addReservationYourselfPage.participantsCountError : ""}
                         size="small"
                         inputProps={{ min: 1 }}
                         required
@@ -497,7 +519,7 @@ export default function NewClientReservation() {
                         alignItems: 'center',
                     }}>
                        <GreenButton onClick={handleCancel} style={{ maxWidth: "13vw", backgroundColor: "#F46C63" }} hoverBackgroundColor={'#c3564f'}>{dictionary.activityDetailsPage.returnLabel}</GreenButton>
-                       <GreenButton type="submit" style={{ maxWidth: "13vw" }} onClick={handleSubmit}>{dictionary.addReservationYourselfPage.confirmLabel}</GreenButton>
+                       <GreenButton type="submit" disabled={isSubmitDisabled} style={{ maxWidth: "13vw" }} onClick={handleSubmit}>{dictionary.addReservationYourselfPage.confirmLabel}</GreenButton>
                         
                     </Box>
                 </Box>

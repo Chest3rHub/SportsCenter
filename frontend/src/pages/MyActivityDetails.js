@@ -55,7 +55,9 @@ export default function MyActivityDetails() {
         isEquipmentReserved,
         isCanceled,
         instanceOfActivityId,
-        reservationId
+        reservationId,
+        clientName,
+        clientSurname
     } = activityDetails;
 
     const formattedDate = new Date(dateOfActivity + 'Z').toISOString().split("T")[0];
@@ -231,7 +233,7 @@ export default function MyActivityDetails() {
                             },
                         }}
                     />
-                    <CustomInput
+                    {role!=='Trener' && <CustomInput
                         label={dictionary.activityDetailsPage.coachLabel}
                         type="text"
                         id="trainerName"
@@ -249,7 +251,26 @@ export default function MyActivityDetails() {
                                 },
                             },
                         }}
-                    />
+                    />}
+                    {role==='Trener' && !trainerName && <CustomInput
+                        label={dictionary.activityDetailsPage.reservationMadeByLabel}
+                        type="text"
+                        id="reservationMadeBy"
+                        name="reservationMadeBy"
+                        fullWidth
+                        value={`${clientName} ${clientSurname}`}
+                        size="small"
+                        InputProps={{ readOnly: true }}
+                        readonlyStyle
+                        additionalStyles={{
+                            "& .MuiOutlinedInput-root": {
+                                borderRadius: "12px",
+                                "& fieldset": {
+                                    borderColor: "#d3d3d3",
+                                },
+                            },
+                        }}
+                    />}
                     <CustomInput
                         label={dictionary.activityDetailsPage.courtLabel}
                         type="text"
@@ -322,6 +343,23 @@ export default function MyActivityDetails() {
                             />
                         }
                         label={dictionary.activityDetailsPage.isEquipmentIncludedLabel}
+                    />}
+                    {role==='Trener' && <FormControlLabel
+                        control={
+                            <Checkbox
+                                id="isEquipmentReserved"
+                                name="isEquipmentReserved"
+                                checked={isEquipmentIncluded}
+                                onChange={()=>{}}
+                                sx={{
+                                    color: "#8edfb4",
+                                    '&.Mui-checked': {
+                                        color: "#8edfb4",
+                                    },
+                                }}
+                            />
+                        }
+                        label={dictionary.activityDetailsPage.isEquipmentReservedLabel}
                     />}
 
                     <Box sx={{

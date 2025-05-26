@@ -296,6 +296,10 @@ const clientRouter = [
                     element: <Timetable />,
                 }, 
                 {
+                    path: '/my-timetable',
+                    element: <MyTimetable />,
+                },   
+                {
                     path: '/activity-details',
                     element: <ActivityDetails />,
                 },  

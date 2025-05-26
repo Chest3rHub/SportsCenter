@@ -116,7 +116,7 @@ export default {
     },
     coachSidebar: {
       newsLabel: 'Aktualności',
-      timetableLabel: 'Grafik',
+      myTimetableLabel: 'Mój grafik',
       changePasswordLabel: 'Zmiana hasła',
     }
   },
@@ -660,6 +660,7 @@ export default {
     cancelLabel:'Odwołaj',
     canceledSuccessLabel: 'Udało się odwołać uczestnictwo!',
     canceledFailureLabel: 'Nie udało się odwołać uczestnictwa!',
+    reservationMadeByLabel:'Osoba rezerwująca',
   },
   days:{
     monday: 'Poniedziałek',

@@ -4,6 +4,7 @@ import { ArrowBackIos, ArrowForwardIos } from '@mui/icons-material';
 import ArrowBackIosRoundedIcon from '@mui/icons-material/ArrowBackIosRounded';
 import ArrowForwardIosRoundedIcon from '@mui/icons-material/ArrowForwardIosRounded';
 import getYourSchedule from '../api/getYourSchedule';
+import getTrainerActivities from '../api/getTrainerActivities';
 import { SportsContext } from '../context/SportsContext';
 import { useNavigate } from 'react-router-dom';
 import GreenButton from '../components/buttons/GreenButton';
@@ -102,43 +103,84 @@ export default function MyTimetable() {
     const daysOfWeek = Array.from({ length: DAYS_IN_WEEK }, (_, i) => addDays(currentWeekStart, i));
 
     useEffect(() => {
-        getYourSchedule(offset)
-            .then(response => {
-                return response.json();
-            })
-            .then(data => {
-                console.log('Odpowiedź z API:', data);
-                if (Array.isArray(data)) {
-                    // kombinacje zeby uzyskac ten dayIndex potrzebny do mapowania w kalendarzu...
-                    // day: 0 to pon, day: 1 to wt itd
-                    const processedEvents = data.map(event => {
-                        const dateStr = event.dateOfActivity;
-                        const eventStart = new Date(`${dateStr}T${event.startTime}`);
-                        const eventEnd = new Date(`${dateStr}T${event.endTime}`);
+        if (role === 'Klient') {
+            getYourSchedule(offset)
+                .then(response => {
+                    return response.json();
+                })
+                .then(data => {
+                    console.log('Odpowiedź z API:', data);
+                    if (Array.isArray(data)) {
+                        // kombinacje zeby uzyskac ten dayIndex potrzebny do mapowania w kalendarzu...
+                        // day: 0 to pon, day: 1 to wt itd
+                        const processedEvents = data.map(event => {
+                            const dateStr = event.dateOfActivity;
+                            const eventStart = new Date(`${dateStr}T${event.startTime}`);
+                            const eventEnd = new Date(`${dateStr}T${event.endTime}`);
 
-                        const startOfWeek = new Date(currentWeekStart);
-                        const day = Math.floor((eventStart - startOfWeek) / (1000 * 60 * 60 * 24));
+                            const startOfWeek = new Date(currentWeekStart);
+                            const day = Math.floor((eventStart - startOfWeek) / (1000 * 60 * 60 * 24));
 
-                        const startTime = eventStart.toTimeString().slice(0, 5);
-                        const endTime = eventEnd.toTimeString().slice(0, 5);
+                            const startTime = eventStart.toTimeString().slice(0, 5);
+                            const endTime = eventEnd.toTimeString().slice(0, 5);
 
-                        return {
-                            ...event,
-                            day,
-                            startTime,
-                            end: endTime,
-                        };
-                    }).filter(e => e.day >= 0 && e.day < 7);
+                            return {
+                                ...event,
+                                day,
+                                startTime,
+                                end: endTime,
+                            };
+                        }).filter(e => e.day >= 0 && e.day < 7);
 
-                    setEvents(processedEvents);
-                } else {
-                    console.error('Otrzymane dane nie są tablicą:', data);
-                }
-                // setLoading(false);
-            })
-            .catch(error => {
-                console.error('Błąd podczas wywoływania getSchedule:', error);
-            });
+                        setEvents(processedEvents);
+                    } else {
+                        console.error('Otrzymane dane nie są tablicą:', data);
+                    }
+                    // setLoading(false);
+                })
+                .catch(error => {
+                    console.error('Błąd podczas wywoływania getSchedule:', error);
+                });
+        }
+        if (role === 'Trener') {
+            getTrainerActivities(offset)
+                .then(response => {
+                    return response.json();
+                })
+                .then(data => {
+                    console.log('Odpowiedź z API:', data);
+                    if (Array.isArray(data)) {
+                        // kombinacje zeby uzyskac ten dayIndex potrzebny do mapowania w kalendarzu...
+                        // day: 0 to pon, day: 1 to wt itd
+                        const processedEvents = data.map(event => {
+                            const dateStr = event.dateOfActivity;
+                            const eventStart = new Date(`${dateStr}T${event.startTime}`);
+                            const eventEnd = new Date(`${dateStr}T${event.endTime}`);
+
+                            const startOfWeek = new Date(currentWeekStart);
+                            const day = Math.floor((eventStart - startOfWeek) / (1000 * 60 * 60 * 24));
+
+                            const startTime = eventStart.toTimeString().slice(0, 5);
+                            const endTime = eventEnd.toTimeString().slice(0, 5);
+
+                            return {
+                                ...event,
+                                day,
+                                startTime,
+                                end: endTime,
+                            };
+                        }).filter(e => e.day >= 0 && e.day < 7);
+
+                        setEvents(processedEvents);
+                    } else {
+                        console.error('Otrzymane dane nie są tablicą:', data);
+                    }
+                    // setLoading(false);
+                })
+                .catch(error => {
+                    console.error('Błąd podczas wywoływania getSchedule:', error);
+                });
+        }
     }, [offset]);
 
     function handleCreateReservation() {

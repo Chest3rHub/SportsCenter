@@ -14,7 +14,7 @@ export default function CoachLayout() {
 
   const menuItems = [
     { label: dictionary.sidebar.coachSidebar.newsLabel, navigate: '/news' },
-    { label: dictionary.sidebar.coachSidebar.timetableLabel, navigate: '/timetable' },
+    { label: dictionary.sidebar.coachSidebar.myTimetableLabel, navigate: '/my-timetable' },
     { label: dictionary.sidebar.coachSidebar.changePasswordLabel, navigate: '/change-password' },
   ];
 

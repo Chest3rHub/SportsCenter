@@ -108,7 +108,7 @@ export default {
     },
     coachSidebar: {
       newsLabel: 'News',
-      timetableLabel: 'Timetable',
+      myTimetableLabel: 'My timetable',
       changePasswordLabel: 'Change password',
     }
   },
@@ -656,6 +656,7 @@ reservationsSummaryPage: {
     cancelLabel:'Cancel',
     canceledSuccessLabel: 'Participation was successfully canceled!',
     canceledFailureLabel: 'Failed to cancel participation!',
+    reservationMadeByLabel:'Booked by',
   },
   days:{
     monday: 'Monday',

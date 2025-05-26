@@ -13,7 +13,7 @@ export default function getEndTimeOptions(formData, closeHour){
 
   const finalMaxEndDate = maxEndDate < closeDate ? maxEndDate : closeDate;
 
-  const minEndDate = new Date(baseDate.getTime() + 30 * 60 * 1000);
+  const minEndDate = new Date(baseDate.getTime() + 60 * 60 * 1000);
 
 
   const pad = (n) => n.toString().padStart(2, '0');

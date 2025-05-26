@@ -6,6 +6,7 @@ import ArrowForwardIosRoundedIcon from '@mui/icons-material/ArrowForwardIosRound
 import getSchedule from '../api/getSchedule';
 import { SportsContext } from '../context/SportsContext';
 import { useNavigate } from 'react-router-dom';
+import GreenButton from '../components/buttons/GreenButton';
 
 // co 30 min od 10:00 do 22:00
 const HOURS = Array.from({ length: 24 }, (_, i) => 10 * 60 + i * 30);
@@ -136,6 +137,10 @@ export default function Timetable() {
             });
     }, [offset]);
 
+    function handleCreateReservation() {
+        navigate(`/Create-single-reservation-yourself`, {
+        });
+    }
     return (
         <>
             <Box sx={{
@@ -353,6 +358,25 @@ export default function Timetable() {
                     <Typography>{dictionary.timetablePage.privateLabel}</Typography>
                 </Box>
             </Box>
+            {role === 'Klient' && <Box sx={{
+                position: "absolute",
+                top: "12vh",
+                right: "2vw",
+                minWidth: "17vw"
+            }}>
+
+                <GreenButton onClick={handleCreateReservation}
+                    style={{
+                        fontSize: '0.8rem',
+                        padding: "3px 8px",
+                        backgroundColor: '#8edfb4',
+                        color: 'black',
+                        fontWeight: 'bold',
+                    }}
+                >
+                    {dictionary.clientReservations.createReservation}
+                </GreenButton>
+            </Box>}
         </>
     );
 }

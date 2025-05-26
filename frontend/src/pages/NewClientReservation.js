@@ -20,6 +20,7 @@ import addReservationYourself from "../api/addReservationYourself";
 
 export default function NewClientReservation() {
     const { dictionary, toggleLanguage } = useContext(SportsContext);
+    const navigate = useNavigate();
 
     const [courts, setCourts] = useState([]);
     const [trainers, setTrainers] = useState([]);
@@ -213,6 +214,9 @@ export default function NewClientReservation() {
     }, [formData.endTime]);
 
 
+    function handleCancel() {
+        navigate(-1);
+    }
 
 
     // ustawienie dni i godzin pracy na takie jak w zaznaczonym dniu
@@ -454,10 +458,12 @@ export default function NewClientReservation() {
                     <Box sx={{
                         display: 'flex',
                         justifyContent: 'center',
-
+                        columnGap:'3vw',
                         alignItems: 'center',
                     }}>
-                        <GreenButton type="submit" style={{ maxWidth: "15vw" }} onClick={handleSubmit}>{dictionary.addReservationYourselfPage.confirmLabel}</GreenButton>
+                       <GreenButton onClick={handleCancel} style={{ maxWidth: "13vw", backgroundColor: "#F46C63" }} hoverBackgroundColor={'#c3564f'}>{dictionary.activityDetailsPage.returnLabel}</GreenButton>
+                       <GreenButton type="submit" style={{ maxWidth: "13vw" }} onClick={handleSubmit}>{dictionary.addReservationYourselfPage.confirmLabel}</GreenButton>
+                        
                     </Box>
                 </Box>
             </OrangeBackground>

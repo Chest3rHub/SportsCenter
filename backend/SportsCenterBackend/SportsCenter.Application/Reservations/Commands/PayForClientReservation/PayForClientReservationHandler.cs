@@ -57,6 +57,10 @@ namespace SportsCenter.Application.Reservations.Commands.PayForClientReservation
                 case PaymentResultEnum.AlreadyPaid:
 
                     throw new ReservationAlreadyPaidException(request.ReservationId);
+
+                case PaymentResultEnum.Cancelled:
+
+                    throw new ReservationAlreadyCanceledException(request.ReservationId);
             }
 
             return Unit.Value;

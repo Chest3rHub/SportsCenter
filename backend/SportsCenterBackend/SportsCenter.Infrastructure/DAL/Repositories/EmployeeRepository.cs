@@ -310,7 +310,7 @@ namespace SportsCenter.Infrastructure.DAL.Repositories
                 .Select(p => p.DataZwolnienia != null)
                 .FirstOrDefaultAsync(cancellationToken);
         }
-        public async Task<PaymentResultEnum> PayForActivityAsync(int activityInstanceId, string clientEmail, CancellationToken cancellationToken)
+        public async Task<PaymentResultEnum> PayForActivityWithAccountBalanceAsync(int activityInstanceId, string clientEmail, CancellationToken cancellationToken)
         {
             var activityInstance = await _dbContext.InstancjaZajecs
                 .Include(i => i.InstancjaZajecKlients)
@@ -331,8 +331,12 @@ namespace SportsCenter.Infrastructure.DAL.Repositories
             }
 
             var activityInstanceClient = await _dbContext.InstancjaZajecKlients
-              .Where(ai => ai.InstancjaZajecId == activityInstance.InstancjaZajecId)
-              .FirstOrDefaultAsync(cancellationToken);
+                .Include(ai => ai.Klient)
+                .ThenInclude(k => k.KlientNavigation)
+                .Where(ai => ai.InstancjaZajecId == activityInstance.InstancjaZajecId &&
+                    ai.Klient.KlientNavigation.Email == clientEmail) //szuka po przekazanym email
+                .FirstOrDefaultAsync(cancellationToken);
+
 
             if (activityInstanceClient.DataWypisu.HasValue)
             {
@@ -381,7 +385,47 @@ namespace SportsCenter.Infrastructure.DAL.Repositories
 
             return PaymentResultEnum.Success;
         }
-        public async Task<PaymentResultEnum> PayForClientReservationAsync(int reservationId, string clientEmail, CancellationToken cancellationToken)
+
+        public async Task<PaymentResultEnum> PayForActivityAsync(int activityInstanceId, string clientEmail, CancellationToken cancellationToken)
+        {
+            var activityInstance = await _dbContext.InstancjaZajecs
+                .Include(i => i.InstancjaZajecKlients)
+                    .ThenInclude(ik => ik.Klient)
+                        .ThenInclude(k => k.KlientNavigation)
+                .Include(i => i.GrafikZajec)
+                .Where(i => i.InstancjaZajecId == activityInstanceId &&
+                            i.InstancjaZajecKlients.Any(ik => ik.Klient.KlientNavigation.Email == clientEmail))
+                .AsTracking()
+                .FirstOrDefaultAsync(cancellationToken);
+
+            if (activityInstance == null)
+                return PaymentResultEnum.ActivityInstanceNotFound;
+
+            if (activityInstance.CzyOdwolane == true)
+                return PaymentResultEnum.ActivityCanceled;
+
+            var activityInstanceClient = activityInstance.InstancjaZajecKlients
+                .FirstOrDefault(ik => ik.Klient.KlientNavigation.Email == clientEmail);
+
+            if (activityInstanceClient == null)
+                return PaymentResultEnum.ClientNotFound;
+
+            if (activityInstanceClient.DataWypisu.HasValue)
+                return PaymentResultEnum.ClientWithdrawn;
+
+            if (activityInstanceClient.CzyOplacone == true)
+                return PaymentResultEnum.AlreadyPaid;
+
+            // Oznacz jako opłacone bez zmniejszania salda
+            activityInstanceClient.CzyOplacone = true;
+            _dbContext.Entry(activityInstanceClient).State = EntityState.Modified;
+
+          
+            await _dbContext.SaveChangesAsync(cancellationToken);
+            return PaymentResultEnum.Success;
+        }
+
+        public async Task<PaymentResultEnum> PayForClientReservationWithAccountBalanceAsync(int reservationId, string clientEmail, CancellationToken cancellationToken)
         {
             var reservation = await _dbContext.Rezerwacjas
          .Include(r => r.Klient)
@@ -415,5 +459,32 @@ namespace SportsCenter.Infrastructure.DAL.Repositories
 
             return PaymentResultEnum.Success;
         }
+
+        public async Task<PaymentResultEnum> PayForClientReservationAsync(int reservationId, string clientEmail, CancellationToken cancellationToken)
+        {
+            var reservation = await _dbContext.Rezerwacjas
+                .Include(r => r.Klient)
+                    .ThenInclude(k => k.KlientNavigation)
+                .FirstOrDefaultAsync(r => r.RezerwacjaId == reservationId, cancellationToken);
+
+            if (reservation == null)
+                return PaymentResultEnum.ActivityNotFound;
+
+            if (reservation.Klient?.KlientNavigation?.Email != clientEmail)
+                return PaymentResultEnum.ClientNotFound;
+
+            if (reservation.CzyOplacona.HasValue && reservation.CzyOplacona.Value)
+                return PaymentResultEnum.AlreadyPaid;
+
+            if (reservation.CzyOdwolana.HasValue && reservation.CzyOdwolana.Value)
+                return PaymentResultEnum.Cancelled;
+
+            reservation.CzyOplacona = true;
+
+            await _dbContext.SaveChangesAsync(cancellationToken);
+
+            return PaymentResultEnum.Success;
+        }
+
     }
 }

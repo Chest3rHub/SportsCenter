@@ -388,6 +388,10 @@ public class ReservationController : BaseController
         {
             return BadRequest(new { message = ex.Message });
         }
+        catch (ReservationAlreadyCanceledException ex)
+        {
+            return BadRequest(new { message = ex.Message });
+        }
         catch (PaymentFailedException ex)
         {
             return BadRequest(new { message = ex.Message });

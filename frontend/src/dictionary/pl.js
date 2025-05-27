@@ -661,6 +661,8 @@ export default {
     canceledSuccessLabel: 'Udało się odwołać uczestnictwo!',
     canceledFailureLabel: 'Nie udało się odwołać uczestnictwa!',
     reservationMadeByLabel:'Osoba rezerwująca',
+    payLabel:'Opłać',
+    paidLabel:'Opłacono',
   },
   days:{
     monday: 'Poniedziałek',

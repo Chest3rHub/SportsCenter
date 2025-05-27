@@ -344,17 +344,29 @@ export default function ActivityDetails() {
                     <Typography sx={{ fontSize: '1.5rem', fontWeight: 'bold' }}>
                         {dictionary.activityDetailsPage.participantsLabel}:
                     </Typography>
-                    <List component="ol" sx={{ paddingLeft: '1.5rem', listStyleType: 'decimal' }}>
+                    <List component="ol" sx={{ paddingLeft: '1.5rem', listStyleType: 'decimal',display: 'flex', flexDirection: 'column', gap: '2vh'}}>
                         {participants.map((participant, index) => (
                             <ListItem
                                 key={index}
                                 component="li"
                                 disablePadding
-                                sx={{ display: 'list-item', textAlign: 'left' }}
+                                sx={{ display: 'list-item', rowGap:'5vh' }}
                             >
-                                <ListItemText primary={participant} />
+                                <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
+                                    <Typography>
+                                        {participant.firstName} {participant.lastName}
+                                    </Typography>
+                                    {!isCanceled && <GreenButton
+                                        disabled={participant.isPaid}
+                                        size="small"
+                                        style={{ maxWidth: '7vw', maxHeight: '6.5vh', fontSize: '0.9rem', fontWeight: 'bold', marginTop: '-0.6vh' }}
+                                    >
+                                        {participant.isPaid ? dictionary.activityDetailsPage.paidLabel : dictionary.activityDetailsPage.payLabel}
+                                    </GreenButton>}
+                                </Box>
                             </ListItem>
                         ))}
+
                     </List>
                 </Box>}
             </Box>

@@ -398,7 +398,7 @@ export default function MyActivityDetails() {
                                 disablePadding
                                 sx={{ display: 'list-item', textAlign: 'left' }}
                             >
-                                <ListItemText primary={participant} />
+                                <ListItemText primary={`${participant.firstName} ${participant.lastName}`} />
                             </ListItem>
                         ))}
                     </List>

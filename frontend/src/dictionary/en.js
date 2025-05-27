@@ -657,6 +657,8 @@ reservationsSummaryPage: {
     canceledSuccessLabel: 'Participation was successfully canceled!',
     canceledFailureLabel: 'Failed to cancel participation!',
     reservationMadeByLabel:'Booked by',
+    payLabel:'Pay',
+    paidLabel:'Paid',
   },
   days:{
     monday: 'Monday',

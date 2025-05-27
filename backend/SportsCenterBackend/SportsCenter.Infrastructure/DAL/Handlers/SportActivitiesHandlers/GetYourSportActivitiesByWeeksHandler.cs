@@ -97,7 +97,7 @@ namespace SportsCenter.Infrastructure.DAL.Handlers.SportActivitiesHandlers
                     StartTime = r.DataOd.TimeOfDay,
                     DurationInMinutes = (int)(r.DataDo - r.DataOd).TotalMinutes,
                     EndTime = r.DataDo.TimeOfDay,
-                    EmployeeId = (int)r.TrenerId,
+                    EmployeeId = r.TrenerId,
                     CourtName = r.Kort.Nazwa,
                     reservationCost = r.Koszt,
                     IsEquipmentReserved = r.CzyUwzglednicSprzet == true ? "Tak" : "Nie",

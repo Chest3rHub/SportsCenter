@@ -17,7 +17,7 @@ namespace SportsCenter.Application.Activities.Queries.GetYourSportActivitiesByWe
         public int DurationInMinutes { get; set; }
         public TimeSpan EndTime { get; set; }
         public string LevelName { get; set; }
-        public int EmployeeId { get; set; }
+        public int? EmployeeId { get; set; }
         public string CourtName { get; set; }
         public decimal? CostWithoutEquipment { get; set; }
         public decimal? CostWithEquipment { get; set; }

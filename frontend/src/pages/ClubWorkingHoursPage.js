@@ -22,6 +22,7 @@ export default function ClubWorkingHoursPage() {
         openHour: '',
         closeHour: ''
     });
+    const [conflicts, setConflicts] = useState([]);
 
     useEffect(() => {
         fetchWorkingHours();
@@ -69,15 +70,17 @@ export default function ClubWorkingHoursPage() {
     };
 
     const handleOpenSpecialHoursModal = () => {
-        setSelectedDate('');
-        setHours({ openHour: '', closeHour: '' });
-        setOpenSpecialHoursModal(true);
+    setSelectedDate('');
+    setHours({ openHour: '', closeHour: '' });
+    setConflicts([]);
+    setOpenSpecialHoursModal(true);
     };
 
     const handleOpenRegularHoursModal = () => {
-        setSelectedDayOfWeek('');
-        setHours({ openHour: '', closeHour: '' });
-        setOpenRegularHoursModal(true);
+    setSelectedDayOfWeek('');
+    setHours({ openHour: '', closeHour: '' });
+    setConflicts([]);
+    setOpenRegularHoursModal(true);
     };
 
     const handleCloseModals = () => {
@@ -144,13 +147,17 @@ export default function ClubWorkingHoursPage() {
             hours.closeHour
         );
         
-        if (!response.ok) throw new Error('Failed to set special hours');
-        
         fetchWorkingHours();
         handleCloseModals();
+        setConflicts([]);
     } catch (error) {
         console.error('Error while trying to set special hours:', error);
-        alert(dictionary.clubHoursPage.errorSettingHours);
+        
+        if (error.response?.status === 409) {
+            setConflicts(error.data?.conflicts || []);
+        } else {
+            alert(error.data?.message || dictionary.clubHoursPage.errorSettingHours);
+        }
     }
 };
 
@@ -171,9 +178,14 @@ export default function ClubWorkingHoursPage() {
             
             fetchWorkingHours();
             handleCloseModals();
-        } catch (error) {
+            setConflicts([]);
+        }  catch (error) {
             console.error('Error while trying to set regular hours:', error);
-            alert(dictionary.clubHoursPage.errorSettingHours);
+            if (error.response?.status === 409) {
+                setConflicts(error.data?.conflicts || []);
+            } else {
+                alert(error.data?.message || dictionary.clubHoursPage.errorSettingHours);
+            }
         }
     };
 
@@ -339,7 +351,6 @@ return (
             <Modal   //specjalne godziny
                 open={openSpecialHoursModal}
                 onClose={handleCloseModals}
-                aria-labelledby="special-hours-modal-title"
                 sx={{
                     display: 'flex',
                     alignItems: 'center',
@@ -353,6 +364,8 @@ return (
                     padding: '3rem',
                     width: '500px',
                     maxWidth: '90%',
+                    display: 'flex',
+                    flexDirection: 'column',
                 }}>
                     <Typography variant="h5" component="h2" sx={{
                         marginBottom: '2.5rem',
@@ -413,11 +426,40 @@ return (
                         helperText={!validateHours(hours.openHour, hours.closeHour) ? 
                         dictionary.clubHoursPage.invalidHoursError : ''}
                     />
+                    {conflicts.length > 0 && (
+                        <Box sx={{ 
+                            width: '93%',
+                            marginBottom: '1.5rem',
+                            padding: '1rem',
+                            backgroundColor: '#FFF5F5',
+                            borderRadius: '4px',
+                            border: '1px solid #F46C63',
+                            textAlign: 'center'
+                        }}>
+                            <Typography sx={{ 
+                                color: '#F46C63' ,
+                                fontWeight: 'bold',
+                                marginBottom: '0.5rem'
+                            }}>
+
+                                {dictionary.clubHoursPage.conflictsError}
+                            </Typography>
+                            {conflicts.map(conflict => (
+                                <Typography key={`${conflict.type}-${conflict.id}`} sx={{ color: '#F46C63' }}>
+                                    {conflict.type === 'Rezerwacja' 
+                                        ? `${dictionary.clubHoursPage.reservationLabel} ${conflict.id}`
+                                        : `${dictionary.clubHoursPage.activityLabel} ${conflict.id}`
+                                    }
+                            </Typography>
+                            ))}
+                        </Box>
+                    )}
 
                     <Box sx={{
                         display: 'flex',
                         justifyContent: 'space-between',
-                        marginTop: '1.5rem'
+                        marginTop: '1.5rem',
+                        width: '100%',
                     }}>
                         <Button
                             variant="contained"
@@ -459,7 +501,6 @@ return (
             <Modal //godziny regularne
                 open={openRegularHoursModal}
                 onClose={handleCloseModals}
-                aria-labelledby="regular-hours-modal-title"
                 sx={{
                     display: 'flex',
                     alignItems: 'center',
@@ -473,6 +514,9 @@ return (
                     padding: '3rem',
                     width: '500px',
                     maxWidth: '90%',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center'
                 }}>
                     <Typography variant="h5" component="h2" sx={{
                         marginBottom: '2.5rem',
@@ -545,9 +589,39 @@ return (
                         dictionary.clubHoursPage.invalidHoursError : ''}
                     />
 
+                    {conflicts.length > 0 && (
+                        <Box sx={{ 
+                            width: '93%',
+                            marginBottom: '1.5rem',
+                            padding: '1rem',
+                            backgroundColor: '#FFF5F5',
+                            borderRadius: '4px',
+                            border: '1px solid #F46C63',
+                            textAlign: 'center'
+                        }}>
+                            <Typography sx={{ 
+                                color: '#F46C63',
+                                fontWeight: 'bold',
+                                marginBottom: '0.5rem'
+                            }}>
+                                {dictionary.clubHoursPage.conflictsError}
+                            </Typography>
+                            {conflicts.map(conflict => (
+                                <Typography key={`${conflict.type}-${conflict.id}`} sx={{ color: '#F46C63' }}>
+                                    {conflict.type === 'Rezerwacja' 
+                                        ? `${dictionary.clubHoursPage.reservationLabel} ${conflict.id}`
+                                        : `${dictionary.clubHoursPage.activityLabel} ${conflict.id}`
+                                    }
+                                    {conflict.date && ` (${new Date(conflict.date).toLocaleDateString()})`}
+                                </Typography>
+                            ))}
+                        </Box>
+                    )}
+
                     <Box sx={{
                         display: 'flex',
                         justifyContent: 'space-between',
+                        width: '100%',
                         marginTop: '1.5rem'
                     }}>
                         <Button

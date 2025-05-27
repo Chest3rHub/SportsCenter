@@ -14,9 +14,15 @@ export default async function setSpecialWorkingHours(date, openHour, closeHour) 
                 closeHour
             })
         });
-        if (!response.ok) throw new Error('Response error:');
-        
-        return response;
+        if (!response.ok) {
+            const errorData = await response.json();
+            const error = new Error(errorData.message || 'Failed to set special hours');
+            error.response = response;
+            error.data = errorData;
+            throw error;
+        }
+    
+    return response;
     } catch (error) {
         console.error('Error setting special working hours:', error);
         throw error;

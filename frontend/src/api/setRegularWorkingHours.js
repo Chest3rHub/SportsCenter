@@ -24,7 +24,13 @@ export default async function setRegularWorkingHours(dayOfWeek, openHour, closeH
                 closeHour
             })
         });
-        if (!response.ok) throw new Error('Response error:');
+        if (!response.ok) {
+        const errorData = await response.json();
+        const error = new Error(errorData.message || 'Failed to set regular hours');
+        error.response = response;
+        error.data = errorData;
+        throw error;
+        }
         
         return response;
     } catch (error) {

@@ -686,7 +686,11 @@ reservationsSummaryPage: {
     fillAllFieldsError: 'Please fill all fields',
     errorSettingHours: 'Error while setting hours',
     pastDateError: 'Cannot select dates in the past',
-    invalidHoursError: 'Closing time must be after opening time'
+    invalidHoursError: 'Closing time must be after opening time',
+    conflictsError: "Working hours cannot be modified, there are conflicts with reservations or activities:",
+    reservationLabel: "Reservation ID:",
+    activityLabel: "Acitivity ID:",
+    errorSettingHours: "Error while trying to set working hours"
   },
   
 };

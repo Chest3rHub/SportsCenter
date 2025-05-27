@@ -690,6 +690,10 @@ export default {
     fillAllFieldsError: 'Proszę wypełnić wszystkie pola!',
     errorSettingHours: 'Błąd podczas ustawiania godzin',
     pastDateError: 'Nie można wybrac dat z przeszłości',
-    invalidHoursError: 'Godzina zamknięcia musi być późniejsza niż otwarcia!'
+    invalidHoursError: 'Godzina zamknięcia musi być późniejsza niż otwarcia!',
+    conflictsError: "Nie można zmodyfikować godzin, istnieją konflikty z rezerwacjami lub zajęciami:",
+    reservationLabel: "Rezerwacja ID:",
+    activityLabel: "Zajęcia ID:",
+    errorSettingHours: "Błąd podczas ustawiania godzin"
   },
 };

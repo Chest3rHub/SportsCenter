@@ -101,47 +101,19 @@ export default function OwnerDashboard() {
     navigate('/working-hours');
   };
 
-  return (
-    <Box sx={{
-      maxWidth: '1100px',
-      margin: '0 auto',
-      padding: '24px',
-      height: '85vh',
-      boxSizing: 'border-box'
-    }}>
-      <Box sx={{ 
-        width: '100%',
-        marginBottom: '16px',
-        textAlign: 'center'
-      }}>
-        <Header>{dictionary.empMainPage.title}</Header>
-      </Box>
-  
+  return (<>
+    <GreenBackground height={"55vh"} marginTop={"2vh"}>
+      <Header>{dictionary.empMainPage.title}</Header>
+
       <Box sx={{
-        display: 'flex',
-        width: '100%',
-        height: 'calc(100% - 60px)',
-        gap: '50px',
-        '@media (max-width: 1200px)': {
-          flexDirection: 'column',
-          gap: '30px'
-        }
+        display:'flex',
+        flexDirection:'row',
+        maxHeight:'32vh',
       }}>
-        <GreenBackground sx={{
-          flex: '0 0 55%',
-          height: '100%',
-          padding: '24px',
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'flex-start',
-          gap: '32px',
-          '@media (max-width: 1200px)': {
-            flex: '1',
-            height: 'auto',
-            minHeight: '400px'
-          }
+        <Box sx={{
+          // pierwszy box ten z newsami
+          width:'50%'
         }}>
-          <Box>
             <Typography sx={{ 
               color: 'black', 
               fontWeight: 'bold', 
@@ -163,12 +135,12 @@ export default function OwnerDashboard() {
               </Box>
             ) : latestNews ? (
               <Box sx={{ 
-                width: '90%',
-                margin: '0 auto'
+                height:'20vh'
               }}>
                 <SingleNews 
                   oneNewsDetails={latestNews} 
                   onNewsDeleted={()=>{}} 
+                  height={'15.7vh'}
                 />
               </Box>
             ) : (
@@ -183,14 +155,14 @@ export default function OwnerDashboard() {
           </Box>
 
           <Box sx={{ 
-            flex: 1,
-            marginTop: '24px'
+            // drugi box ten z to do 
+            width:'50%'
           }}>
             <Typography sx={{ 
               color: 'black', 
               fontWeight: 'bold', 
               fontSize: '2rem',
-              marginBottom: '20px',
+              marginBottom: '24px',
               paddingLeft: '24px',
               textAlign: 'left'
             }}>
@@ -201,23 +173,17 @@ export default function OwnerDashboard() {
               width: '90%',
               margin: '0 auto'
             }}>
-              <OrangeBackground sx={{
-                width: '100%',
-                minHeight: '20vh',
-                padding: '16px',
-                position: 'relative'
-              }}>
+              <OrangeBackground>
                 {tasksLoading ? (
                   <Box sx={{ height: '100%', display: 'grid', placeItems: 'center' }}>
                     <CircularProgress sx={{ color: '#4caf50' }} />
                   </Box>
                 ) : tasks.length > 0 ? (
-                  <Box sx={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                  <Box sx={{ display: 'flex', flexDirection: 'column', rowGap:'0.7vh' }}>
                     <Box sx={{ 
                       display: 'flex', 
                       justifyContent: 'space-between',
-                      mb: '8px',
-                      px: '8px'
+                      
                     }}>
                       <Typography sx={{ color: 'black', fontSize: '1.1rem', fontWeight: 'bold' }}>
                         {dictionary.empMainPage.contentLabel}
@@ -268,27 +234,15 @@ export default function OwnerDashboard() {
               </OrangeBackground>
             </Box>
           </Box>
-        </GreenBackground>
 
-        <GreenBackground sx={{
-          flex: '0 0 45%',
-          height: '100%',
-          padding: '24px',
-          display: 'flex',
-          flexDirection: 'column',
-          gap: '16px',
-          '@media (max-width: 1200px)': {
-            flex: '1',
-            height: 'auto',
-            minHeight: '350px'
-          }
-        }}>
-          <Box sx={{ textAlign: 'center', marginBottom: '16px' }}>
-            <Typography sx={{ 
+      </Box>
+      <Box sx={{ width: '100%',  
+        // godziny klubu
+      }}>
+        <Typography sx={{ 
               color: 'black', 
               fontWeight: 'bold', 
               fontSize: '2rem',
-              marginBottom: '4px'
             }}>
               {dictionary.ownerMainPage.openingHoursLabel}
             </Typography>
@@ -299,115 +253,75 @@ export default function OwnerDashboard() {
             }}>
               {dictionary.ownerMainPage.thisWeekLabel}
             </Typography>
-          </Box>
-
-          {hoursLoading ? (
-            <Box sx={{ display: 'grid', placeItems: 'center', flex: 1 }}>
-              <CircularProgress sx={{ color: '#4caf50' }} />
-            </Box>
-          ) : workingHours.length > 0 ? (
-            <>
-              <Box sx={{
-                display: 'flex',
-                flexDirection: 'column',
-                flex: 1,
-                padding: '0 4px'
-              }}>
-                <OrangeBackground sx={{ 
-                  padding: '12px',
-                  borderRadius: '8px',
-                  width: '100%',
-                  minHeight: '300px'
-                }}>
-                  <Box sx={{ 
-                    display: 'flex', 
-                    flexDirection: 'column', 
-                    gap: '8px'
-                  }}>
-                    {workingHours.map((day, index) => (
-                      <Box 
-                        key={index}
-                        sx={{ 
-                            display: 'flex', 
-                            justifyContent: 'space-between',
-                            alignItems: 'center',
-                            paddingY: '8px',
-                            paddingX: '12px',
-                            borderBottom: index < workingHours.length - 1 ? '1px solid rgba(0,0,0,0.1)' : 'none',
-                        }}
-                        >
-                        <Typography sx={{ 
-                            color: 'black', 
-                            fontWeight: 'bold',
-                            fontSize: '1rem',
-                            flex: '0 0 120px',
-                            textAlign: 'left'
-                        }}>
-                            {getDayName(day.dayOfWeek)}
-                        </Typography>
-                        <Typography sx={{ 
-                            color: 'black',
-                            fontSize: '1rem',
-                            flex: '1',
-                            textAlign: 'right',
-                            paddingRight: '12px'
-                        }}>
-                            {formatTime(day.openHour)} - {formatTime(day.closeHour)}
-                        </Typography>
-                        </Box>
-                    ))}
-                  </Box>
-                </OrangeBackground>
-               </Box>
-
-              <Box sx={{ marginTop: '20px', display: 'flex', justifyContent: 'center' }}>
-                <GreenButton 
-                  onClick={handleModifyHoursClick}
-                  style={{ width: 'auto', paddingX: '24px' }}
-                >
-                  {dictionary.ownerMainPage.modifyHoursButtonLabel}
-                </GreenButton>
-              </Box>
-            </>
-              ) : (
-            <>
-              <Box sx={{
-                display: 'flex',
-                flexDirection: 'column',
-                flex: 1,
-                padding: '0 4px'
-              }}>
-                <OrangeBackground sx={{ 
-                  padding: '12px',
-                  borderRadius: '8px',
-                  width: '100%',
-                  minHeight: '300px',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center'
-                }}>
-                  <Typography sx={{ 
-                    color: 'black', 
-                    textAlign: 'center',
-                    fontSize: '1.1rem'
-                  }}>
-                    {dictionary.ownerMainPage.noHoursLabel}
-                  </Typography>
-                </OrangeBackground>
-              </Box>
-              
-              <Box sx={{ marginTop: '20px', display: 'flex', justifyContent: 'center' }}>
-                <GreenButton 
-                  onClick={handleModifyHoursClick}
-                  style={{ width: 'auto', paddingX: '24px' }}
-                >
-                  {dictionary.ownerMainPage.modifyHoursButtonLabel}
-                </GreenButton>
-              </Box>
-            </>
-          )}
-        </GreenBackground>
-      </Box>
+  {hoursLoading ? (
+    <Box sx={{ display: 'grid', placeItems: 'center', flex: 1 }}>
+      <CircularProgress sx={{ color: '#4caf50' }} />
     </Box>
+  ) : workingHours.length > 0 ? (
+    <>
+      <OrangeBackground width={'90%'}>
+        <Box sx={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(7, 1fr)',
+          gap: '6px',
+          textAlign: 'center',
+        }}>
+          {workingHours.map((day, index) => (
+            <Typography key={`day-${index}`} sx={{ fontWeight: 'bold', color: 'black', fontSize: '0.9rem' }}>
+              {getDayName(day.dayOfWeek)}
+            </Typography>
+          ))}
+        </Box>
+
+        <Box sx={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(7, 1fr)',
+          gap: '8px',
+          textAlign: 'center',
+          marginTop: '12px'
+        }}>
+          {workingHours.map((day, index) => (
+            <Typography key={`hour-${index}`} sx={{ color: 'black', fontSize: '1rem' }}>
+              {formatTime(day.openHour)} - {formatTime(day.closeHour)}
+            </Typography>
+          ))}
+        </Box>
+      </OrangeBackground>
+
+      <Box sx={{ marginTop: '20px', display: 'flex', justifyContent: 'center' }}>
+        <GreenButton 
+          onClick={handleModifyHoursClick}
+          style={{ width: 'auto', paddingX: '24px' }}
+        >
+          {dictionary.ownerMainPage.modifyHoursButtonLabel}
+        </GreenButton>
+      </Box>
+    </>
+  ) : (
+    <>
+      <OrangeBackground>
+        <Typography sx={{
+          color: 'black',
+          textAlign: 'center',
+          fontSize: '1.1rem'
+        }}>
+          {dictionary.ownerMainPage.noHoursLabel}
+        </Typography>
+      </OrangeBackground>
+
+      <Box sx={{ marginTop: '20px', display: 'flex', justifyContent: 'center' }}>
+        <GreenButton 
+          onClick={handleModifyHoursClick}
+          style={{ width: 'auto', paddingX: '24px' }}
+        >
+          {dictionary.ownerMainPage.modifyHoursButtonLabel}
+        </GreenButton>
+      </Box>
+    </>
+  )}
+</Box>
+
+    </GreenBackground>
+  </>
   );
 }

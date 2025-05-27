@@ -6,7 +6,7 @@ import NewsButton from "./buttons/NewsButton";
 import removeNews from "../api/removeNews";
 import { useNavigate } from "react-router-dom";
 
-export default function SingleNews({ oneNewsDetails, onNewsDeleted, offset }) {
+export default function SingleNews({ oneNewsDetails, onNewsDeleted, offset, height }) {
     const {role, dictionary, token} = useContext(SportsContext);
     const navigate = useNavigate();
 
@@ -50,10 +50,10 @@ export default function SingleNews({ oneNewsDetails, onNewsDeleted, offset }) {
     return (
         <OrangeBackground 
             width={"80%"} 
-            maxHeight={"12vh"} 
-            minHeight={"12vh"} 
+            maxHeight={height ? height : "12vh"} 
+            minHeight={height ? height : "12vh"} 
             overflow={"hidden"} 
-            height={"12vh"}
+            height={height ? height : "12vh"}
             position={ "relative" }
         >
             <Typography sx={{

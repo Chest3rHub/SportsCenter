@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using SportsCenter.Application.Exceptions;
 using SportsCenter.Application.Exceptions.SportsCenterExceptions;
 using SportsCenter.Core.Entities;
 using SportsCenter.Core.Repositories;
@@ -32,7 +33,7 @@ namespace SportsCenter.Application.SportsCenterManagement.Commands.SetSpecialSpo
             if (conflictingReservations.Any())
             {
                 Console.WriteLine("Istnieją rezerwacje lub zajęcia kolidujące z nowymi godzinami pracy:");
-
+                
                 foreach (var conflict in conflictingReservations)
                 {
                     if (conflict is Rezerwacja reservation)
@@ -44,7 +45,22 @@ namespace SportsCenter.Application.SportsCenterManagement.Commands.SetSpecialSpo
                         Console.WriteLine($"Zajęcia ID: {activityInstance.GrafikZajec.ZajeciaId}");
                     }
                 }
+
+                var conflicts = conflictingReservations.Select(conflict => 
+                {
+                    if (conflict is Rezerwacja reservation)
+                    {
+                        return new ConflictInfo("Rezerwacja", reservation.RezerwacjaId);
+                    }
+                    else if (conflict is InstancjaZajec activityInstance)
+                    {
+                        return new ConflictInfo("Zajęcia", activityInstance.GrafikZajec.ZajeciaId);
+                    }
+                    return null;
+                }).Where(x => x != null).ToList();
+                throw new ConflictException(conflicts);
             }
+
 
             if (existingDate != null)
             {

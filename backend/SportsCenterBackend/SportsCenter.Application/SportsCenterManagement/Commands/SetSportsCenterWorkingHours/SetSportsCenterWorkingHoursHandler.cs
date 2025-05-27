@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using SportsCenter.Application.Exceptions;
 using SportsCenter.Application.Exceptions.SportsCenterExceptions;
 using SportsCenter.Core.Entities;
 using SportsCenter.Core.Repositories;
@@ -49,6 +50,21 @@ namespace SportsCenter.Application.SportsClubManagement.Commands.AddSportsClubWo
                         Console.WriteLine($"Nieoczekiwany typ obiektu: {conflict.GetType().Name}");
                     }
                 }
+
+                var conflicts = conflictingReservations.Select(conflict => 
+                {
+                    if (conflict is Rezerwacja reservation)
+                    {
+                        return new ConflictInfo("Rezerwacja", reservation.RezerwacjaId);
+                    }
+                    else if (conflict is InstancjaZajec activityInstance)
+                    {
+                        return new ConflictInfo("Zajęcia", activityInstance.GrafikZajec.ZajeciaId);
+                    }
+                    return null;
+                }).Where(x => x != null).ToList();
+
+                throw new ConflictException(conflicts);
             }
 
             var dayOfWeekExists = await _sportsCenterRepository.CheckIfDayExistsAsync(request.DayOfWeek, cancellationToken);

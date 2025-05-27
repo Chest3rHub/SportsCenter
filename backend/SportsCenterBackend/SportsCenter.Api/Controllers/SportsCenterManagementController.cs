@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using SportsCenter.Application.Exceptions;
 using SportsCenter.Application.Exceptions.SportsCenterExceptions;
 using SportsCenter.Application.SportsCenterManagement.Commands.SetSpecialSportsCenterWorkingHours;
 using SportsCenter.Application.SportsCenterManagement.Queries.GetAvailableCourts;
@@ -37,6 +38,13 @@ namespace SportsCenter.Api.Controllers
             {
                 return NotFound(new { message = ex.Message });
             }
+            catch (ConflictException ex)
+            {
+                return Conflict(new { 
+                    message = "There are conflicts with reservations or sport activities",
+                    conflicts = ex.Conflicts
+                });
+            }
             catch (Exception ex)
             {
                 return StatusCode(500, new { message = "An error occurred while sending the request", details = ex.Message });
@@ -57,6 +65,13 @@ namespace SportsCenter.Api.Controllers
             {
                 await Mediator.Send(workingHours);
                 return NoContent();
+            }
+            catch (ConflictException ex)
+            {
+                return Conflict(new { 
+                    message = "There are conflicts with reservations or sport activities",
+                    conflicts = ex.Conflicts
+                });
             }
             catch (Exception ex)
             {

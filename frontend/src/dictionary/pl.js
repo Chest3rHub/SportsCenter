@@ -663,6 +663,7 @@ export default {
     reservationMadeByLabel:'Osoba rezerwująca',
     payLabel:'Opłać',
     paidLabel:'Opłacono',
+    payFailedLabel:'Nie udało się opłacić.',
   },
   days:{
     monday: 'Poniedziałek',

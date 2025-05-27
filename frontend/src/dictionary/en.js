@@ -659,6 +659,7 @@ reservationsSummaryPage: {
     reservationMadeByLabel:'Booked by',
     payLabel:'Pay',
     paidLabel:'Paid',
+    payFailedLabel:'Failed to mark as paid'
   },
   days:{
     monday: 'Monday',

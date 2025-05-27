@@ -9,6 +9,8 @@ import signUpForActivity from "../api/signUpForActivity";
 import Backdrop from '@mui/material/Backdrop';
 import SentimentSatisfiedIcon from '@mui/icons-material/SentimentSatisfied';
 import SentimentDissatisfiedIcon from '@mui/icons-material/SentimentDissatisfied';
+import markClientActivityAsPaid from "../api/markClientActivityAsPaid";
+import { id } from "date-fns/locale";
 export default function ActivityDetails() {
     const { dictionary, toggleLanguage, role } = useContext(SportsContext);
 
@@ -52,8 +54,13 @@ export default function ActivityDetails() {
         participants,
         cost,
         isEquipmentReserved,
-        isCanceled
+        isCanceled,
+        id,
+        activityIdToPay,
     } = activityDetails;
+
+    const [participantsState, setParticipantsState] = useState(activityDetails?.participants || []);
+
 
     const formattedDate = new Date(date + 'Z').toISOString().split("T")[0];
     const formattedStartTime = startTime.slice(0, 5);
@@ -90,6 +97,25 @@ export default function ActivityDetails() {
         }
     }
 
+   async function handlePay(email, activityId){
+        try {
+            const response = await markClientActivityAsPaid(email,activityId);
+            if (!response.ok) {
+                const errorData = await response.json();
+                let failText = dictionary.activityDetailsPage.payFailedLabel;
+                setFailedSignUpLabel(failText);
+                handleOpenFailure();
+            } else {
+                setParticipantsState(prev =>
+                    prev.map(p =>
+                        p.email === email ? { ...p, isPaid: true } : p
+                    )
+                );
+                
+            }
+        } catch (error) {
+        }
+    }
 
     if (!activityDetails) {
         return <Typography variant="h6">{dictionary.activityDetailsPage.noDataAvailable}</Typography>;
@@ -326,7 +352,7 @@ export default function ActivityDetails() {
                     </Box>
                 </Box>
 
-                {participants && <Box sx={{
+                {participantsState && (role==='Pracownik administracyjny' || role==='Wlasciciel') &&  <Box sx={{
                     display: 'flex',
                     position: 'absolute',
                     right: '1vw',
@@ -345,7 +371,7 @@ export default function ActivityDetails() {
                         {dictionary.activityDetailsPage.participantsLabel}:
                     </Typography>
                     <List component="ol" sx={{ paddingLeft: '1.5rem', listStyleType: 'decimal',display: 'flex', flexDirection: 'column', gap: '2vh'}}>
-                        {participants.map((participant, index) => (
+                        {participantsState.map((participant, index) => (
                             <ListItem
                                 key={index}
                                 component="li"
@@ -360,6 +386,7 @@ export default function ActivityDetails() {
                                         disabled={participant.isPaid}
                                         size="small"
                                         style={{ maxWidth: '7vw', maxHeight: '6.5vh', fontSize: '0.9rem', fontWeight: 'bold', marginTop: '-0.6vh' }}
+                                        onClick={()=>{handlePay(participant.email,activityIdToPay)}}
                                     >
                                         {participant.isPaid ? dictionary.activityDetailsPage.paidLabel : dictionary.activityDetailsPage.payLabel}
                                     </GreenButton>}

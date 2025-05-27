@@ -66,6 +66,9 @@ namespace SportsCenter.Infrastructure.DAL.Handlers.SportActivitiesHandlers
                         EndTime = g.GodzinaOd.Add(TimeSpan.FromMinutes(g.CzasTrwania)),
                         LevelName = g.Zajecia.IdPoziomZajecNavigation.Nazwa,
                         EmployeeId = g.PracownikId,
+                        TrainerName = g.Pracownik != null
+                            ? $"{g.Pracownik.PracownikNavigation.Imie} {g.Pracownik.PracownikNavigation.Nazwisko}"
+                            : "Brak trenera",
                         CourtName = g.Kort.Nazwa,
                         CostWithoutEquipment = g.KosztBezSprzetu,
                         CostWithEquipment = g.KosztZeSprzetem,
@@ -98,6 +101,9 @@ namespace SportsCenter.Infrastructure.DAL.Handlers.SportActivitiesHandlers
                     DurationInMinutes = (int)(r.DataDo - r.DataOd).TotalMinutes,
                     EndTime = r.DataDo.TimeOfDay,
                     EmployeeId = r.TrenerId,
+                    TrainerName = r.Trener != null
+                        ? $"{r.Trener.PracownikNavigation.Imie} {r.Trener.PracownikNavigation.Nazwisko}"
+                        : "Brak trenera",
                     CourtName = r.Kort.Nazwa,
                     reservationCost = r.Koszt,
                     IsEquipmentReserved = r.CzyUwzglednicSprzet == true ? "Tak" : "Nie",

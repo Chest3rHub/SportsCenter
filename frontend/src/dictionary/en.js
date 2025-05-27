@@ -84,6 +84,7 @@ export default {
       balanceLabel: 'Balance',
       shopLabel: 'Shop',
       accountLabel: 'Account',
+      dashboardLabel:'Dashboard',
     },
     employeeSidebar: {
       clientsLabel: 'Clients',
@@ -92,6 +93,7 @@ export default {
       changePasswordLabel: 'Change password',
       trainingsLabel: 'Trainings',
       reservationsLabel: 'Reservations',
+      dashboardLabel:'Dashboard',
     },
     ownerSidebar: {
       employeesLabel: 'Employees',
@@ -105,11 +107,13 @@ export default {
       productsLabel: 'Products',
       gearLabel: 'Gear',
       newsLabel: 'News',
+      dashboardLabel:'Dashboard',
     },
     coachSidebar: {
       newsLabel: 'News',
       myTimetableLabel: 'My timetable',
       changePasswordLabel: 'Change password',
+      dashboardLabel:'Dashboard',
     }
   },
   newsPage: {

@@ -97,7 +97,8 @@ export default function EmployeeDashboard() {
       margin: '0 auto',
       padding: '24px',
       height: '85vh',
-      boxSizing: 'border-box'
+      boxSizing: 'border-box',
+      marginLeft:'16vw'
     }}>
       <Box sx={{ 
         width: '100%',
@@ -233,21 +234,6 @@ export default function EmployeeDashboard() {
                         </Typography>
                       </Box>
                     ))}
-
-                    {tasks.length > 3 && (
-                      <Typography
-                        sx={{
-                          color: '#0AB68B',
-                          textAlign: 'center',
-                          cursor: 'pointer',
-                          mt: '8px',
-                          '&:hover': { textDecoration: 'underline' }
-                        }}
-                        onClick={handleTodoListClick}
-                      >
-                        (...)
-                      </Typography>
-                    )}
                   </Box>
                 ) : (
                   <Typography sx={{ 

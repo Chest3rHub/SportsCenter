@@ -238,6 +238,7 @@ export default function OwnerDashboard() {
       </Box>
       <Box sx={{ width: '100%',  
         // godziny klubu
+        marginTop:'3vh'
       }}>
         <Typography sx={{ 
               color: 'black', 
@@ -249,7 +250,8 @@ export default function OwnerDashboard() {
             <Typography sx={{ 
               color: 'black', 
               fontSize: '1.2rem',
-              fontStyle: 'italic'
+              fontStyle: 'italic',
+              marginBottom:'2vh'
             }}>
               {dictionary.ownerMainPage.thisWeekLabel}
             </Typography>

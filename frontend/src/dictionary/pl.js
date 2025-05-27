@@ -90,6 +90,7 @@ export default {
       balanceLabel: 'Saldo',
       shopLabel: 'Sklep',
       accountLabel: 'Konto',
+      dashboardLabel:'Panel',
     },
     employeeSidebar: {
       clientsLabel: 'Klienci',
@@ -100,6 +101,7 @@ export default {
       trainingsLabel: 'Zajęcia',
       productsLabel: 'Produkty',
       newsLabel: 'Aktualności',
+      dashboardLabel:'Panel',
     },
     ownerSidebar: {
       employeesLabel: 'Pracownicy',
@@ -113,11 +115,13 @@ export default {
       productsLabel: 'Produkty',
       gearLabel: 'Sprzęt',
       newsLabel: 'Aktualności',
+      dashboardLabel:'Panel',
     },
     coachSidebar: {
       newsLabel: 'Aktualności',
       myTimetableLabel: 'Mój grafik',
       changePasswordLabel: 'Zmiana hasła',
+      dashboardLabel:'Panel',
     }
   },
   newsPage: {

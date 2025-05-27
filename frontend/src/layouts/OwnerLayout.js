@@ -13,6 +13,7 @@ export default function OwnerLayout() {
   const { token, setToken, dictionary, toggleLanguage, setRole } = useContext(SportsContext);
 
   const menuItems = [
+    { label: dictionary.sidebar.ownerSidebar.dashboardLabel, navigate: '/' },
     { label: dictionary.sidebar.ownerSidebar.employeesLabel, navigate: '/employees' },
     { label: dictionary.sidebar.ownerSidebar.clientsLabel, navigate: '/clients' },
     { label: dictionary.sidebar.ownerSidebar.timetableLabel, navigate: '/timetable' },

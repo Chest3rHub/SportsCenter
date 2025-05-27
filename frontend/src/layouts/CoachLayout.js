@@ -13,6 +13,7 @@ export default function CoachLayout() {
   const { token, setToken, dictionary, toggleLanguage, setRole } = useContext(SportsContext);
 
   const menuItems = [
+    { label: dictionary.sidebar.coachSidebar.dashboardLabel, navigate: '/' },
     { label: dictionary.sidebar.coachSidebar.newsLabel, navigate: '/news' },
     { label: dictionary.sidebar.coachSidebar.myTimetableLabel, navigate: '/my-timetable' },
     { label: dictionary.sidebar.coachSidebar.changePasswordLabel, navigate: '/change-password' },

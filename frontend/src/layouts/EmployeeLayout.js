@@ -12,6 +12,7 @@ export default function EmployeeLayout() {
   const { token, setToken, dictionary, setRole } = useContext(SportsContext);
 
   const menuItems = [
+    { label: dictionary.sidebar.employeeSidebar.dashboardLabel, navigate: '/' },
     { label: dictionary.sidebar.employeeSidebar.clientsLabel, navigate: '/clients' },
     { label: dictionary.sidebar.employeeSidebar.timetableLabel, navigate: '/timetable' },
     { label: dictionary.sidebar.employeeSidebar.todoLabel, navigate: '/todo' },

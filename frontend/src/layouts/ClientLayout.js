@@ -13,6 +13,7 @@ export default function ClientLayout() {
   const { token, setToken, dictionary, toggleLanguage, setRole } = useContext(SportsContext);
 
   const menuItems = [
+    { label: dictionary.sidebar.clientSidebar.dashboardLabel, navigate: '/' },
     { label: dictionary.sidebar.clientSidebar.newsLabel, navigate: '/news' },
     { label: dictionary.sidebar.clientSidebar.myTimetableLabel, navigate: '/my-timetable' },
     { label: dictionary.sidebar.clientSidebar.myReservationsLabel, navigate: '/my-reservations' },
@@ -63,8 +64,6 @@ export default function ClientLayout() {
     };
     fetchUserData();
   }, []);
-  // dostosowac navbar dla pomocy sprzatajacej moze kazdy ma jeden taki sam z przyciskiem wyloguj np?
-  // wedlug projektu pomoc sprzatajaca nie ma sidebara!! 
   return (
     <Box>
       <Navbar navbarItems={navbarItems} />

@@ -208,9 +208,17 @@ internal class GetScheduleInfoHandler : IRequestHandler<GetScheduleInfo, List<Sc
                             LastName = ik.Klient.KlientNavigation.Nazwisko,
                             Email = ik.Klient?.KlientNavigation.Email,
                             IsPaid = ik.CzyOplacone
-                         })
-                        .ToList()
-                };
+                         })                   
+                        .ToList(),
+                        ActivityIdToPay = scheduledClass.InstancjaZajec
+                        .Where(i =>
+                        {
+                            var instDate = i.Data.ToDateTime(TimeOnly.MinValue);
+                            return instDate >= startDate && instDate <= endTime;
+                        })
+                        .Select(i => i.InstancjaZajecId)
+                        .FirstOrDefault()
+                        };
 
             }
             else if (isTrainerRole)

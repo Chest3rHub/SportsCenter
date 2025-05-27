@@ -20,5 +20,7 @@ namespace SportsCenter.Application.Schedule.Queries.GetScheduleInfo
         public bool IsEquipmentReserved { get; set; }
         [JsonProperty(Order = 16)]
         public bool IsCanceled { get; set; }
+        [JsonProperty(Order = 17)]
+        public int ActivityIdToPay { get; set; }
     }
 }

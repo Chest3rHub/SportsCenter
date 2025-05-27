@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.EntityFrameworkCore;
 using SportsCenter.Application.Activities.Queries.GetYourSportActivitiesByWeeks;
 using System;
@@ -70,8 +71,7 @@ namespace SportsCenter.Infrastructure.DAL.Handlers.SportActivitiesHandlers
                             ? $"{g.Pracownik.PracownikNavigation.Imie} {g.Pracownik.PracownikNavigation.Nazwisko}"
                             : "Brak trenera",
                         CourtName = g.Kort.Nazwa,
-                        CostWithoutEquipment = g.KosztBezSprzetu,
-                        CostWithEquipment = g.KosztZeSprzetem,
+                        Cost= combined.ik.CzyUwzglednicSprzet ? g.KosztZeSprzetem : g.KosztBezSprzetu,           
                         IsEquipmentReserved = combined.ik.CzyUwzglednicSprzet ? "Tak" : "Nie",
                         IsActivityPaid = combined.ik.CzyOplacone.HasValue
                             ? (combined.ik.CzyOplacone.Value ? "Tak" : "Nie")
@@ -105,7 +105,7 @@ namespace SportsCenter.Infrastructure.DAL.Handlers.SportActivitiesHandlers
                         ? $"{r.Trener.PracownikNavigation.Imie} {r.Trener.PracownikNavigation.Nazwisko}"
                         : "Brak trenera",
                     CourtName = r.Kort.Nazwa,
-                    reservationCost = r.Koszt,
+                    Cost = r.Koszt,
                     IsEquipmentReserved = r.CzyUwzglednicSprzet == true ? "Tak" : "Nie",
                     IsActivityPaid = r.CzyOplacona == true ? "Tak" : "Nie",
                     IsActivityCanceled = r.CzyOdwolana == true ? "Tak" : "Nie"

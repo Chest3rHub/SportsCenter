@@ -86,7 +86,7 @@ internal class GetScheduleInfoHandler : IRequestHandler<GetScheduleInfo, List<Sc
                     TrainerName = reservation.Trener?.PracownikNavigation != null
                         ? $"{reservation.Trener.PracownikNavigation.Imie} {reservation.Trener.PracownikNavigation.Nazwisko}"
                         : "Brak trenera",
-                    Cost = reservation.Koszt,
+                    ReservationCost = reservation.Koszt,
                     Discount = reservation.Klient?.ZnizkaNaZajecia ?? 0,
                     Participants = new List<ParticipantDto>
                     {
@@ -184,9 +184,8 @@ internal class GetScheduleInfoHandler : IRequestHandler<GetScheduleInfo, List<Sc
                             : "Brak trenera",
                     GroupName = scheduledClass.Zajecia?.Nazwa,
                     SkillLevel = scheduledClass.Zajecia?.IdPoziomZajecNavigation?.Nazwa,
-                    Cost = scheduledClass.KosztZeSprzetem > 0
-                            ? scheduledClass.KosztZeSprzetem
-                            : (decimal?)0,
+                    CostWithEquipment = scheduledClass.KosztZeSprzetem,
+                    CostWithoutEquipment = scheduledClass.KosztBezSprzetu,
                     Participants = scheduledClass.InstancjaZajec
                         .Where(i =>
                         {
@@ -265,7 +264,9 @@ internal class GetScheduleInfoHandler : IRequestHandler<GetScheduleInfo, List<Sc
                         ? $"{scheduledClass.Pracownik.PracownikNavigation.Imie} {scheduledClass.Pracownik.PracownikNavigation.Nazwisko}"
                         : "Brak trenera",
                     GroupName = scheduledClass.Zajecia?.Nazwa,
-                    SkillLevel = scheduledClass.Zajecia?.IdPoziomZajecNavigation?.Nazwa
+                    SkillLevel = scheduledClass.Zajecia?.IdPoziomZajecNavigation?.Nazwa,
+                    CostWithEquipment = scheduledClass.KosztZeSprzetem,
+                    CostWithoutEquipment = scheduledClass.KosztBezSprzetu,
                 };
             }
             else

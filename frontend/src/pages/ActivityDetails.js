@@ -10,7 +10,7 @@ import Backdrop from '@mui/material/Backdrop';
 import SentimentSatisfiedIcon from '@mui/icons-material/SentimentSatisfied';
 import SentimentDissatisfiedIcon from '@mui/icons-material/SentimentDissatisfied';
 import markClientActivityAsPaid from "../api/markClientActivityAsPaid";
-import { id } from "date-fns/locale";
+import markClientReservationAsPaid from "../api/markClientReservationAsPaid";
 export default function ActivityDetails() {
     const { dictionary, toggleLanguage, role } = useContext(SportsContext);
 
@@ -99,7 +99,13 @@ export default function ActivityDetails() {
 
    async function handlePay(email, activityId){
         try {
-            const response = await markClientActivityAsPaid(email,activityId);
+            let response=null;
+            if(description==='Rezerwacja'){
+                response = await markClientReservationAsPaid(email,activityDetails.id);
+            } else {
+                response = await markClientActivityAsPaid(email,activityId);
+            }
+            
             if (!response.ok) {
                 const errorData = await response.json();
                 let failText = dictionary.activityDetailsPage.payFailedLabel;

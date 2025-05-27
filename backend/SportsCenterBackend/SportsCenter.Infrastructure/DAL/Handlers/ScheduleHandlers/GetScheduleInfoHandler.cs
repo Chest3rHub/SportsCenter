@@ -94,7 +94,8 @@ internal class GetScheduleInfoHandler : IRequestHandler<GetScheduleInfo, List<Sc
                         {
                         FirstName = reservation.Klient?.KlientNavigation?.Imie,
                         LastName = reservation.Klient?.KlientNavigation?.Nazwisko,
-                        IsPaid = reservation.CzyOplacona
+                        IsPaid = reservation.CzyOplacona,
+                        Email = reservation.Klient?.KlientNavigation.Email,
                         }
                     },
                     IsEquipmentReserved = reservation.CzyUwzglednicSprzet,

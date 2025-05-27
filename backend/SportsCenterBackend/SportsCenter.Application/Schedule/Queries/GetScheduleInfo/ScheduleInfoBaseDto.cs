@@ -26,6 +26,12 @@ public abstract class ScheduleInfoBaseDto
     public string  GroupName { get; set; }
     [JsonProperty(Order = 9)]
     public string SkillLevel { get; set; }
+    [JsonProperty(Order = 10)]
+    public decimal? CostWithEquipment { get; set; }
+    [JsonProperty(Order = 11)]
+    public decimal? CostWithoutEquipment { get; set; }
+    [JsonProperty(Order = 12)]
+    public decimal? ReservationCost { get; set; }
     [JsonIgnore]
     public string Type { get; set; }
 }

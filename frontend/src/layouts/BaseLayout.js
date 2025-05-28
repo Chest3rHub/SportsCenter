@@ -7,6 +7,7 @@ export default function BaseLayout() {
   const { dictionary, toggleLanguage, setRole, } = useContext(SportsContext);
 
   const navbarItems = [
+    { label: dictionary.navbar.anonymousUser.homeLabel, navigate: '/' },
     { label: dictionary.navbar.anonymousUser.newsLabel, navigate: '/news' },
     { label: dictionary.navbar.anonymousUser.timetableLabel, navigate: '/timetable' },
     { label: dictionary.navbar.anonymousUser.registerLabel, navigate: '/register' },

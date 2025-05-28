@@ -8,6 +8,7 @@ export default {
   navbar: {
     changeLanguageLabel: 'EN',
     anonymousUser: {
+      homeLabel:'Start',
       newsLabel: 'Aktualności',
       timetableLabel: 'Grafik',
       registerLabel: 'Rejestracja',

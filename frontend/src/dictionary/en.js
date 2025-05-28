@@ -2,6 +2,7 @@ export default {
   navbar: {
     changeLanguageLabel: 'PL',
     anonymousUser: {
+      homeLabel:'Home',
       newsLabel: 'News',
       timetableLabel: 'Timetable',
       registerLabel: 'Register',

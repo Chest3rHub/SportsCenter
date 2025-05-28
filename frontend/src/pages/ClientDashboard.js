@@ -91,7 +91,8 @@ export default function ClientDashboard() {
       margin: '0 auto',
       padding: '24px',
       height: '85vh',
-      boxSizing: 'border-box'
+      boxSizing: 'border-box',
+      marginLeft:'17vw',
     }}>
       <Box sx={{ 
         width: '100%',

@@ -702,13 +702,15 @@ export default {
     errorSettingHours: "Błąd podczas ustawiania godzin"
   },
   homePage: {
-    titleLabel: 'Witamy w aplikacji ROCKet IT!',
+    titleLabel: 'Witaj!',
     whatIsNewLabel: 'Co nowego?',
     firstCommercial: 'Oferujemy nie tylko wygodny system rezerwacji kortów do tenisa, badmintona i innych sportów rakietowych, ale także profesjonalne zajęcia prowadzone przez doświadczonych trenerów oraz przyjazną spoleczność, która dzieli Twoją sportową pasję',
     secondCommercial: ', z nami każdy serw to czysta frajda! Wystarczy kilka kliknięć, by zacząć grać, trenować z najlepszymi instruktorami i korzystać z kompleksowego systemu rezerwacji dostępnego 24/7!',
     registerLabel: 'Zarejestruj się',
     ourCourtsLabel: 'Nasze korty:',
-    noCourtsLabel: 'Brak kortów'
+    noCourtsLabel: 'Brak kortów',
+    registerLabel:'Zarejestruj się',
+    joinNowLabel:'Dołącz do nas już dziś!'
   }
 
 };

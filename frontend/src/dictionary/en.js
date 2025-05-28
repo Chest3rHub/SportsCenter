@@ -698,13 +698,15 @@ reservationsSummaryPage: {
     errorSettingHours: "Error while trying to set working hours"
   },
   homePage: {
-    titleLabel: 'Welcome to the ROCKet IT app!',
+    titleLabel: 'Welcome!',
     whatIsNewLabel: "What's new?",
     firstCommercial: 'We offer not only a convenient booking system for tennis, badminton and other racket sports courts, but also professional classes led by experienced trainers and a friendly community that shares your sports passion',
     secondCommercial: ', with us, every serve is pure fun! Just a few clicks and you are on the court, training with top tier coaches and using our super convenient 24/7 booking system!',
     registerLabel: 'Register',
     ourCourtsLabel: 'Our courts:',
-    noCourtsLabel: 'No courts found'
+    noCourtsLabel: 'No courts found',
+    registerLabel:'Register',
+    joinNowLabel:'Join us today!'
   }
   
 };

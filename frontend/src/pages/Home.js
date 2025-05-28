@@ -9,6 +9,8 @@ import SingleNews from "../components/SingleNews";
 import getNews from "../api/getNews";
 import getCourts from "../api/getCourts";
 import CircularProgress from '@mui/material/CircularProgress';
+import GreenButton from "../components/buttons/GreenButton";
+import { keyframes } from "@mui/material";
 
 export default function Home() {
   const { dictionary } = useContext(SportsContext);
@@ -19,14 +21,26 @@ export default function Home() {
   const [courtsError, setCourtsError] = useState(null);
   const navigate = useNavigate();
 
+  const pulse = keyframes`
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.25);
+  }
+  100% {
+    transform: scale(1);
+  }
+`;
+
   useEffect(() => {
-    
+
     const fetchData = async () => {
       try {
         const newsResponse = await getNews(0);
         if (!newsResponse.ok) throw new Error('Failed to fetch news');
         const newsData = await newsResponse.json();
-        
+
         if (newsData?.length > 0) {
           setLatestNews([...newsData].sort((a, b) => new Date(b.date) - new Date(a.date))[0]);
         }
@@ -46,7 +60,7 @@ export default function Home() {
       }
     };
 
-     fetchData();
+    fetchData();
   }, []);
 
   const handleRegisterClick = () => {
@@ -56,160 +70,155 @@ export default function Home() {
   return (
     <>
       <GreenBackground height={"auto"} marginTop={"5vh"} gap={"2vh"}>
-        <Header>{dictionary.homePage.titleLabel}</Header>
+        <Box
+          sx={{
+            width: '100%',             // pełna szerokość kontenera
+            display: 'flex',
+            justifyContent: 'center',  // wyśrodkowanie poziome
+            minHeight: '5vh',
+          }}
+        ><Header>{dictionary.homePage.titleLabel}</Header>
+
+        </Box>
+
         <Box sx={{
           display: 'flex',
-          flexDirection: { xs: 'column', md: 'row' },
-          width: '90%',
-          margin: '0 auto',
-          gap: '4vw',
-          minHeight: '40vh'
+          flexDirection: 'row',
+          columnGap: '3vw',
+          //  justifyContent:'space-between',
+
         }}>
           <Box sx={{
-            width: { xs: '100%', md: '50%' },
+            // box z co nowego
+            width: '50%',
             display: 'flex',
-            flexDirection: 'column'
+            flexDirection: 'column',
+            rowGap: '2vh',
           }}>
-            <Typography sx={{ 
-              color: 'black', 
-              fontWeight: 'bold', 
+            <Typography sx={{
+              color: 'black',
+              fontWeight: 'bold',
               fontSize: '1.5rem',
-              marginBottom: '2vh',
-              textAlign: 'left'
+
+              textAlign: 'left',
+              paddingLeft: '2vw'
             }}>
               {dictionary.homePage.whatIsNewLabel}
             </Typography>
-
-            <Box sx={{ marginLeft: '-30px' }}>
-              {loading ?(
-                <Box sx={{ 
-                  height: '140px', 
-                  display: 'grid', 
-                  placeItems: 'center' 
-                }}>
-                  <CircularProgress sx={{ color: '#4caf50', fontSize: '3.5rem' }} />
-                </Box>
-              ) : latestNews ? (
-                <SingleNews 
-                  oneNewsDetails={latestNews} 
-                  onNewsDeleted={()=>{}} 
-                />
-              ) : (
-                <Typography sx={{ 
-                  color: 'black', 
-                  fontSize: '1rem',
-                  textAlign: 'center'
-                }}>
-                  {dictionary.empMainPage.noNewsLabel}
-                </Typography>
-              )}
-            </Box>
-
-            <Typography sx={{ 
-              color: 'black', 
-              fontSize: '1.25rem',
-              fontWeight: 'bold',
-              textAlign: 'left',
-              marginTop: '4vh',
-            }}>
-              {dictionary.homePage.firstCommercial} 🎾🥇
-            </Typography>
-          </Box>
-
-          <Box sx={{ 
-            width: { xs: '100%', md: '50%' },
-            display: 'flex',
-            flexDirection: 'column'
-          }}>
-            <Typography 
-              sx={{ 
-                color: 'black', 
-                fontSize: '1.5rem',
-                fontWeight: 'bold',
-                textAlign: 'left',
-                marginBottom: '2vh'
-              }}
-            >
-              <span 
-                onClick={handleRegisterClick}
-                style={{ 
-                  cursor: 'pointer',
-                  textDecoration: 'underline',
-                  color: '#0AB68B'
-                }}
-              >
-                {dictionary.homePage.registerLabel}
-              </span>
-               {dictionary.homePage.secondCommercial}
-            </Typography>
-
-            <Box sx={{ marginTop: '2vh' }}>
-              <Typography sx={{ 
-                color: 'black', 
-                fontWeight: 'bold', 
-                fontSize: '1.5rem',
-                marginBottom: '1vh',
-                textAlign: 'left'
+            {loading ? (
+              <Box sx={{
+                height: '140px',
+                display: 'grid',
+                placeItems: 'center'
               }}>
-                {dictionary.homePage.ourCourtsLabel}
+                <CircularProgress sx={{ color: '#4caf50', fontSize: '3.5rem' }} />
+              </Box>
+            ) : latestNews ? (
+              <SingleNews
+                oneNewsDetails={latestNews}
+                onNewsDeleted={() => { }}
+                height={'16vh'}
+              />
+            ) : (
+              <Typography sx={{
+                color: 'black',
+                fontSize: '1rem',
+                textAlign: 'center'
+              }}>
+                {dictionary.empMainPage.noNewsLabel}
               </Typography>
-              <OrangeBackground 
-                width="92%" 
-                height="20vh" 
-                maxHeight="20vh" 
-                overflow="auto"
-                minHeight="20vh"
+            )}
+          </Box>
+          <Box sx={{
+            // box z kortami
+            width: '50%',
+            display: 'flex',
+            flexDirection: 'column',
+            rowGap: '2vh',
+          }}>
+            <Typography sx={{
+              color: 'black',
+              fontWeight: 'bold',
+              fontSize: '1.5rem',
+              marginLeft: '1.5vw',
+              textAlign: 'left'
+            }}>
+              {dictionary.homePage.ourCourtsLabel}
+            </Typography>
+
+            {courtsLoading ? (
+              <Box sx={{ height: '100%', display: 'grid', placeItems: 'center' }}>
+                <CircularProgress sx={{ color: '#4caf50' }} />
+              </Box>
+            ) : courts.length > 0 ? (
+              <OrangeBackground
+                width={"80%"}
+                height="16vh"
+                maxHeight="16vh"
+                overflow="hidden"
+                minHeight="16vh"
               >
-                {courtsLoading ? (
-                  <Box sx={{ height: '100%', display: 'grid', placeItems: 'center' }}>
-                    <CircularProgress sx={{ color: '#4caf50' }} />
-                  </Box>
-                ) : courtsError ? (
-                  <Typography sx={{ 
-                    color: 'black', 
-                    height: '100%',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    fontSize: '1.1rem'
-                  }}>
-                    Error while fetching courts: {courtsError}
-                  </Typography>
-                ) : courts.length > 0 ? (
-                  <Box sx={{ 
-                    display: 'flex', 
-                    flexDirection: 'column',
-                    gap: '1vh',
-                    padding: '0 16px'
-                  }}>
-                    {courts.map((court) => (
-                      <Typography 
-                        key={court.id}
-                        sx={{ 
-                          color: 'black', 
-                          fontSize: '1.2rem',
-                          textAlign: 'left',
-                          padding: '0.5vh 0'
-                        }}
-                      >
-                        • {court.name}
-                      </Typography>
-                    ))}
-                  </Box>
-                ) : (
-                  <Typography sx={{ 
-                    color: 'black', 
-                    height: '100%',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    fontSize: '1.1rem'
-                  }}>
-                    {dictionary.homePage.noCourtsLabel}
-                  </Typography>
-                )}
+                <Box sx={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: '1vh',
+
+                }}>
+                  {courts.map((court) => (
+                    <Typography
+                      key={court.id}
+                      sx={{
+                        color: 'black',
+                        fontSize: '1.2rem',
+                        textAlign: 'left',
+
+                      }}
+                    >
+                      • {court.name}
+                    </Typography>
+                  ))}
+                </Box>
               </OrangeBackground>
-            </Box>
+            ) : (
+              <Typography sx={{
+                color: 'black',
+                height: '100%',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                fontSize: '1.1rem'
+              }}>
+                {dictionary.homePage.noCourtsLabel}
+              </Typography>
+            )}
+          </Box>
+        </Box>
+        <Typography sx={{
+          color: 'black',
+          fontWeight: 'bold',
+          fontSize: '2rem',
+          textAlign: 'center',
+          marginTop: '2vh'
+        }}>
+          {dictionary.homePage.joinNowLabel}
+        </Typography>
+        <Box
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            marginTop: '1vh',
+            marginBottom: '1vh',
+          }}
+
+        >
+          <Box
+            sx={{
+              animation: `${pulse} 3.5s infinite`,
+              display: 'inline-block'
+            }}
+          >
+            <GreenButton style={{ paddingLeft: '2vw', paddingRight: '2vw', minWidth:'14vw' }} onClick={handleRegisterClick}>{dictionary.homePage.registerLabel}</GreenButton>
           </Box>
         </Box>
       </GreenBackground>

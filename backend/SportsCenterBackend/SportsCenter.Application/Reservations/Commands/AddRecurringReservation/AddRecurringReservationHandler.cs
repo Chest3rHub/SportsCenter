@@ -4,7 +4,6 @@ using SportsCenter.Application.Exceptions.ClientsExceptions;
 using SportsCenter.Application.Exceptions.EmployeesException;
 using SportsCenter.Application.Exceptions.EmployeesExceptions;
 using SportsCenter.Application.Exceptions.ReservationExceptions;
-using SportsCenter.Application.Exceptions.SportActivitiesExceptions;
 using SportsCenter.Application.Reservations.Commands.AddReservation;
 using SportsCenter.Core.Entities;
 using SportsCenter.Core.Repositories;
@@ -44,6 +43,11 @@ namespace SportsCenter.Application.Reservations.Commands.AddRecurringReservation
                 throw new ClientWithGivenIdNotFoundException(request.ClientId);
             }
 
+            if (request.TrainerId.HasValue && request.TrainerId.Value == 0)
+            {
+                request.TrainerId = null;
+            }
+
             if (request.TrainerId.HasValue)
             {
                 var trainerPosition = await _employeeRepository.GetEmployeePositionNameByIdAsync(request.TrainerId.Value, cancellationToken);
@@ -71,6 +75,7 @@ namespace SportsCenter.Application.Reservations.Commands.AddRecurringReservation
             DateTime currentDate = request.StartTime;
             List<FailedReservation> failedReservations = new List<FailedReservation>();
             List<ReservationProposal> reservationProposals = new List<ReservationProposal>();
+            List<Rezerwacja> reservationsToAdd = new();
 
             var dniTygodnia = new Dictionary<DayOfWeek, string>
             {
@@ -82,14 +87,6 @@ namespace SportsCenter.Application.Reservations.Commands.AddRecurringReservation
                 { DayOfWeek.Saturday, "sobota" },
                 { DayOfWeek.Sunday, "niedziela" }
             };
-
-            //czy w tym czasie klient jest zapisany na inne zaj lub ma zlozona rezerwacje
-            var isAvailable = await _reservationRepository.IsClientAvailableForPeriodAsync(request.ClientId, request.StartTime, request.EndTime, cancellationToken);
-
-            if (!isAvailable)
-            {
-                throw new ClientAlreadyHasActivityOrReservationException();
-            }
 
             while (currentDate <= request.RecurrenceEndDate)
             {
@@ -184,7 +181,7 @@ namespace SportsCenter.Application.Reservations.Commands.AddRecurringReservation
                     else
                     {
                         decimal cost = await CalculateCostAsync(request, currentDate, endDate, cancellationToken);
-                        var newReservation = new Rezerwacja
+                        reservationsToAdd.Add(new Rezerwacja
                         {
                             KlientId = request.ClientId,
                             KortId = request.CourtId,
@@ -197,8 +194,7 @@ namespace SportsCenter.Application.Reservations.Commands.AddRecurringReservation
                             CzyOplacona = false,
                             CzyOdwolana = false,
                             CzyZwroconoPieniadze = false
-                        };
-                        await _reservationRepository.AddReservationAsync(newReservation, cancellationToken);
+                        });
                     }
                 }
 
@@ -212,10 +208,18 @@ namespace SportsCenter.Application.Reservations.Commands.AddRecurringReservation
                 };
             }
 
-            if (failedReservations.Any() || reservationProposals.Any())
+            // dodanie poprawnych rezerwacji
+            foreach (var res in reservationsToAdd)
             {
-                await NotifyUserAboutFailedReservationsAsync(failedReservations, reservationProposals);
+                await _reservationRepository.AddReservationAsync(res, cancellationToken);
             }
+
+            _httpContextAccessor.HttpContext!.Items["reservationResult"] = new
+            {
+                success = true,
+                failedReservations,
+                reservationProposals
+            };
 
             return Unit.Value;
         }

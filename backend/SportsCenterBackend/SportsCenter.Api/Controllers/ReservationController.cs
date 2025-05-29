@@ -47,21 +47,21 @@ public class ReservationController : BaseController
             await Mediator.Send(addReservation);
             return Ok(new { Message = "Reservation created successfully" });
         }
-        catch (TooManyParticipantsException)
-        {           
-            return BadRequest(new { Message = "Too many participants. The maximum is 8." });
+        catch (TooManyParticipantsException ex)
+        {
+            return StatusCode(415, new { message = ex.Message });
         }
-        catch (CourtNotAvaliableException)
-        {             
-            return Conflict(new { Message = $"The court {addReservation.CourtId} is not available for the requested time." });
+        catch (CourtNotAvaliableException ex)
+        {
+            return StatusCode(411, new { message = ex.Message });
         }
-        catch (TrainerNotAvaliableException)
-        {               
-            return Conflict(new { Message = "The selected trainer is not available for the requested time." });
+        catch (TrainerNotAvaliableException ex)
+        {
+            return StatusCode(419, new { message = ex.Message });
         }
         catch (ClientAlreadyHasActivityOrReservationException ex)
         {
-            return Conflict(new { message = ex.Message });
+            return StatusCode(420, new { message = ex.Message });
         }
         catch (Exception ex)
         {
@@ -136,31 +136,35 @@ public class ReservationController : BaseController
         try
         {           
             await Mediator.Send(addRecurringReservation);
-            return Ok(new { Message = "Recurring reservation created successfully" });
+            if (HttpContext.Items.TryGetValue("reservationResult", out var result) && result is not null)
+            {
+                return Ok(result);
+            }
+            return StatusCode(500, new { message = "An error occurred while sending the request" });
         }
         catch (ClientWithGivenIdNotFoundException ex)
         {
-            return NotFound(new { message = ex.Message });
+            return StatusCode(414, new { message = ex.Message });
         }
         catch (TooManyParticipantsException ex)
         {
-            return Conflict(new { message = ex.Message });
+            return StatusCode(415, new { message = ex.Message });
         }
         catch (EmployeeNotFoundException ex)
         {
-            return NotFound(new { message = ex.Message });
+            return StatusCode(416, new { message = ex.Message });
         }
         catch (NotTrainerEmployeeException ex)
         {
-            return Conflict(new { message = ex.Message });
+            return StatusCode(417, new { message = ex.Message });
         }
         catch (EmployeeAlreadyDismissedException ex)
         {
-            return Conflict(new { message = ex.Message });
+            return StatusCode(418, new { message = ex.Message });
         }
         catch (ClientAlreadyHasActivityOrReservationException ex)
         {
-            return Conflict(new { message = ex.Message });
+            return StatusCode(420, new { message = ex.Message });
         }
         catch (Exception ex)
         {
@@ -183,41 +187,41 @@ public class ReservationController : BaseController
             await Mediator.Send(moveReservation);
             return Ok(new { Message = "Reservation moved successfully." });
         }
-        catch (ReservationNotFoundException ex) 
+        catch (ReservationNotFoundException ex)
         {
-            return NotFound(new { message = ex.Message });
+            return StatusCode(411, new { message = ex.Message });
         }
         catch (ReservationOutsideWorkingHoursException ex)
         {
-            return NotFound(new { message = ex.Message });
+            return StatusCode(412, new { message = ex.Message }); ;
         }
         catch (NotThatClientReservationException ex)
         {
-            return NotFound(new { message = ex.Message });
+            return StatusCode(413, new { message = ex.Message });
         }
         catch (PostponeReservationNotAllowedException ex)
         {
-            return NotFound(new { message = ex.Message });
+            return StatusCode(414, new { message = ex.Message });
         }
         catch (CourtNotAvaliableException ex)
         {
-            return Conflict(new { message = ex.Message });
+            return StatusCode(415, new { message = ex.Message });
         }
         catch (EmployeeNotFoundException ex)
         {
-            return Conflict(new { message = ex.Message });
+            return StatusCode(416, new { message = ex.Message });
         }
         catch (NotTrainerEmployeeException ex)
         {
-            return Conflict(new { message = ex.Message });
+            return StatusCode(417, new { message = ex.Message });
         }
         catch (EmployeeAlreadyDismissedException ex)
         {
-            return Conflict(new { message = ex.Message });
+            return StatusCode(418, new { message = ex.Message });
         }
         catch (TrainerNotAvaliableException ex)
         {
-            return Conflict(new { message = ex.Message });
+            return StatusCode(419, new { message = ex.Message });
         }
         catch (InvalidOperationException ex)
         {
@@ -225,7 +229,7 @@ public class ReservationController : BaseController
         }
         catch (ClientAlreadyHasActivityOrReservationException ex)
         {
-            return Conflict(new { message = ex.Message });
+            return StatusCode(420, new { message = ex.Message });
         }
         catch (Exception ex)
         {

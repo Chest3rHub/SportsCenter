@@ -91,7 +91,19 @@ export default function ClientReservations() {
         return dictionary.clientReservations.statusUnknown;
     } 
 
-    function canCancelOrMoveReservation(reservation) {
+    function canCancelReservation(reservation) {
+        if (!reservation) return false;
+
+        if (reservation.isReservationCanceled || reservation.isMoneyRefunded) return false;
+    
+        const now = new Date();
+        const startTime = new Date(reservation.startTime);
+        const hoursDifference = (startTime.getTime() - now.getTime()) / (1000 * 60 * 60);
+        //console.log(hoursDifference);
+        return hoursDifference >= 2;
+    }    
+
+    function canMoveReservation(reservation) {
         if (!reservation) return false;
 
         if (reservation.isReservationCanceled || reservation.isMoneyRefunded) return false;
@@ -101,7 +113,7 @@ export default function ClientReservations() {
         const hoursDifference = (startTime.getTime() - now.getTime()) / (1000 * 60 * 60);
         //console.log(hoursDifference);
         return hoursDifference >= 24;
-    }    
+    }  
 
     function handleCancelReservation(id) {
         handleClose();
@@ -242,8 +254,8 @@ export default function ClientReservations() {
                             </Box>
                         </Box>
 
-                        <ReservationButton backgroundColor={"#f0aa4f"} onClick={() => handleMoveReservation(reservation)} disabled={!canCancelOrMoveReservation(reservation)}>{dictionary.clientReservations.moveLabel}</ReservationButton>
-                        <ReservationButton backgroundColor={"#F46C63"} onClick={() => handleOpen(reservation)} disabled={!canCancelOrMoveReservation(reservation)}>{dictionary.clientReservations.cancelLabel}</ReservationButton>
+                        <ReservationButton backgroundColor={"#f0aa4f"} onClick={() => handleMoveReservation(reservation)} disabled={!canMoveReservation(reservation)}>{dictionary.clientReservations.moveLabel}</ReservationButton>
+                        <ReservationButton backgroundColor={"#F46C63"} onClick={() => handleOpen(reservation)} disabled={!canCancelReservation(reservation)}>{dictionary.clientReservations.cancelLabel}</ReservationButton>
                     </Box>))}
                 </Box>  
                 <Modal

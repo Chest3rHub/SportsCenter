@@ -1,3 +1,4 @@
+import { Box, MenuItem, Checkbox, FormControlLabel, Autocomplete, Typography } from "@mui/material";
 import React, { useState, useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
@@ -5,47 +6,94 @@ import GreenButton from '../components/buttons/GreenButton';
 import GreenBackground from '../components/GreenBackground';
 import OrangeBackground from '../components/OrangeBackground';
 import { SportsContext } from '../context/SportsContext';
-import CustomInput from '../components/CustomInput';
-import { Box } from '@mui/material';
-import { Checkbox, FormControlLabel } from '@mui/material';
-import getTrainers from '../api/getTrainers';
-import getAvailableTrainers from '../api/getAvailableTrainers';
-import getAvailableCourts from '../api/getAvailableCourts';
-import getCourts from '../api/getCourts';
-import MenuItem from '@mui/material/MenuItem';
-import { Autocomplete, TextField } from '@mui/material';
-import DatePicker, { registerLocale } from "react-datepicker"; // npm install react-datepicker date-fns
-import 'react-datepicker/dist/react-datepicker.css';
-import {
-    format,
-    startOfDay,
-    endOfDay,
-    addHours,
-    isBefore,
-    isAfter,
-    eachHourOfInterval,
-    differenceInWeeks,
-    startOfWeek,
-    isSameDay,
-    isSameMinute,
-    setHours,
-    setMinutes,
-    addMinutes,
-    addDays
-} from 'date-fns';
+import CustomInput from "../components/CustomInput";
+import getCourts from "../api/getCourts";
+import CustomTimeInput from "../components/CustomTimeInput";
+import generateTime from "../utils/generateTime";
+import getTrainers from "../api/getTrainers";
 import getClubWorkingHours from '../api/getClubWorkingHours';
-import getCourtEvents from '../api/getCourtEvents';
-import { pl } from 'date-fns/locale';
-import getClients from '../api/getClients';
+import getWorkingHoursForSingleDay from "../utils/getWorkingHoursForSingleDay";
+import getEndTimeOptions from "../utils/getEndTimeOptions";
+import getAvailableCourts from "../api/getAvailableCourts";
+import getAvailableTrainers from "../api/getAvailableTrainers";
+import { useDebounce } from '../hooks/useDebounce';
 import searchClientsTopTen from '../api/searchClientsTopTen';
 import addRecurringReservationForClient from '../api/addRecurringReservationForClient';
 import addReservationForClient from '../api/addReservationForClient';
-import { useDebounce } from '../hooks/useDebounce';
-import toUTCTimeStringSameHours from '../utils/toUTCTimeStringSameHours';
+import { Dialog, DialogTitle, DialogContent, DialogActions } from '@mui/material';
+import ReservationButton from '../components/buttons/ReservationButton';
+import Backdrop from '@mui/material/Backdrop';
+import Avatar from '@mui/material/Avatar';
+import SentimentSatisfiedIcon from '@mui/icons-material/SentimentSatisfied';
+import SentimentDissatisfiedIcon from '@mui/icons-material/SentimentDissatisfied';
 
 export default function AddReservationForClient() {
 
     const { dictionary, toggleLanguage } = useContext(SportsContext);
+    const navigate = useNavigate();
+
+    const [courts, setCourts] = useState([]);
+    const [availableCourts, setAvailableCourts] = useState([]);
+    const [trainers, setTrainers] = useState([]);
+    const [clients, setClients] = useState([]);
+    const [availableTrainers, setAvailableTrainers] = useState([]);
+    const [isEquipmentIncluded, setIsEquipmentIncluded] = useState(false);
+    const [workingDaysAndHours, setWorkingDaysAndHours] = useState([]);
+    const [offset, setOffset] = useState(-1);
+    const [courtsError, setCourtsError] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
+
+    const [startTimeError, setStartTimeError] = useState(false);
+    const [endTimeRequiredError, setEndTimeRequiredError] = useState(false);
+    const [endTimeBeforeStartError, setEndTimeBeforeStartError] = useState(false);
+    const [endTimeDurationError, setEndTimeDurationError] = useState(false);
+    const [participantsCountError, setParticipantsCountError] = useState(false);
+    const [isEquipmentReservedError, setIsEquipmentReservedError] = useState(false);
+    const [recurrenceEndDateError, setRecurrenceEndDateError] = useState(false);
+    const [dateError, setDateError] = useState(false);
+    const [dateRequiredError, setDateRequiredError] = useState(false);
+    const [startTimeRequiredError, setStartTimeRequiredError] = useState(false);
+    const [clientRequiredError, setClientRequiredError] = useState(false);
+
+    const [searchClientText, setSearchClientText] = useState('');
+    const debouncedSearchText = useDebounce(searchClientText, 300);
+    const [selectedClient, setSelectedClient] = useState(null);
+
+    const [openProposalDialog, setOpenProposalDialog] = useState(false);
+    const [reservationProposals, setReservationProposals] = useState([]);
+    const [courtIdMissingError, setCourtIdMissingError] = useState({});
+    const [trainerIdMissingError, setTrainerIdMissingError] = useState({});
+    const [selectedCourtIds, setSelectedCourtIds] = useState({});
+    const [selectedTrainerIds, setSelectedTrainerIds] = useState({});
+
+    const setCourtFor = (uid, courtId) => {
+        setSelectedCourtIds(prev =>   ({ ...prev,   [uid]: courtId }));
+        setCourtIdMissingError(prev => ({ ...prev,   [uid]: false   }));
+    };
+
+    const setTrainerFor = (uid, trainerId) => {
+        setSelectedTrainerIds(prev =>   ({ ...prev,   [uid]: trainerId }));
+        setTrainerIdMissingError(prev => ({ ...prev,   [uid]: false     }));
+    };
+
+    const [failedSignUpLabel, setFailedSignUpLabel] = useState('');
+    const [proposalErrors, setProposalErrors] = useState({});
+
+    const [openSuccessBackdrop, setOpenSuccessBackdrop] = useState(false);
+    const [openFailureBackdrop, setOpenFailureBackdrop] = useState(false);
+
+    const handleCloseSuccess = () => {
+        setOpenSuccessBackdrop(false);
+    };
+    const handleCloseFailure = () => {
+        setOpenFailureBackdrop(false);
+    };
+    const handleOpenSuccess = () => {
+        setOpenSuccessBackdrop(true);
+    };
+    const handleOpenFailure = () => {
+        setOpenFailureBackdrop(true);
+    };
 
     const [formData, setFormData] = useState({
         clientId: '',
@@ -55,66 +103,26 @@ export default function AddReservationForClient() {
         creationDate: '',
         trainerId: '',
         participantsCount: '',
-        isEquipmentReserved: '',
+        isEquipmentReserved: false,
         recurrence: '',
         recurrenceEndDate: ''
     });
 
-    const [startTimeError, setStartTimeError] = useState(false);
-    const [endTimeRequiredError, setEndTimeRequiredError] = useState(false);
-    const [endTimeBeforeStartError, setEndTimeBeforeStartError] = useState(false);
-    const [endTimeDurationError, setEndTimeDurationError] = useState(false);
-    const [participantsCountError, setParticipantsCountError] = useState(false);
-    const [isEquipmentReservedError, setIsEquipmentReservedError] = useState(false);
-    const [recurrenceEndDateError, setRecurrenceEndDateError] = useState(false);
-
-    const [trainers, setTrainers] = useState([]);
-    const [availableTrainers, setAvailableTrainers] = useState([]);
-    const [courts, setCourts] = useState([]);
-    const [clients, setClients] = useState([]);
-    const [workingHours, setWorkingHours] = useState([]);
-    const [existingReservations, setExistingReservations] = useState([]);
-    const [excludedTimes, setExcludedTimes] = useState([]);
-    const [isLoading, setIsLoading] = useState(false);
-    const [workingHoursError, setWorkingHoursError] = useState(false);
-    const [clubHoursMessage, setClubHoursMessage] = useState('');
-
-    const [searchClientText, setSearchClientText] = useState('');
-    const debouncedSearchText = useDebounce(searchClientText, 300);
-    const [selectedClient, setSelectedClient] = useState(null);
-
-
-    useEffect(() => {
-        const client = clients.find(c => c.id === formData.clientId);
-        if (client) {
-            setSelectedClient(client);
-        }
-    }, [clients, formData.clientId]);
-    
-
-
-    useEffect(() => {
-        registerLocale('pl', pl);
-    }, []);
+    function removeCourtErrorsAfterChange(){
+        setCourtsError('');
+    }
 
     useEffect(() => {
         async function fetchData() {
             setIsLoading(true);
             try {
-                const [trainersData, courtsData, clientsResponse] = await Promise.all([
-                    getTrainers(),
-                    getCourts(),
+                const [clientsResponse] = await Promise.all([
                     searchClientsTopTen(debouncedSearchText)
                 ]);
 
                 const clientsData = await clientsResponse.json();
-
-                setTrainers(trainersData);
-                setAvailableTrainers(trainersData);
-                setCourts(courtsData);
                 setClients(clientsData);
 
-                await fetchWorkingHours(0);
             } catch (error) {
                 console.error('Błąd podczas pobierania danych:', error);
             } finally {
@@ -124,252 +132,318 @@ export default function AddReservationForClient() {
 
         fetchData();
     }, [debouncedSearchText]);
-
     useEffect(() => {
-        if (formData.courtId && formData.startTime) {
-            const startDate = new Date(formData.startTime);
-            fetchReservations(formData.courtId, startDate);
-            fetchWorkingHoursForDate(startDate);
-
-            console.log(workingHours);
-        }
-    }, [formData.courtId, formData.startTime]);
-
-    useEffect(() => {
-        if (workingHours.length > 0 && formData.startTime) {
-            calculateExcludedTimes();
-        }
-    }, [workingHours, existingReservations, formData.startTime]);
-
-    useEffect(() => {
-        const fetchAvailableTrainers = async () => {
-            if (!formData.startTime || !formData.endTime) return;
-
-            try {
-                const localStart = new Date(formData.startTime);
-                const localEnd = new Date(formData.endTime);
-                
-                const startUTC = toUTCTimeStringSameHours(localStart);
-                const endUTC = toUTCTimeStringSameHours(localEnd);
-                const trainersResponse = await getAvailableTrainers(startUTC, endUTC);
-                setAvailableTrainers(trainersResponse.length ? trainersResponse : []);
-            } catch (error) {
-                console.error('Error fetching available trainers:', error);
-                setAvailableTrainers([]);
-            }
-        };
-
-        fetchAvailableTrainers();
-    }, [formData.startTime, formData.endTime]);
-
-    const fetchWorkingHours = async (weekOffset) => {
-        try {
-            const response = await getClubWorkingHours(weekOffset);
-            if (response.ok) {
-                const data = await response.json();
-
-                const enhancedData = data.map(day => ({
-                    ...day,
-                    dayOfWeek: format(new Date(day.date), 'EEEE', { locale: pl }).toLowerCase()
-                }));
-
-                setWorkingHours(enhancedData);
-            }
-        } catch (error) {
-            console.error('Error fetching working hours:', error);
-        }
-    };
-
-    const fetchWorkingHoursForDate = async (date) => {
-        const today = new Date();
-        const selected = new Date(date);
-        const todayCorrect = startOfDay(today);
-        const selectedCorrect = startOfDay(selected);
-        const todayDayOfWeek = todayCorrect.getDay();
-        const selectedDayOfWeek = selectedCorrect.getDay();
-
-        let weekOffset;
-
-        if (todayDayOfWeek === 0) {
-            const todayAdjusted = addDays(todayCorrect, 1);
-            const startOfCurrentWeek = startOfWeek(todayAdjusted, { weekStartsOn: 1 });
-            const startOfSelectedWeek = startOfWeek(selectedCorrect, { weekStartsOn: 1 });
-            weekOffset = differenceInWeeks(startOfSelectedWeek, startOfCurrentWeek);
-        } else {
-            const startOfCurrentWeek = startOfWeek(todayCorrect, { weekStartsOn: 1 });
-            const startOfSelectedWeek = startOfWeek(selectedCorrect, { weekStartsOn: 1 });
-            weekOffset = differenceInWeeks(startOfSelectedWeek, startOfCurrentWeek);
-        }
-
-        await fetchWorkingHours(weekOffset);
-    };
-
-    const fetchReservations = async (courtId, date) => {
-        try {
-            const response = await getCourtEvents(courtId, date);
-            if (response.ok) {
-                const data = await response.json();
-                setExistingReservations(data);
-            }
-        } catch (error) {
-            console.error('Error fetching resrvations:', error);
-        }
-    };
-
-    const calculateExcludedTimes = () => {
-        if (!formData.startTime || !workingHours.length) return;
-
-        const selectedDate = new Date(formData.startTime);
-        const dateStr = format(selectedDate, 'yyyy-MM-dd');
-        const dayWorkingHours = workingHours.find(day => day.date === dateStr);
-
-        if (!dayWorkingHours) {
-            setExcludedTimes([]);
-            return;
-        }
-
-        const [openHour, openMinute] = dayWorkingHours.openHour.split(':').map(Number);
-        const [closeHour, closeMinute] = dayWorkingHours.closeHour.split(':').map(Number);
-        const openTime = setMinutes(setHours(startOfDay(selectedDate), openHour), openMinute);
-        const closeTime = setMinutes(setHours(startOfDay(selectedDate), closeHour), closeMinute);
-
-        const allSlots = [];
-        let currentTime = startOfDay(selectedDate);
-        while (currentTime <= endOfDay(selectedDate)) {
-            allSlots.push(new Date(currentTime));
-            currentTime = addMinutes(currentTime, 30);
-        }
-
-        const excludedWorkingHours = allSlots.filter(slot =>
-            isBefore(slot, openTime) || isAfter(slot, closeTime)
-        );
-
-        const excludedReservationTimes = existingReservations.flatMap(reservation => {
-            const start = new Date(reservation.startTime);
-            const end = new Date(reservation.endTime);
-
-            const slots = [];
-            let time = start;
-            while (time < end) {
-                slots.push(new Date(time));
-                time = addMinutes(time, 30);
-            }
-            return slots;
-        });
-
-        setExcludedTimes([...new Set([...excludedWorkingHours, ...excludedReservationTimes])]);
-    };
-
-    const getValidEndTimes = () => {
-        if (!formData.startTime) return [];
-
-        const start = new Date(formData.startTime);
-        const dateStr = format(start, 'yyyy-MM-dd');
-        const dayWorkingHours = workingHours.find(day => day.date === dateStr);
-
-        if (!dayWorkingHours) return [];
-
-        const [openHour, openMinute] = dayWorkingHours.openHour.split(':').map(Number);
-        const [closeHour, closeMinute] = dayWorkingHours.closeHour.split(':').map(Number);
-        const openTime = setMinutes(setHours(startOfDay(start), openHour), openMinute);
-        const closeTime = setMinutes(setHours(startOfDay(start), closeHour), closeMinute);
-
-        const nextReservation = existingReservations
-            .filter(res => {
-                const resStart = new Date(res.startTime);
-                return format(resStart, 'yyyy-MM-dd') === dateStr &&
-                    isAfter(resStart, start);
+        getCourts()
+            .then(response => {
+                setCourts(response);
             })
-            .sort((a, b) => new Date(a.startTime) - new Date(b.startTime))[0];
+            .then(data => {
+            })
+            .catch(error => {
+                console.error('Błąd podczas wywoływania get courts:', error);
+            });
+    }, []);
+    useEffect(() => {
+        getTrainers()
+            .then(response => {
+                setTrainers(response);
+                setAvailableTrainers(response);
+            })
+            .then(data => {
+            })
+            .catch(error => {
+                console.error('Błąd podczas wywoływania get trainers:', error);
+            });
+    }, []);
+    useEffect(() => {
+        getClubWorkingHours(-1)
+            .then(response => response.json())
+            .then(data => {
+                setWorkingDaysAndHours(data);
+            })
+            .catch(error => {
+                console.error('Błąd podczas wywoływania getClubWorkingHours:', error);
+            });
+    }, []);
 
-        const maxEndTime = nextReservation
-            ? new Date(nextReservation.startTime)
-            : closeTime;
+    // jak sie ustawi date zerujemy wszystko poza data
+    useEffect(() => {
+        setFormData(prev => ({
+            clientId: prev.clientId,
+            date: prev.date,
+            startTime: '',
+            endTime: '',
+            creationDate: '',
+            courtId: '',
+            trainerId: '',
+            participantsCount: '',
+            isEquipmentReserved: prev.isEquipmentReserved,
+            recurrence: '',
+            recurrenceEndDate: ''
+        }));
+        removeCourtErrorsAfterChange();
+    }, [formData.date]);
+    // jak sie zmieni czas rozpoczecia usuwamy wszystko poza data i czasem rozpoczecia
+    useEffect(() => {
+        setFormData(prev => ({
+            clientId: prev.clientId,
+            date: prev.date,
+            startTime: prev.startTime,
+            endTime: '',
+            creationDate: '',
+            courtId: '',
+            trainerId: '',
+            participantsCount: '',
+            isEquipmentReserved: prev.isEquipmentReserved,
+            recurrence: '',
+            recurrenceEndDate: ''
+        }));
+        removeCourtErrorsAfterChange();
+    }, [formData.startTime]);
+    // jak sie zmieni czas zakonczenia usuwamy wszystko poza data i czasem rozpoczecia zakonczenia
+    useEffect(() => {
+        setFormData(prev => ({
+            clientId: prev.clientId,
+            date: prev.date,
+            startTime: prev.startTime,
+            endTime: prev.endTime,
+            creationDate: '',
+            courtId: '',
+            trainerId: '',
+            participantsCount: '',
+            isEquipmentReserved: prev.isEquipmentReserved,
+            recurrence: '',
+            recurrenceEndDate: ''
+        }));
+        removeCourtErrorsAfterChange();
+    }, [formData.endTime]);
+    // jak sie zmieni kort usuwamy wszystko poza data, czasami i kortem
+    useEffect(() => {
+        setFormData(prev => ({
+            clientId: prev.clientId,
+            date: prev.date,
+            startTime: prev.startTime,
+            endTime: prev.endTime,
+            creationDate: '',
+            courtId: prev.courtId,
+            trainerId: '',
+            participantsCount: '',
+            isEquipmentReserved: prev.isEquipmentReserved,
+            recurrence: '',
+            recurrenceEndDate: ''
+        }));
+    }, [formData.courtId]);
+    // jak sie zmieni trener usuwamy wszystko poza data, czasami kortem i trenerem
+    useEffect(() => {
+        setFormData(prev => ({
+            clientId: prev.clientId,
+            date: prev.date,
+            startTime: prev.startTime,
+            endTime: prev.endTime,
+            creationDate: '',
+            courtId: prev.courtId,
+            trainerId: prev.trainerId,
+            participantsCount: '',
+            isEquipmentReserved: prev.isEquipmentReserved,
+            recurrence: '',
+            recurrenceEndDate: ''
+        }));
+    }, [formData.trainerId]);
+    // jak sie zmieni liczba uczestnikow czy informacja o rezerwacji sprzetu, rekurencji lub klient to nic nie usuwamy
 
-        const validTimes = [];
-        let currentTime = addMinutes(start, 30);
-        const endTime = isBefore(maxEndTime, closeTime) ? maxEndTime : closeTime;
+    // jesli zmieni sie wybrana data to wyliczany jest dla niej offset i pobierane dane o godzinach pracy 
+    // dla tygodnia o podanym offsecie - 1 bo backend zle przesuwa
+    useEffect(() => {
+        if (formData.date) {
 
-        while (isBefore(currentTime, endTime)) {
-            validTimes.push(new Date(currentTime));
-            currentTime = addMinutes(currentTime, 30);
+            const startDate = new Date(formData.date);
+            getWorkingHoursForSingleDay(startDate).then(weekOffset => {
+                console.log(weekOffset)
+                getClubWorkingHours(weekOffset - 1)
+                    .then(response => response.json())
+                    .then(data => {
+                        setWorkingDaysAndHours(data);
+                    })
+                    .catch(error => {
+                        console.error('Błąd podczas wywoływania getClubWorkingHours po zmianie daty:', error);
+                    });
+            });
+        }
+    }, [formData.date]);
+
+    // gdy sie zmieni godzina zakonczenia to pobieramy dostepne kort w danym przedziale czasowym
+    useEffect(() => {
+        const startDateTime = `${formData.date}T${formData.startTime}`;
+        const endDateTime = `${formData.date}T${formData.endTime}`;
+
+        getAvailableCourts(startDateTime, endDateTime)
+            .then(response => {
+                setAvailableCourts(response);
+                if (!response || response.length === 0) {
+                    setCourtsError('Brak dostępnych kortów w podanych godzinach');
+                } else {
+                    setCourtsError('');
+                }
+            })
+            .then(data => {
+            })
+            .catch(error => {
+                console.error('Błąd podczas wywoływania get courts:', error);
+            });
+    }, [formData.endTime]);
+
+    // pobranie dostepnych trenerow w podanych godzinach czasowych w dany dzien
+    useEffect(() => {
+        const startDateTime = `${formData.date}T${formData.startTime}`;
+        const endDateTime = `${formData.date}T${formData.endTime}`;
+
+        getAvailableTrainers(startDateTime, endDateTime)
+            .then(response => {
+                setAvailableTrainers(response);
+            })
+            .then(data => {
+            })
+            .catch(error => {
+                console.error('Błąd podczas wywoływania get courts:', error);
+            });
+    }, [formData.endTime]);
+
+    // ustawienie dni i godzin pracy na takie jak w zaznaczonym dniu
+    const selectedDayWorkingHours = workingDaysAndHours.find(day => day.date === formData.date);
+    const openHour = selectedDayWorkingHours ? selectedDayWorkingHours.openHour.slice(0, 5) : "10:00";
+    const closeHour = selectedDayWorkingHours ? selectedDayWorkingHours.closeHour.slice(0, 5) : "22:00";
+
+    function isFormValid() {
+        let valid = true;
+        const { clientId, courtId, date, startTime, endTime, participantsCount, recurrenceEndDate } = formData;
+
+        const now = new Date();
+        const todayStr = now.toISOString().slice(0,10);
+        const start = date && startTime ? new Date(`${date}T${startTime}:00`) : null;
+        const end   = date && endTime ? new Date(`${date}T${endTime}:00`) : null;
+
+        if (!clientId){
+            setClientRequiredError(true);
+            valid=false;
+        } else {
+            setClientRequiredError(false);
         }
 
-        return validTimes;
-    };
-
-    const filterPassedTime = (time) => {
-        const currentDate = new Date();
-
-        if (isSameDay(time, currentDate)) {
-            if (isBefore(time, currentDate)) return false;
-        }
-
-        const dateStr = format(time, 'yyyy-MM-dd');
-        const dayWorkingHours = workingHours.find(day => day.date === dateStr);
-
-        if (dayWorkingHours) {
-            const [openHour, openMinute] = dayWorkingHours.openHour.split(':').map(Number);
-            const [closeHour, closeMinute] = dayWorkingHours.closeHour.split(':').map(Number);
-            const openTime = setMinutes(setHours(startOfDay(time), openHour), openMinute);
-            const closeTime = setMinutes(setHours(startOfDay(time), closeHour), closeMinute);
-
-            if (isBefore(time, openTime) || isAfter(time, closeTime)) {
-                return false;
+        // data z przeszłości
+        if (!date) {
+            setDateRequiredError(true);
+            valid=false;
+            if (date < todayStr){
+                setDateRequiredError(false);
+                setDateError(true);
+                valid = false;
+            }
+        } else {
+            setDateRequiredError(false);
+            if (date < todayStr){
+                setDateError(true);
+                valid = false;
+            } else {
+                setDateError(false);
             }
         }
-        return true;
-    };
 
-    const handleStartTimeChange = (date) => {
-        if (!date) return;
-        const dateStr = format(date, 'yyyy-MM-dd');
-        const dayWorkingHours = workingHours.find(day => day.date === dateStr);
+        // godzina rozpoczęcia z przeszłości
+        if (!startTime) {
+            setStartTimeRequiredError(true);
+            valid = false;
+        } else {
+            setStartTimeRequiredError(false);
+            if (date === todayStr && start < now) {
+                setStartTimeError(true);
+                valid = false;
+            } else {
+                setStartTimeError(false);
+            }
+        }
 
-        if (dayWorkingHours) {
-            const [openHour, openMinute] = dayWorkingHours.openHour.split(':').map(Number);
-            const [closeHour, closeMinute] = dayWorkingHours.closeHour.split(':').map(Number);
-            const openTime = setMinutes(setHours(startOfDay(date), openHour), openMinute);
-            const closeTime = setMinutes(setHours(startOfDay(date), closeHour), closeMinute);
+        // godzina zakończenia wcześniejsza niż godzina rozpoczęcia
+        if (!endTime) {
+            setEndTimeRequiredError(true);
+            valid = false;
+        } else {
+            setEndTimeRequiredError(false);
+            if (start && end <= start) {
+                setEndTimeBeforeStartError(true);
+                valid = false;
+            } else {
+                setEndTimeBeforeStartError(false);
+            }
 
-            if (isBefore(date, openTime) || isAfter(date, closeTime)) {
-                if (isBefore(date, openTime)) {
-                    date = new Date(openTime);
+            // długość 1–5h
+            if (start && end) {
+                const diffH = (end - start) / (1000*60*60);
+                if (diffH < 1 || diffH > 5) {
+                    setEndTimeDurationError(true);
+                    valid = false;
                 } else {
-                    date = new Date(closeTime);
+                    setEndTimeDurationError(false);
                 }
             }
         }
 
-        setFormData(prev => ({
-            ...prev,
-            startTime: date,
-            endTime: date,
-            trainerId: ''
-        }));
-    };
+        // kort
+        if (!courtId){
+            setCourtsError(true);
+            valid=false;
+        } else {
+            setCourtsError(false);
+        }
 
-    const handleEndTimeChange = (date) => {
-        if (!date) return;
-        const minutes = date.getMinutes();
-        const roundedDate = new Date(date);
-        roundedDate.setMinutes(minutes < 30 ? 0 : 30, 0, 0);
-        setFormData(prev => ({
-            ...prev,
-            endTime: roundedDate,
-            trainerId: ''
-        }));
-    };
+        // ilość uczestników 1-8
+        const participants = parseInt(participantsCount, 10);
+        if (!participants || participants < 1 || participants > 8) {
+            setParticipantsCountError(true);
+            valid = false;
+        } else {
+            setParticipantsCountError(false);
+        }
 
-    const handleChange = (e) => {
-        const { name, value, type, checked } = e.target;
-        setFormData(prev => ({
-            ...prev,
-            [name]: type === "checkbox" ? checked : value,
-        }));
-    };
+        // data zakończenia cykliczności - co najmniej 1 dzień po endTime
+        if (recurrenceEndDate && end) {
+            const recDate = new Date(recurrenceEndDate);
+            recDate.setHours(0,0,0,0);
+            const endDate = new Date(end);
+            endDate.setHours(0,0,0,0);
+            const daysDiff = (recDate - endDate) / (1000 * 60 * 60 * 24);
 
-    const navigate = useNavigate();
+            if (daysDiff < 1) {
+            setRecurrenceEndDateError(true);
+            valid = false;
+            } else {
+            setRecurrenceEndDateError(false);
+            }
+        }
+        return valid;
+    }
+
+    function determineFailTextByResponseCode(responseCode) {
+        switch (responseCode) {
+            case 411:
+                return dictionary.addReservationForClientPage.courtNotAvailable;
+            case 414:
+                return dictionary.addReservationForClientPage.clientWithGivenIdNotFound;
+            case 415:
+                return dictionary.addReservationForClientPage.tooManyParticipants;
+            case 416:
+                return dictionary.addReservationForClientPage.employeeNotFound;
+            case 417:
+                return dictionary.addReservationForClientPage.notTrainerEmployee;
+            case 418:
+                return dictionary.addReservationForClientPage.employeeAlreadyDismissedException;
+            case 419:
+                return dictionary.addReservationForClientPage.trainerNotAvailableError;
+            case 420:
+                return dictionary.addReservationForClientPage.alreadyHasActivityLabel;
+            default:
+                return dictionary.addReservationForClientPage.savedFailureLabel;
+        }
+    }
 
     function handleError(textToDisplay) {
         navigate('/error', {
@@ -377,183 +451,157 @@ export default function AddReservationForClient() {
         });
     }
 
-    const validateForm = () => {
-        let isValid = true;
-        const start = new Date(formData.startTime);
-        const end = new Date(formData.endTime);
-        const recurrenceEnd = formData.recurrenceEndDate ? new Date(formData.recurrenceEndDate) : null;
+    function toLocalIso(dt) {
+        const t = new Date(dt.getTime() - dt.getTimezoneOffset() * 60000);
+        return t.toISOString().slice(0, 19);
+    }
 
-        if (!formData.startTime) {
-            isValid = false;
-            setStartTimeError(true);
-        } else {
-            setStartTimeError(false);
+    async function handleSubmit() {
+        if (!isFormValid()) {
+            return;
         }
+    
+        const now = new Date();
+        const offsetInMs = now.getTimezoneOffset() * 60 * 1000;
+        const isRecurring = Boolean(formData.recurrence?.trim()) && Boolean(formData.recurrenceEndDate?.trim());
 
-        if (!formData.endTime) {
-            isValid = false;
-            setEndTimeRequiredError(true);
-        } else {
-            setEndTimeRequiredError(false);
-        }
-
-        if (formData.endTime && end <= start) {
-            isValid = false;
-            setEndTimeBeforeStartError(true);
-        } else {
-            setEndTimeBeforeStartError(false);
-        }
-        //czas trwania rezerwacji min 1h max 5h
-        if (formData.startTime && formData.endTime) {
-            const diffInHours = (end - start) / (1000 * 60 * 60);
-            if (diffInHours < 1 || diffInHours > 5) {
-                isValid = false;
-                setEndTimeDurationError(true);
-            } else {
-                setEndTimeDurationError(false);
-            }
-        }
-
-        //ilosc uczestnikow od 1 do 8
-        const participants = parseInt(formData.participantsCount);
-        if (!participants || participants < 1 || participants > 8) {
-            isValid = false;
-            setParticipantsCountError(true);
-        } else {
-            setParticipantsCountError(false);
-        }
-
-        if (recurrenceEnd && end) {
-            const recurrenceDate = new Date(recurrenceEnd);
-            recurrenceDate.setHours(0, 0, 0, 0);
-
-            const endDate = new Date(end);
-            endDate.setHours(0, 0, 0, 0);
-
-            const diffInDays = (recurrenceDate - endDate) / (1000 * 60 * 60 * 24);
-
-            if (diffInDays < 1) {
-                isValid = false;
-                setRecurrenceEndDateError(true);
-            } else {
-                setRecurrenceEndDateError(false);
-            }
-        }
-
-        return isValid;
-    };
-
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        if (!validateForm()) return;
-
-        const dataToSend = {
-            ...formData,
-            startTime: format(formData.startTime, "yyyy-MM-dd'T'HH:mm:ss"),
-            endTime: format(formData.endTime, "yyyy-MM-dd'T'HH:mm:ss"),
-            creationDate: format(new Date(), "yyyy-MM-dd'T'HH:mm:ss")
+        let payload = {
+            ClientId: Number(formData.clientId),
+            CourtId: Number(formData.courtId),
+            StartTime: toLocalIso(new Date(`${formData.date}T${formData.startTime}:00`)),
+            EndTime: toLocalIso(new Date(`${formData.date}T${formData.endTime}:00`)),
+            CreationDate: toLocalIso(new Date()),
+            TrainerId: formData.trainerId ? Number(formData.trainerId) : 0,
+            ParticipantsCount: formData.participantsCount.toString(),
+            IsEquipmentReserved: formData.isEquipmentReserved ? "true" : "",
         };
+
+        if (isRecurring) {
+            payload.Recurrence = formData.recurrence;
+            payload.RecurrenceEndDate = toLocalIso(new Date(`${formData.recurrenceEndDate}T23:59:00`));
+        }
 
         try {
             let response;
 
-            const isRecurring = Boolean(formData.recurrence?.trim()) && Boolean(formData.recurrenceEndDate?.trim());
-
-            //console.log('isRecurring:', isRecurring);
-
             if (isRecurring) {
-                response = await addRecurringReservationForClient(dataToSend);
+                response = await addRecurringReservationForClient(payload);
             } else {
-                response = await addReservationForClient(dataToSend);
+                response = await addReservationForClient(payload);
             }
-
+    
             if (!response.ok) {
                 const errorData = await response.json();
-                console.log(errorData);
-                handleError('Błąd rezerwacji... sprawdź konsolę');
+                let failText = determineFailTextByResponseCode(response.status);
+                setFailedSignUpLabel(failText);
+                handleOpenFailure();
+            }
+
+            const resultData = await response.json(); 
+
+            if (resultData.reservationProposals && resultData.reservationProposals.length > 0) {
+                setReservationProposals(
+                    resultData.reservationProposals.map((p, i) => ({
+                        ...p,
+                        _uid: `${p.date}-${i}`
+                    }))
+                );
+                handleOpenProposal();
             } else {
-                navigate('/reservations');
+                setOpenSuccessBackdrop(true);
+                setFormData(prev => ({
+                    clientId: '',
+                    date: '',
+                    startTime: '',
+                    endTime: '',
+                    creationDate: '',
+                    courtId: '',
+                    trainerId: '',
+                    participantsCount: '',
+                    isEquipmentReserved: false,
+                    recurrence: '',
+                    recurrenceEndDate: '',
+                }));
+            }
+
+        } catch (error) {
+            console.error('Błąd podczas rezerwacji:', error);
+        }
+    }
+
+    const handleOpenProposal = () => setOpenProposalDialog(true);
+    const handleCloseProposal = () => setOpenProposalDialog(false);
+
+    const handleRejectProposal = uid => {
+        setReservationProposals(prev => prev.filter(p => p._uid !== uid));
+        setSelectedCourtIds(prev =>   { const o={...prev}; delete o[uid]; return o; });
+        setSelectedTrainerIds(prev => { const o={...prev}; delete o[uid]; return o; });
+        setCourtIdMissingError(prev =>   { const o={...prev}; delete o[uid]; return o; });
+        setTrainerIdMissingError(prev => { const o={...prev}; delete o[uid]; return o; });
+        if (reservationProposals.length === 1) handleCloseProposal();
+    };
+
+    const handleAcceptProposal = async (uid) => {
+        const p = reservationProposals.find(x => x._uid === uid);
+        const courtId   = selectedCourtIds[uid];
+        const trainerId = selectedTrainerIds[uid];
+
+        const [eh, em] = formData.endTime.split(':').map(Number);
+
+        const dateOnly = p.date.split('T')[0];
+        const start = new Date(`${dateOnly}T${formData.startTime}:00`);
+        const end = new Date(`${dateOnly}T${formData.endTime}:00`);
+
+        const hasCourtErr   = !courtId;
+        setCourtIdMissingError(prev   => ({ ...prev,   [uid]: hasCourtErr }));
+        if (hasCourtErr) return;
+
+        const reservationData = {
+            ClientId: Number(formData.clientId),
+            CourtId: Number(courtId),
+            StartTime: toLocalIso(start),
+            EndTime: toLocalIso(end),
+            CreationDate: toLocalIso(new Date()),
+            TrainerId: trainerId ? Number(trainerId) : 0,
+            ParticipantsCount: formData.participantsCount,
+            IsEquipmentReserved: formData.isEquipmentReserved ? "true" : "",
+        };
+
+        try {
+            const response = await addReservationForClient(reservationData);
+            if (response.ok) {
+                handleRejectProposal(uid);
+            } else {
+                const failText = determineFailTextByResponseCode(response.status);
+                setProposalErrors(prev => ({ 
+                    ...prev, 
+                    [uid]: failText 
+                }));
             }
         } catch (error) {
-            console.error('Błąd rezerwacji:', error);
+            console.error("Błąd:", error);
         }
     };
 
-
-    const endTimeE = endTimeRequiredError || endTimeBeforeStartError || endTimeDurationError;
-    let endTimeErrorMessage = "";
-    if (endTimeRequiredError) {
-        endTimeErrorMessage = dictionary.addReservationForClientPage.endTimeRequiredError;
-    } else if (endTimeBeforeStartError) {
-        endTimeErrorMessage = dictionary.addReservationForClientPage.endTimeBeforeStartError;
-    } else if (endTimeDurationError) {
-        endTimeErrorMessage = dictionary.addReservationForClientPage.endTimeDurationError;
+    function handleCancel() {
+        navigate('/reservations', {
+          });
     }
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData((prev) => ({
+            ...prev,
+            [name]: value
+        }));
+    };
 
     return (
         <>
-            <style>
-                {`
-                .custom-datepicker-input {
-                    width: 100%;
-                    padding: 10px 14px;
-                    border: 1px solid #ccc;
-                    border-radius: 16px;
-                    font-size: 16px;
-                    background-color: #fff;
-                    transition: border-color 0.3s;
-                    font-family: inherit;
-                    height: 40px;
-                    box-sizing: border-box;
-                }
-                .custom-datepicker-input:focus {
-                    border-color:#1976D2;
-                    outline: none;
-                }
-                .custom-datepicker-input:disabled {
-                    background-color: #f5f5f5;
-                    cursor: not-allowed;
-                }
-                .custom-datepicker-calendar {
-                    font-family: inherit;
-                    border: 1px solid #ccc;
-                    border-radius: 16px;
-                    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-                }
-                .custom-datepicker-calendar .react-datepicker__header {
-                    background-color: #f5f5f5;
-                    border-bottom: 1px solid #ccc;
-                    border-radius: 16px 16px 0 0;
-                }
-                .custom-time-slot {
-                    padding: 10px 15px;
-                    font-size: 15px;
-                }
-                .custom-time-slot:hover {
-                    background-color: #f5f5f5 !important;
-                }
-                .react-datepicker__time-list-item--selected {
-                    background-color:#AFEBBC !important;
-                    color: white !important;
-                }
-                .react-datepicker__time-container {
-                    width: 120px;
-                }
-                .react-datepicker__day--selected,
-                .react-datepicker__day--in-selecting-range,
-                .react-datepicker__day--in-range,
-                .react-datepicker__time-list-item--selected {
-                    background-color: #AFEBBC !important;
-                    color: #000 !important;
-                }
-            `}
-            </style>
-
             <GreenBackground height={"80vh"} marginTop={"2vh"}>
                 <Header>{dictionary.addReservationForClientPage.title}</Header>
                 <OrangeBackground width="70%">
-                    <form onSubmit={handleSubmit}>
-                        <Box sx={{ display: "flex", flexDirection: "column", gap: "1.5rem", marginBottom: "2vh" }}>
+                    <Box sx={{ display: "flex", flexDirection: "column", gap: "1.5rem", marginBottom: "2vh" }}>
                             <Autocomplete
                                 id="client"
                                 options={clients}
@@ -579,10 +627,97 @@ export default function AddReservationForClient() {
                                         name="clientId"
                                         required
                                         size="small"
+                                        error={clientRequiredError}
+                                        helperText={clientRequiredError ? dictionary.addReservationForClientPage.clientRequiredError : ""}
                                     />
                                 )}
                             />
 
+                            <CustomInput
+                                label={dictionary.addReservationYourselfPage.dateLabel}
+                                type="date"
+                                id="date"
+                                name="date"
+                                fullWidth
+                                value={formData.date}
+                                onChange={handleChange}
+                                error={dateRequiredError || dateError}
+                                helperText={dateRequiredError ? dictionary.addReservationForClientPage.dateRequiredError : dateError 
+                                                              ? dictionary.addReservationForClientPage.dateError : ""}
+                                required
+                                size="small"
+                                InputLabelProps={{
+                                    shrink: true
+                                }}
+                            />
+
+                            <Box sx={{
+                                display: 'flex',
+                                flexDirection: 'row',
+                                columnGap: '3vw'
+                            }}>
+
+                                <CustomTimeInput
+                                    select
+                                    label={dictionary.addReservationYourselfPage.startTimeLabel}
+                                    id="startTime"
+                                    name="startTime"
+                                    value={formData.startTime}
+                                    onChange={handleChange}
+                                    required
+                                    error={startTimeRequiredError || startTimeError}
+                                    helperText={startTimeRequiredError ? dictionary.addReservationForClientPage.startTimeRequiredError : startTimeError 
+                                                                       ? dictionary.addReservationForClientPage.startTimeError : ""}
+                                    size="small"
+                                    fullWidth
+                                    SelectProps={{
+                                        sx: {
+                                            textAlign: 'left',
+                                            borderRadius: '8px'
+                                        }
+                                    }}
+                                    disabled={!formData.date}
+                                >
+                                    <MenuItem value="">{dictionary.addReservationYourselfPage.chooseTimeLabel}</MenuItem>
+                                    {generateTime(openHour, closeHour, 30).map((time) => (
+                                        <MenuItem key={time} value={time}>
+                                            {time}
+                                        </MenuItem>
+                                    ))}
+                                </CustomTimeInput>
+                                
+                                <CustomTimeInput
+                                    select
+                                    label={dictionary.addReservationYourselfPage.endTimeLabel}
+                                    id="endTime"
+                                    name="endTime"
+                                    value={formData.endTime}
+                                    onChange={handleChange}
+                                    error={endTimeRequiredError || endTimeBeforeStartError || endTimeDurationError}
+                                    helperText={endTimeRequiredError ? dictionary.addReservationForClientPage.endTimeRequiredError : endTimeBeforeStartError
+                                                                     ? dictionary.addReservationForClientPage.endTimeBeforeStartError : endTimeDurationError
+                                                                     ? dictionary.addReservationForClientPage.endTimeDurationError : ""
+                                    }
+                                    required
+                                    size="small"
+                                    fullWidth
+                                    SelectProps={{
+                                        sx: {
+                                            textAlign: 'left',
+                                            borderRadius: '8px'
+                                        }
+                                    }}
+                                    disabled={!formData.date || !formData.startTime}
+                                >
+                                    <MenuItem value="">{dictionary.addReservationYourselfPage.chooseTimeLabel}</MenuItem>
+                                    {getEndTimeOptions(formData,closeHour).map((time) => (
+                                        <MenuItem key={time} value={time}>
+                                            {time}
+                                        </MenuItem>
+                                    ))}
+                                </CustomTimeInput>
+
+                            </Box>
 
                             <CustomInput
                                 select
@@ -592,6 +727,8 @@ export default function AddReservationForClient() {
                                 value={formData.courtId}
                                 fullWidth
                                 onChange={handleChange}
+                                error={courtsError}
+                                helperText={courtsError ? dictionary.addReservationForClientPage.courtsError : ""}
                                 required
                                 size="small"
                                 SelectProps={{
@@ -600,94 +737,15 @@ export default function AddReservationForClient() {
                                         borderRadius: '8px'
                                     }
                                 }}
+                                disabled={!formData.date || !formData.startTime || !formData.endTime}
                             >
                                 <MenuItem value=""></MenuItem>
-                                {courts.map(court => (
+                                {availableCourts.map(court => (
                                     <MenuItem key={court.id} value={court.id}>
                                         {court.name}
                                     </MenuItem>
                                 ))}
                             </CustomInput>
-
-                            <div style={{
-                                width: '100%',
-                                marginBottom: '8px'
-                            }}>
-                                <label style={{
-                                    display: 'block',
-                                    marginBottom: '8px',
-                                    fontSize: '16px',
-                                    color: 'rgba(0, 0, 0, 0.87)'
-                                }}>
-                                    {dictionary.addReservationForClientPage.startTimeLabel}
-                                </label>
-                                <DatePicker
-                                    selected={formData.startTime}
-                                    onChange={handleStartTimeChange}
-                                    showTimeSelect
-                                    timeFormat="HH:mm"
-                                    timeIntervals={30}
-                                    dateFormat="Pp"
-                                    minDate={new Date()}
-                                    locale="pl"
-                                    filterTime={filterPassedTime}
-                                    excludeTimes={excludedTimes}
-                                    placeholderText={dictionary.addReservationForClientPage.chooseStartTimeLabel}
-                                    disabled={!formData.courtId}
-                                    className="custom-datepicker-input"
-                                    calendarClassName="custom-datepicker-calendar"
-                                    timeClassName={() => "custom-time-slot"}
-                                    required
-                                />
-                                {startTimeError && (
-                                    <div style={{ color: 'red', fontSize: '0.8rem', marginTop: '4px' }}>
-                                        {dictionary.addReservationForClientPage.startTimeError}
-                                    </div>
-                                )}
-                            </div>
-
-                            <div style={{
-                                width: '100%',
-                                marginBottom: '8px'
-                            }}>
-                                <label style={{
-                                    display: 'block',
-                                    marginBottom: '8px',
-                                    fontSize: '16px',
-                                    color: 'rgba(0, 0, 0, 0.87)'
-                                }}>
-                                    {dictionary.addReservationForClientPage.endTimeLabel}
-                                </label>
-                                <DatePicker
-                                    selected={formData.endTime}
-                                    onChange={handleEndTimeChange}
-                                    showTimeSelect
-                                    timeFormat="HH:mm"
-                                    timeIntervals={30}
-                                    dateFormat="Pp"
-                                    minDate={formData.startTime || new Date()}
-                                    locale="pl"
-                                    filterTime={(time) => {
-                                        if (!formData.startTime) return false;
-                                        const minEndTime = addMinutes(new Date(formData.startTime), 30);
-                                        if (isBefore(time, minEndTime)) return false;
-                                        const validTimes = getValidEndTimes();
-                                        return validTimes.some(validTime => isSameMinute(validTime, time));
-                                    }}
-                                    excludeTimes={excludedTimes}
-                                    placeholderText={dictionary.addReservationForClientPage.chooseEndTimeLabel}
-                                    disabled={!formData.courtId}
-                                    className="custom-datepicker-input"
-                                    calendarClassName="custom-datepicker-calendar"
-                                    timeClassName={() => "custom-time-slot"}
-                                    required
-                                />
-                                {endTimeE && (
-                                    <div style={{ color: 'red', fontSize: '0.8rem', marginTop: '4px' }}>
-                                        {endTimeErrorMessage}
-                                    </div>
-                                )}
-                            </div>
 
                             <CustomInput
                                 select
@@ -697,12 +755,11 @@ export default function AddReservationForClient() {
                                 value={formData.trainerId}
                                 fullWidth
                                 onChange={handleChange}
-                                required
                                 size="small"
                                 SelectProps={{
                                     sx: { textAlign: 'left' }
                                 }}
-                                disabled={!formData.startTime || !formData.endTime}
+                                disabled={!formData.date || !formData.startTime || !formData.endTime || !formData.courtId}
                             >
                                 <MenuItem value=""></MenuItem>
                                 {availableTrainers.map(trainer => (
@@ -723,7 +780,9 @@ export default function AddReservationForClient() {
                                 error={participantsCountError}
                                 helperText={participantsCountError ? dictionary.addReservationForClientPage.participantsCountError : ""}
                                 size="small"
+                                inputProps={{ min: 1 }}
                                 required
+                                disabled={!formData.date || !formData.startTime || !formData.endTime || !formData.courtId}
                             />
 
                             <FormControlLabel
@@ -732,7 +791,12 @@ export default function AddReservationForClient() {
                                         id="isEquipmentReserved"
                                         name="isEquipmentReserved"
                                         checked={formData.isEquipmentReserved}
-                                        onChange={handleChange}
+                                        onChange={() => {
+                                            setFormData(prev => ({
+                                                ...prev,
+                                                isEquipmentReserved: !prev.isEquipmentReserved
+                                            }));
+                                    }}
                                         sx={{
                                             color: "#8edfb4",
                                             '&.Mui-checked': {
@@ -743,11 +807,6 @@ export default function AddReservationForClient() {
                                 }
                                 label={dictionary.addReservationForClientPage.isEquipmentReservedLabel}
                             />
-                            {isEquipmentReservedError && (
-                                <div style={{ color: 'red', fontSize: '0.8rem', marginTop: '4px' }}>
-                                    {dictionary.addReservationForClientfPage.isEquipmentReservedError}
-                                </div>
-                            )}
 
                             <CustomInput
                                 select
@@ -788,12 +847,236 @@ export default function AddReservationForClient() {
                                 }}
                             />
 
-                            <GreenButton type="submit">{dictionary.addReservationForClientPage.confirmLabel}</GreenButton>
+                            <Box sx={{
+                                display: "flex",
+                                flexDirection: "row",
+                                justifyContent: 'center',
+                                columnGap: "2vw"
+                            }}>
+                                <GreenButton onClick={handleCancel} style={{ backgroundColor: "#F46C63" }} hoverBackgroundColor={'#c3564f'}>{dictionary.addReservationForClientPage.returnLabel}</GreenButton>
+                                <GreenButton type="submit" onClick={handleSubmit}>{dictionary.addReservationForClientPage.confirmLabel}</GreenButton>
+                            </Box>
                         </Box>
-                    </form>
+                        <Dialog 
+                            open={openProposalDialog}
+                            onClose={handleCloseProposal}
+                            fullWidth
+                            maxWidth="md"
+                        >
+                            <DialogTitle sx={{ textAlign: 'center', color: '#F46C63', fontSize: '2rem' }}>
+                                {dictionary.addReservationForClientPage.proposalHeader}
+                            </DialogTitle>
+
+                            <DialogContent dividers>
+                                <Typography sx={{ color: '#ccc', fontSize: '1rem', mb: 2, textAlign: 'center' }}>
+                                    {dictionary.addReservationForClientPage.closeInfo}
+                                </Typography>
+
+                                {reservationProposals.length > 0 ? (
+                                    reservationProposals.map(p => {
+                                        const uid = p._uid;
+                                        const date = new Date(p.date).toLocaleString('pl-PL', {
+                                            year: 'numeric', month: '2-digit', day: '2-digit',
+                                            hour: '2-digit', minute: '2-digit'
+                                        
+                                    });
+
+                                    return (
+                                        <Box key={uid}
+                                        sx={{
+                                            mb: 3,
+                                            p: 3,
+                                            backgroundColor: '#ebf9ea',
+                                            borderRadius: 2,
+                                            display: 'flex',
+                                            flexDirection: 'column',
+                                            rowGap: '3vh'
+                                        }}
+                                        >
+                                            <Typography variant="h6" sx={{ fontWeight: 'bold', color: '#333' }}>
+                                                {date}
+                                            </Typography>
+
+                                            {p.availableCourts.length === 0 ? (
+                                                <Typography variant="body2" color="error" sx={{ mb: 2 }}>
+                                                    {dictionary.addReservationForClientPage.noCourtsAvailable}
+                                                </Typography>
+                                            ) : (
+                                                <CustomInput
+                                                  select
+                                                  label={dictionary.addReservationForClientPage.courtNameLabel}
+                                                  fullWidth
+                                                  value={selectedCourtIds[uid] || ''}
+                                                  onChange={e => setCourtFor(uid, e.target.value)}
+                                                  error={Boolean(courtIdMissingError[uid])}
+                                                  size="small"
+                                                  sx={{ mb: 2,  }}
+                                                  >
+                                                    <MenuItem value="" />
+                                                    {p.availableCourts.map(courtId => {
+                                                        const court = courts.find(c => c.id === courtId);
+                                                        return (
+                                                            <MenuItem key={courtId} value={courtId}>
+                                                                {court?.name || `Id: ${courtId}`}
+                                                            </MenuItem>
+                                                        );
+                                                    })}
+                                                  </CustomInput>
+                                            )}
+
+                                            {p.availableTrainers.length === 0 ? (
+                                                <Typography variant="body2" color="error" sx={{ mb: 2 }}>
+                                                    {dictionary.addReservationForClientPage.noTrainersAvailable}
+                                                </Typography>
+                                            ) : (
+                                                <CustomInput
+                                                  select
+                                                  label={dictionary.addReservationForClientPage.trainerNameLabel}
+                                                  fullWidth
+                                                  value={selectedTrainerIds[uid] || ''}
+                                                  onChange={e => setTrainerFor(uid, e.target.value)}
+                                                  error={Boolean(trainerIdMissingError[uid])}
+                                                  size="small"
+                                                  sx={{ mb: 2 }}
+                                                  >
+                                                    <MenuItem value="" />
+                                                    {p.availableTrainers.map(trainerId => {
+                                                        const trainer = trainers.find(t => t.id === trainerId);
+                                                        return (
+                                                            <MenuItem key={trainerId} value={trainerId}>
+                                                                {trainer?.fullName || `Id: ${trainerId}`}
+                                                            </MenuItem>
+                                                        );
+                                                    })}
+                                                  </CustomInput>
+                                            )}
+
+                                            {proposalErrors[uid] && (
+                                                <Typography color="error" sx={{ mb: 2 }}>
+                                                {proposalErrors[uid]}
+                                                </Typography>
+                                            )}
+
+                                            <Box sx={{
+                                                display: "flex",
+                                                flexDirection: "row",
+                                                justifyContent: 'center',
+                                                columnGap: "1vw"
+                                                }}>
+
+                                                <ReservationButton backgroundColor={"#F46C63"} onClick={() => handleRejectProposal(uid)}>{dictionary.addReservationForClientPage.ignoreReservationProposal}</ReservationButton>
+
+                                                <ReservationButton
+                                                    backgroundColor={"#8edfb4"}
+                                                    disabled={p.availableCourts.length === 0}
+                                                    onClick={() => handleAcceptProposal(uid)}
+                                                >
+                                                    {dictionary.addReservationForClientPage.acceptReservationProposal}
+                                                </ReservationButton>
+                                            </Box>
+                                        </Box>
+                                    );
+                                })
+                                ) : (
+                                    <Typography variant="body1" color="textSecondary" align="center">
+                                        {dictionary.addReservationForClientPage.noReservatonProposals}
+                                    </Typography>
+                                )}
+                            </DialogContent>
+                        </Dialog>
+                        {/* BACKDROP SUKCESU */}
+                        <Backdrop open={openSuccessBackdrop} onClick={handleCloseSuccess}
+                                sx={{ color:'#fff', zIndex: theme=>theme.zIndex.drawer+1 }}>
+                            <Box sx={{
+                                backgroundColor: "white",
+                                margin: 'auto',
+                                minWidth: '30vw',
+                                minHeight: '30vh',
+                                borderRadius: '20px',
+                                boxShadow: '0 10px 20px rgba(0, 0, 0, 0.2)',
+                            }}>
+                                <Box>
+                                    <Typography sx={{
+                                        color: 'green',
+                                        fontWeight: 'Bold',
+                                        fontSize: '3rem',
+                                        marginTop: '2vh',
+
+                                    }}>
+                                        {dictionary.addReservationForClientPage.successLabel}
+                                    </Typography>
+                                </Box>
+                                <Box>
+                                    <Typography sx={{
+                                        color: 'black',
+                                        fontSize: '1.5rem',
+                                    }}>
+                                        {dictionary.addReservationForClientPage.reservationCreatedLabel}
+                                    </Typography>
+                                </Box>
+                                <Box>
+                                    <Typography sx={{
+                                        color: 'black',
+                                        fontSize: '1.5rem',
+                                    }}>
+                                        {dictionary.activityDetailsPage.clickAnywhereLabel}
+                                    </Typography>
+                                </Box>
+                                <Box sx={{ textAlign: 'center', display: "flex", justifyContent: "center" }}>
+                                    <Avatar sx={{ width: "7rem", height: "7rem" }}>
+                                        <SentimentSatisfiedIcon sx={{ fontSize: "7rem", color: 'green', stroke: "white", strokeWidth: 1.1, backgroundColor: "white" }} />
+                                    </Avatar>
+                                </Box>
+                            </Box>
+                        </Backdrop>
+
+                        {/* BACKDROP BŁĘDU */}
+                        <Backdrop open={openFailureBackdrop} onClick={handleCloseFailure}
+                                sx={{ color:'#fff', zIndex: theme=>theme.zIndex.drawer+1 }}>
+                        <Box sx={{
+                            backgroundColor: "white",
+                            margin: 'auto',
+                            minWidth: '40vw',
+                            minHeight: '30vh',
+                            borderRadius: '20px',
+                            boxShadow: '0 10px 20px rgba(0, 0, 0, 0.2)',
+                        }}>
+                            <Box>
+                                <Typography sx={{
+                                    color: 'red',
+                                    fontWeight: 'Bold',
+                                    fontSize: '3rem',
+                                    marginTop: '2vh',
+
+                                }}>
+                                    {dictionary.addReservationForClientPage.failureLabel}
+                                </Typography>
+                            </Box>
+                            <Box>
+                                <Typography sx={{
+                                    color: 'black',
+                                    fontSize: '1.5rem',
+                                }}>
+                                    {failedSignUpLabel}
+                                </Typography>
+                            </Box>
+                            <Box>
+                                <Typography sx={{
+                                    color: 'black',
+                                    fontSize: '1.5rem',
+                                }}>
+                                    {dictionary.activityDetailsPage.clickAnywhereFailureLabel}
+                                </Typography>
+                            </Box>
+                            <Box sx={{ textAlign: 'center', display: "flex", justifyContent: "center" }}>
+                                <Avatar sx={{ width: "7rem", height: "7rem" }}>
+                                    <SentimentDissatisfiedIcon sx={{ fontSize: "7rem", color: 'red', stroke: "white", strokeWidth: 1.1, backgroundColor: "white" }} />
+                                </Avatar>
+                            </Box>
+                        </Box>
+                    </Backdrop>
                 </OrangeBackground>
             </GreenBackground>
-
         </>
-    )
+    );
 }

@@ -54,7 +54,7 @@ function MoveReservation() {
     const [trainers, setTrainers] = useState([]);
     const [availableTrainers, setAvailableTrainers] = useState([]);
     const [workingDaysAndHours, setWorkingDaysAndHours] = useState([]);
-    const [offset, setOffset] = useState(-1);
+    const [offset, setOffset] = useState(0);
     const [courtsError, setCourtsError] = useState('');
 
     useEffect(() => {
@@ -81,7 +81,7 @@ function MoveReservation() {
             });
     }, []);
     useEffect(() => {
-        getClubWorkingHours(-1)
+        getClubWorkingHours(0)
             .then(response => response.json())
             .then(data => {
                 setWorkingDaysAndHours(data);
@@ -116,7 +116,7 @@ function MoveReservation() {
             const startDate = new Date(formData.date);
             getWorkingHoursForSingleDay(startDate).then(weekOffset => {
                 console.log(weekOffset)
-                getClubWorkingHours(weekOffset - 1)
+                getClubWorkingHours(weekOffset)
                     .then(response => response.json())
                     .then(data => {
                         setWorkingDaysAndHours(data);

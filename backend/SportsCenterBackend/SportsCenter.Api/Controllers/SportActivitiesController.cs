@@ -165,15 +165,15 @@ namespace SportsCenter.Api.Controllers;
         }
         catch (ClientAlreadySignedUpException ex)
         {
-            return Conflict(new { message = ex.Message });
+            return StatusCode(421, new { message = ex.Message });
         }
         catch (LimitOfPlacesReachedException ex)
         {
-            return Conflict(new { message = ex.Message });
+            return StatusCode(422, new { message = ex.Message });
         }
         catch (ClientAlreadyHasActivityOrReservationException ex)
         {
-            return Conflict(new { message = ex.Message });
+            return StatusCode(423, new { message = ex.Message });
         }
         catch (Exception ex)
         {

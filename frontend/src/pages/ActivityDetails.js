@@ -154,7 +154,7 @@ export default function ActivityDetails() {
                     <Header backgroundColor={isCanceled ? '#F46C63' : undefined}>{isCanceled ? dictionary.activityDetailsPage.shortCanceledLabel : (groupName ? groupName : dictionary.activityDetailsPage.reservationLabel)}</Header>
                 </Box>
                 <Box sx={{
-                    minHeight:'55vh',
+                    minHeight:'45vh',
                     borderRadius: '20px',
                     boxShadow: '0 10px 20px rgba(0, 0, 0, 0.2)',
                     backgroundColor: 'white',
@@ -227,7 +227,7 @@ export default function ActivityDetails() {
                         }}
                     />
 
-                    <CustomInput
+                    {groupName && <CustomInput
                         label={dictionary.activityDetailsPage.groupLabel}
                         type="text"
                         id="group"
@@ -245,8 +245,8 @@ export default function ActivityDetails() {
                                 },
                             },
                         }}
-                    />
-                    <CustomInput
+                    />}
+                    {skillLevel && <CustomInput
                         label={dictionary.activityDetailsPage.skillLevelLabel}
                         type="text"
                         id="skillLevel"
@@ -264,7 +264,7 @@ export default function ActivityDetails() {
                                 },
                             },
                         }}
-                    />
+                    />}
                     <CustomInput
                         label={dictionary.activityDetailsPage.coachLabel}
                         type="text"

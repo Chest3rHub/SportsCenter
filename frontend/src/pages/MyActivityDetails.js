@@ -100,6 +100,16 @@ export default function MyActivityDetails() {
         }
     }
 
+    function canCancel(event) {
+        if (!event) return false;
+
+        if (event.isReservationCanceled || event.isMoneyRefunded) return false;
+    
+        const now = new Date();
+        const activityStart = new Date(`${dateOfActivity}T${startTime}`);
+        const diffInHours = (activityStart - now) / (1000 * 60 * 60);
+        return diffInHours >= 2;
+    }   
 
     if (!activityDetails) {
         return <Typography variant="h6">{dictionary.activityDetailsPage.noDataAvailable}</Typography>;
@@ -368,7 +378,19 @@ export default function MyActivityDetails() {
                         columnGap: '5vw',
                     }}>
                         <GreenButton onClick={handleCancel} style={{ maxWidth: "10vw", backgroundColor: "#F46C63" }} hoverBackgroundColor={'#c3564f'}>{dictionary.activityDetailsPage.returnLabel}</GreenButton>
-                        {role === 'Klient' && <GreenButton type="submit" style={{ maxWidth: "10vw" ,backgroundColor: "#F46C63"}} hoverBackgroundColor={'#c3564f'} onClick={() => cancelActivityClient()}>{dictionary.activityDetailsPage.cancelLabel}</GreenButton>}
+                        {role === 'Klient' &&
+                            <GreenButton
+                                type="submit"
+                                style={{
+                                    maxWidth: "10vw",
+                                    backgroundColor: "#F46C63"
+                                }}
+                                hoverBackgroundColor={'#c3564f'}
+                                onClick={() => cancelActivityClient()}
+                                disabled={!canCancel(activityDetails)}
+                            >
+                                {dictionary.activityDetailsPage.cancelLabel}
+                            </GreenButton>}
                     </Box>
                 </Box>
 

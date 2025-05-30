@@ -712,6 +712,8 @@ export default {
     clientAlreadySignedUpLabel:'Jesteś już zapisany na tę aktywność.',
     limitOfPlacesReachedLabel:'Brak wolnych miejsc na tę aktywność.',
     clientHasActivityOrReservationLabel:'Masz już aktywność lub rezerwację w tym czasie.',
+    costWithEquipmentLabel:'Koszt ze sprzętem',
+    costWithoutEquipmentLabel:'Koszt bez sprzętu',
 
   },
   days:{

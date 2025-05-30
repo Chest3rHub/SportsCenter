@@ -57,7 +57,10 @@ export default function ActivityDetails() {
         isCanceled,
         id,
         activityIdToPay,
+        costWithEquipment,
+        costWithoutEquipment,
     } = activityDetails;
+
 
     const [participantsState, setParticipantsState] = useState(activityDetails?.participants || []);
 
@@ -307,6 +310,44 @@ export default function ActivityDetails() {
                         name="cost"
                         fullWidth
                         value={cost + ' PLN'}
+                        size="small"
+                        InputProps={{ readOnly: true }}
+                        readonlyStyle
+                        additionalStyles={{
+                            "& .MuiOutlinedInput-root": {
+                                borderRadius: "12px",
+                                "& fieldset": {
+                                    borderColor: "#d3d3d3",
+                                },
+                            },
+                        }}
+                    />}
+                    {costWithEquipment && <CustomInput
+                        label={dictionary.activityDetailsPage.costWithEquipmentLabel}
+                        type="text"
+                        id="costWithEquipment"
+                        name="costWithEquipment"
+                        fullWidth
+                        value={costWithEquipment + ' PLN'}
+                        size="small"
+                        InputProps={{ readOnly: true }}
+                        readonlyStyle
+                        additionalStyles={{
+                            "& .MuiOutlinedInput-root": {
+                                borderRadius: "12px",
+                                "& fieldset": {
+                                    borderColor: "#d3d3d3",
+                                },
+                            },
+                        }}
+                    />}
+                    {costWithoutEquipment && <CustomInput
+                        label={dictionary.activityDetailsPage.costWithoutEquipmentLabel}
+                        type="text"
+                        id="costWithoutEquipment"
+                        name="costWithoutEquipment"
+                        fullWidth
+                        value={costWithoutEquipment + ' PLN'}
                         size="small"
                         InputProps={{ readOnly: true }}
                         readonlyStyle

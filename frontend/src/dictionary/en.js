@@ -710,6 +710,8 @@ reservationsSummaryPage: {
     clientAlreadySignedUpLabel:'You are already signed up for this activity.',
     limitOfPlacesReachedLabel:'No more places available for this activity.',
     clientHasActivityOrReservationLabel:'You already have an activity or reservation at this time.',
+    costWithEquipmentLabel:'Cost with equipment',
+    costWithoutEquipmentLabel:'Cost without equipment',
   },
   days:{
     monday: 'Monday',

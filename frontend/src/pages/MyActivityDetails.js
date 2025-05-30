@@ -122,7 +122,7 @@ export default function MyActivityDetails() {
                     <Header backgroundColor={isCanceled ? '#F46C63' : undefined}>{isCanceled ? dictionary.activityDetailsPage.shortCanceledLabel : (sportActivityName ? sportActivityName : dictionary.activityDetailsPage.reservationLabel)}</Header>
                 </Box>
                 <Box sx={{
-                    minHeight:'55vh',
+                   
                     borderRadius: '20px',
                     boxShadow: '0 10px 20px rgba(0, 0, 0, 0.2)',
                     backgroundColor: 'white',
@@ -131,7 +131,7 @@ export default function MyActivityDetails() {
                     display: 'flex',
                     flexDirection: 'column',
                     rowGap: '2vh',
-
+                    paddingTop:'5vh',
                 }}>
 
                     <CustomInput
@@ -214,7 +214,7 @@ export default function MyActivityDetails() {
                             },
                         }}
                     />
-                    <CustomInput
+                    {levelName && <CustomInput
                         label={dictionary.activityDetailsPage.skillLevelLabel}
                         type="text"
                         id="skillLevel"
@@ -232,7 +232,7 @@ export default function MyActivityDetails() {
                                 },
                             },
                         }}
-                    />
+                    />}
                     {role!=='Trener' && <CustomInput
                         label={dictionary.activityDetailsPage.coachLabel}
                         type="text"
@@ -344,7 +344,7 @@ export default function MyActivityDetails() {
                         }
                         label={dictionary.activityDetailsPage.isEquipmentIncludedLabel}
                     />}
-                    {role==='Trener' && <FormControlLabel
+                    {role==='Trener' && sportActivityName==='Rezerwacja' &&<FormControlLabel
                         control={
                             <Checkbox
                                 id="isEquipmentReserved"

@@ -75,10 +75,17 @@ export default function ActivityDetails() {
             return dictionary.activityDetailsPage.tooLongLabel;
           case 420:
             return dictionary.activityDetailsPage.canceledLabel;
+          case 421:
+            return dictionary.activityDetailsPage.clientAlreadySignedUpLabel;
+          case 422:
+            return dictionary.activityDetailsPage.limitOfPlacesReachedLabel;
+          case 423:
+            return dictionary.activityDetailsPage.clientHasActivityOrReservationLabel;
           default:
             return dictionary.activityDetailsPage.savedFailureLabel;
         }
       }
+      
       
     async function signUpForActivityClient() {
 

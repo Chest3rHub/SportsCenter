@@ -709,6 +709,10 @@ export default {
     payLabel:'Opłać',
     paidLabel:'Opłacono',
     payFailedLabel:'Nie udało się opłacić.',
+    clientAlreadySignedUpLabel:'Jesteś już zapisany na tę aktywność.',
+    limitOfPlacesReachedLabel:'Brak wolnych miejsc na tę aktywność.',
+    clientHasActivityOrReservationLabel:'Masz już aktywność lub rezerwację w tym czasie.',
+
   },
   days:{
     monday: 'Poniedziałek',

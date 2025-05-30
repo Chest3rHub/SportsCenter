@@ -706,7 +706,10 @@ reservationsSummaryPage: {
     reservationMadeByLabel:'Booked by',
     payLabel:'Pay',
     paidLabel:'Paid',
-    payFailedLabel:'Failed to mark as paid'
+    payFailedLabel:'Failed to mark as paid',
+    clientAlreadySignedUpLabel:'You are already signed up for this activity.',
+    limitOfPlacesReachedLabel:'No more places available for this activity.',
+    clientHasActivityOrReservationLabel:'You already have an activity or reservation at this time.',
   },
   days:{
     monday: 'Monday',

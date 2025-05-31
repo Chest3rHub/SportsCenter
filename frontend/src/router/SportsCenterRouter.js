@@ -48,7 +48,7 @@ import ClubWorkingHoursPage from "../pages/ClubWorkingHoursPage";
 import MyActivityDetails from "../pages/MyActivityDetails";
 import NewClientReservation from "../pages/NewClientReservation";
 import ForgotPassword from "../pages/ForgotPassword";
-import CoachDashboard from "../pages/coachDashboard";
+import CoachDashboard from "../pages/CoachDashboard";
 import CleanerDashboard from "../pages/CleanerDashboard";
 // pozmieniac dla klienta na komponenty trasy itd
 

@@ -12,6 +12,7 @@ export default function CleanerLayout() {
   const { token, setToken, dictionary } = useContext(SportsContext);
 
   const navbarItems = [
+    { label: dictionary.navbar.cleaner.homeLabel, navigate: '/' },
     { label: dictionary.navbar.cleaner.newsLabel, navigate: '/news' },
     { label: dictionary.navbar.cleaner.timetableLabel, navigate: '/timetable' },
     { label: dictionary.navbar.cleaner.accountLabel, navigate: '/account' },

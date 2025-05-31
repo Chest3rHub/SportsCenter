@@ -33,6 +33,7 @@ export default {
       logoutLabel: 'Log out',
     },
     cleaner: {
+      homeLabel:'Home',
       newsLabel: 'News',
       timetableLabel: 'Timetable',
       accountLabel: 'Account',

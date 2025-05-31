@@ -39,6 +39,7 @@ export default {
       logoutLabel: 'Wyloguj',
     },
     cleaner: {
+      homeLabel:'Start',
       newsLabel: 'Aktualności',
       timetableLabel: 'Grafik',
       accountLabel: 'Konto',

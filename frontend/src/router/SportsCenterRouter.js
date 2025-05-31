@@ -47,6 +47,7 @@ import OwnerDashboard from "../pages/OwnerDashboard";
 import ClubWorkingHoursPage from "../pages/ClubWorkingHoursPage";
 import MyActivityDetails from "../pages/MyActivityDetails";
 import NewClientReservation from "../pages/NewClientReservation";
+import ForgotPassword from "../pages/ForgotPassword";
 
 // pozmieniac dla klienta na komponenty trasy itd
 
@@ -529,6 +530,10 @@ const clientRouter = [
                 {
                     path: "/get-sport-activity-with-id",
                     element: <GetActivityInfo />
+                },
+                {
+                    path: "/forgot-password",
+                    element: <ForgotPassword />
                 },
                 {
                     path: "*",

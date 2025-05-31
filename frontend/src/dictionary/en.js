@@ -770,5 +770,20 @@ reservationsSummaryPage: {
   forgotPassword: {
     title: "Forgot your password?",
     message: "To reset your password, please visit the club reception with an identity document. A staff member will help you regain access to your account."
+  },
+  coachMainPage: {
+    titleLabel: 'Main page',
+    whatIsNewLabel: "What's new?",
+    upcomingEventsLabel: 'Upcoming training / reservation',
+    noNewsLabel: 'No news',
+    typeLabel: 'Type:',
+    reservationLabel: 'Reservation',
+    dateLabel: 'Date:',
+    courtLabel: 'Court:',
+    clientLabel: 'Client:',
+    sportActivityLabel: 'Training - ',
+    levelLabel: 'Level:',
+    noUpcomingEventsLabel: 'No upcoming trainings/reservations this week'
   }
+
 };

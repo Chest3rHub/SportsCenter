@@ -48,6 +48,7 @@ import ClubWorkingHoursPage from "../pages/ClubWorkingHoursPage";
 import MyActivityDetails from "../pages/MyActivityDetails";
 import NewClientReservation from "../pages/NewClientReservation";
 import ForgotPassword from "../pages/ForgotPassword";
+import CoachDashboard from "../pages/coachDashboard";
 
 // pozmieniac dla klienta na komponenty trasy itd
 
@@ -262,7 +263,7 @@ const clientRouter = [
             children: [
                 {
                     path: "/",
-                    element: <Home />,
+                    element: <CoachDashboard />,
                 },
                 {
                     path: "/dashboard",  

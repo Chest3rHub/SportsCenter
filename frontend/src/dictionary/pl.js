@@ -773,7 +773,20 @@ export default {
   forgotPassword: {
     title: "Zapomniałeś hasła?",
     message: "W celu zresetowania hasła zapraszamy do recepcji klubu z dokumentem potwierdzającym tożsamość. Pracownik klubu pomoże Ci odzyskać dostęp do konta."
+  },
+    coachMainPage: {
+    titleLabel: 'Strona główna',
+    whatIsNewLabel: 'Co nowego?',
+    upcomingEventsLabel: 'Nadchodzące zajęcia / rezerwacja',
+    noNewsLabel: 'Brak nowości',
+    typeLabel: 'Typ:',
+    reservationLabel: 'Rezerwacja',
+    dateLabel: 'Termin:',
+    courtLabel: 'Kort:',
+    clientLabel: 'Klient:',
+    sportActivityLabel: 'Zajęcia - ',
+    levelLabel: 'Poziom:',
+    noUpcomingEventsLabel: 'Brak nadchodzących zajęć / rezerwacji w tym tygodniu'
   }
-  
 
 };

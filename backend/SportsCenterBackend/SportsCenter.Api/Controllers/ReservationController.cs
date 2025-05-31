@@ -304,7 +304,7 @@ public class ReservationController : BaseController
         }
     }
 
-    [Authorize(Roles = "Wlasciciel")]
+    [Authorize(Roles = "Wlasciciel,Pracownik administracyjny")]
     [HttpGet("Reservation-summary")]
     public async Task<IActionResult> GetReservationSummary([FromQuery] DateTime startDate, [FromQuery] DateTime endDate, [FromQuery] int offset = 0)
     {

@@ -22,52 +22,81 @@ export default function OwnerDashboard() {
   const [hoursLoading, setHoursLoading] = useState(true);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const fetchData = async () => {
 
+  useEffect(() => {
+    const fetchNews = async () => {
       try {
         const newsResponse = await getNews(0);
-        if (!newsResponse.ok) throw new Error('Failed to fetch news');
+        if (!newsResponse.ok) throw new Error("Failed to fetch news");
+
         const newsData = await newsResponse.json();
-        
+
         if (newsData?.length > 0) {
           setLatestNews([...newsData].sort((a, b) => new Date(b.date) - new Date(a.date))[0]);
         }
+      } catch (error) {
+        console.error("Error fetching news:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
 
+    fetchNews();
+  }, []);
+
+  useEffect(() => {
+    const fetchTasks = async () => {
+      try {
         const tasksResponse = await getYourTasks(0);
-        if (!tasksResponse.ok) throw new Error('Failed to fetch tasks');
+        if (tasksResponse.status === 404) {
+          setTasks([]);
+          return;
+        }
+        if (!tasksResponse.ok) throw new Error("Failed to fetch tasks");
+
         const tasksData = await tasksResponse.json();
-        
+
         if (Array.isArray(tasksData)) {
           const sortedTasks = tasksData.sort((a, b) => new Date(a.dateTo) - new Date(b.dateTo));
           setTasks(sortedTasks);
         } else {
           setTasks([]);
         }
+      } catch (error) {
+        console.error("Error fetching tasks:", error);
+        setTasks([]);
+      } finally {
+        setTasksLoading(false);
+      }
+    };
 
+    fetchTasks();
+  }, []);
+
+  useEffect(() => {
+    const fetchWorkingHours = async () => {
+      try {
         const hoursResponse = await getClubWorkingHours(0);
-        if (!hoursResponse.ok) throw new Error('Failed to fetch working hours');
+        if (!hoursResponse.ok) throw new Error("Failed to fetch working hours");
+
         const hoursData = await hoursResponse.json();
-        
+
         if (Array.isArray(hoursData)) {
           setWorkingHours(hoursData);
         } else {
           setWorkingHours([]);
         }
-
       } catch (error) {
-        console.error('Error fetching data:', error);
-        setTasks([]);
+        console.error("Error fetching working hours:", error);
         setWorkingHours([]);
       } finally {
-        setLoading(false);
-        setTasksLoading(false);
         setHoursLoading(false);
       }
     };
 
-    fetchData();
+    fetchWorkingHours();
   }, []);
+
 
   const formatDeadline = (dateString) => {
     if (!dateString) return dictionary.empMainPage.noDateLabel || 'No date';

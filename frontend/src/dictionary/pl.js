@@ -757,6 +757,11 @@ export default {
     noCourtsLabel: 'Brak kortów',
     registerLabel:'Zarejestruj się',
     joinNowLabel:'Dołącz do nas już dziś!'
+  },
+  forgotPassword: {
+    title: "Zapomniałeś hasła?",
+    message: "W celu zresetowania hasła zapraszamy do recepcji klubu z dokumentem potwierdzającym tożsamość. Pracownik klubu pomoże Ci odzyskać dostęp do konta."
   }
+  
 
 };

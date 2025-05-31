@@ -116,7 +116,7 @@ function Login() {
               <GreenButton type="submit">
                 {dictionary.loginPage.signInLabel}
               </GreenButton>
-              <Link to="/reset-password" style={{
+              <Link to="/forgot-password" style={{
                 textDecoration: 'none',
               }}>
               <Typography sx={{

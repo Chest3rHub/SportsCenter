@@ -754,6 +754,9 @@ reservationsSummaryPage: {
     noCourtsLabel: 'No courts found',
     registerLabel:'Register',
     joinNowLabel:'Join us today!'
+  },
+  forgotPassword: {
+    title: "Forgot your password?",
+    message: "To reset your password, please visit the club reception with an identity document. A staff member will help you regain access to your account."
   }
-  
 };

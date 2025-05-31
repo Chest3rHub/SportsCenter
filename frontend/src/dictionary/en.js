@@ -435,6 +435,12 @@ clientReservations: {
   statusUnknown: 'Unknown status',
   nextLabel: 'Next',
   previousLabel: 'Previous',
+  reservationNotFound: 'Reservation not found.',
+  tooLateToCancel: 'Too late to cancel the reservation.',
+  alreadyCanceled: 'Reservation is already canceled.',
+  defaultCancelError: 'Failed to cancel the reservation.',
+  cancelErrorTitle: 'Error While Canceling',
+  okButtonLabel: 'OK'
 },
 moveReservation: {
   title: 'Move Reservation',
@@ -491,6 +497,12 @@ reservationsPage: {
   yesLabel: 'Yes',
   nextLabel: 'Next',
   previousLabel: 'Previous',
+  reservationNotFound: 'Reservation not found.',
+  tooLateToCancel: 'Too late to cancel the reservation.',
+  alreadyCanceled: 'Reservation is already canceled.',
+  defaultCancelError: 'Failed to cancel the reservation.',
+  cancelErrorTitle: 'Error While Canceling',
+  okButtonLabel: 'OK'
 },
 reservationInfoPage: {
   title: 'Reservation',

@@ -438,6 +438,12 @@ export default {
     statusUnknown: 'Nieznany status',
     nextLabel: 'Następne',
     previousLabel: 'Poprzednie',
+    reservationNotFound: 'Rezerwacja nie została znaleziona.',
+    tooLateToCancel: 'Za późno, aby odwołać rezerwację.',
+    alreadyCanceled: 'Rezerwacja już została odwołana.',
+    defaultCancelError: 'Nie udało się odwołać rezerwacji.',
+    cancelErrorTitle: 'Błąd podczas odwoływania',
+    okButtonLabel: 'OK'
   },
   moveReservation: {
     title: 'Przenieś rezerwację',
@@ -494,6 +500,12 @@ export default {
     yesLabel: 'Tak',
     nextLabel: 'Następne',
     previousLabel: 'Poprzednie',
+    reservationNotFound: 'Rezerwacja nie została znaleziona.',
+    tooLateToCancel: 'Za późno, aby odwołać rezerwację.',
+    alreadyCanceled: 'Rezerwacja już została odwołana.',
+    defaultCancelError: 'Nie udało się odwołać rezerwacji.',
+    cancelErrorTitle: 'Błąd podczas odwoływania',
+    okButtonLabel: 'OK'
   },
   reservationInfoPage: {
     title: 'Rezerwacja',

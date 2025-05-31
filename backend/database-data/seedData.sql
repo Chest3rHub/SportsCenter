@@ -14,18 +14,24 @@ insert into GodzinyPracyKlubu values ('10:00', '22:00', 'piatek')
 insert into GodzinyPracyKlubu values ('10:00', '22:00', 'sobota')
 insert into GodzinyPracyKlubu values ('10:00', '22:00', 'niedziela')
 
+-- Wyjątkowe godziny pracy
+INSERT INTO WyjatkoweGodzinyPracy VALUES
+  ('2025-05-01', '12:00', '20:00'),  -- Święto pracy – późniejszy start
+  ('2025-06-15', '08:00', '18:00'),  -- Zawody juniors – krótszy dzień
+  ('2025-12-24', '08:00', '14:00');  -- Wigilia
+
 -- Osoba
 -- Klienci
-INSERT INTO Osoba VALUES ('Jan', 'Dzban', 'klient@wp.pl', 'AQAAAAIAAYagAAAAEGUJewyb+BNnmYNzKO+cJTkdGOneGfxOCoIGGJ3MZgK/qZymPY8PEvDcNAyP+Xz3yA==', '2001-04-06', '123456789', null, 'Kliencka 15');
-INSERT INTO Osoba VALUES ('Kasia', 'Zpodlasia', 'kasia@wp.pl', 'AQAAAAIAAYagAAAAEGUJewyb+BNnmYNzKO+cJTkdGOneGfxOCoIGGJ3MZgK/qZymPY8PEvDcNAyP+Xz3yA==', '2001-04-06', '123456789', null, 'Kliencka 15');
-INSERT INTO Osoba VALUES ('Marek', 'Marucha', 'marek@wp.pl', 'AQAAAAIAAYagAAAAEGUJewyb+BNnmYNzKO+cJTkdGOneGfxOCoIGGJ3MZgK/qZymPY8PEvDcNAyP+Xz3yA==', '2001-04-06', '123456789', null, 'Kliencka 15');
-INSERT INTO Osoba VALUES ('Dagmara', 'Puńska', 'dagmara@wp.pl', 'AQAAAAIAAYagAAAAEGUJewyb+BNnmYNzKO+cJTkdGOneGfxOCoIGGJ3MZgK/qZymPY8PEvDcNAyP+Xz3yA==', '2001-04-06', '123456789', null, 'Kliencka 15');
-INSERT INTO Osoba VALUES ('Franek', 'Kasztanek', 'franek@wp.pl', 'AQAAAAIAAYagAAAAEGUJewyb+BNnmYNzKO+cJTkdGOneGfxOCoIGGJ3MZgK/qZymPY8PEvDcNAyP+Xz3yA==', '2001-04-06', '123456789', null, 'Kliencka 15');
-INSERT INTO Osoba VALUES ('Muller', 'Milch', 'muller@wp.pl', 'AQAAAAIAAYagAAAAEGUJewyb+BNnmYNzKO+cJTkdGOneGfxOCoIGGJ3MZgK/qZymPY8PEvDcNAyP+Xz3yA==', '2001-04-06', '123456789', null, 'Kliencka 15');
-INSERT INTO Osoba VALUES ('Barbara', 'Rabarbarowa', 'barbara@wp.pl', 'AQAAAAIAAYagAAAAEGUJewyb+BNnmYNzKO+cJTkdGOneGfxOCoIGGJ3MZgK/qZymPY8PEvDcNAyP+Xz3yA==', '2001-04-06', '123456789', null, 'Kliencka 15');
-INSERT INTO Osoba VALUES ('Andrzej', 'Duduś', 'andrzej@wp.pl', 'AQAAAAIAAYagAAAAEGUJewyb+BNnmYNzKO+cJTkdGOneGfxOCoIGGJ3MZgK/qZymPY8PEvDcNAyP+Xz3yA==', '2001-04-06', '123456789', null, 'Kliencka 15');
-INSERT INTO Osoba VALUES ('Rafał', 'Czaskoski', 'rafal@wp.pl', 'AQAAAAIAAYagAAAAEGUJewyb+BNnmYNzKO+cJTkdGOneGfxOCoIGGJ3MZgK/qZymPY8PEvDcNAyP+Xz3yA==', '2001-04-06', '123456789', null, 'Kliencka 15');
-INSERT INTO Osoba VALUES ('Sławek', 'Memcen', 'slawek@wp.pl', 'AQAAAAIAAYagAAAAEGUJewyb+BNnmYNzKO+cJTkdGOneGfxOCoIGGJ3MZgK/qZymPY8PEvDcNAyP+Xz3yA==', '2001-04-06', '123456789', null, 'Kliencka 15');
+INSERT INTO Osoba VALUES ('Jan', 'Dzban', 'klient@wp.pl', 'AQAAAAIAAYagAAAAEGUJewyb+BNnmYNzKO+cJTkdGOneGfxOCoIGGJ3MZgK/qZymPY8PEvDcNAyP+Xz3yA==', '1990-01-15', '123456789', null, 'Kliencka 15');
+INSERT INTO Osoba VALUES ('Kasia', 'Zpodlasia', 'kasia@wp.pl', 'AQAAAAIAAYagAAAAEGUJewyb+BNnmYNzKO+cJTkdGOneGfxOCoIGGJ3MZgK/qZymPY8PEvDcNAyP+Xz3yA==', '1995-07-22', '123456789', null, 'Kliencka 15');
+INSERT INTO Osoba VALUES ('Marek', 'Marucha', 'marek@wp.pl', 'AQAAAAIAAYagAAAAEGUJewyb+BNnmYNzKO+cJTkdGOneGfxOCoIGGJ3MZgK/qZymPY8PEvDcNAyP+Xz3yA==', '1987-12-03', '123456789', null, 'Kliencka 15');
+INSERT INTO Osoba VALUES ('Dagmara', 'Puńska', 'dagmara@wp.pl', 'AQAAAAIAAYagAAAAEGUJewyb+BNnmYNzKO+cJTkdGOneGfxOCoIGGJ3MZgK/qZymPY8PEvDcNAyP+Xz3yA==', '1999-04-10', '123456789', null, 'Kliencka 15');
+INSERT INTO Osoba VALUES ('Franek', 'Kasztanek', 'franek@wp.pl', 'AQAAAAIAAYagAAAAEGUJewyb+BNnmYNzKO+cJTkdGOneGfxOCoIGGJ3MZgK/qZymPY8PEvDcNAyP+Xz3yA==', '2000-09-17', '123456789', null, 'Kliencka 15');
+INSERT INTO Osoba VALUES ('Muller', 'Milch', 'muller@wp.pl', 'AQAAAAIAAYagAAAAEGUJewyb+BNnmYNzKO+cJTkdGOneGfxOCoIGGJ3MZgK/qZymPY8PEvDcNAyP+Xz3yA==', '1985-03-05', '123456789', null, 'Kliencka 15');
+INSERT INTO Osoba VALUES ('Barbara', 'Rabarbarowa', 'barbara@wp.pl', 'AQAAAAIAAYagAAAAEGUJewyb+BNnmYNzKO+cJTkdGOneGfxOCoIGGJ3MZgK/qZymPY8PEvDcNAyP+Xz3yA==', '1992-06-30', '123456789', null, 'Kliencka 15');
+INSERT INTO Osoba VALUES ('Andrzej', 'Duduś', 'andrzej@wp.pl', 'AQAAAAIAAYagAAAAEGUJewyb+BNnmYNzKO+cJTkdGOneGfxOCoIGGJ3MZgK/qZymPY8PEvDcNAyP+Xz3yA==', '1989-11-21', '123456789', null, 'Kliencka 15');
+INSERT INTO Osoba VALUES ('Rafał', 'Czaskoski', 'rafal@wp.pl', 'AQAAAAIAAYagAAAAEGUJewyb+BNnmYNzKO+cJTkdGOneGfxOCoIGGJ3MZgK/qZymPY8PEvDcNAyP+Xz3yA==', '1996-02-14', '123456789', null, 'Kliencka 15');
+INSERT INTO Osoba VALUES ('Sławek', 'Memcen', 'slawek@wp.pl', 'AQAAAAIAAYagAAAAEGUJewyb+BNnmYNzKO+cJTkdGOneGfxOCoIGGJ3MZgK/qZymPY8PEvDcNAyP+Xz3yA==', '1993-08-08', '123456789', null, 'Kliencka 15');
 
 INSERT INTO Klient (KlientID, Saldo, ZnizkaNaZajecia, ZnizkaNaProdukty)
 VALUES
@@ -44,9 +50,9 @@ VALUES
 INSERT INTO Osoba VALUES ('Właściciel', 'Właścicielski', 'wlasciciel@wp.pl', 'AQAAAAIAAYagAAAAEGUJewyb+BNnmYNzKO+cJTkdGOneGfxOCoIGGJ3MZgK/qZymPY8PEvDcNAyP+Xz3yA==', '2001-04-06', '123456789', null, 'Pracownicza 15');
 INSERT INTO Osoba VALUES ('Pracownik', 'Administrajski', 'pracownik@wp.pl', 'AQAAAAIAAYagAAAAEGUJewyb+BNnmYNzKO+cJTkdGOneGfxOCoIGGJ3MZgK/qZymPY8PEvDcNAyP+Xz3yA==', '2001-04-06', '123456789', null, 'Pracownicza 15');
 INSERT INTO Osoba VALUES ('Trener', 'Trenerski', 'trener@wp.pl', 'AQAAAAIAAYagAAAAEGUJewyb+BNnmYNzKO+cJTkdGOneGfxOCoIGGJ3MZgK/qZymPY8PEvDcNAyP+Xz3yA==', '2001-04-06', '123456789', null, 'Pracownicza 15');
-INSERT INTO Osoba VALUES ('Trener2', 'Trenerski2', 'trener2@wp.pl', 'AQAAAAIAAYagAAAAEGUJewyb+BNnmYNzKO+cJTkdGOneGfxOCoIGGJ3MZgK/qZymPY8PEvDcNAyP+Xz3yA==', '2001-04-06', '123456789', null, 'Pracownicza 15');
-INSERT INTO Osoba VALUES ('Trener3', 'Trenerski3', 'trener3@wp.pl', 'AQAAAAIAAYagAAAAEGUJewyb+BNnmYNzKO+cJTkdGOneGfxOCoIGGJ3MZgK/qZymPY8PEvDcNAyP+Xz3yA==', '2001-04-06', '123456789', null, 'Pracownicza 15');
-INSERT INTO Osoba VALUES ('Pani', 'Sprzatajska', 'sprzataczka@wp.pl', 'AQAAAAIAAYagAAAAEGUJewyb+BNnmYNzKO+cJTkdGOneGfxOCoIGGJ3MZgK/qZymPY8PEvDcNAyP+Xz3yA==', '2001-04-06', '123456789', null, 'Pracownicza 15');
+INSERT INTO Osoba VALUES ('Tomasz', 'Kolejowy', 'trener2@wp.pl', 'AQAAAAIAAYagAAAAEGUJewyb+BNnmYNzKO+cJTkdGOneGfxOCoIGGJ3MZgK/qZymPY8PEvDcNAyP+Xz3yA==', '2001-04-06', '123456789', null, 'Pracownicza 15');
+INSERT INTO Osoba VALUES ('Kamil', 'Kort', 'trener3@wp.pl', 'AQAAAAIAAYagAAAAEGUJewyb+BNnmYNzKO+cJTkdGOneGfxOCoIGGJ3MZgK/qZymPY8PEvDcNAyP+Xz3yA==', '2001-04-06', '123456789', null, 'Pracownicza 15');
+INSERT INTO Osoba VALUES ('Katarzyna', 'Sprzatajska', 'sprzataczka@wp.pl', 'AQAAAAIAAYagAAAAEGUJewyb+BNnmYNzKO+cJTkdGOneGfxOCoIGGJ3MZgK/qZymPY8PEvDcNAyP+Xz3yA==', '2001-04-06', '123456789', null, 'Pracownicza 15');
 
 INSERT INTO Pracownik (PracownikID, IdTypPracownika, DataZatrudnienia, DataZwolnienia)
 VALUES
@@ -60,13 +66,17 @@ VALUES
 -- Aktualności
 INSERT INTO Aktualnosci (Nazwa, Opis, WazneOd, WazneDo)
 VALUES
+    ('Cennik Rezerwacji',
+     'Obowiązujący cennik: 70 zł/h za kort, 50 zł/h za trenera, 10 zł za sprzęt (jednorazowo w ramach rezerwacji). Dla stałych klientów dostępne zniżki! Szczegóły w recepcji.',
+     '2025-05-29', NULL),
+
     ('Turniej Squasha',
      'Zapraszamy na wielki turniej squasha! Emocje, pot i rakiety w ruchu. Nagrody czekają, a najlepszy zgarnia wszystko!',
-     '2025-04-10', '2025-04-15'),
+     '2025-04-10', '2025-10-15'),
 
     ('Promka na Badmintona',
      'Tylko w tym tygodniu badminton za pół ceny! Wbijaj z koleżką albo wujkiem, niech piórko leci jak szalone.',
-     '2025-04-06', '2025-04-13'),
+     '2025-04-06', '2025-10-13'),
 
     ('Nowy Trener Tenisa',
      'Poznajcie Andrzeja – nowego trenera z 20-letnim doświadczeniem i bekhendem jak u Federera. Pierwszy trening gratis!',
@@ -74,11 +84,11 @@ VALUES
 
     ('Wakacyjny Karnet',
      'Lato coraz bliżej, forma sama się nie zrobi. Kup wakacyjny karnet już dziś i zgarnij stylowy bidon gratis!',
-     '2025-05-01', '2025-08-31'),
+     '2025-05-01', '2025-10-31'),
 
     ('Dzień Otwarty!',
      'Wpadnij z rodziną na Dzień Otwarty! Darmowe zajęcia, loteria fantowa i mini-turniej w tenisa stołowego. Będzie się działo!',
-     '2025-04-20', '2025-04-20'),
+     '2025-04-20', '2025-10-20'),
 
     ('Badminton After Dark',
      'Nowość! Wieczorne granie przy ledach i muzyce – Badminton After Dark. Startujemy co piątek od 21:00. Wbijaj!',
@@ -188,40 +198,101 @@ INSERT INTO Zajecia VALUES ('Squash', 2);
 INSERT INTO Zajecia VALUES ('Squash', 1);
 
 -- Kort
-INSERT INTO Kort VALUES ('Kort A');
-INSERT INTO Kort VALUES ('Kort B');
-INSERT INTO Kort VALUES ('Kort C');
-INSERT INTO Kort VALUES ('Kort D');
+INSERT INTO Kort VALUES ('Kort B1');
+INSERT INTO Kort VALUES ('Kort B2');
+INSERT INTO Kort VALUES ('Kort T1');
+INSERT INTO Kort VALUES ('Kort S1');
 
--- GrafikZajec
-INSERT INTO GrafikZajec VALUES ('2025-04-05', 'sobota', '10:00:00', 90, 1, 13, 10, 1, 80.00, 120.00);
-INSERT INTO GrafikZajec VALUES ('2025-04-05', 'sobota', '12:00:00', 90, 2, 13, 8, 2, 75.00, 115.00);
-INSERT INTO GrafikZajec VALUES ('2025-04-05', 'sobota', '14:00:00', 90, 3, 13, 12, 3, 70.00, 110.00);
-INSERT INTO GrafikZajec VALUES ('2025-04-06', 'niedziela', '16:00:00', 90, 4, 14, 10, 4, 85.00, 130.00);
-INSERT INTO GrafikZajec VALUES ('2025-04-06', 'niedziela', '18:00:00', 90, 5, 14, 8, 2, 80.00, 125.00);
-INSERT INTO GrafikZajec VALUES ('2025-04-07', 'poniedzialek', '20:00:00', 90, 6, 14, 10, 1, 75.00, 120.00);
-INSERT INTO GrafikZajec VALUES ('2025-04-08', 'wtorek', '10:00:00', 90, 7, 15, 10, 3, 90.00, 140.00);
-INSERT INTO GrafikZajec VALUES ('2025-04-08', 'wtorek', '12:00:00', 90, 8, 15, 10, 4, 85.00, 135.00);
-INSERT INTO GrafikZajec VALUES ('2025-04-08', 'wtorek', '14:00:00', 90, 9, 15, 12, 1, 80.00, 130.00);
+/* --------- GrafikZajec (26 V – 1 VI 2025) --------- */
+INSERT INTO GrafikZajec VALUES ('2025-05-31','sobota',     '10:00:00',90, 1,13,10,1, 80.00,120.00);
+INSERT INTO GrafikZajec VALUES ('2025-05-31','sobota',     '12:00:00',90, 2,13, 8,2, 75.00,115.00);
+INSERT INTO GrafikZajec VALUES ('2025-05-31','sobota',     '14:00:00',90, 3,13,12,3, 70.00,110.00);
+INSERT INTO GrafikZajec VALUES ('2025-06-01','niedziela',  '16:00:00',90, 4,14,10,4, 85.00,130.00);
+INSERT INTO GrafikZajec VALUES ('2025-06-01','niedziela',  '18:00:00',90, 5,14, 8,2, 80.00,125.00);
+INSERT INTO GrafikZajec VALUES ('2025-05-26','poniedzialek','20:00:00',90, 6,14,10,1, 75.00,120.00);
+INSERT INTO GrafikZajec VALUES ('2025-05-27','wtorek',     '10:00:00',90, 7,15,10,3, 90.00,140.00);
+INSERT INTO GrafikZajec VALUES ('2025-05-27','wtorek',     '12:00:00',90, 8,15,10,4, 85.00,135.00);
+INSERT INTO GrafikZajec VALUES ('2025-05-27','wtorek',     '14:00:00',90, 9,15,12,1, 80.00,130.00);
+INSERT INTO GrafikZajec VALUES ('2025-05-28','sroda',      '10:00:00',60, 8,13,11,1, 84.67,124.67);
+INSERT INTO GrafikZajec VALUES ('2025-05-28','sroda',      '14:00:00',60, 9,14,10,2, 85.38,125.38);
+INSERT INTO GrafikZajec VALUES ('2025-05-28','sroda',      '20:00:00',60, 1,13, 9,2, 86.83,126.83);
+INSERT INTO GrafikZajec VALUES ('2025-05-29','czwartek',   '08:00:00',60, 2,15, 8,3, 78.93,118.93);
+INSERT INTO GrafikZajec VALUES ('2025-05-29','czwartek',   '10:00:00',60, 3,14,11,2, 76.94,116.94);
+INSERT INTO GrafikZajec VALUES ('2025-05-29','czwartek',   '12:00:00',60, 5,14,11,4, 81.58,121.58);
+INSERT INTO GrafikZajec VALUES ('2025-05-30','piatek',     '08:00:00',60, 6,15,11,4, 70.39,110.39);
+INSERT INTO GrafikZajec VALUES ('2025-05-30','piatek',     '12:00:00',60, 4,15, 9,2, 76.93,116.93);
+INSERT INTO GrafikZajec VALUES ('2025-05-30','piatek',     '14:00:00',60, 3,14,10,2, 71.97,111.97);
 
--- InstancjaZajec
-INSERT INTO InstancjaZajec VALUES ('2025-04-05', 0, 1);
-INSERT INTO InstancjaZajec VALUES ('2025-04-05', 0, 2);
-INSERT INTO InstancjaZajec VALUES ('2025-04-05', 0, 3);
-INSERT INTO InstancjaZajec VALUES ('2025-04-06', 0, 4);
-INSERT INTO InstancjaZajec VALUES ('2025-04-06', 0, 5);
-INSERT INTO InstancjaZajec VALUES ('2025-04-07', 0, 6);
-INSERT INTO InstancjaZajec VALUES ('2025-04-08', 0, 7);
-INSERT INTO InstancjaZajec VALUES ('2025-04-08', 0, 8);
-INSERT INTO InstancjaZajec VALUES ('2025-04-08', 0, 9);
+/* --------- InstancjaZajec (mapa do powyższego grafiku) --------- */
+INSERT INTO InstancjaZajec VALUES ('2025-05-31',0, 1);
+INSERT INTO InstancjaZajec VALUES ('2025-05-31',0, 2);
+INSERT INTO InstancjaZajec VALUES ('2025-05-31',0, 3);
+INSERT INTO InstancjaZajec VALUES ('2025-06-01',0, 4);
+INSERT INTO InstancjaZajec VALUES ('2025-06-01',0, 5);
+INSERT INTO InstancjaZajec VALUES ('2025-05-26',0, 6);
+INSERT INTO InstancjaZajec VALUES ('2025-05-27',0, 7);
+INSERT INTO InstancjaZajec VALUES ('2025-05-27',0, 8);
+INSERT INTO InstancjaZajec VALUES ('2025-05-27',0, 9);
+INSERT INTO InstancjaZajec VALUES ('2025-05-28',0,10);
+INSERT INTO InstancjaZajec VALUES ('2025-05-28',0,11);
+INSERT INTO InstancjaZajec VALUES ('2025-05-28',0,12);
+INSERT INTO InstancjaZajec VALUES ('2025-05-29',0,13);
+INSERT INTO InstancjaZajec VALUES ('2025-05-29',0,14);
+INSERT INTO InstancjaZajec VALUES ('2025-05-29',0,15);
+INSERT INTO InstancjaZajec VALUES ('2025-05-30',0,16);
+INSERT INTO InstancjaZajec VALUES ('2025-05-30',0,17);
+INSERT INTO InstancjaZajec VALUES ('2025-05-30',0,18);
 
-
--- InstacjaZajec_Klient
+/* --------- InstancjaZajec_Klient (zapisy 26 V – 1 VI 2025) --------- */
 INSERT INTO InstancjaZajec_Klient
 VALUES
-    (1, '2025-04-06', NULL, 1, 1, 1, 0),
-    (2, '2025-04-06', NULL, 0, 2, 0, 0),
-    (3, '2025-04-06', NULL, 1, 3, 1, 1);
+-- Sobota 31 V  (Instancje 1-3)
+    (1,'2025-05-31',NULL,1, 1,1,0),
+    (2,'2025-05-31',NULL,0, 2,0,0),
+    (3,'2025-05-31',NULL,1, 3,1,1),
+-- Środa 28 V  (Instancje 10-12)
+    (4,'2025-05-27',NULL,0,10,1,0),
+    (5,'2025-05-27',NULL,1,10,1,0),
+    (6,'2025-05-27',NULL,1,11,1,1),
+    (7,'2025-05-27',NULL,0,11,1,0),
+    (8,'2025-05-27',NULL,1,12,0,0),
+-- Czwartek 29 V (Instancje 13-15)
+    (9 ,'2025-05-28',NULL,1,13,1,0),
+    (10,'2025-05-28',NULL,1,13,1,0),
+    (1 ,'2025-05-28',NULL,0,14,1,1),
+    (2 ,'2025-05-28',NULL,1,14,0,0),
+    (3 ,'2025-05-28',NULL,0,15,1,0),
+-- Piątek 30 V  (Instancje 16-18)
+    (4 ,'2025-05-29',NULL,1,16,1,0),
+    (5 ,'2025-05-29',NULL,0,16,0,0),
+    (6 ,'2025-05-29',NULL,1,17,1,1),
+    (7 ,'2025-05-29',NULL,1,17,1,0),
+    (8 ,'2025-05-29',NULL,0,18,1,0),
+    (9 ,'2025-05-29',NULL,1,18,0,0),
+-- Niedziela 1 VI (Instancje 4-5)
+    (1 ,'2025-05-31',NULL,0, 4,1,0),
+    (4 ,'2025-05-31',NULL,1, 4,1,0),
+    (7 ,'2025-05-31',NULL,0, 4,1,0),
+    (2 ,'2025-05-31',NULL,1, 5,1,0),
+    (5 ,'2025-05-31',NULL,0, 5,1,0),
+    (8 ,'2025-05-31',NULL,1, 5,1,0),
+-- Poniedziałek 26 V  (Instancja 6)
+    (3 ,'2025-05-26',NULL,0, 6,1,0),
+    (6 ,'2025-05-26',NULL,1, 6,1,0),
+    (9 ,'2025-05-26',NULL,0, 6,1,0),
+-- Wtorek 27 V  (Instancje 7-9)
+    (1 ,'2025-05-26',NULL,1, 7,1,0),
+    (2 ,'2025-05-26',NULL,0, 7,1,0),
+    (10,'2025-05-26',NULL,1, 7,1,0),
+    (3 ,'2025-05-26',NULL,1, 8,1,0),
+    (4 ,'2025-05-26',NULL,0, 8,1,0),
+    (5 ,'2025-05-26',NULL,1, 8,1,0),
+    (6 ,'2025-05-26',NULL,0, 9,1,0),
+    (7 ,'2025-05-26',NULL,1, 9,1,0),
+    (8 ,'2025-05-26',NULL,0, 9,1,0),
+    (9 ,'2025-05-26',NULL,1, 9,1,0),
+    (10,'2025-05-26',NULL,0, 9,1,0);
+
 
 -- Ocena
 INSERT INTO Ocena
@@ -237,3 +308,46 @@ VALUES
     (1, 2, '2025-04-10 10:00:00', '2025-04-10 11:00:00', '2025-04-06', 13, 1, 50.00, 1, 0, 0),
     (2, 1, '2025-04-11 09:00:00', '2025-04-11 10:00:00', '2025-04-06', NULL, 0, 40.00, 0, 0, 0),
     (3, 3, '2025-04-12 14:00:00', '2025-04-12 15:00:00', '2025-04-06', 14, 1, 60.00, 1, 1, 1);
+
+-- Czerwiec 2025
+INSERT INTO Rezerwacja
+VALUES
+    (1, 1, '2025-06-05 09:00:00', '2025-06-05 10:00:00', '2025-05-30', 13, 1, 60.00, 1, 0, 0),
+    (2, 2, '2025-06-10 18:00:00', '2025-06-10 19:30:00', '2025-06-01', 14, 1, 105.00, 1, 0, 0),
+    (3, 3, '2025-06-12 20:00:00', '2025-06-12 22:00:00', '2025-06-02', NULL, 0, 140.00, 1, 0, 0),
+    (4, 4, '2025-06-15 08:00:00', '2025-06-15 09:30:00', '2025-06-05', 15, 0, 75.00, 1, 0, 0),
+    (5, 1, '2025-06-20 14:00:00', '2025-06-20 15:00:00', '2025-06-10', NULL, 1, 60.00, 0, 1, 1),
+    (6, 2, '2025-06-25 11:00:00', '2025-06-25 12:00:00', '2025-06-15', 13, 0, 40.00, 1, 0, 0),
+    (1, 1, '2025-06-28 17:00:00', '2025-06-28 18:00:00', '2025-06-20', 14, 1, 60.00, 1, 0, 0);
+
+-- Lipiec 2025
+INSERT INTO Rezerwacja
+VALUES
+    (1, 3, '2025-07-03 10:00:00', '2025-07-03 11:30:00', '2025-06-25', 14, 1, 105.00, 1, 0, 0),
+    (2, 4, '2025-07-05 16:00:00', '2025-07-05 17:00:00', '2025-06-27', NULL, 0, 40.00, 1, 0, 0),
+    (3, 1, '2025-07-10 08:00:00', '2025-07-10 09:00:00', '2025-07-01', 15, 1, 60.00, 1, 0, 0),
+    (4, 2, '2025-07-12 19:00:00', '2025-07-12 20:30:00', '2025-07-02', 13, 0, 105.00, 1, 0, 0),
+    (5, 3, '2025-07-18 13:00:00', '2025-07-18 14:00:00', '2025-07-05', NULL, 1, 60.00, 0, 1, 1),
+    (6, 4, '2025-07-22 15:00:00', '2025-07-22 16:00:00', '2025-07-10', 14, 0, 40.00, 1, 0, 0),
+    (1, 2, '2025-07-25 11:00:00', '2025-07-25 12:00:00', '2025-07-15', 15, 1, 60.00, 1, 0, 0);
+
+-- Sierpień 2025
+INSERT INTO Rezerwacja
+VALUES
+    (1, 2, '2025-08-01 09:30:00', '2025-08-01 10:30:00', '2025-07-25', 15, 1, 60.00, 1, 0, 0),
+    (2, 3, '2025-08-04 18:00:00', '2025-08-04 19:00:00', '2025-07-27', NULL, 0, 40.00, 1, 0, 0),
+    (3, 4, '2025-08-10 20:00:00', '2025-08-10 22:00:00', '2025-08-01', 13, 1, 140.00, 1, 0, 0),
+    (4, 1, '2025-08-15 08:00:00', '2025-08-15 09:00:00', '2025-08-05', 14, 0, 40.00, 1, 0, 0),
+    (5, 2, '2025-08-20 14:00:00', '2025-08-20 15:30:00', '2025-08-10', 15, 1, 105.00, 1, 0, 0),
+    (6, 3, '2025-08-25 11:00:00', '2025-08-25 12:00:00', '2025-08-15', NULL, 1, 60.00, 0, 1, 1),
+    (1, 4, '2025-08-28 13:00:00', '2025-08-28 14:00:00', '2025-08-18', 13, 1, 60.00, 1, 0, 0);
+
+    /* -- dodatkowe rezerwacje, aby w KAŻDYM tygodniu VI-VIII 2025 była co najmniej jedna -- */
+
+INSERT INTO Rezerwacja
+VALUES
+    /* tydzień 27 (30 VI – 6 VII) — brakowało terminu w samym czerwcu          */
+    (2, 2, '2025-06-30 18:00:00', '2025-06-30 19:00:00', '2025-06-20', 13, 1, 60.00, 1, 0, 0),
+
+    /* tydzień 31 (28 VII – 3 VIII) — dodatkowa rezerwacja w lipcu             */
+    (5, 3, '2025-07-29 09:00:00', '2025-07-29 10:30:00', '2025-07-19', NULL, 0, 40.00, 1, 0, 0);

@@ -416,15 +416,15 @@ public class ReservationController : BaseController
         }
         catch (ReservationNotFoundException ex)
         {
-            return NotFound(new { message = ex.Message });
+            return StatusCode(411, new { message = ex.Message });
         }
         catch (TooLateToCancelreservationException ex)
         {
-            return Conflict(new { message = ex.Message });
+            return StatusCode(412, new { message = ex.Message });
         }
         catch (ReservationAlreadyCanceledException ex)
         {
-            return Conflict(new { message = ex.Message });
+            return StatusCode(413, new { message = ex.Message });
         }
         catch (Exception ex)
         {
@@ -442,15 +442,15 @@ public class ReservationController : BaseController
         }
         catch (ClientNotFoundException ex)
         {
-            return NotFound(new { message = ex.Message });
+            return StatusCode(411, new { message = ex.Message });
         }
         catch (ReservationNotFoundException ex)
         {
-            return NotFound(new { message = ex.Message });
+            return StatusCode(412, new { message = ex.Message });
         }
         catch (ReservationAlreadyCanceledException ex)
         {
-            return Conflict(new { message = ex.Message });
+            return StatusCode(413, new { message = ex.Message });
         }
         catch (Exception ex)
         {

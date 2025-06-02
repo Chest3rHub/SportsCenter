@@ -705,6 +705,7 @@ export default {
     costLabel: 'Koszt',
     successLabel: 'Sukces!',
     savedSuccessLabel: 'Udało się zapisać uczestnictwo!',
+    cancelSuccessLabel: 'Udało się odwołać rezerwację!',
     clickAnywhereLabel: 'Kliknij w dowolne miejsce ekranu.',
     failureLabel: 'Błąd!',
     clickAnywhereFailureLabel: 'Kliknij w dowolne miejsce ekranu.',

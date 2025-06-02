@@ -11,6 +11,7 @@ import SentimentSatisfiedIcon from '@mui/icons-material/SentimentSatisfied';
 import SentimentDissatisfiedIcon from '@mui/icons-material/SentimentDissatisfied';
 import markClientActivityAsPaid from "../api/markClientActivityAsPaid";
 import markClientReservationAsPaid from "../api/markClientReservationAsPaid";
+import cancelClientReservation from "../api/cancelClientReservation";
 export default function ActivityDetails() {
     const { dictionary, toggleLanguage, role } = useContext(SportsContext);
 
@@ -72,24 +73,24 @@ export default function ActivityDetails() {
 
     function determineFailTextByResponseCode(responseCode) {
         switch (responseCode) {
-          case 409:
-            return dictionary.activityDetailsPage.alreadySignedUpLabel;
-          case 418:
-            return dictionary.activityDetailsPage.tooLongLabel;
-          case 420:
-            return dictionary.activityDetailsPage.canceledLabel;
-          case 421:
-            return dictionary.activityDetailsPage.clientAlreadySignedUpLabel;
-          case 422:
-            return dictionary.activityDetailsPage.limitOfPlacesReachedLabel;
-          case 423:
-            return dictionary.activityDetailsPage.clientHasActivityOrReservationLabel;
-          default:
-            return dictionary.activityDetailsPage.savedFailureLabel;
+            case 409:
+                return dictionary.activityDetailsPage.alreadySignedUpLabel;
+            case 418:
+                return dictionary.activityDetailsPage.tooLongLabel;
+            case 420:
+                return dictionary.activityDetailsPage.canceledLabel;
+            case 421:
+                return dictionary.activityDetailsPage.clientAlreadySignedUpLabel;
+            case 422:
+                return dictionary.activityDetailsPage.limitOfPlacesReachedLabel;
+            case 423:
+                return dictionary.activityDetailsPage.clientHasActivityOrReservationLabel;
+            default:
+                return dictionary.activityDetailsPage.savedFailureLabel;
         }
-      }
-      
-      
+    }
+
+
     async function signUpForActivityClient() {
 
         try {
@@ -107,15 +108,15 @@ export default function ActivityDetails() {
         }
     }
 
-   async function handlePay(email, activityId){
+    async function handlePay(email, activityId) {
         try {
-            let response=null;
-            if(description==='Rezerwacja'){
-                response = await markClientReservationAsPaid(email,activityDetails.id);
+            let response = null;
+            if (description === 'Rezerwacja') {
+                response = await markClientReservationAsPaid(email, activityDetails.id);
             } else {
-                response = await markClientActivityAsPaid(email,activityId);
+                response = await markClientActivityAsPaid(email, activityId);
             }
-            
+
             if (!response.ok) {
                 const errorData = await response.json();
                 let failText = dictionary.activityDetailsPage.payFailedLabel;
@@ -127,10 +128,54 @@ export default function ActivityDetails() {
                         p.email === email ? { ...p, isPaid: true } : p
                     )
                 );
-                
+
             }
         } catch (error) {
         }
+    }
+
+    const [openCancelErrorBackdrop, setOpenCancelErrorBackdrop] = useState(false);
+    const [openCancelSuccessBackdrop, setOpenCancelSuccessBackdrop] = useState(false);
+    const [cancelErrorMessage, setCancelErrorMessage] = useState("");
+    const [hasCanceledAlready, setHasCanceledAlready] = useState(false);
+
+    function determineCancelErrorByStatus(status, serverMessage) {
+        switch (status) {
+            case 411:
+                return dictionary.reservationsPage.reservationNotFound || serverMessage;
+            case 412:
+                return dictionary.reservationsPage.tooLateToCancel || serverMessage;
+            case 413:
+                return dictionary.reservationsPage.alreadyCanceled || serverMessage;
+            default:
+                return serverMessage;
+        }
+    }
+
+    function handleCancelReservation(clientEmail, id) {
+
+        cancelClientReservation(clientEmail, id)
+            .then(response => {
+                if (!response.ok) {
+                    return response.json().then(err => {
+                        const msg = err.message || dictionary.reservationsPage.defaultCancelError;
+                        const errorText = determineCancelErrorByStatus(response.status, msg);
+                        throw new Error(errorText);
+                    });
+                }
+                setHasCanceledAlready(true);
+                return response.json();
+            })
+            .then(data => {
+                console.log("Rezerwacja odwołana:", data);
+                setOpenCancelSuccessBackdrop(true);
+            })
+            .catch(error => {
+                console.error("Błąd podczas odwoływania rezerwacji:", error);
+                setCancelErrorMessage(error.message);
+                setOpenCancelErrorBackdrop(true);
+                //handleOpenFailure();
+            });
     }
 
     if (!activityDetails) {
@@ -154,7 +199,7 @@ export default function ActivityDetails() {
                     <Header backgroundColor={isCanceled ? '#F46C63' : undefined}>{isCanceled ? dictionary.activityDetailsPage.shortCanceledLabel : (groupName ? groupName : dictionary.activityDetailsPage.reservationLabel)}</Header>
                 </Box>
                 <Box sx={{
-                    minHeight:'45vh',
+                    minHeight: '45vh',
                     borderRadius: '20px',
                     boxShadow: '0 10px 20px rgba(0, 0, 0, 0.2)',
                     backgroundColor: 'white',
@@ -361,7 +406,7 @@ export default function ActivityDetails() {
                         }}
                     />}
 
-                    {(role === 'Wlasciciel' || role === 'Pracownik administracyjny') && description ==='Rezerwacja'&&<FormControlLabel
+                    {(role === 'Wlasciciel' || role === 'Pracownik administracyjny') && description === 'Rezerwacja' && <FormControlLabel
                         control={
                             <Checkbox
                                 id="isEquipmentReserved"
@@ -378,13 +423,13 @@ export default function ActivityDetails() {
                         }
                         label={dictionary.activityDetailsPage.isEquipmentReservedLabel}
                     />}
-                    {role==='Klient' && <FormControlLabel
+                    {role === 'Klient' && <FormControlLabel
                         control={
                             <Checkbox
                                 id="isEquipmentReserved"
                                 name="isEquipmentReserved"
                                 checked={isEquipmentIncluded}
-                                onChange={()=>{setIsEquipmentIncluded((prev)=>!prev)}}
+                                onChange={() => { setIsEquipmentIncluded((prev) => !prev) }}
                                 sx={{
                                     color: "#8edfb4",
                                     '&.Mui-checked': {
@@ -403,10 +448,24 @@ export default function ActivityDetails() {
                     }}>
                         <GreenButton onClick={handleCancel} style={{ maxWidth: "10vw", backgroundColor: "#F46C63" }} hoverBackgroundColor={'#c3564f'}>{dictionary.activityDetailsPage.returnLabel}</GreenButton>
                         {role === 'Klient' && <GreenButton type="submit" style={{ maxWidth: "10vw" }} onClick={() => signUpForActivityClient()}>{dictionary.activityDetailsPage.signUpLabel}</GreenButton>}
+                        {(role === 'Wlasciciel' || role === 'Pracownik administracyjny') &&
+                            description === 'Rezerwacja' &&
+                            <GreenButton
+                                type="submit"
+                                style={{
+                                    maxWidth: "10vw",
+                                    backgroundColor: "#F46C63"
+                                }}
+                                hoverBackgroundColor={'#c3564f'}
+                                onClick={() => handleCancelReservation(participants[0].email, id)}
+                                disabled={hasCanceledAlready || activityDetails.isCanceled}
+                            >
+                                {dictionary.activityDetailsPage.cancelLabel}
+                            </GreenButton>}
                     </Box>
                 </Box>
 
-                {participantsState && (role==='Pracownik administracyjny' || role==='Wlasciciel') &&  <Box sx={{
+                {participantsState && (role === 'Pracownik administracyjny' || role === 'Wlasciciel') && <Box sx={{
                     display: 'flex',
                     position: 'absolute',
                     right: '1vw',
@@ -416,7 +475,7 @@ export default function ActivityDetails() {
                     boxShadow: '0 10px 20px rgba(0, 0, 0, 0.2)',
                     backgroundColor: 'white',
                     padding: '1.35rem',
-                    minHeight:'10vh',
+                    minHeight: '10vh',
                     display: 'flex',
                     flexDirection: 'column',
 
@@ -424,31 +483,31 @@ export default function ActivityDetails() {
                     <Typography sx={{ fontSize: '1.5rem', fontWeight: 'bold' }}>
                         {dictionary.activityDetailsPage.participantsLabel}:
                     </Typography>
-                    <List component="ol" sx={{ paddingLeft: '1.5rem', listStyleType: 'decimal',display: 'flex', flexDirection: 'column', gap: '2vh'}}>
+                    <List component="ol" sx={{ paddingLeft: '1.5rem', listStyleType: 'decimal', display: 'flex', flexDirection: 'column', gap: '2vh' }}>
                         {participantsState.map((participant, index) => (
                             <ListItem
                                 key={index}
                                 component="li"
                                 disablePadding
-                                sx={{ display: 'list-item', rowGap:'5vh' }}
+                                sx={{ display: 'list-item', rowGap: '5vh' }}
                             >
                                 <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
                                     <Typography>
                                         {participant.firstName} {participant.lastName}
                                     </Typography>
-                                    {!isCanceled && participant.isSigned &&<GreenButton
+                                    {!isCanceled && participant.isSigned && <GreenButton
                                         disabled={participant.isPaid}
                                         size="small"
                                         style={{ maxWidth: '7vw', maxHeight: '6.5vh', fontSize: '0.9rem', fontWeight: 'bold', marginTop: '-0.6vh' }}
-                                        onClick={()=>{handlePay(participant.email,activityIdToPay)}}
+                                        onClick={() => { handlePay(participant.email, activityIdToPay) }}
                                     >
                                         {participant.isPaid ? dictionary.activityDetailsPage.paidLabel : dictionary.activityDetailsPage.payLabel}
                                     </GreenButton>}
-                                    {!participant.isSigned &&<GreenButton
+                                    {!participant.isSigned && <GreenButton
                                         disabled={true}
                                         size="small"
                                         style={{ maxWidth: '7vw', maxHeight: '6.5vh', fontSize: '0.9rem', fontWeight: 'bold', marginTop: '-0.6vh', backgroundColor: "#F46C63" }}
-                                        onClick={()=>{}}
+                                        onClick={() => { }}
                                     >
                                         {dictionary.activityDetailsPage.shortCanceledLabel}
                                     </GreenButton>}
@@ -551,6 +610,122 @@ export default function ActivityDetails() {
                     <Box sx={{ textAlign: 'center', display: "flex", justifyContent: "center" }}>
                         <Avatar sx={{ width: "7rem", height: "7rem" }}>
                             <SentimentDissatisfiedIcon sx={{ fontSize: "7rem", color: 'red', stroke: "white", strokeWidth: 1.1, backgroundColor: "white" }} />
+                        </Avatar>
+                    </Box>
+                </Box>
+            </Backdrop>
+
+
+            <Backdrop
+                sx={(theme) => ({ color: '#fff', zIndex: theme.zIndex.drawer + 1 })}
+                open={openCancelErrorBackdrop}
+                onClick={() => setOpenCancelErrorBackdrop(false)}
+            >
+                <Box sx={{
+                    backgroundColor: "white",
+                    margin: 'auto',
+                    minWidth: '30vw',
+                    minHeight: '30vh', // ujednolicone z pozytywnym
+                    borderRadius: '20px',
+                    boxShadow: '0 10px 20px rgba(0, 0, 0, 0.2)',
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "space-around",
+                    alignItems: "center",
+                    textAlign: "center",
+                    p: 4,
+                }}>
+                    <Typography sx={{
+                        color: 'red',
+                        fontWeight: 'bold',
+                        fontSize: '3rem',
+                        marginTop: '2vh',
+                    }}>
+                        {dictionary.activityDetailsPage.failureLabel}
+                    </Typography>
+
+                    <Typography sx={{
+                        color: 'black',
+                        fontSize: '1.5rem',
+                    }}>
+                        {cancelErrorMessage}
+                    </Typography>
+
+                    <Typography sx={{
+                        color: 'black',
+                        fontSize: '1.5rem',
+                    }}>
+
+                    </Typography>
+
+                    <Typography sx={{
+                        color: 'black',
+                        fontSize: '1.5rem',
+                    }}>
+                        {dictionary.activityDetailsPage.clickAnywhereLabel}
+                    </Typography>
+
+                    <Box sx={{ textAlign: 'center', display: "flex", justifyContent: "center" }}>
+                        <Avatar sx={{ width: "7rem", height: "7rem" }}>
+                            <SentimentDissatisfiedIcon
+                                sx={{
+                                    fontSize: "7rem",
+                                    color: 'red',
+                                    stroke: "white",
+                                    strokeWidth: 1.1,
+                                    backgroundColor: "white"
+                                }}
+                            />
+                        </Avatar>
+                    </Box>
+                </Box>
+            </Backdrop>
+
+
+            <Backdrop
+                sx={(theme) => ({ color: '#fff', zIndex: theme.zIndex.drawer + 1 })}
+                open={openCancelSuccessBackdrop}
+                onClick={() => setOpenCancelSuccessBackdrop(false)}
+            >
+                <Box sx={{
+                    backgroundColor: "white",
+                    margin: 'auto',
+                    minWidth: '30vw',
+                    minHeight: '30vh',
+                    borderRadius: '20px',
+                    boxShadow: '0 10px 20px rgba(0, 0, 0, 0.2)',
+
+                }}>
+                    <Box>
+                        <Typography sx={{
+                            color: 'green',
+                            fontWeight: 'Bold',
+                            fontSize: '3rem',
+                            marginTop: '2vh',
+
+                        }}>
+                            {dictionary.activityDetailsPage.successLabel}
+                        </Typography>
+                    </Box>
+                    <Box>
+                        <Typography sx={{
+                            color: 'black',
+                            fontSize: '1.5rem',
+                        }}>
+                            {dictionary.activityDetailsPage.cancelSuccessLabel}
+                        </Typography>
+                    </Box>
+                    <Box>
+                        <Typography sx={{
+                            color: 'black',
+                            fontSize: '1.5rem',
+                        }}>
+                            {dictionary.activityDetailsPage.clickAnywhereLabel}
+                        </Typography>
+                    </Box>
+                    <Box sx={{ textAlign: 'center', display: "flex", justifyContent: "center" }}>
+                        <Avatar sx={{ width: "7rem", height: "7rem" }}>
+                            <SentimentSatisfiedIcon sx={{ fontSize: "7rem", color: 'green', stroke: "white", strokeWidth: 1.1, backgroundColor: "white" }} />
                         </Avatar>
                     </Box>
                 </Box>

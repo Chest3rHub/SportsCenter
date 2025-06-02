@@ -703,6 +703,7 @@ reservationsSummaryPage: {
     costLabel: 'Cost',
     successLabel: 'Success!',
     savedSuccessLabel: 'You have successfully signed up!',
+    cancelSuccessLabel: 'Canceled reservation successfully!',
     clickAnywhereLabel: 'Click anywhere on the screen.',
     failureLabel: 'Error!',
     clickAnywhereFailureLabel: 'Click anywhere on the screen.',

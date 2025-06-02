@@ -786,6 +786,10 @@ reservationsSummaryPage: {
     sportActivityLabel: 'Training - ',
     levelLabel: 'Level:',
     noUpcomingEventsLabel: 'No upcoming trainings/reservations this week'
-  }
-
+  },
+  notFoundPage: {
+    notFoundTitle: 'Page not found',
+    notFoundMessage: 'The page you are looking for does not exist or has been moved.',
+    homeLabel: 'Home'
+  }, 
 };

@@ -789,6 +789,11 @@ export default {
     sportActivityLabel: 'Zajęcia - ',
     levelLabel: 'Poziom:',
     noUpcomingEventsLabel: 'Brak nadchodzących zajęć / rezerwacji w tym tygodniu'
+  },
+  notFoundPage:{
+    notFoundTitle:'Nie znaleziono strony',
+    notFoundMessage:'Strona, której szukasz, nie istnieje lub została przeniesiona.',
+    homeLabel:'Strona główna'
   }
 
 };

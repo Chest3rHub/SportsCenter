@@ -342,7 +342,7 @@ export default function MyActivityDetails() {
                             <Checkbox
                                 id="isEquipmentReserved"
                                 name="isEquipmentReserved"
-                                checked={isEquipmentIncluded}
+                                checked={isEquipmentReserved}
                                 onChange={()=>{}}
                                 sx={{
                                     color: "#8edfb4",
@@ -359,7 +359,7 @@ export default function MyActivityDetails() {
                             <Checkbox
                                 id="isEquipmentReserved"
                                 name="isEquipmentReserved"
-                                checked={isEquipmentIncluded}
+                                checked={isEquipmentReserved}
                                 onChange={()=>{}}
                                 sx={{
                                     color: "#8edfb4",

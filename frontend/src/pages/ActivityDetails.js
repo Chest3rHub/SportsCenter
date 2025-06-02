@@ -361,7 +361,7 @@ export default function ActivityDetails() {
                         }}
                     />}
 
-                    {(role === 'Wlasciciel' || role === 'Pracownik administracyjny') && <FormControlLabel
+                    {(role === 'Wlasciciel' || role === 'Pracownik administracyjny') && description ==='Rezerwacja'&&<FormControlLabel
                         control={
                             <Checkbox
                                 id="isEquipmentReserved"

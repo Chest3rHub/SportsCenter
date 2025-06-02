@@ -436,13 +436,21 @@ export default function ActivityDetails() {
                                     <Typography>
                                         {participant.firstName} {participant.lastName}
                                     </Typography>
-                                    {!isCanceled && <GreenButton
+                                    {!isCanceled && participant.isSigned &&<GreenButton
                                         disabled={participant.isPaid}
                                         size="small"
                                         style={{ maxWidth: '7vw', maxHeight: '6.5vh', fontSize: '0.9rem', fontWeight: 'bold', marginTop: '-0.6vh' }}
                                         onClick={()=>{handlePay(participant.email,activityIdToPay)}}
                                     >
                                         {participant.isPaid ? dictionary.activityDetailsPage.paidLabel : dictionary.activityDetailsPage.payLabel}
+                                    </GreenButton>}
+                                    {!participant.isSigned &&<GreenButton
+                                        disabled={true}
+                                        size="small"
+                                        style={{ maxWidth: '7vw', maxHeight: '6.5vh', fontSize: '0.9rem', fontWeight: 'bold', marginTop: '-0.6vh', backgroundColor: "#F46C63" }}
+                                        onClick={()=>{}}
+                                    >
+                                        {dictionary.activityDetailsPage.shortCanceledLabel}
                                     </GreenButton>}
                                 </Box>
                             </ListItem>

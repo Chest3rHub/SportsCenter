@@ -22,8 +22,8 @@ namespace SportsCenter.Application.Activities.Queries.GetTrainerSportActivitiesB
         public string ClientName { get; set; }
         public string ClientSurname { get; set; }
         public string CourtName { get; set; }
-        public string IsEquipmentReserved { get; set; }
-        public string IsActivityCanceled { get; set; }
+        public bool IsEquipmentReserved { get; set; }
+        public bool IsActivityCanceled { get; set; }
         public string Type { get; set; }
     }
 }

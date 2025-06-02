@@ -416,7 +416,7 @@ namespace SportsCenter.Infrastructure.DAL.Repositories
             if (activityInstanceClient.CzyOplacone == true)
                 return PaymentResultEnum.AlreadyPaid;
 
-            // Oznacz jako opłacone bez zmniejszania salda
+            //oznacza jako opłacone bez zmniejszania salda
             activityInstanceClient.CzyOplacone = true;
             _dbContext.Entry(activityInstanceClient).State = EntityState.Modified;
 

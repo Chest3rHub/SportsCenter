@@ -12,5 +12,7 @@ namespace SportsCenter.Application.Schedule.Queries.GetScheduleInfo
         public string LastName { get; set; }
         public string Email { get; set; }
         public bool? IsPaid { get; set; }
+        public bool? IsSigned { get; set; }
+        public bool? IsMoneyRefounded { get; set; }
     }
 }

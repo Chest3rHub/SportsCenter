@@ -21,9 +21,9 @@ namespace SportsCenter.Application.Activities.Queries.GetYourSportActivitiesByWe
         public string? TrainerName { get; set; }
         public string CourtName { get; set; }
         public decimal Cost { get; set; }
-        public string IsEquipmentReserved { get; set; }
+        public bool IsEquipmentReserved { get; set; }
         public string IsActivityPaid { get; set; }
-        public string IsActivityCanceled { get; set; }
+        public bool IsActivityCanceled { get; set; }
         public string Type { get; set; }
     }
 }

@@ -68,9 +68,7 @@ namespace SportsCenter.Infrastructure.DAL.Handlers.SportActivitiesHandlers
                         LevelName = g.Zajecia.IdPoziomZajecNavigation.Nazwa,
                         EmployeeId = g.PracownikId,
                         CourtName = g.Kort.Nazwa,
-                        IsActivityCanceled = combined.iz.CzyOdwolane.HasValue
-                            ? (combined.iz.CzyOdwolane.Value ? "Tak" : "Nie")
-                            : "Nie"
+                        IsActivityCanceled = (bool)combined.iz.CzyOdwolane
                     })
                 .OrderBy(activity => activity.DateOfActivity)
                 .ThenBy(activity => activity.StartTime)
@@ -95,8 +93,8 @@ namespace SportsCenter.Infrastructure.DAL.Handlers.SportActivitiesHandlers
                     ClientName = r.Klient.KlientNavigation.Imie,
                     ClientSurname = r.Klient.KlientNavigation.Nazwisko,
                     CourtName = r.Kort.Nazwa,                    
-                    IsEquipmentReserved = r.CzyUwzglednicSprzet == true ? "Tak" : "Nie",                 
-                    IsActivityCanceled = r.CzyOdwolana == true ? "Tak" : "Nie"
+                    IsEquipmentReserved = r.CzyUwzglednicSprzet,                 
+                    IsActivityCanceled = (bool)r.CzyOdwolana
 
                 })
                 .OrderBy(reservation => reservation.DateOfActivity)

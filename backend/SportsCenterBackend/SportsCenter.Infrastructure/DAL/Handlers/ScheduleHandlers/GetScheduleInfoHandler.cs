@@ -123,7 +123,7 @@ internal class GetScheduleInfoHandler : IRequestHandler<GetScheduleInfo, List<Sc
                         FirstName = reservation.Klient?.KlientNavigation?.Imie,
                         LastName = reservation.Klient?.KlientNavigation?.Nazwisko,
                         Email = reservation.Klient?.KlientNavigation.Email,
-                        IsPaid = null //trener nie powinien widziec tej informacji
+                        IsPaid = null, //trener nie powinien widziec tej informacji
                         }
                     },
                 };
@@ -207,8 +207,9 @@ internal class GetScheduleInfoHandler : IRequestHandler<GetScheduleInfo, List<Sc
                             FirstName = ik.Klient.KlientNavigation.Imie,
                             LastName = ik.Klient.KlientNavigation.Nazwisko,
                             Email = ik.Klient?.KlientNavigation.Email,
-                            IsPaid = ik.CzyOplacone
-                         })                   
+                            IsPaid = ik.CzyOplacone,
+                            IsSigned = ik.DataWypisu == null
+                         })                  
                         .ToList(),
                         ActivityIdToPay = scheduledClass.InstancjaZajec
                         .Where(i =>
@@ -256,7 +257,8 @@ internal class GetScheduleInfoHandler : IRequestHandler<GetScheduleInfo, List<Sc
                             FirstName = ik.Klient.KlientNavigation.Imie,
                             Email = ik.Klient?.KlientNavigation.Email,
                             LastName = ik.Klient.KlientNavigation.Nazwisko,
-                            IsPaid = null //trener tego nie powinien widziec
+                            IsPaid = null, //trener tego nie powinien widziec
+                            IsSigned = ik.DataWypisu == null
                         })
                         .ToList()
                 };

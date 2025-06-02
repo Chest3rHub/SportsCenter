@@ -72,13 +72,11 @@ namespace SportsCenter.Infrastructure.DAL.Handlers.SportActivitiesHandlers
                             : "Brak trenera",
                         CourtName = g.Kort.Nazwa,
                         Cost= combined.ik.CzyUwzglednicSprzet ? g.KosztZeSprzetem : g.KosztBezSprzetu,           
-                        IsEquipmentReserved = combined.ik.CzyUwzglednicSprzet ? "Tak" : "Nie",
+                        IsEquipmentReserved = combined.ik.CzyUwzglednicSprzet,
                         IsActivityPaid = combined.ik.CzyOplacone.HasValue
                             ? (combined.ik.CzyOplacone.Value ? "Tak" : "Nie")
                             : "Nie",
-                        IsActivityCanceled = combined.iz.CzyOdwolane.HasValue
-                            ? (combined.iz.CzyOdwolane.Value ? "Tak" : "Nie")
-                            : "Nie"
+                        IsActivityCanceled = (bool)combined.iz.CzyOdwolane
                     })
                 .OrderBy(activity => activity.DateOfActivity)
                 .ThenBy(activity => activity.StartTime)
@@ -106,9 +104,9 @@ namespace SportsCenter.Infrastructure.DAL.Handlers.SportActivitiesHandlers
                         : "Brak trenera",
                     CourtName = r.Kort.Nazwa,
                     Cost = r.Koszt,
-                    IsEquipmentReserved = r.CzyUwzglednicSprzet == true ? "Tak" : "Nie",
+                    IsEquipmentReserved = r.CzyUwzglednicSprzet,
                     IsActivityPaid = r.CzyOplacona == true ? "Tak" : "Nie",
-                    IsActivityCanceled = r.CzyOdwolana == true ? "Tak" : "Nie"
+                    IsActivityCanceled = (bool)r.CzyOdwolana
 
                 })
                 .OrderBy(reservation => reservation.DateOfActivity)

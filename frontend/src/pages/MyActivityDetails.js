@@ -57,7 +57,8 @@ export default function MyActivityDetails() {
         instanceOfActivityId,
         reservationId,
         clientName,
-        clientSurname
+        clientSurname,
+        isActivityCanceled
     } = activityDetails;
 
     const formattedDate = new Date(dateOfActivity + 'Z').toISOString().split("T")[0];
@@ -129,7 +130,7 @@ export default function MyActivityDetails() {
                 }}
             >
                 <Box sx={{ maxWidth: '40vw', minWidth: '30vw' }}>
-                    <Header backgroundColor={isCanceled ? '#F46C63' : undefined}>{isCanceled ? dictionary.activityDetailsPage.shortCanceledLabel : (sportActivityName ? sportActivityName : dictionary.activityDetailsPage.reservationLabel)}</Header>
+                    <Header backgroundColor={isActivityCanceled ? '#F46C63' : undefined}>{isActivityCanceled ? dictionary.activityDetailsPage.shortCanceledLabel : (sportActivityName ? sportActivityName : dictionary.activityDetailsPage.reservationLabel)}</Header>
                 </Box>
                 <Box sx={{
                    

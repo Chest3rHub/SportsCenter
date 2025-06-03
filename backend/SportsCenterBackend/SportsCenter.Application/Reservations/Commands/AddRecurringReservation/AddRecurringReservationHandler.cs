@@ -114,7 +114,9 @@ namespace SportsCenter.Application.Reservations.Commands.AddRecurringReservation
                         {
                             Date = currentDate,
                             Reason = $"Złe godziny pracy klubu. Klub w tym dniu ma godziny pracy od {workingHours.GodzinaOtwarcia:HH:mm} do {workingHours.GodzinaZamkniecia:HH:mm}.",
-                            ErrorCode = 1
+                            ErrorCode = 1,
+                            StartTime = workingHours.GodzinaOtwarcia,
+                            EndTime = workingHours.GodzinaZamkniecia
                         });
                     }
                 }
@@ -143,7 +145,9 @@ namespace SportsCenter.Application.Reservations.Commands.AddRecurringReservation
                         {
                             Date = currentDate,
                             Reason = $"Złe godziny pracy klubu. Klub w tym dniu ma godziny pracy od {workingHours.GodzinaOtwarcia:HH:mm} do {workingHours.GodzinaZamkniecia:HH:mm}.",
-                            ErrorCode = 2
+                            ErrorCode = 2,
+                            StartTime = workingHours.GodzinaOtwarcia,
+                            EndTime = workingHours.GodzinaZamkniecia
                         });
                     }
                 }
@@ -303,6 +307,8 @@ namespace SportsCenter.Application.Reservations.Commands.AddRecurringReservation
             public DateTime Date { get; set; }
             public string Reason { get; set; }
             public int? ErrorCode { get; set; }
+            public TimeOnly? StartTime { get; set; }
+            public TimeOnly? EndTime { get; set; }
         }
 
         private async Task<decimal> CalculateCostAsync(AddRecurringReservation request, DateTime startTime, DateTime endTime, CancellationToken cancellationToken)

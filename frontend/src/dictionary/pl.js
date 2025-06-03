@@ -705,6 +705,7 @@ export default {
     costLabel: 'Koszt',
     successLabel: 'Sukces!',
     savedSuccessLabel: 'Udało się zapisać uczestnictwo!',
+    cancelSuccessLabel: 'Udało się odwołać rezerwację!',
     clickAnywhereLabel: 'Kliknij w dowolne miejsce ekranu.',
     failureLabel: 'Błąd!',
     clickAnywhereFailureLabel: 'Kliknij w dowolne miejsce ekranu.',
@@ -788,6 +789,11 @@ export default {
     sportActivityLabel: 'Zajęcia - ',
     levelLabel: 'Poziom:',
     noUpcomingEventsLabel: 'Brak nadchodzących zajęć / rezerwacji w tym tygodniu'
+  },
+  notFoundPage:{
+    notFoundTitle:'Nie znaleziono strony',
+    notFoundMessage:'Strona, której szukasz, nie istnieje lub została przeniesiona.',
+    homeLabel:'Strona główna'
   }
 
 };

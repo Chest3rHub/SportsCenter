@@ -703,6 +703,7 @@ reservationsSummaryPage: {
     costLabel: 'Cost',
     successLabel: 'Success!',
     savedSuccessLabel: 'You have successfully signed up!',
+    cancelSuccessLabel: 'Canceled reservation successfully!',
     clickAnywhereLabel: 'Click anywhere on the screen.',
     failureLabel: 'Error!',
     clickAnywhereFailureLabel: 'Click anywhere on the screen.',
@@ -785,6 +786,10 @@ reservationsSummaryPage: {
     sportActivityLabel: 'Training - ',
     levelLabel: 'Level:',
     noUpcomingEventsLabel: 'No upcoming trainings/reservations this week'
-  }
-
+  },
+  notFoundPage: {
+    notFoundTitle: 'Page not found',
+    notFoundMessage: 'The page you are looking for does not exist or has been moved.',
+    homeLabel: 'Home'
+  }, 
 };

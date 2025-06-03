@@ -4,6 +4,7 @@ using SportsCenter.Application.Exceptions.ClientsExceptions;
 using SportsCenter.Application.Exceptions.EmployeesException;
 using SportsCenter.Application.Exceptions.EmployeesExceptions;
 using SportsCenter.Application.Exceptions.ReservationExceptions;
+using SportsCenter.Application.Exceptions.SportActivitiesExceptions;
 using SportsCenter.Application.Reservations.Commands.AddReservation;
 using SportsCenter.Core.Entities;
 using SportsCenter.Core.Repositories;
@@ -147,6 +148,41 @@ namespace SportsCenter.Application.Reservations.Commands.AddRecurringReservation
 
                 if (isValidHours)
                 {
+
+                    //czy w tym czasie klient jest zapisany na inne zaj lub ma zlozona rezerwacje
+                    DateTime startDateTime = currentDate.Date
+                        .AddHours(request.StartTime.Hour)
+                        .AddMinutes(request.StartTime.Minute);
+
+                    DateTime endDateTime = currentDate.Date
+                        .AddHours(request.EndTime.Hour)
+                        .AddMinutes(request.EndTime.Minute);
+
+                    var isClientAvailable = await _reservationRepository.IsClientAvailableForPeriodAsync(
+                        request.ClientId,
+                        startDateTime,
+                        endDateTime, 
+                        cancellationToken);
+
+                    if (!isClientAvailable)
+                    {
+                        failedReservations.Add(new FailedReservation
+                        {
+                            Date = currentDate,
+                            Reason = $"Klient ma już inną rezerwację lub zajęcia."
+                        });
+
+                        currentDate = request.Recurrence switch
+                        {
+                            "Daily" => currentDate.AddDays(1),
+                            "Weekly" => currentDate.AddDays(7),
+                            "BiWeekly" => currentDate.AddDays(14),
+                            "Monthly" => currentDate.AddMonths(1),
+                            _ => throw new Exception("Invalid recurrence value")
+                        };
+                        continue;
+                    }
+
                     bool isCourtAvailable = await _courtRepository.IsCourtAvailableAsync(request.CourtId, currentDate, endDate, cancellationToken);
                     bool isTrainerAvailable = true;
 

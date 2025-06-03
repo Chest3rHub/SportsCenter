@@ -91,14 +91,14 @@ namespace SportsCenter.Infrastructure.DAL.Repositories
             var reservation = await _dbContext.Rezerwacjas
                 .FirstOrDefaultAsync(r => r.RezerwacjaId == reservationId, cancellationToken);        
 
-            if (reservation.CzyOplacona == true)
-            {
-                var client = await _dbContext.Klients
-                    .FirstOrDefaultAsync(c => c.KlientId == reservation.KlientId, cancellationToken);
+            //if (reservation.CzyOplacona == true)
+            //{
+            //    var client = await _dbContext.Klients
+            //        .FirstOrDefaultAsync(c => c.KlientId == reservation.KlientId, cancellationToken);
 
-                client.Saldo += reservation.Koszt;
-                reservation.CzyZwroconoPieniadze = true;
-            }
+            //    client.Saldo += reservation.Koszt;
+            //    reservation.CzyZwroconoPieniadze = true;
+            //}
             reservation.CzyOdwolana = true;
             await _dbContext.SaveChangesAsync(cancellationToken);
         }
@@ -137,8 +137,8 @@ namespace SportsCenter.Infrastructure.DAL.Repositories
             var hasReservationConflict = await _dbContext.Rezerwacjas
                 .AnyAsync(r =>
                     r.KlientId == clientId &&
-                    r.DataOd < endDateTime &&
-                    r.DataDo > startDateTime &&
+                    r.DataOd <= endDateTime &&
+                    r.DataDo >= startDateTime &&
                     r.CzyOdwolana == false,
                     cancellationToken);
 

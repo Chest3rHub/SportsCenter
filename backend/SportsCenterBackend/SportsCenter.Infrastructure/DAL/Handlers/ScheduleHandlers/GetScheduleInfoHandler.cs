@@ -208,7 +208,8 @@ internal class GetScheduleInfoHandler : IRequestHandler<GetScheduleInfo, List<Sc
                             LastName = ik.Klient.KlientNavigation.Nazwisko,
                             Email = ik.Klient?.KlientNavigation.Email,
                             IsPaid = ik.CzyOplacone,
-                            IsSigned = ik.DataWypisu == null
+                            IsSigned = ik.DataWypisu == null,
+                            IsMoneyRefounded = ik.CzyZwroconoPieniadze
                          })                  
                         .ToList(),
                         ActivityIdToPay = scheduledClass.InstancjaZajec
@@ -258,7 +259,8 @@ internal class GetScheduleInfoHandler : IRequestHandler<GetScheduleInfo, List<Sc
                             Email = ik.Klient?.KlientNavigation.Email,
                             LastName = ik.Klient.KlientNavigation.Nazwisko,
                             IsPaid = null, //trener tego nie powinien widziec
-                            IsSigned = ik.DataWypisu == null
+                            IsSigned = ik.DataWypisu == null,
+                            IsMoneyRefounded = ik.CzyZwroconoPieniadze
                         })
                         .ToList()
                 };

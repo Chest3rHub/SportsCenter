@@ -111,7 +111,7 @@ builder.Services.AddCors(options =>
     options.AddPolicy("CorsPolicy", builder =>
     {
         builder
-            .WithOrigins("http://localhost:3000","https://localhost:3000", "localhost:3000")
+            .WithOrigins("http://localhost:3000","https://localhost:3000", "localhost:3000", "https://mango-sea-013dd3203.6.azurestaticapps.net")
             .AllowAnyMethod()
             .AllowAnyHeader()
             .AllowCredentials();

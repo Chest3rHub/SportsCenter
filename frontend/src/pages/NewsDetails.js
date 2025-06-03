@@ -31,36 +31,21 @@ export default function NewsDetails() {
                 height={"53vh"}>
                 <Box
                     sx={{
-                        display: 'grid',
-                        gridTemplateColumns: '33% 63%',
+                        display: 'flex',
+                        
                         gap: '1vw',
                         minHeight: '47vh',
                         marginBottom: '1vh',
                     }}
                 >
-                    <Box
-                        sx={{
-                            backgroundColor: 'white',
-                            height: '28vh',
-                            width: '28vh',
-                            display: 'flex',
-                            justifyContent: 'center',
-                            borderRadius: '20px',
-                            // lewa kolumna ze zdjeciem
-                        }}
-                    >
-                        <Typography sx={{
-                            margin: 'auto',
-                        }}>
-                            image...
-                        </Typography>
-                    </Box>
+                    
 
                     <Box
                         sx={{
                             overflowY: 'auto',        
                             maxHeight: '45vh',
                             borderRadius:'5px',
+                            padding:'1rem'
                             // mozna przewijac tekst w dol jak jest zbyt dlugi 
                             // prawa kolumna z contentem
                         }}
@@ -69,7 +54,7 @@ export default function NewsDetails() {
                             color: "black",
                             textAlign: "left",
                             overflow: "hidden",
-                            fontSize:'1.2rem',
+                            fontSize:'1.6rem',
                         }}>
                             {oneNewsDetails.content}
 

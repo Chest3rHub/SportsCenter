@@ -113,7 +113,8 @@ namespace SportsCenter.Application.Reservations.Commands.AddRecurringReservation
                         failedReservations.Add(new FailedReservation
                         {
                             Date = currentDate,
-                            Reason = $"Złe godziny pracy klubu. Klub w tym dniu ma godziny pracy od {workingHours.GodzinaOtwarcia:HH:mm} do {workingHours.GodzinaZamkniecia:HH:mm}."
+                            Reason = $"Złe godziny pracy klubu. Klub w tym dniu ma godziny pracy od {workingHours.GodzinaOtwarcia:HH:mm} do {workingHours.GodzinaZamkniecia:HH:mm}.",
+                            ErrorCode = 1
                         });
                     }
                 }
@@ -141,7 +142,8 @@ namespace SportsCenter.Application.Reservations.Commands.AddRecurringReservation
                         failedReservations.Add(new FailedReservation
                         {
                             Date = currentDate,
-                            Reason = $"Złe godziny pracy klubu. Klub w tym dniu ma godziny pracy od {workingHours.GodzinaOtwarcia:HH:mm} do {workingHours.GodzinaZamkniecia:HH:mm}."
+                            Reason = $"Złe godziny pracy klubu. Klub w tym dniu ma godziny pracy od {workingHours.GodzinaOtwarcia:HH:mm} do {workingHours.GodzinaZamkniecia:HH:mm}.",
+                            ErrorCode = 2
                         });
                     }
                 }
@@ -169,7 +171,8 @@ namespace SportsCenter.Application.Reservations.Commands.AddRecurringReservation
                         failedReservations.Add(new FailedReservation
                         {
                             Date = currentDate,
-                            Reason = $"Klient ma już inną rezerwację lub zajęcia."
+                            Reason = $"Klient ma już inną rezerwację lub zajęcia.",
+                            ErrorCode = 3
                         });
 
                         currentDate = request.Recurrence switch
@@ -299,6 +302,7 @@ namespace SportsCenter.Application.Reservations.Commands.AddRecurringReservation
         {
             public DateTime Date { get; set; }
             public string Reason { get; set; }
+            public int? ErrorCode { get; set; }
         }
 
         private async Task<decimal> CalculateCostAsync(AddRecurringReservation request, DateTime startTime, DateTime endTime, CancellationToken cancellationToken)

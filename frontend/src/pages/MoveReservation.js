@@ -288,12 +288,16 @@ function MoveReservation() {
     }
 
     // czy oryginalny trener nadal dostępny
-    const trainerIds = availableTrainers.map(t => t.id);
-    if (!trainerIds.includes(reservationTrainerId)) {
-      setTrainerNotAvailableError(true);
-      return;
-    } else {
+    if (reservationTrainerId == null) {
       setTrainerNotAvailableError(false);
+    } else {
+      const trainerIds = availableTrainers.map(t => t.id);
+      if (!trainerIds.includes(reservationTrainerId)) {
+        setTrainerNotAvailableError(true);
+        return;
+      } else {
+        setTrainerNotAvailableError(false);
+      }
     }
 
     const makeIsoDateTime = (date, time) => `${date}T${time}:00`;

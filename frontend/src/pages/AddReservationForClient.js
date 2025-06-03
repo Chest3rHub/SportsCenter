@@ -51,6 +51,7 @@ export default function AddReservationForClient() {
   const [recurrenceEndDateError, setRecurrenceEndDateError] = useState(false);
 
   const [reservationProposals, setReservationProposals] = useState([]);
+  const [failedReservations, setFailedReservations] = useState([])
   const [selectedCourtIds, setSelectedCourtIds] = useState({});
   const [selectedTrainerIds, setSelectedTrainerIds] = useState({});
   const [courtIdMissingError, setCourtIdMissingError] = useState({});
@@ -440,6 +441,23 @@ export default function AddReservationForClient() {
     return valid;
   }
 
+  function determineFailedReservationReasonByResponseCode(responseCode, startTime, endTime) {
+    switch(responseCode) {
+      case 1:
+        const from = startTime.slice(0, 5);
+        const to   = endTime.slice(0, 5);
+        return dictionary.addReservationForClientPage.workingHoursError1 + from + dictionary.addReservationForClientPage.workingHoursError1 + to;
+      case 2:
+        const from2 = startTime.slice(0, 5);
+        const to2   = endTime.slice(0, 5);
+        return dictionary.addReservationForClientPage.workingHoursError1 + from2 + dictionary.addReservationForClientPage.workingHoursError1 + to2;
+      case 3:
+        return dictionary.addReservationForClientPage.alreadyHasActivityLabel;
+      default: 
+        return dictionary.addReservationForClientPage.savedFailureLabel;
+    }
+  }
+
   function determineFailTextByResponseCode(responseCode) {
     switch (responseCode) {
       case 411:
@@ -512,14 +530,21 @@ export default function AddReservationForClient() {
       }
 
       const resultData = await response.json();
-      if (resultData.reservationProposals && resultData.reservationProposals.length > 0) {
-        setReservationProposals(
-          resultData.reservationProposals.map((p, i) => ({
-            ...p,
-            _uid: `${p.date}-${i}`
-          }))
-        );
+
+      setFailedReservations(resultData.failedReservations || []);
+
+      const proposals = resultData.reservationProposals || [];
+      setReservationProposals(
+        proposals.map((p, i) => ({
+          ...p,
+          _uid: `${p.date}-${i}`
+        }))
+      );
+
+      if ((resultData.failedReservations && resultData.failedReservations.length > 0) || (proposals.length > 0)) {
+
         setOpenProposalDialog(true);
+
       } else {
         handleOpenSuccess();
         setFormData({
@@ -875,6 +900,41 @@ export default function AddReservationForClient() {
               <Typography sx={{ color: "#ccc", fontSize: "1rem", mb: 2, textAlign: "center" }}>
                 {dictionary.addReservationForClientPage.closeInfo}
               </Typography>
+
+              {failedReservations.length > 0 && (
+                <Box sx={{ mb: 3, p: 2, backgroundColor: "#ffe7e7", borderRadius: 1 }}>
+                  <Typography sx={{ fontWeight: "bold", color: "red", mb: 1 }}>
+                    {dictionary.addReservationForClientPage.failedReservationsHeader || ""}
+                  </Typography>
+                  {failedReservations.map((f, idx) => {
+                    const displayDate = new Date(f.date).toLocaleString("pl-PL", {
+                      year: "numeric",
+                      month: "2-digit",
+                      day: "2-digit",
+                      hour: "2-digit",
+                      minute: "2-digit"
+                    });
+                    
+                  const reasonText = determineFailedReservationReasonByResponseCode(
+                    f.errorCode,
+                    f.startTime || "", 
+                    f.endTime   || ""
+                  );
+
+                  return (
+                  <Box key={idx} sx={{ mb: 1 }}>
+                    <Typography>
+                      {displayDate}
+                      {": "}
+                      <Typography component="span" color="error">
+                        {reasonText}
+                      </Typography>
+                    </Typography>
+                  </Box>
+                  );
+                  })}
+                </Box>
+              )}
 
               {reservationProposals.length > 0 ? (
                 reservationProposals.map(p => {

@@ -414,6 +414,10 @@ addReservationForClientPage: {
  employeeAlreadyDismissedException: 'The specified employee is no longer employed',
  trainerNotAvailableError: 'The specified trainer is not available at the chosen times',
  alreadyHasActivityLabel: 'The client already has another reservation or activity at the specified time',
+ workingHoursError1: "Invalid club working hours. The club’s working hours on this day are from ",
+ workingHoursError2: " to ",
+ workingHoursError: "Invalid club working hours",
+ failedReservationsHeader: "Failed reservations:"
 },
 clientReservations: {
   title: 'My Reservations',

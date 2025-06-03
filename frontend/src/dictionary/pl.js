@@ -417,6 +417,10 @@ export default {
     employeeAlreadyDismissedException: 'Podany pracownik już nie jest zatrudniony',
     trainerNotAvailableError: 'Podany trener nie jest dostępny w wyznaczonych godzinach',
     alreadyHasActivityLabel: 'Klient ma już inną rezerwację lub zajęcia w podanym czasie',
+    workingHoursError1: 'Złe godziny pracy klubu. Klub w tym dniu ma godziny pracy od ',
+    workingHoursError2: ' do ',
+    workingHoursError: 'Złe godziny pracy klubu',
+    failedReservationsHeader: 'Nieudane rezerwacje:'
   },
   clientReservations: {
     title: 'Moje rezerwacje',

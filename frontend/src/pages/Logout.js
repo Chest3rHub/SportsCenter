@@ -1,14 +1,21 @@
 import { useEffect, useContext } from "react";
 import { SportsContext } from "../context/SportsContext";
 import { Box, Typography } from "@mui/material";
+import logout from "../api/logout";
 
 export default function Logout(){
-    const { role, token, setRole, setToken, dictionary} = useContext(SportsContext);
-    useEffect(()=>{
-        setRole('Anonim');
+    const { role, token, setRole, setToken, dictionary, setRouter} = useContext(SportsContext);
+    useEffect(() => {
         setToken(null);
-        document.cookie = "accessToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-    },[]);
+        logout()
+            .then(response => response.json())
+            .then(data => {
+                setRole('Anonim');
+            })
+            .catch(error => {
+                console.error('Błąd podczas wywoływania logout:', error);
+            });
+    }, []);
 
     return (
         <Box sx={{

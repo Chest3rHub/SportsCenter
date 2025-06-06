@@ -50,7 +50,6 @@ import NewClientReservation from "../pages/NewClientReservation";
 import ForgotPassword from "../pages/ForgotPassword";
 import CoachDashboard from "../pages/CoachDashboard";
 import CleanerDashboard from "../pages/CleanerDashboard";
-// pozmieniac dla klienta na komponenty trasy itd
 
 const clientRouter = [
     {
@@ -129,7 +128,6 @@ const clientRouter = [
     }
 ];
     
-// pozmieniac dla wlasciciela na komponenty trasy itd
     const ownerRouter = [
         {
             path: "/",
@@ -255,7 +253,6 @@ const clientRouter = [
         }
     ];
 
-    // pozmieniac dla trenera na komponenty trasy itd
     const coachRouter = [
         {
             path: "/",
@@ -321,7 +318,6 @@ const clientRouter = [
         }
     ];
 
-    // pozmieniac dla sprzataczki na komponenty trasy itd
     const cleanerRouter = [
         {
             path: "/",
@@ -379,7 +375,6 @@ const clientRouter = [
         }
     ];
 
-    // pozmieniac dla pracownika adm. na komponenty trasy itd
     const employeeRouter = [
         {
             path: "/",
@@ -485,8 +480,6 @@ const clientRouter = [
         }
     ];
     
-
-    // pozmieniac dla niezalogowanego usera na komponenty trasy itd
     const baseRouter = [
         {
             path: "/",
@@ -556,15 +549,17 @@ const clientRouter = [
             router = cleanerRouter;
         } else if (role === "Pracownik administracyjny"){
             router = employeeRouter;
+        } else if(role ==='Anonim'){
+            router = baseRouter;
         } else {
             router = baseRouter;
         }
+        console.log(router);
         return createBrowserRouter(router);
     }
 
 export default function SportsCenterRouter(props){
-    // tutaj mozna bedzie dodac rozpoznawanie slownika z jezykiem polskim i angielskim
-    // a rola bedzie wyciagana z props (pewnie backend ja bedzie wysylal)
+
     const { role,  router, setRouter } = useContext(SportsContext);
 
     useEffect(() => {
@@ -572,7 +567,7 @@ export default function SportsCenterRouter(props){
             const newRouter = getRouter(role); 
             setRouter(newRouter); 
         } else {
-            const newRouter = getRouter('anonymous');
+            const newRouter = getRouter('Anonim');
             setRouter(newRouter);
         }
     }, [role]); 

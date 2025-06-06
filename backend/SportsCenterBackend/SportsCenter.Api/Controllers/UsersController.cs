@@ -85,6 +85,21 @@ namespace SportsCenter.Api.Controllers
                 return Unauthorized(new { message = ex.Message });
             }
         }
+        [HttpPost("logout")]
+        public IActionResult Logout()
+        {
+            var cookieOptions = new CookieOptions
+            {
+                HttpOnly = false,
+                Secure = true,
+                SameSite = SameSiteMode.None,
+                Expires = DateTimeOffset.UtcNow.AddDays(-1) 
+            };
+
+            Response.Cookies.Append("accessToken", "", cookieOptions);
+
+            return Ok(new { message = "Logged out successfully" });
+        }
 
         [Authorize(Roles = "Wlasciciel,Klient,Pomoc sprzatajaca,Trener,Pracownik administracyjny")]
         [HttpPut("change-password-yourself")]

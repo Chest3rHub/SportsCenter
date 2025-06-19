@@ -319,7 +319,7 @@ export default function OwnerDashboard() {
         </Box>
       </OrangeBackground>
 
-      <Box sx={{ marginTop: '20px', display: 'flex', justifyContent: 'center' }}>
+      <Box sx={{ marginTop: '20px', display: 'none', justifyContent: 'center' }}>
         <GreenButton 
           onClick={handleModifyHoursClick}
           style={{ width: 'auto', paddingX: '24px' }}
@@ -340,7 +340,7 @@ export default function OwnerDashboard() {
         </Typography>
       </OrangeBackground>
 
-      <Box sx={{ marginTop: '20px', display: 'flex', justifyContent: 'center' }}>
+      <Box sx={{ marginTop: '20px', display: 'none', justifyContent: 'center' }}>
         <GreenButton 
           onClick={handleModifyHoursClick}
           style={{ width: 'auto', paddingX: '24px' }}

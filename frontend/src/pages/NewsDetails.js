@@ -13,7 +13,6 @@ export default function NewsDetails() {
     const { dictionary }= useContext(SportsContext);
 
     const { oneNewsDetails, offsetFromLocation} = location.state || {};
-    console.log(oneNewsDetails);
     function handleCancel() {
         navigate('/news', {
             state: { offsetFromLocation }  

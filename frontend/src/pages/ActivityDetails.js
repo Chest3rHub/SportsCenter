@@ -22,7 +22,7 @@ export default function ActivityDetails() {
         navigate(-1);
     }
 
-    console.log(activityDetails)
+    
     const [isEquipmentIncluded, setIsEquipmentIncluded] = useState(false);
     const [failedSignUpLabel, setFailedSignUpLabel] = useState('')
 
@@ -167,11 +167,11 @@ export default function ActivityDetails() {
                 return response.json();
             })
             .then(data => {
-                console.log("Rezerwacja odwołana:", data);
+               // console.log("Rezerwacja odwołana:", data);
                 setOpenCancelSuccessBackdrop(true);
             })
             .catch(error => {
-                console.error("Błąd podczas odwoływania rezerwacji:", error);
+              //  console.error("Błąd podczas odwoływania rezerwacji:", error);
                 setCancelErrorMessage(error.message);
                 setOpenCancelErrorBackdrop(true);
                 //handleOpenFailure();

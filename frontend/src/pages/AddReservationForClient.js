@@ -93,7 +93,7 @@ export default function AddReservationForClient() {
         const clientsData = await clientsResponse.json();
         setClients(clientsData);
       } catch (error) {
-        console.error("Błąd podczas pobierania klientów:", error);
+      //  console.error("Błąd podczas pobierania klientów:", error);
       } finally {
         setIsLoading(false);
       }
@@ -105,7 +105,7 @@ export default function AddReservationForClient() {
   useEffect(() => {
     getCourts()
       .then(response => setCourts(response))
-      .catch(error => console.error("Błąd getCourts:", error));
+      .catch(() => {});
   }, []);
 
   // wszyscy trenerzy
@@ -115,7 +115,7 @@ export default function AddReservationForClient() {
         setTrainers(response);
         setAvailableTrainers(response); 
       })
-      .catch(error => console.error("Błąd getTrainers:", error));
+      .catch(() => {});
   }, []);
 
   // godziny otwarcia klubu
@@ -123,7 +123,7 @@ export default function AddReservationForClient() {
     getClubWorkingHours(-1)
       .then(res => res.json())
       .then(data => setWorkingDaysAndHours(data))
-      .catch(error => console.error("Błąd getClubWorkingHours:", error));
+      .catch(() => {});
   }, []);
 
  // obsluga bledow
@@ -241,13 +241,13 @@ export default function AddReservationForClient() {
               setCourtsError(false);
             }
           })
-          .catch(error => console.error("Błąd getAvailableCourts:", error));
+          .catch(() => {});
 
         getAvailableTrainers(isoStart, isoEnd)
           .then(response => {
             setAvailableTrainers(response);
           })
-          .catch(error => console.error("Błąd getAvailableTrainers:", error));
+          .catch(() => {});
       }
     } else {
       setAvailableCourts([]);
@@ -337,7 +337,7 @@ export default function AddReservationForClient() {
         .then(weekOffset => getClubWorkingHours(weekOffset - 1))
         .then(res => res.json())
         .then(data => setWorkingDaysAndHours(data))
-        .catch(error => console.error("Błąd getClubWorkingHours po zmianie daty:", error));
+        .catch(() => {});
     }
   }, [formData.date]);
 
@@ -561,7 +561,7 @@ export default function AddReservationForClient() {
         });
       }
     } catch (error) {
-      console.error("Błąd podczas rezerwacji:", error);
+    //  console.error("Błąd podczas rezerwacji:", error);
     }
   }
 
@@ -633,7 +633,7 @@ export default function AddReservationForClient() {
         setProposalErrors(prev => ({ ...prev, [uid]: failText }));
       }
     } catch (error) {
-      console.error("Błąd:", error);
+    //  console.error("Błąd:", error);
     }
   };
 

@@ -105,7 +105,7 @@ function ChangePassword() {
 
       if (!response.ok) {
         const errorData = await response.json();
-        console.log(errorData);
+      //  console.log(errorData);
         handleError('Blad zmiany hasła... sprawdz konsole');
       } else {
         setFormData({

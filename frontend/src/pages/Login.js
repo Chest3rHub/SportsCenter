@@ -55,11 +55,11 @@ function Login() {
 
     try {
       const response = await loginRequest(loginData);
-      console.log(response);
+      
       if (response.ok) {
 
         const data = await response.json();
-        console.log("Zalogowano pomyślnie:", data);
+        
         setRole(data.role);
         
         setServerError(false);

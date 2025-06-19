@@ -80,7 +80,7 @@ function AddDepositToClient() {
       const response = await addDepositToClient(formData, token);
       if (!response.ok) {
         const errorData = await response.json();
-        console.error('Błąd odpowiedzi z API:', errorData);
+     //   console.error('Błąd odpowiedzi z API:', errorData);
         handleOpenFailure();
       } else {
         setFormData({
@@ -90,7 +90,7 @@ function AddDepositToClient() {
         handleOpenSuccess();
       }
     } catch (error) {
-      console.error('Błąd doładowania salda:', error);
+   //   console.error('Błąd doładowania salda:', error);
       handleOpenFailure();
     }
   };

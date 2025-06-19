@@ -9,7 +9,7 @@ export default async function getEmployeesPositions() {
         credentials: 'include',
     });
     if (!response.ok) {
-        throw new Error('Failed to fetch employee positions');
+      //  throw new Error('Failed to fetch employee positions');
     }
 
     return response.json();

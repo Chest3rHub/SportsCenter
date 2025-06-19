@@ -64,7 +64,7 @@ function MoveReservation() {
   useEffect(() => {
     getCourts()
       .then(response => setCourts(response))
-      .catch(error => console.error('Błąd podczas getCourts:', error));
+      .catch(error => {});
   }, []);
 
   useEffect(() => {
@@ -73,14 +73,14 @@ function MoveReservation() {
         setTrainers(response);
         setAvailableTrainers(response);
       })
-      .catch(error => console.error('Błąd podczas getTrainers:', error));
+      .catch(error => {});
   }, []);
 
   useEffect(() => {
     getClubWorkingHours(0)
       .then(res => res.json())
       .then(data => setWorkingDaysAndHours(data))
-      .catch(error => console.error('Błąd podczas getClubWorkingHours:', error));
+      .catch(error => {});
   }, []);
 
   // walidacja daty 
@@ -105,7 +105,7 @@ function MoveReservation() {
           })
           .then(res => res.json())
           .then(data => setWorkingDaysAndHours(data))
-          .catch(error => console.error('Błąd podczas getClubWorkingHours po zmianie daty:', error));
+          .catch(error => {});
       }
     } else {
       // jeśli pole pustej daty → ani dataError, ani żaden inny błąd nie ustawiamy
@@ -216,11 +216,11 @@ function MoveReservation() {
               setCourtsError('');
             }
           })
-          .catch(error => console.error('Błąd podczas getAvailableCourts:', error));
+          .catch(error => {});
 
         getAvailableTrainers(isoStart, isoEnd)
           .then(response => setAvailableTrainers(response))
-          .catch(error => console.error('Błąd podczas getAvailableTrainers:', error));
+          .catch(error => {});
       } else {
         // jeśli wystąpił błąd w czasie, to nie filtrujemy trenerów
         setAvailableTrainers(trainers);
@@ -318,7 +318,7 @@ function MoveReservation() {
         setFormData({ date: '', newStartTime: '', newEndTime: '' });
       }
     } catch (error) {
-      console.error('Błąd podczas przenoszenia rezerwacji:', error);
+     // console.error('Błąd podczas przenoszenia rezerwacji:', error);
       setFailedSignUpLabel(dictionary.moveReservation.savedFailureLabel);
       setOpenFailureBackdrop(true);
     }

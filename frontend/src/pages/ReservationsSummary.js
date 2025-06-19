@@ -71,14 +71,14 @@ export default function ReservationsSummary() {
     
             if (!response.ok) {
                 const errorText = await response.text();
-                console.error("API responded with error:", errorText);
+              //  console.error("API responded with error:", errorText);
                 throw new Error('Failed to fetch reservations summary');
             }
     
             const data = await response.json();
             setReservationsSummary(data.summariesByRezerwacja || []);
         } catch (error) {
-            console.error("Error fetching reservations summary:", error);
+          //  console.error("Error fetching reservations summary:", error);
         } finally {
             setLoading(false);
         }

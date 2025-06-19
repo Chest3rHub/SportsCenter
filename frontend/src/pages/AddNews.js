@@ -127,8 +127,8 @@ function AddNews() {
 
       if (!response.ok) {
         const errorData = await response.json();
-        console.log(errorData);
-        handleError('Blad dodawania aktualności... sprawdz konsole');
+      //  console.log(errorData);
+      //  handleError('Blad dodawania aktualności... sprawdz konsole');
       } else {
         //navigate('/add-news');
         setFormData({
@@ -141,7 +141,7 @@ function AddNews() {
 
     } catch (error) {
       //console.error('Błąd dodawania aktualności:', error);
-      handleError('Blad dodawania aktualności... sprawdz konsole');
+    //  handleError('Blad dodawania aktualności... sprawdz konsole');
 
     }
   };

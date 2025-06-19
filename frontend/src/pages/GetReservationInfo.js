@@ -44,7 +44,7 @@ export default function GetReservationInfo() {
                     status, 
                 });
               } catch (error) {
-                  console.error("Błąd podczas pobierania danych rezerwacji:", error);
+              //    console.error("Błąd podczas pobierania danych rezerwacji:", error);
               }
             };
             fetchReservationData();

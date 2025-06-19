@@ -75,14 +75,14 @@ export default function SportActivities() {
     
             if (!response.ok) {
                 const errorText = await response.text();
-                console.error("API responded with error:", errorText);
-                throw new Error('Failed to fetch activities summary');
+              //  console.error("API responded with error:", errorText);
+              //  throw new Error('Failed to fetch activities summary');
             }
     
             const data = await response.json();
             setActivitiesSummary(data.summariesByZajecia || []);
         } catch (error) {
-            console.error("Error fetching activities summary:", error);
+          //  console.error("Error fetching activities summary:", error);
         } finally {
             setLoading(false);
         }

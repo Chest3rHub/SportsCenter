@@ -29,7 +29,7 @@ export default function CleanerDashboard() {
           setLatestNews([...newsData].sort((a, b) => new Date(b.date) - new Date(a.date))[0]);
         }
       } catch (error) {
-        console.error('Error fetching news:', error);
+      //  console.error('Error fetching news:', error);
       } finally {
         setLoading(false);
       }
@@ -52,7 +52,7 @@ export default function CleanerDashboard() {
           setOpeningHours([]);
         }
       } catch (error) {
-        console.error('Error fetching working hours:', error);
+      //  console.error('Error fetching working hours:', error);
         setOpeningHours([]);
       } finally {
         setHoursLoading(false);

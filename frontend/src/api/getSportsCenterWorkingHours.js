@@ -10,6 +10,5 @@ export default async function getSportsCenterWorkingHours(startDate) {
     });
 
     const data = await response.json();
-    console.log('Odpowiedz z backendu: '+ response)
     return data;
 }

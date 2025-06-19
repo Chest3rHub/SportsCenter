@@ -103,7 +103,6 @@ export default function Timetable() {
                 return response.json();
             })
             .then(data => {
-                console.log('Odpowiedź z API:', data);
                 if (Array.isArray(data)) {
                     // kombinacje zeby uzyskac ten dayIndex potrzebny do mapowania w kalendarzu...
                     // day: 0 to pon, day: 1 to wt itd
@@ -128,12 +127,12 @@ export default function Timetable() {
 
                     setEvents(processedEvents);
                 } else {
-                    console.error('Otrzymane dane nie są tablicą:', data);
+                 //   console.error('Otrzymane dane nie są tablicą:', data);
                 }
                 // setLoading(false);
             })
             .catch(error => {
-                console.error('Błąd podczas wywoływania getSchedule:', error);
+              //  console.error('Błąd podczas wywoływania getSchedule:', error);
             });
     }, [offset]);
 

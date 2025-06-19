@@ -35,7 +35,7 @@ export default function OwnerDashboard() {
           setLatestNews([...newsData].sort((a, b) => new Date(b.date) - new Date(a.date))[0]);
         }
       } catch (error) {
-        console.error("Error fetching news:", error);
+       // console.error("Error fetching news:", error);
       } finally {
         setLoading(false);
       }
@@ -63,7 +63,7 @@ export default function OwnerDashboard() {
           setTasks([]);
         }
       } catch (error) {
-        console.error("Error fetching tasks:", error);
+      //  console.error("Error fetching tasks:", error);
         setTasks([]);
       } finally {
         setTasksLoading(false);
@@ -87,7 +87,7 @@ export default function OwnerDashboard() {
           setWorkingHours([]);
         }
       } catch (error) {
-        console.error("Error fetching working hours:", error);
+      //error("Error fetching working hours:", error);
         setWorkingHours([]);
       } finally {
         setHoursLoading(false);

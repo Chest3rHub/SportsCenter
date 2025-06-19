@@ -13,7 +13,7 @@ export default function Logout(){
                 setRole('Anonim');
             })
             .catch(error => {
-                console.error('Błąd podczas wywoływania logout:', error);
+                //console.error('Błąd podczas wywoływania logout:', error);
             });
     }, []);
 

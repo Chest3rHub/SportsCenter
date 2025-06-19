@@ -85,7 +85,7 @@ function AddReservationYourself() {
                 setCourts(courtsData);
                 await fetchWorkingHours(0);
             } catch (error) {
-                console.error('Błąd podczas pobierania trenerów lub kortów:', error);
+           //     console.error('Błąd podczas pobierania trenerów lub kortów:', error);
             } finally {
                 setIsLoading(false);
             }
@@ -128,7 +128,7 @@ function AddReservationYourself() {
                 const trainersResponse = await getAvailableTrainers(startUTC, endUTC);
                 setAvailableTrainers(trainersResponse.length ? trainersResponse : []);
             } catch (error) {
-                console.error('Error fetching available trainers:', error);
+              //  console.error('Error fetching available trainers:', error);
                 setAvailableTrainers([]);
             }
         };
@@ -151,7 +151,7 @@ function AddReservationYourself() {
                 setWorkingHours(enhancedData);
             }
         } catch (error) {
-            console.error('Error fetching working hours:', error);
+         //   console.error('Error fetching working hours:', error);
         }
     };
 
@@ -185,7 +185,7 @@ function AddReservationYourself() {
                 setExistingReservations(data);
             }
         } catch (error) {
-            console.error('Error fetching resrvations:', error);
+          //  console.error('Error fetching resrvations:', error);
         }
     };
 
@@ -419,13 +419,13 @@ function AddReservationYourself() {
 
             if (!response.ok) {
                 const errorData = await response.json();
-                console.log(errorData);        
-                handleError('Blad rezerwacji... sprawdz konsole');
+              //  console.log(errorData);        
+             //   handleError('Blad rezerwacji... sprawdz konsole');
             } else {
                 navigate('/my-reservations');
             }
         } catch (error) {
-            console.error('Błąd rezerwacji:', error);
+         //   console.error('Błąd rezerwacji:', error);
         }
     };
 

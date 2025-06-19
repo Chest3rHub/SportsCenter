@@ -94,12 +94,12 @@ function AddClientDiscount() {
         const response = await addClientDiscount(formData, token);
         if (!response.ok) {
           const errorData = await response.json();
-          console.log('Błąd odpowiedzi z API:', errorData);
+        //  console.log('Błąd odpowiedzi z API:', errorData);
           if (errorData.errors) {
             
-            console.error('Szczegóły błędów walidacji:', errorData.errors);
+        //    console.error('Szczegóły błędów walidacji:', errorData.errors);
         }
-        console.log(formData.clientEmail);
+        
           handleOpenFailure();
         } else {
           setFormData({
@@ -110,7 +110,7 @@ function AddClientDiscount() {
           handleOpenSuccess();
         }
       } catch (error) {
-        console.error('Błąd dodawania zniżki:', error);
+     //   console.error('Błąd dodawania zniżki:', error);
         handleOpenFailure();
       }
     };

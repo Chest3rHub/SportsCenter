@@ -30,21 +30,17 @@ export default function SportActivities() {
     const maxActivitiesPerPage = 6;
     const activitiesRequiredToEnablePagination = 7;
 
-    useEffect(() => {
-        console.log('Aktualny offset:', offset);
-    
+    useEffect(() => {    
         getScheduleActivities(offset)
             .then(response => {
-                console.log('Response:', response);
                 return response.json();
             })
             .then(data => {
-                console.log('Odpowiedź z API:', data);
                 setActivities(data);
                 setLoading(false);
             })
             .catch(error => {
-                console.error('Błąd podczas wywoływania getScheduleActivities:', error);
+            //    console.error('Błąd podczas wywoływania getScheduleActivities:', error);
             });
     }, [offset, stateToTriggerUseEffectAfterDeleting]);
     
@@ -69,7 +65,7 @@ export default function SportActivities() {
       
           if (!response.ok) {
             const errorData = await response.json();
-            console.error("Błąd usuwania:", errorData);
+          //  console.error("Błąd usuwania:", errorData);
             alert("Wystąpił błąd podczas usuwania zajęć.");
             return;
           }
@@ -78,7 +74,7 @@ export default function SportActivities() {
           handleCloseModal();
           setStateToTriggerUseEffectAfterDeleting(prev => !prev);
         } catch (error) {
-          console.error("Błąd połączenia z serwerem:", error);
+       //   console.error("Błąd połączenia z serwerem:", error);
           alert("Nie udało się połączyć z serwerem.");
         }
       };

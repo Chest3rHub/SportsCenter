@@ -60,7 +60,7 @@ export default function Clients() {
             const data = await response.json();
             setClients(data);
         } catch (error) {
-            console.error('Error fetching clients:', error);
+         //   console.error('Error fetching clients:', error);
         } finally {
             setLoading(false);
         }
@@ -136,7 +136,7 @@ export default function Clients() {
         let minAgeError = '';
         let maxAgeError = '';
 
-        console.log("Wysyłam minAge:", minAge, "maxAge:", maxAge);
+        
 
 
         if (!minAge || !maxAge) {
@@ -170,7 +170,7 @@ export default function Clients() {
                 setOffset(0);
             })
             .catch(error => {
-                console.error("Błąd pobierania danych:", error);
+            //    console.error("Błąd pobierania danych:", error);
             });
     }
 

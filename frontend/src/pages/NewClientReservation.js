@@ -84,7 +84,7 @@ export default function NewClientReservation() {
             .then(data => {
             })
             .catch(error => {
-                console.error('Błąd podczas wywoływania get courts:', error);
+            //    console.error('Błąd podczas wywoływania get courts:', error);
             });
     }, []);
     useEffect(() => {
@@ -96,7 +96,7 @@ export default function NewClientReservation() {
             .then(data => {
             })
             .catch(error => {
-                console.error('Błąd podczas wywoływania get trainers:', error);
+            //    console.error('Błąd podczas wywoływania get trainers:', error);
             });
     }, []);
     useEffect(() => {
@@ -106,7 +106,7 @@ export default function NewClientReservation() {
                 setWorkingDaysAndHours(data);
             })
             .catch(error => {
-                console.error('Błąd podczas wywoływania getClubWorkingHours:', error);
+            //    console.error('Błąd podczas wywoływania getClubWorkingHours:', error);
             });
     }, []);
 
@@ -237,14 +237,13 @@ export default function NewClientReservation() {
 
             const startDate = new Date(formData.date);
             getWorkingHoursForSingleDay(startDate).then(weekOffset => {
-                console.log(weekOffset)
                 getClubWorkingHours(weekOffset)
                     .then(response => response.json())
                     .then(data => {
                         setWorkingDaysAndHours(data);
                     })
                     .catch(error => {
-                        console.error('Błąd podczas wywoływania getClubWorkingHours po zmianie daty:', error);
+                     //   console.error('Błąd podczas wywoływania getClubWorkingHours po zmianie daty:', error);
                     });
             });
         }
@@ -268,7 +267,7 @@ export default function NewClientReservation() {
             .then(data => {
             })
             .catch(error => {
-                console.error('Błąd podczas wywoływania get courts:', error);
+            //   console.error('Błąd podczas wywoływania get courts:', error);
             });
     }, [formData.endTime]);
 
@@ -284,7 +283,7 @@ export default function NewClientReservation() {
             .then(data => {
             })
             .catch(error => {
-                console.error('Błąd podczas wywoływania get courts:', error);
+             //   console.error('Błąd podczas wywoływania get courts:', error);
             });
     }, [formData.endTime]);
 
@@ -363,7 +362,7 @@ export default function NewClientReservation() {
                 }));
             }
         } catch (error) {
-            console.error('Błąd podczas rezerwacji:', error);
+           // console.error('Błąd podczas rezerwacji:', error);
             handleOpenFailure();
         }
     }

@@ -10,7 +10,7 @@ export default async function getAvailableTrainers(startTime, endTime) {
         credentials: 'include',
     });
     if (!response.ok) {
-        throw new Error('Failed to fetch trainers');
+     //   throw new Error('Failed to fetch trainers');
     }
     return await response.json()
 }

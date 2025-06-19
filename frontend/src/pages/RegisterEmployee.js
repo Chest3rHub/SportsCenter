@@ -48,7 +48,7 @@ function RegisterEmployee() {
       setPositions(data);
       return data;
     } catch (error) {
-      console.error('Błąd pobierania pozycji pracowników:', error);
+    // console.error('Błąd pobierania pozycji pracowników:', error);
       handleError('Nie udało się pobrać pozycji pracowników');
     }
   };
@@ -177,7 +177,6 @@ function RegisterEmployee() {
 
       if (!response.ok) {
         const errorData = await response.json();
-        console.log(errorData);
         if (errorData.message && errorData.message.includes('Email:')) {
           setEmailIsTakenError(true);
         } else {
@@ -188,7 +187,7 @@ function RegisterEmployee() {
       }
 
     } catch (error) {
-      console.error('Błąd rejestracji pracownika:', error);
+     // console.error('Błąd rejestracji pracownika:', error);
     }
   };
 

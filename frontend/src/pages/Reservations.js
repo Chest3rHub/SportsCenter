@@ -41,7 +41,7 @@ export default function Reservations() {
         setLoading(false);
       })
       .catch(error => {
-        console.error('Błąd podczas wywoływania getAllReservations:', error);
+      //  console.error('Błąd podczas wywoływania getAllReservations:', error);
       });
   }, [offset, stateToTriggerUseEffectAfterDeleting]);
 
@@ -123,11 +123,10 @@ export default function Reservations() {
         return response.json();
       })
       .then(data => {
-        console.log("Rezerwacja odwołana:", data);
         setStateToTriggerUseEffectAfterDeleting(prev => !prev);
       })
       .catch(error => {
-        console.error("Błąd podczas odwoływania rezerwacji:", error);
+      //  console.error("Błąd podczas odwoływania rezerwacji:", error);
         setCancelErrorMessage(error.message);
         setOpenCancelErrorBackdrop(true);
       });

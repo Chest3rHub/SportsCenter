@@ -38,7 +38,7 @@ export default function ClubWorkingHoursPage() {
             const data = await response.json();
             setWorkingHours(data);
         } catch (error) {
-            console.error('Error:', error);
+          //  console.error('Error:', error);
             setWorkingHours([]);
         } finally {
             setLoading(false);
@@ -151,7 +151,7 @@ export default function ClubWorkingHoursPage() {
         handleCloseModals();
         setConflicts([]);
     } catch (error) {
-        console.error('Error while trying to set special hours:', error);
+     //   console.error('Error while trying to set special hours:', error);
         
         if (error.response?.status === 409) {
             setConflicts(error.data?.conflicts || []);
@@ -180,7 +180,7 @@ export default function ClubWorkingHoursPage() {
             handleCloseModals();
             setConflicts([]);
         }  catch (error) {
-            console.error('Error while trying to set regular hours:', error);
+        //    console.error('Error while trying to set regular hours:', error);
             if (error.response?.status === 409) {
                 setConflicts(error.data?.conflicts || []);
             } else {

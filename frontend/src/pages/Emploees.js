@@ -36,12 +36,12 @@ export default function Employees() {
                 return response.json();
             })
             .then(data => {
-                console.log('Odpowiedź z API:', data);
+              //  console.log('Odpowiedź z API:', data);
                 setEmployees(data);
                 setLoading(false);
             })
             .catch(error => {
-                console.error('Błąd podczas wywoływania getEmployees:', error);
+             //   console.error('Błąd podczas wywoływania getEmployees:', error);
             });
     }, [offset, stateToTriggerUseEffectAfterDeleting]);
 
@@ -56,12 +56,12 @@ export default function Employees() {
         fireEmployee(id)
             .then(response => { })
             .then(data => {
-                console.log("Pracownik zwolniony:", data);
+             //   console.log("Pracownik zwolniony:", data);
                 setStateToTriggerUseEffectAfterDeleting((prev) => !prev);
 
             })
             .catch(error => {
-                console.error("Błąd podczas zwalniania pracownika:", error);
+             //   console.error("Błąd podczas zwalniania pracownika:", error);
             });
     }
 

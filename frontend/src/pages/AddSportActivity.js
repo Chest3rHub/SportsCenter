@@ -95,7 +95,7 @@ function AddSportActivity() {
                 const levelResponse = await getActivityLevelNames();
                 setLevels(levelResponse || []);
             } catch (error) {
-                console.error('Błąd pobierania poziomów trudności:', error);
+             //   console.error('Błąd pobierania poziomów trudności:', error);
                 setLevels([]);
             }
         };
@@ -153,7 +153,7 @@ function AddSportActivity() {
                 setAvailableCourts(courtsResponse || []);
     
             } catch (error) {
-                console.error('Error fetching availability or working hours:', error);
+             //   console.error('Error fetching availability or working hours:', error);
                 setAvailableTrainers([]);
                 setAvailableCourts([]);
                 setWorkingHoursError(false);
@@ -284,7 +284,7 @@ function AddSportActivity() {
       
           if (name === "startDate" && value) {
             const weekday = getWeekdayName(value);
-            console.log(weekday);
+          //  console.log(weekday);
             updatedData.dayOfWeek = weekday;
           }
       
@@ -316,7 +316,7 @@ function AddSportActivity() {
               }
         
             } catch (error) {
-                console.error('Błąd dodawania:', error);
+             //   console.error('Błąd dodawania:', error);
                 handleError(getErrorMessage('GENERIC_ERROR', dictionary));
             }
           };

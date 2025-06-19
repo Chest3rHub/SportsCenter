@@ -59,25 +59,11 @@ export default function GetActivityInfo() {
                 const data = await response.json();
                 setActivityData(data);
               } catch (error) {
-                  console.error("Błąd podczas pobierania danych zajęć:", error);
+                //  console.error("Błąd podczas pobierania danych zajęć:", error);
               }
             };
             fetchActivityData();
-      }, [id, token]); 
-
-      function handleCancelActivityInstance(id) {
-              // handleClose();
-              // cancelActivity(id)
-              //     .then(response => { })
-              //     .then(data => {
-              //         console.log("Zajecia odwołane:", data);
-              //         setStateToTriggerUseEffectAfterDeleting((prev) => !prev);
-      
-              //     })
-              //     .catch(error => {
-              //         console.error("Błąd podczas zwalniania pracownika:", error);
-              //     });
-        }
+      }, [id]); 
 
         function handleCancel() {
           navigate('/trainings', {

@@ -19,12 +19,12 @@ export default async function getCourtEvents(courtId, date) {
         });
         
         if (!response.ok) {
-            throw new Error('Network problem');
+         //   throw new Error('Network problem');
         }
         
         return response;
     } catch (error) {
-        console.error('Error fetching court reservations', error);
-        throw error;
+      //  console.error('Error fetching court reservations', error);
+      //  throw error;
     }
 }

@@ -554,7 +554,6 @@ const clientRouter = [
         } else {
             router = baseRouter;
         }
-        console.log(router);
         return createBrowserRouter(router);
     }
 

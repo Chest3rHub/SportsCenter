@@ -12,8 +12,8 @@ export default async function getTrainerBusyTimes(trainerId, date) {
     });
 
     if (!response.ok) {
-        const errorText = await response.text();
-        throw new Error(`Błąd pobierania zajętości trenera: ${response.status} ${errorText}`);
+      //  const errorText = await response.text();
+      //  throw new Error(`Błąd pobierania zajętości trenera: ${response.status} ${errorText}`);
     }
 
     const data = await response.json();

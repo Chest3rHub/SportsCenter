@@ -52,7 +52,7 @@ export default function Home() {
         }
 
       } catch (error) {
-        console.error('Error fetching data!', error);
+       // console.error('Error fetching data!', error);
         setCourtsError(error.message);
       } finally {
         setLoading(false);

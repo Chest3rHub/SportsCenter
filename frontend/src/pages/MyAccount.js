@@ -31,7 +31,7 @@ export default function MyAccount() {
             const data = await response.json();
             setUserData(data);
           } catch (error) {
-              console.error("Błąd podczas pobierania danych użytkownika:", error);
+            //  console.error("Błąd podczas pobierania danych użytkownika:", error);
           }
         };
         fetchUserData();

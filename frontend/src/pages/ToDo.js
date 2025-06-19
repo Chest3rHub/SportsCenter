@@ -53,7 +53,7 @@ export default function ToDoPage() {
             const data = await response.json();
             setTasks(data);
         } catch (error) {
-            console.error('Error:', error);
+         //   console.error('Error:', error);
             setTasks([]);
         } finally {
             setLoading(false);
@@ -68,7 +68,7 @@ export default function ToDoPage() {
             const adminEmployees = data.filter(emp => emp.role === "Pracownik administracyjny");
             setEmployees(adminEmployees);
         } catch (error) {
-            console.error('Error:', error);
+         //   console.error('Error:', error);
         }
     };
 
@@ -85,7 +85,7 @@ export default function ToDoPage() {
             const data = await response.json();
             setEmployeeTasks(data);
         } catch (error) {
-            console.error('Error:', error);
+          //  console.error('Error:', error);
             setEmployeeTasks([]);
         } finally {
             setLoadingEmployeeTasks(false);
@@ -164,7 +164,7 @@ export default function ToDoPage() {
             await fetchTasks();
             handleCloseModal();
         } catch (error) {
-            console.error('Error adding task:', error);
+         //   console.error('Error adding task:', error);
         }
     };
 
@@ -188,7 +188,7 @@ export default function ToDoPage() {
             await fetchTasks();
             handleCloseModal();
         } catch (error) {
-            console.error('Error adding employee task:', error);
+          //  console.error('Error adding employee task:', error);
         }
     };
 
@@ -207,7 +207,7 @@ export default function ToDoPage() {
             fetchTasks();
             handleCloseModal();
         } catch (error) {
-            console.error('Error editing task:', error);
+         //   console.error('Error editing task:', error);
         }
     };
 
@@ -229,7 +229,7 @@ export default function ToDoPage() {
             await fetchTasks();
         }
     } catch (error) {
-        console.error('Error deleting task:', error);
+      //  console.error('Error deleting task:', error);
     }
 };
 

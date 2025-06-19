@@ -11,12 +11,12 @@ export default async function getClubWorkingHours(weekOffset = 0) {
         });
         
         if (!response.ok) {
-            throw new Error('Network problem');
+          //  throw new Error('Network problem');
         }
         
         return response;
     } catch (error) {
-        console.error('Error fetching club working hours:', error);
-        throw error;
+       // console.error('Error fetching club working hours:', error);
+       // throw error;
     }
 }

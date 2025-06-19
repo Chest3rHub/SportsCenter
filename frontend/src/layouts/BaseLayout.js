@@ -25,7 +25,7 @@ export default function BaseLayout() {
           setRole('Anonim');
         }
       } catch (error) {
-        console.error("Błąd podczas pobierania danych użytkownika:", error);
+      //  console.error("Błąd podczas pobierania danych użytkownika:", error);
       }
     };
     fetchUserData();

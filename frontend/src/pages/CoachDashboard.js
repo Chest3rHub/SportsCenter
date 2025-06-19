@@ -44,14 +44,14 @@ export default function CoachDashboard() {
             const activityStart = new Date(`${activity.dateOfActivity}T${activity.startTime}`);
             return activityStart > now;
           });
-          console.log('Upcoming', upcomingActivities);
+          
           setActivities(upcomingActivities);
         } else {
           setActivities([]);
         }
 
       } catch (error) {
-        console.error('Error fetching data:', error);
+       // console.error('Error fetching data:', error);
         setActivities([]);
       } finally {
         setLoading(false);

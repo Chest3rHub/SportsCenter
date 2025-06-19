@@ -58,7 +58,7 @@ export default function EmployeeDashboard() {
         }
 
       } catch (error) {
-        console.error('Error fetching data:', error);
+      //  console.error('Error fetching data:', error);
         setTasks([]);
         setOrders([]);
       } finally {

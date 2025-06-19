@@ -165,7 +165,6 @@ function Register() {
 
       if (!response.ok) {
         const errorData = await response.json();
-        console.log(errorData);
         if (errorData.message && errorData.message.includes('Email:')) {
           setEmailIsTakenError(true);
         } else {
@@ -177,7 +176,7 @@ function Register() {
       }
 
     } catch (error) {
-      console.error('Błąd rejestracji:', error);
+    //  console.error('Błąd rejestracji:', error);
     }
   };
 

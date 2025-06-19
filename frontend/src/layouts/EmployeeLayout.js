@@ -40,10 +40,10 @@ export default function EmployeeLayout() {
           const newToken = await response.json();
           setToken(newToken.token);
         } else {
-          console.error('Błąd podczas odświeżania tokena');
+       //   console.error('Błąd podczas odświeżania tokena');
         }
       } catch (error) {
-        console.error('Wystąpił błąd podczas zapytania o token:', error);
+      //  console.error('Wystąpił błąd podczas zapytania o token:', error);
       }
     }, 30 * 60 * 1000); // 30 min
 
@@ -61,7 +61,7 @@ export default function EmployeeLayout() {
           setRole('Anonim');
         }
       } catch (error) {
-        console.error("Błąd podczas pobierania danych użytkownika:", error);
+      //  console.error("Błąd podczas pobierania danych użytkownika:", error);
       }
     };
     fetchUserData();

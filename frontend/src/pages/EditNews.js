@@ -126,7 +126,7 @@ export default function EditNews() {
 
             if (!response.ok) {
                 const errorData = await response.json();
-                console.log(errorData);
+              //  console.log(errorData);
                 //handleError('Blad edytowania aktualności... sprawdz konsole');
                 
                 handleOpenFailure();
@@ -136,7 +136,7 @@ export default function EditNews() {
             }
 
         } catch (error) {
-            console.error('Błąd edytowania aktualności:', error);
+          //error('Błąd edytowania aktualności:', error);
             handleOpenFailure();
 
         }

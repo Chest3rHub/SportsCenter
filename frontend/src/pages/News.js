@@ -33,16 +33,15 @@ export default function News() {
                 return response.json();
             })
             .then(data => {
-                console.log('Odpowiedź z API:', data);
                 if (Array.isArray(data)) {
                     setNews(data);
                 } else {
-                    console.error('Otrzymane dane nie są tablicą:', data);
+                  //  console.error('Otrzymane dane nie są tablicą:', data);
                 }
                 setLoading(false);
             })
             .catch(error => {
-                console.error('Błąd podczas wywoływania getNews:', error);
+              //  console.error('Błąd podczas wywoływania getNews:', error);
             });
     }, [offset, stateToTriggerUseEffectAfterDeleting]);
 
@@ -77,7 +76,6 @@ export default function News() {
         // }
     }
 
-   // console.log(news);
 
     
     const limitedNews = news.slice(0, maxNewsPerPage);

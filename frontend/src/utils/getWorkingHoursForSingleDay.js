@@ -1,9 +1,6 @@
 export default async function getWorkingHoursForSingleDay(date) {
     const today = new Date();
-    console.log('Today', today)
     const selected = new Date(date);
-    console.log('Date', date)
-    console.log('Selected', selected)
 
 
     today.setHours(0, 0, 0, 0);
@@ -25,8 +22,6 @@ export default async function getWorkingHoursForSingleDay(date) {
 
     const msInWeek = 7 * 24 * 60 * 60 * 1000;
     const weekOffset = Math.round((selectedWeekStart - currentWeekStart) / msInWeek);
-
-    console.log("Week offset", weekOffset)
 
 return weekOffset;
 }

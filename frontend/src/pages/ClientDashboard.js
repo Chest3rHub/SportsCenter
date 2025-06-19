@@ -66,7 +66,7 @@ export default function ClientDashboard() {
 
         setUpcomingClasses(futureActivities);
       } catch (error) {
-        console.error('Error in fetchUserAndData:', error);
+      //  console.error('Error in fetchUserAndData:', error);
       } finally {
         setLoading(false);
         setBalanceLoading(false);

@@ -80,10 +80,13 @@ export default function NewClientReservation() {
     useEffect(() => {
         getCourts()
             .then(response => {
+                console.log('Get courts response:', response)
                 if(!response){
                     setCourts([]);
                 } else {
-                    setCourts(response);
+                    if (Array.isArray(response)) {
+                        setCourts(response);
+                    }
                 }
             })
             .then(data => {
@@ -270,7 +273,9 @@ export default function NewClientReservation() {
                 if(!response){
                     setCourts([]);
                 } else {
-                    setCourts(response);
+                    if (Array.isArray(response)) {
+                        setCourts(response);
+                    }
                 }
                 if (!response || response.length === 0) {
                     setCourtsError('Brak dostępnych kortów w podanych godzinach');

@@ -42,6 +42,7 @@ export default function NewClientReservation() {
 
 
     
+    
     const [formData, setFormData] = useState({
         date: '',
         startTime: '',
@@ -79,7 +80,9 @@ export default function NewClientReservation() {
     useEffect(() => {
         getCourts()
             .then(response => {
-                setCourts(response);
+                if(response.ok){
+                    setCourts(response);
+                }
             })
             .then(data => {
             })
@@ -257,7 +260,9 @@ export default function NewClientReservation() {
 
         getAvailableCourts(startDateTime, endDateTime)
             .then(response => {
-                setCourts(response);
+                if(response.ok){
+                    setCourts(response);
+                }
                 if (!response || response.length === 0) {
                     setCourtsError('Brak dostępnych kortów w podanych godzinach');
                 } else {
@@ -278,9 +283,12 @@ export default function NewClientReservation() {
 
         getAvailableTrainers(startDateTime, endDateTime)
             .then(response => {
-                setAvailableTrainers(response);
+                if(response.ok){
+                    setAvailableTrainers(response);
+                }
             })
             .then(data => {
+                
             })
             .catch(error => {
              //   console.error('Błąd podczas wywoływania get courts:', error);

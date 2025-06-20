@@ -80,7 +80,9 @@ export default function NewClientReservation() {
     useEffect(() => {
         getCourts()
             .then(response => {
-                if(response.ok){
+                if(!response){
+                    setCourts([]);
+                } else {
                     setCourts(response);
                 }
             })
@@ -93,9 +95,14 @@ export default function NewClientReservation() {
     useEffect(() => {
         getTrainers()
             .then(response => {
-                setTrainers(response);
-                setAvailableTrainers(response);
-            })
+                if(!response){
+                    setAvailableTrainers([]);
+                    setTrainers([]);
+                } else {
+                    setTrainers(response);
+                    setAvailableTrainers(response);
+                }
+                            })
             .then(data => {
             })
             .catch(error => {
@@ -260,7 +267,9 @@ export default function NewClientReservation() {
 
         getAvailableCourts(startDateTime, endDateTime)
             .then(response => {
-                if(response.ok){
+                if(!response){
+                    setCourts([]);
+                } else {
                     setCourts(response);
                 }
                 if (!response || response.length === 0) {
@@ -283,7 +292,9 @@ export default function NewClientReservation() {
 
         getAvailableTrainers(startDateTime, endDateTime)
             .then(response => {
-                if(response.ok){
+                if(!response){
+                    setAvailableTrainers([]);
+                } else {
                     setAvailableTrainers(response);
                 }
             })

@@ -80,7 +80,6 @@ export default function NewClientReservation() {
     useEffect(() => {
         getCourts()
             .then(response => {
-                console.log('Get courts response:', response)
                 if(!response){
                     setCourts([]);
                 } else {

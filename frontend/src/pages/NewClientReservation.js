@@ -102,8 +102,10 @@ export default function NewClientReservation() {
                     setAvailableTrainers([]);
                     setTrainers([]);
                 } else {
-                    setTrainers(response);
-                    setAvailableTrainers(response);
+                    if (Array.isArray(response)) {
+                        setTrainers(response);
+                        setAvailableTrainers(response);
+                    }
                 }
                             })
             .then(data => {
@@ -300,7 +302,9 @@ export default function NewClientReservation() {
                 if(!response){
                     setAvailableTrainers([]);
                 } else {
-                    setAvailableTrainers(response);
+                    if (Array.isArray(response)) {
+                        setAvailableTrainers(response);
+                    }
                 }
             })
             .then(data => {

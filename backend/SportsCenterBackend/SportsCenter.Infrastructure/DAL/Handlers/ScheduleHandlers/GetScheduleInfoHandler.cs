@@ -96,6 +96,8 @@ internal class GetScheduleInfoHandler : IRequestHandler<GetScheduleInfo, List<Sc
                         LastName = reservation.Klient?.KlientNavigation?.Nazwisko,
                         IsPaid = reservation.CzyOplacona,
                         Email = reservation.Klient?.KlientNavigation.Email,
+                        IsSigned = !reservation.CzyOdwolana, //0 w bazie to nieodwolana a tu to 0 to false, czyli isSigned jest false jak jest nieodwolana wiec dla nieodwolanej IsSigned !(zmieniam na true)
+                        IsMoneyRefounded = reservation.CzyZwroconoPieniadze
                         }
                     },
                     IsEquipmentReserved = reservation.CzyUwzglednicSprzet,

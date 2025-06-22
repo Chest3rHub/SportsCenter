@@ -3,7 +3,7 @@ import { Typography, Box, List, ListItem, ListItemText, Avatar, FormControlLabel
 import Header from "../components/Header";
 import GreenButton from "../components/buttons/GreenButton";
 import CustomInput from "../components/CustomInput";
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import { SportsContext } from "../context/SportsContext";
 import signUpForActivity from "../api/signUpForActivity";
 import Backdrop from '@mui/material/Backdrop';
@@ -28,7 +28,6 @@ export default function ActivityDetails() {
 
     const [openSuccessBackdrop, setOpenSuccessBackdrop] = useState(false);
     const [openFailureBackdrop, setOpenFailureBackdrop] = useState(false);
-
 
     const handleCloseSuccess = () => {
         setOpenSuccessBackdrop(false);
@@ -177,6 +176,20 @@ export default function ActivityDetails() {
                 //handleOpenFailure();
             });
     }
+
+    // obsluga wydarzen w przeszlosci
+    const [isSignUpAllowed, setIsSignUpAllowed] = useState(true);
+
+    useEffect(() => {
+        if (!date || !startTime) return;
+        const cleanDate = date.split("T")[0];
+
+        const activityDateTime = new Date(`${cleanDate}T${startTime}`);
+        const now = new Date();
+
+        setIsSignUpAllowed(now < activityDateTime);
+
+    }, [date, startTime]);
 
     if (!activityDetails) {
         return <Typography variant="h6">{dictionary.activityDetailsPage.noDataAvailable}</Typography>;
@@ -447,7 +460,7 @@ export default function ActivityDetails() {
                         columnGap: '5vw',
                     }}>
                         <GreenButton onClick={handleCancel} style={{ maxWidth: "10vw", backgroundColor: "#F46C63" }} hoverBackgroundColor={'#c3564f'}>{dictionary.activityDetailsPage.returnLabel}</GreenButton>
-                        {role === 'Klient' && <GreenButton type="submit" style={{ maxWidth: "10vw" }} onClick={() => signUpForActivityClient()}>{dictionary.activityDetailsPage.signUpLabel}</GreenButton>}
+                        {role === 'Klient' && <GreenButton type="submit" disabled={!isSignUpAllowed} style={{ maxWidth: "10vw" }} onClick={() => signUpForActivityClient()}>{dictionary.activityDetailsPage.signUpLabel}</GreenButton>}
                         {(role === 'Wlasciciel' || role === 'Pracownik administracyjny') &&
                             description === 'Rezerwacja' &&
                             <GreenButton

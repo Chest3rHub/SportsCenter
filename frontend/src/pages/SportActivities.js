@@ -121,7 +121,7 @@ export default function SportActivities() {
                         backgroundColor: '#eafaf1',
                         padding: '1.2rem',
                         borderRadius: '20px',
-                        margin: '1.5rem 0',
+                        marginBottom:'1.5vh',
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
@@ -163,7 +163,7 @@ export default function SportActivities() {
             )}
                 <Box
                     sx={{
-                        height: '67vh',
+                        height: '50vh',
                         borderRadius: '20px',
                         boxShadow: '0 10px 20px rgba(0, 0, 0, 0.2)',
                         backgroundColor: 'white',
@@ -180,8 +180,7 @@ export default function SportActivities() {
                             marginBottom: '3vh',
                         }}
                     >
-                        <SmallGreenHeader width={'22%'}>{dictionary.sportActivitiesPage.sportActivityId}</SmallGreenHeader>
-                        <SmallGreenHeader width={'22%'}>{dictionary.sportActivitiesPage.sportActivityName}</SmallGreenHeader>
+                        <SmallGreenHeader width={'17%'}>{dictionary.sportActivitiesPage.sportActivityName}</SmallGreenHeader>
                         <SmallGreenHeader width={'24%'}>{dictionary.sportActivitiesPage.sportActivityLevelName}</SmallGreenHeader>                        <SmallGreenHeader width={'16.6%'}>{dictionary.sportActivitiesPage.dayOfWeek}</SmallGreenHeader>
                         <SmallGreenHeader width={'22%'}>{dictionary.sportActivitiesPage.startHour}</SmallGreenHeader>
                         <SmallGreenHeader width={'22%'}>{dictionary.sportActivitiesPage.courtName}</SmallGreenHeader>
@@ -212,17 +211,7 @@ export default function SportActivities() {
                         >
                             <Box
                                 sx={{
-                                    width: '20%',
-                                    textAlign: 'center',
-                                }}
-                            >
-                                <Typography>
-                                    {activity.sportActivityId}
-                                </Typography>
-                            </Box>
-                            <Box
-                                sx={{
-                                    width: '20%',
+                                    width: '15%',
                                     textAlign: 'center',
                                 }}
                             >
@@ -232,17 +221,19 @@ export default function SportActivities() {
                             </Box>
                             <Box
                                 sx={{
-                                    width: '23%',
+                                    width: '22%',
                                     textAlign: 'center',
                                 }}
                             >
-                                <Typography>
+                                <Typography sx={{
+                                    fontSize:'0.9rem'
+                                }}>
                                     {activity.levelName}
                                 </Typography>
                             </Box>
                             <Box
                                 sx={{
-                                    width: '20%',
+                                    width: '13%',
                                     textAlign: 'center',
                                 }}
                             >
@@ -278,7 +269,11 @@ export default function SportActivities() {
                             <ActivitiesButton backgroundColor={"#F46C63"}onClick={() => handleOpenModal(activity)} minWidth={'6vw'}>
                                 {dictionary.sportActivitiesPage.deleteActivityLabel}
                             </ActivitiesButton>    
-                             )}                
+                             )} 
+                             {role ==='Pracownik administracyjny' && <Box sx={{
+                                minWidth:'7vw'
+                             }}>
+                                </Box>}               
                         </Box>))}
                     </Box>
                     <Modal 

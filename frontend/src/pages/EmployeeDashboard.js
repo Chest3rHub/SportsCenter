@@ -92,44 +92,30 @@ export default function EmployeeDashboard() {
   };
 
   return (
-    <Box sx={{
-      maxWidth: '1100px',
-      margin: '0 auto',
-      padding: '24px',
-      height: '85vh',
-      boxSizing: 'border-box',
-      marginLeft:'16vw'
-    }}>
-      <Box sx={{ 
-        width: '100%',
-        marginBottom: '16px',
-        textAlign: 'center'
-      }}>
+    <GreenBackground height={"55vh"} marginTop={"12vh"} gap={"2vh"}>
+      <Box sx={{
+            width: '100%',             // pełna szerokość kontenera
+            display: 'flex',
+            justifyContent: 'center',  // wyśrodkowanie poziome
+            minHeight: '5vh',
+            marginBottom:'5vh',
+          }}>
         <Header>{dictionary.empMainPage.title}</Header>
       </Box>
   
       <Box sx={{
-        display: 'flex',
-        width: '100%',
+        display: 'flex',    
         height: 'calc(100% - 60px)',
         gap: '50px'
       }}>
-        <GreenBackground sx={{
-          flex: '0 0 55%',
-          height: '100%',
-          padding: '24px',
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'flex-start',
-          gap: '32px'
-        }}>
+        
           <Box>
             <Typography sx={{ 
               color: 'black', 
               fontWeight: 'bold', 
               fontSize: '2rem',
               marginBottom: '24px',
-              paddingLeft: '24px',
+              paddingLeft: '38px',
               textAlign: 'left'
             }}>
               {dictionary.empMainPage.whatIsNewLabel}
@@ -146,7 +132,8 @@ export default function EmployeeDashboard() {
             ) : latestNews ? (
               <Box sx={{ 
                 width: '90%',
-                margin: '0 auto'
+                margin: '0 auto',
+                maxWidth:'30vw'
               }}>
                 <SingleNews 
                   oneNewsDetails={latestNews} 
@@ -166,13 +153,13 @@ export default function EmployeeDashboard() {
 
           <Box sx={{ 
             flex: 1,
-            marginTop: '24px'
+            
           }}>
             <Typography sx={{ 
               color: 'black', 
               fontWeight: 'bold', 
               fontSize: '2rem',
-              marginBottom: '20px',
+              marginBottom: '24px',
               paddingLeft: '24px',
               textAlign: 'left'
             }}>
@@ -188,18 +175,18 @@ export default function EmployeeDashboard() {
                 minHeight: '20vh',
                 padding: '16px',
                 position: 'relative'
-              }}>
+              }} height={'12vh'}>
                 {tasksLoading ? (
-                  <Box sx={{ height: '100%', display: 'grid', placeItems: 'center' }}>
+                  <Box sx={{ height: '90%', display: 'grid', placeItems: 'center' }}>
                     <CircularProgress sx={{ color: '#4caf50' }} />
                   </Box>
                 ) : tasks.length > 0 ? (
-                  <Box sx={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                  <Box sx={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
                     <Box sx={{ 
                       display: 'flex', 
                       justifyContent: 'space-between',
-                      mb: '8px',
-                      px: '8px'
+                      mb: '6px',
+                      px: '6px'
                     }}>
                       <Typography sx={{ color: 'black', fontSize: '1.1rem', fontWeight: 'bold' }}>
                         {dictionary.empMainPage.contentLabel}
@@ -250,16 +237,12 @@ export default function EmployeeDashboard() {
               </OrangeBackground>
             </Box>
           </Box>
-        </GreenBackground>
+        
 
-        <GreenBackground sx={{
-          flex: '0 0 45%',
-          height: '100%',
-          padding: '24px',
-          display: 'flex',
-          flexDirection: 'column',
-          gap: '16px'
+        <Box sx={{
+          display:'none'
         }}>
+        
           <Typography sx={{ 
             color: 'black', 
             fontWeight: 'bold', 
@@ -351,8 +334,9 @@ export default function EmployeeDashboard() {
               {dictionary.empMainPage.noOrdersLabel}
             </Typography>
           )}
-        </GreenBackground>
+        
+        </Box>
       </Box>
-    </Box>
+      </GreenBackground>
   );
 }

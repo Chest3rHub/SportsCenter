@@ -431,7 +431,11 @@ const clientRouter = [
                 {
                     path: "/add-deposit-to-client",
                     element: <AddDepositToClient />
-                },       
+                },    
+                {
+                    path: "/update-client-deposit",
+                    element: <ChangeClientDeposit />
+                },   
                 {
                     path: "/todo",
                     element: <ToDoPage />

@@ -59,7 +59,7 @@ function AddClientDiscount() {
     const validateForm = () => {
 
       const activityDiscountValue = parseFloat(formData.activityDiscount);
-      if (isNaN(activityDiscountValue) || activityDiscountValue < 0) {
+      if (isNaN(activityDiscountValue) || activityDiscountValue < 0 || activityDiscountValue > 100) {
         setActivityDiscountError(true);
         return false;
       }
@@ -67,7 +67,7 @@ function AddClientDiscount() {
     
 
       const productDiscountValue = parseFloat(formData.productDiscount);
-      if (isNaN(productDiscountValue) || productDiscountValue < 0) {
+      if (isNaN(productDiscountValue) || productDiscountValue < 0 || productDiscountValue > 100) {
         setProductDiscountError(true);
         return false;
       }
@@ -148,7 +148,7 @@ function AddClientDiscount() {
                   helperText={activityDiscountError ? dictionary.addClientDiscountPage.activityDiscountError : ''}
                   required
                   size="small"
-                  inputProps={{ min: 1 }}
+                  inputProps={{ min: 0 }}
                 />
                 <CustomInput
                   label={dictionary.addClientDiscountPage.productDiscountLabel}
@@ -162,7 +162,7 @@ function AddClientDiscount() {
                   helperText={productDiscountError ? dictionary.addClientDiscountPage.productDiscountError : ''}
                   required
                   size="small"
-                  inputProps={{ min: 1 }}
+                  inputProps={{ min: 0 }}
                 />
                 <Box sx={{ 
                   display: 'flex', 

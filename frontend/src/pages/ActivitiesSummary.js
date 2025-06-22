@@ -189,7 +189,7 @@ export default function SportActivities() {
 
             <Box
                 sx={{
-                    height: '55vh',
+                    height: '43vh',
                     borderRadius: '20px',
                     boxShadow: '0 10px 20px rgba(0, 0, 0, 0.2)',
                     backgroundColor: 'white',
@@ -207,7 +207,7 @@ export default function SportActivities() {
                     }}
                 >
                     <SmallGreenHeader width={'40%'}>{dictionary.activitiesSummaryPage.nameLabel}</SmallGreenHeader>
-                    <SmallGreenHeader width={'22%'}>{dictionary.activitiesSummaryPage.completedLabel}</SmallGreenHeader>
+                    <SmallGreenHeader width={'24%'}>{dictionary.activitiesSummaryPage.completedLabel}</SmallGreenHeader>
                     <SmallGreenHeader width={'22%'}>{dictionary.activitiesSummaryPage.cancelledLabel}</SmallGreenHeader>
                     <SmallGreenHeader width={'22%'}>{dictionary.activitiesSummaryPage.totalRevenueLabel}</SmallGreenHeader>
                 </Box>
@@ -219,7 +219,7 @@ export default function SportActivities() {
                             display: 'flex',
                             alignContent: 'start',
                             alignItems: 'center',
-                            width: '80%',
+                            width: '82%',
                             gap: '2%',
                             padding: '0.3rem 0px',
                         }}
@@ -238,16 +238,16 @@ export default function SportActivities() {
                                 maxWidth: '60vw'
                             }}
                         >
-                            <Box sx={{ width: '40%', textAlign: 'center' }}>
+                            <Box sx={{ width: '35%', textAlign: 'center' }}>
                                 <Typography>{summary.zajeciaNazwa}</Typography>
                             </Box>
-                            <Box sx={{ width: '18%', textAlign: 'center' }}>
+                            <Box sx={{ width: '20%', textAlign: 'center' }}>
                                 <Typography>{summary.completedActivities}</Typography>
                             </Box>
-                            <Box sx={{ width: '20%', textAlign: 'center'}}>
+                            <Box sx={{ width: '19%', textAlign: 'center', }}>
                                 <Typography>{summary.cancelledActivities}</Typography>
                             </Box>
-                            <Box sx={{width: '20%', textAlign: 'center'}}>
+                            <Box sx={{width: '18%', textAlign: 'center'}}>
                             <Typography>{summary.totalRevenue} zł</Typography>
                             </Box>
                         </Box>

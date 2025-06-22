@@ -360,6 +360,7 @@ export default function ClientDashboard() {
   
           <Typography
             sx={{
+              display:'none',
               color: 'black',
               textDecoration: 'underline',
               cursor: 'pointer',

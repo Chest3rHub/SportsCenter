@@ -187,15 +187,16 @@ export default function Clients() {
                     flexGrow: 1,
                     marginLeft: 'auto',
                     marginRight: 'auto',
+                    marginTop:'-2vh',
                 }}
             >
                 <Header>{dictionary.clientsPage.clientsLabel}</Header>
                 <Box
                     sx={{
                         backgroundColor: '#eafaf1',
-                        padding: '1.2rem',
+                        padding: '0.8rem',
                         borderRadius: '20px',
-                        margin: '1.5rem 0',
+                        marginBottom:'0.5rem',
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
@@ -307,7 +308,9 @@ export default function Clients() {
                                     textAlign: 'center',
                                 }}
                             >
-                                <Typography>
+                                <Typography sx={{
+                                    fontSize:'0.9rem',
+                                }}>
                                     {client.name} {client.surname}
                                 </Typography>
                             </Box>
@@ -344,7 +347,7 @@ export default function Clients() {
                         flexDirection: "row",
                         justifyContent: 'center',
                         columnGap: "4vw",
-                        marginTop: '5vh',
+                        marginTop: '2vh',
                     }}
                 >
                     <ChangePageButton

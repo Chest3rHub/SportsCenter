@@ -202,7 +202,7 @@ export default function OwnerDashboard() {
               width: '90%',
               margin: '0 auto'
             }}>
-              <OrangeBackground>
+              <OrangeBackground minHeight={'15.7vh'}>
                 {tasksLoading ? (
                   <Box sx={{ height: '100%', display: 'grid', placeItems: 'center' }}>
                     <CircularProgress sx={{ color: '#4caf50' }} />
